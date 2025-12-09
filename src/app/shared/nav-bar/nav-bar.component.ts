@@ -1,13 +1,14 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
-import { CommonModule } from '@angular/common';
 import { ModeButtonComponent } from './mode-button/mode-button.component';
+import { SearchBoxComponent } from './search-box/search-box.component';
 
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
-  imports: [CommonModule, MenubarModule, ButtonModule, ModeButtonComponent],
+  imports: [CommonModule, MenubarModule, ButtonModule, ModeButtonComponent, SearchBoxComponent],
 })
 export class NavBarComponent {
   public readonly menuItems = signal([
@@ -18,47 +19,47 @@ export class NavBarComponent {
         {
           label: 'Experience',
           icon: 'pi pi-box',
-          routerLink: ['/tops/experience'],
+          routerLink: ['/top/experience'],
         },
         {
           label: 'Magic',
           icon: 'pi pi-box',
-          routerLink: ['/tops/magic'],
+          routerLink: ['/top/magic'],
         },
         {
           label: 'Fist',
           icon: 'pi pi-box',
-          routerLink: ['/tops/fist'],
+          routerLink: ['/top/fist'],
         },
         {
           label: 'Club',
           icon: 'pi pi-box',
-          routerLink: ['/tops/club'],
+          routerLink: ['/top/club'],
         },
         {
           label: 'Sword',
           icon: 'pi pi-box',
-          routerLink: ['/tops/sword'],
+          routerLink: ['/top/sword'],
         },
         {
           label: 'Axe',
           icon: 'pi pi-box',
-          routerLink: ['/tops/axe'],
+          routerLink: ['/top/axe'],
         },
         {
           label: 'Distance',
           icon: 'pi pi-box',
-          routerLink: ['/tops/distance'],
+          routerLink: ['/top/distance'],
         },
         {
           label: 'Shielding',
           icon: 'pi pi-box',
-          routerLink: ['/tops/shielding'],
+          routerLink: ['/top/shielding'],
         },
         {
           label: 'Fishing',
           icon: 'pi pi-box',
-          routerLink: ['/tops/fishing'],
+          routerLink: ['/top/fishing'],
         },
       ],
     },
