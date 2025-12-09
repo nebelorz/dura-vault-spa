@@ -1,0 +1,68 @@
+<div class="highscore-container">
+  <div class="highscore-header">
+    <h2 class="highscore-title">
+      {{ section() | titlecase }} Highscore
+      <app-loading-spinner [visible]="loading()" />
+    </h2>
+
+    <div>
+      <p-selectButton
+        [options]="periodOptions"
+        [(ngModel)]="selectedPeriodValue"
+        (onChange)="onPeriodChange($event.value)"
+        optionLabel="label"
+        optionValue="value"
+      />
+    </div>
+  </div>
+
+  <!-- Error message -->
+  @if (error()) {
+    <p-message severity="error" [text]="error()!" />
+  }
+
+  <!-- Data table -->
+  @if (!loading() || data().length > 0) {
+    <p-table
+      class="p-datatable-sm"
+      [value]="data()"
+      [scrollable]="true"
+      scrollHeight="calc(100vh - 250px)"
+      [tableStyle]="{ 'min-width': '50rem' }"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Name</th>
+          <th>Vocation</th>
+          <th>Level</th>
+          <th>Experience</th>
+          <th>Gain Experience</th>
+          <th>Gain Level</th>
+          <th>Gain Rank</th>
+          <th>Date</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-record>
+        <tr>
+          <td>
+            <strong>{{ record.name }}</strong>
+          </td>
+          <td>{{ record.vocation }}</td>
+          <td>{{ record.level }}</td>
+          <td>{{ formatPoints(record.points) }}</td>
+          <td>{{ formatGain(record.gain_points) }}</td>
+          <td>{{ formatGain(record.gain_level) }}</td>
+          <td>{{ formatGain(record.gain_rank) }}</td>
+          <td>{{ formatDate(record.scrape_date) }}</td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="9" style="text-align: center">No data available</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  }
+</div>

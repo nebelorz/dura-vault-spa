@@ -1,0 +1,17 @@
+.highscore-container {
+  padding: 1rem;
+  max-width: 100%;
+
+  .highscore-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    .highscore-title {
+      margin: 0;
+      font-size: x-large;
+      font-weight: bold;
+    }
+  }
+}
