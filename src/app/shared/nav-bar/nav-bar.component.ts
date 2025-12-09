@@ -1,7 +1,9 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
+
 import { ModeButtonComponent } from './mode-button/mode-button.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
 
