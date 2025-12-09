@@ -3,4 +3,8 @@ export const environment = {
   dura: {
     baseURL: 'https://classic.dura-online.com',
   },
+  supabase: {
+    url: 'SUPABASE_URL',
+    anonKey: 'SUPABASE_ANON_KEY',
+  },
 };

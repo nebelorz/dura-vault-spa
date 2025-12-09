@@ -45,4 +45,5 @@ __screenshots__/
 Thumbs.db
 
 # Environment files
-environments/
+environments/environment.prod.ts
+environments/environment.ts
