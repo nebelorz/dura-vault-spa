@@ -17,7 +17,7 @@ export class SearchBoxComponent {
     const query = input.value.trim().replace(/\s+/g, '+');
 
     if (query) {
-      window.open(`${environment.baseUrl}/?characters/${query}`, '_blank');
+      window.open(`${environment.dura.baseURL}/?characters/${query}`, '_blank');
     }
   }
 }
