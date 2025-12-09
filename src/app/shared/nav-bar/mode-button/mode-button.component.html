@@ -1,3 +1,9 @@
-<span class="navbar-item" style="cursor: pointer" (click)="toggleDarkMode()">
-  <i class="pi {{ icon() }}"></i>
-</span>
+<p-button
+  class="navbar-item"
+  size="small"
+  [icon]="icon()"
+  [rounded]="true"
+  [outlined]="true"
+  severity="primary"
+  (click)="toggleDarkMode()"
+/>

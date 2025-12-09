@@ -1,7 +1,10 @@
 import { Component, computed, signal } from '@angular/core';
 
+import { ButtonModule } from 'primeng/button';
+
 @Component({
   selector: 'app-mode-button',
+  imports: [ButtonModule],
   standalone: true,
   templateUrl: './mode-button.component.html',
   styleUrls: ['./mode-button.component.scss'],
