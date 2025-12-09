@@ -1,3 +1,6 @@
 export const environment = {
-  baseUrl: 'https://classic.dura-online.com',
+  production: false,
+  dura: {
+    baseURL: 'https://classic.dura-online.com',
+  },
 };
