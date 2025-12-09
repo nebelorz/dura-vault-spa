@@ -1,9 +1,11 @@
-<input
-  pInputText
-  pSize="small"
-  type="text"
-  placeholder="Search character on Dura"
-  autocomplete="off"
-  (keydown.enter)="onSearch($event)"
-  class="search-box-input"
-/>
+<p-floatlabel variant="on">
+  <input
+    pInputText
+    pSize="small"
+    type="text"
+    autocomplete="off"
+    (keydown.enter)="onSearch($event)"
+    class="search-box-input"
+  />
+  <label for="search_character_dura">Search character on Dura</label>
+</p-floatlabel>

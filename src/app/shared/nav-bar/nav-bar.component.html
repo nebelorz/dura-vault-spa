@@ -1,8 +1,11 @@
 <div class="card">
   <p-menubar [model]="menuItems()" class="navbar-menubar">
+    <!-- Keeps these components at the start of the nav bar -->
+    <ng-template pTemplate="start">
+      <app-search-box />
+    </ng-template>
     <!-- Keeps these components at the end of the nav bar -->
     <ng-template pTemplate="end">
-      <app-search-box />
       <app-mode-button />
     </ng-template>
   </p-menubar>
