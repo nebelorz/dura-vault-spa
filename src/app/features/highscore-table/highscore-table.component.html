@@ -5,7 +5,18 @@
       <app-loading-spinner [visible]="loading()" />
     </h2>
 
-    <div>
+    <div class="header-controls">
+      <p-floatlabel variant="on">
+        <input
+          pInputText
+          pSize="small"
+          type="text"
+          autocomplete="off"
+          (input)="onFilterGlobal($any($event.target).value)"
+        />
+        <label for="search_character_table">Search by name</label>
+      </p-floatlabel>
+
       <p-selectButton
         [options]="periodOptions"
         [(ngModel)]="selectedPeriodValue"
@@ -24,22 +35,24 @@
   <!-- Data table -->
   @if (!loading() || data().length > 0) {
     <p-table
+      #dt
       class="p-datatable-sm"
+      stripedRows
       [value]="data()"
       [scrollable]="true"
-      scrollHeight="calc(100vh - 250px)"
-      [tableStyle]="{ 'min-width': '50rem' }"
+      [globalFilterFields]="['name']"
+      scrollHeight="calc(100vh - 200px)"
     >
       <ng-template pTemplate="header">
         <tr>
-          <th>Name</th>
-          <th>Vocation</th>
-          <th>Level</th>
-          <th>Experience</th>
-          <th>Gain Experience</th>
-          <th>Gain Level</th>
-          <th>Gain Rank</th>
-          <th>Date</th>
+          <th pSortableColumn="name">Name</th>
+          <th pSortableColumn="vocation">Vocation</th>
+          <th pSortableColumn="level">Level</th>
+          <th pSortableColumn="points">Experience</th>
+          <th pSortableColumn="gain_points">Gain Experience</th>
+          <th pSortableColumn="gain_level">Gain Level</th>
+          <th pSortableColumn="gain_rank">Gain Rank</th>
+          <th pSortableColumn="scrape_date">Date</th>
         </tr>
       </ng-template>
 

@@ -1,12 +1,16 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, viewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
+import { FloatLabel } from 'primeng/floatlabel';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { SelectButtonModule } from 'primeng/selectbutton';
-import { TableModule } from 'primeng/table';
+import { Table, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 
 import { HighscoreService } from '../../core/services/highscore.service';
@@ -20,7 +24,11 @@ import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-sp
   imports: [
     ButtonModule,
     CommonModule,
+    FloatLabel,
     FormsModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
     LoadingSpinnerComponent,
     MessageModule,
     SelectButtonModule,
@@ -31,6 +39,8 @@ import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-sp
 export class HighscoreTableComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private highscoreService = inject(HighscoreService);
+
+  dt = viewChild<Table>('dt');
 
   section = signal<string>('experience');
   selectedPeriod = signal<TimePeriod>('day');
@@ -92,6 +102,10 @@ export class HighscoreTableComponent implements OnInit {
     this.selectedPeriodValue = period;
     this.selectedPeriod.set(period);
     this.loadData();
+  }
+
+  onFilterGlobal(value: string): void {
+    this.dt()?.filterGlobal(value, 'contains');
   }
 
   refreshData(): void {
