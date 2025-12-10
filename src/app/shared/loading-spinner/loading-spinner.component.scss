@@ -1,3 +1,5 @@
+@import '../colors-css.scss';
+
 .loading-spinner {
   display: inline-flex;
   align-items: center;
@@ -6,7 +8,7 @@
   vertical-align: middle;
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
-  color: var(--p-button-primary-background);
+  color: $color-primary;
 
   &.visible {
     opacity: 1;

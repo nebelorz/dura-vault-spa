@@ -1,0 +1,24 @@
+@import '../../../shared/colors-css.scss';
+
+p-table {
+  border: 2px solid $color-secondary;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.pi-plus,
+.pi-angle-up {
+  font-size: 10px;
+  color: $color-primary;
+}
+
+.pi-angle-down {
+  font-size: 10px;
+  color: $color-danger;
+}
+
+.gain-percentage {
+  color: $color-gray-light;
+  font-size: smaller;
+  margin-left: 0.25em;
+}

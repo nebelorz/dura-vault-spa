@@ -1,5 +1,8 @@
+@import '../colors-css.scss';
+
 .info-icon {
   cursor: pointer;
+  color: $color-gray-light;
   display: inline-flex;
   align-items: center;
   margin-left: 0.5rem;
@@ -8,5 +11,5 @@
 }
 
 ::ng-deep .p-tooltip-text {
-  font-size:x-small
+  font-size: x-small;
 }
