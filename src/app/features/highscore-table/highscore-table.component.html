@@ -41,7 +41,6 @@
       showGridline
       selectionMode="single"
       [value]="data()"
-      [scrollable]="true"
       [globalFilterFields]="['name']"
       scrollHeight="calc(100vh - 200px)"
     >
@@ -71,10 +70,7 @@
             }
             {{ formatPoints(record.gain_points) }}
             @if (record.points > 0) {
-              <span
-                class="gain-percentage"
-                pTooltip="Compared to total experience"
-              >
+              <span class="gain-percentage" pTooltip="Compared to total experience">
                 ({{ (record.gain_points / record.points) * 100 | number: '1.1-1' }}%)
               </span>
             }
