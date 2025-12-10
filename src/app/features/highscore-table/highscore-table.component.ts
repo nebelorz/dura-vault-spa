@@ -125,13 +125,6 @@ export class HighscoreTableComponent implements OnInit {
     return points.toLocaleString('en-US');
   }
 
-  formatGain(gain: number | null): string {
-    if (gain === null || gain === undefined) {
-      return '-';
-    }
-    return gain > 0 ? `+${gain.toLocaleString('en-US')}` : gain.toLocaleString('en-US');
-  }
-
   formatDate(date: string): string {
     return new Date(date).toLocaleDateString('en-US', {
       year: 'numeric',

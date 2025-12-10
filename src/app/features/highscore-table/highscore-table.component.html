@@ -38,6 +38,8 @@
       #dt
       class="p-datatable-sm"
       stripedRows
+      showGridline
+      selectionMode="single"
       [value]="data()"
       [scrollable]="true"
       [globalFilterFields]="['name']"
@@ -45,6 +47,7 @@
     >
       <ng-template pTemplate="header">
         <tr>
+          <th></th>
           <th pSortableColumn="name">Name</th>
           <th pSortableColumn="vocation">Vocation</th>
           <th pSortableColumn="level">Level</th>
@@ -52,22 +55,42 @@
           <th pSortableColumn="gain_points">Gain Experience</th>
           <th pSortableColumn="gain_level">Gain Level</th>
           <th pSortableColumn="gain_rank">Gain Rank</th>
-          <th pSortableColumn="scrape_date">Date</th>
         </tr>
       </ng-template>
 
-      <ng-template pTemplate="body" let-record>
+      <ng-template pTemplate="body" let-record let-rowIndex="rowIndex">
         <tr>
-          <td>
-            <strong>{{ record.name }}</strong>
-          </td>
+          <td>{{ rowIndex + 1 }}</td>
+          <td>{{ record.name }}</td>
           <td>{{ record.vocation }}</td>
           <td>{{ record.level }}</td>
           <td>{{ formatPoints(record.points) }}</td>
-          <td>{{ formatGain(record.gain_points) }}</td>
-          <td>{{ formatGain(record.gain_level) }}</td>
-          <td>{{ formatGain(record.gain_rank) }}</td>
-          <td>{{ formatDate(record.scrape_date) }}</td>
+          <td>
+            @if (record.gain_points > 0) {
+              <i class="pi pi-plus"></i>
+            }
+            {{ formatPoints(record.gain_points) }}
+            @if (record.points > 0) {
+              <span
+                class="gain-percentage"
+                pTooltip="Compared to total experience"
+              >
+                ({{ (record.gain_points / record.points) * 100 | number: '1.1-1' }}%)
+              </span>
+            }
+          </td>
+          <td>
+            {{ record.gain_level }}
+            @if (record.gain_level > 0) {
+              <i class="pi pi-angle-up"></i>
+            }
+          </td>
+          <td>
+            {{ record.gain_rank }}
+            @if (record.gain_rank > 0) {
+              <i class="pi pi-angle-up"></i>
+            }
+          </td>
         </tr>
       </ng-template>
 

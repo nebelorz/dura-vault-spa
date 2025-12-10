@@ -1,3 +1,20 @@
+p-table {
+  border: 2px solid var(--p-button-secondary-background);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+i {
+  font-size: 10px;
+  color: var(--p-primary-color);
+}
+
+.gain-percentage {
+  color: #888;
+  font-size: smaller;
+  margin-left: 0.25em;
+}
+
 .highscore-container {
   padding: 1rem;
   max-width: 100%;
