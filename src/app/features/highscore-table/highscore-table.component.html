@@ -1,100 +1,18 @@
 <div class="highscore-container">
   <div class="highscore-header">
-    <h2 class="highscore-title">
-      {{ section() | titlecase }} Highscore
-      <app-loading-spinner [visible]="loading()" />
-    </h2>
+    <app-highscore-header [section]="section()" [loading]="loading()" />
 
-    <div class="header-controls">
-      <p-floatlabel variant="on">
-        <input
-          pInputText
-          pSize="small"
-          type="text"
-          autocomplete="off"
-          (input)="onFilterGlobal($any($event.target).value)"
-        />
-        <label for="search_character_table">Search by name</label>
-      </p-floatlabel>
-
-      <p-selectButton
-        [options]="periodOptions"
-        [(ngModel)]="selectedPeriodValue"
-        (onChange)="onPeriodChange($event.value)"
-        optionLabel="label"
-        optionValue="value"
-      />
-    </div>
+    <app-highscore-filters
+      [periodOptions]="periodOptions"
+      [selectedPeriod]="selectedPeriod()"
+      (searchChange)="onSearchChange($event)"
+      (periodChange)="onPeriodChange($event)"
+    />
   </div>
 
-  <!-- Error message -->
   @if (error()) {
     <p-message severity="error" [text]="error()!" />
   }
 
-  <!-- Data table -->
-  @if (!loading() || data().length > 0) {
-    <p-table
-      #dt
-      class="p-datatable-sm"
-      stripedRows
-      showGridline
-      selectionMode="single"
-      [value]="data()"
-      [globalFilterFields]="['name']"
-      scrollHeight="calc(100vh - 200px)"
-    >
-      <ng-template pTemplate="header">
-        <tr>
-          <th></th>
-          <th pSortableColumn="name">Name</th>
-          <th pSortableColumn="vocation">Vocation</th>
-          <th pSortableColumn="level">Level</th>
-          <th pSortableColumn="points">Experience</th>
-          <th pSortableColumn="gain_points">Gain Experience</th>
-          <th pSortableColumn="gain_level">Gain Level</th>
-          <th pSortableColumn="gain_rank">Gain Rank</th>
-        </tr>
-      </ng-template>
-
-      <ng-template pTemplate="body" let-record let-rowIndex="rowIndex">
-        <tr>
-          <td>{{ rowIndex + 1 }}</td>
-          <td>{{ record.name }}</td>
-          <td>{{ record.vocation }}</td>
-          <td>{{ record.level }}</td>
-          <td>{{ formatPoints(record.points) }}</td>
-          <td>
-            @if (record.gain_points > 0) {
-              <i class="pi pi-plus"></i>
-            }
-            {{ formatPoints(record.gain_points) }}
-            @if (record.points > 0) {
-              <span class="gain-percentage" pTooltip="Compared to total experience">
-                ({{ (record.gain_points / record.points) * 100 | number: '1.1-1' }}%)
-              </span>
-            }
-          </td>
-          <td>
-            {{ record.gain_level }}
-            @if (record.gain_level > 0) {
-              <i class="pi pi-angle-up"></i>
-            }
-          </td>
-          <td>
-            {{ record.gain_rank }}
-            @if (record.gain_rank > 0) {
-              <i class="pi pi-angle-up"></i>
-            }
-          </td>
-        </tr>
-      </ng-template>
-
-      <ng-template pTemplate="emptymessage">
-        <tr>
-          <td colspan="9" style="text-align: center">No data available</td>
-        </tr>
-      </ng-template>
-    </p-table>
-  }
+  <app-highscore-data-table [data]="data()" [loading]="loading()" [section]="section()" />
 </div>

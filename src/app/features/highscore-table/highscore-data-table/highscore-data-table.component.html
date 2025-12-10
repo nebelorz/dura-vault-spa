@@ -1,0 +1,100 @@
+@if (!loading() || data().length > 0) {
+  <p-table
+    #dataTable
+    class="p-datatable-sm"
+    selectionMode="single"
+    [value]="data()"
+    [globalFilterFields]="globalFilterFields()"
+    scrollHeight="calc(100vh - 200px)"
+  >
+    <ng-template pTemplate="header">
+      @if (section() === 'experience') {
+        <tr>
+          <th></th>
+          <th pSortableColumn="name">Name</th>
+          <th pSortableColumn="vocation">Vocation</th>
+          <th pSortableColumn="level">Level</th>
+          <th pSortableColumn="points">Experience</th>
+          <th pSortableColumn="gain_points">Gain Experience</th>
+          <th pSortableColumn="gain_level">Gain Level</th>
+          <th pSortableColumn="gain_rank">Gain Rank</th>
+        </tr>
+      } @else {
+        <tr>
+          <th></th>
+          <th pSortableColumn="name">Name</th>
+          <th pSortableColumn="vocation">Vocation</th>
+          <th pSortableColumn="level">Level</th>
+          <th pSortableColumn="gain_level">Gain Level</th>
+          <th pSortableColumn="gain_rank">Gain Rank</th>
+        </tr>
+      }
+    </ng-template>
+
+    <ng-template pTemplate="body" let-record let-rowIndex="rowIndex">
+      @if (section() === 'experience') {
+        <tr>
+          <td>{{ rowIndex + 1 }}</td>
+          <td>{{ record.name }}</td>
+          <td>{{ record.vocation }}</td>
+          <td>{{ record.level }}</td>
+          <td>{{ formatPoints(record.points) }}</td>
+          <td>
+            @if (getGainIcon(record.gain_points)) {
+              <i [class]="getGainIcon(record.gain_points)"></i>
+            }
+            {{ formatPoints(record.gain_points | absolutValue) }}
+            @if (record.points > 0) {
+              <span class="gain-percentage" pTooltip="Gain as % of XP" showDelay="600">
+                ({{ ((record.gain_points || 0) / record.points) * 100 | number: '1.2-2' }}%)
+              </span>
+            }
+          </td>
+          <td>
+            {{ record.gain_level | absolutValue }}
+            @if (getGainIcon(record.gain_level)) {
+              <i [class]="getGainIcon(record.gain_level)"></i>
+            }
+          </td>
+          <td>
+            {{ record.gain_rank | absolutValue }}
+            @if (getGainIcon(record.gain_rank)) {
+              <i [class]="getGainIcon(record.gain_rank)"></i>
+            }
+          </td>
+        </tr>
+      } @else {
+        <tr>
+          <td>{{ rowIndex + 1 }}</td>
+          <td>{{ record.name }}</td>
+          <td>{{ record.vocation }}</td>
+          <td>{{ record.level }}</td>
+          <td>
+            {{ record.gain_level | absolutValue }}
+            @if (getGainIcon(record.gain_level)) {
+              <i [class]="getGainIcon(record.gain_level)"></i>
+            }
+          </td>
+          <td>
+            {{ record.gain_rank | absolutValue }}
+            @if (getGainIcon(record.gain_rank)) {
+              <i [class]="getGainIcon(record.gain_rank)"></i>
+            }
+          </td>
+        </tr>
+      }
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      @if (section() === 'experience') {
+        <tr>
+          <td colspan="8" style="text-align: center">No data available</td>
+        </tr>
+      } @else {
+        <tr>
+          <td colspan="6" style="text-align: center">No data available</td>
+        </tr>
+      }
+    </ng-template>
+  </p-table>
+}

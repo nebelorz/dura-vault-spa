@@ -1,59 +1,41 @@
 import { Component, inject, OnInit, signal, viewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-
-import { ButtonModule } from 'primeng/button';
-import { FloatLabel } from 'primeng/floatlabel';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
-import { SelectButtonModule } from 'primeng/selectbutton';
-import { Table, TableModule } from 'primeng/table';
-import { TooltipModule } from 'primeng/tooltip';
 
 import { HighscoreService } from '../../core/services/highscore.service';
 import { HighscoreRecord, HighscoreSection, TimePeriod } from '../../core/models/highscore.model';
-import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-spinner.component';
+import { HighscoreHeaderComponent } from './highscore-header/highscore-header.component';
+import { HighscoreFiltersComponent } from './highscore-filters/highscore-filters.component';
+import { HighscoreDataTableComponent } from './highscore-data-table/highscore-data-table.component';
 
 @Component({
   selector: 'app-highscore-table',
   templateUrl: './highscore-table.component.html',
   styleUrls: ['./highscore-table.component.scss'],
   imports: [
-    ButtonModule,
-    CommonModule,
-    FloatLabel,
-    FormsModule,
-    IconFieldModule,
-    InputIconModule,
-    InputTextModule,
-    LoadingSpinnerComponent,
     MessageModule,
-    SelectButtonModule,
-    TableModule,
-    TooltipModule,
+    HighscoreHeaderComponent,
+    HighscoreFiltersComponent,
+    HighscoreDataTableComponent,
   ],
 })
 export class HighscoreTableComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private highscoreService = inject(HighscoreService);
 
-  dt = viewChild<Table>('dt');
+  dataTable = viewChild(HighscoreDataTableComponent);
 
   section = signal<string>('experience');
   selectedPeriod = signal<TimePeriod>('day');
-  selectedPeriodValue: TimePeriod = 'day'; // ngModel binding
   data = signal<HighscoreRecord[]>([]);
   loading = signal<boolean>(false);
   error = signal<string | null>(null);
 
   periodOptions = [
-    { label: 'Day', value: 'day' },
-    { label: 'Week', value: 'week' },
-    { label: 'Month', value: 'month' },
-    { label: 'Year', value: 'year' },
+    { label: 'Day', value: 'day' as TimePeriod },
+    { label: 'Week', value: 'week' as TimePeriod },
+    { label: 'Month', value: 'month' as TimePeriod },
+    { label: 'Year', value: 'year' as TimePeriod },
   ];
 
   ngOnInit(): void {
@@ -91,21 +73,15 @@ export class HighscoreTableComponent implements OnInit {
   }
 
   onPeriodChange(period: TimePeriod): void {
-    if (!period || typeof period !== 'string') {
-      this.selectedPeriodValue = this.selectedPeriod();
-      return;
-    }
-
-    // Prevents duplicate calls for same period
+    if (!period || typeof period !== 'string') return;
     if (period === this.selectedPeriod()) return;
 
-    this.selectedPeriodValue = period;
     this.selectedPeriod.set(period);
     this.loadData();
   }
 
-  onFilterGlobal(value: string): void {
-    this.dt()?.filterGlobal(value, 'contains');
+  onSearchChange(value: string): void {
+    this.dataTable()?.filterGlobal(value);
   }
 
   refreshData(): void {
@@ -113,23 +89,7 @@ export class HighscoreTableComponent implements OnInit {
     const section = this.section();
     const storeKey = `${section}_${period}`;
 
-    // Clear stored data
     this.highscoreService.clearDataByPattern(storeKey);
     this.loadData();
-  }
-
-  formatPoints(points: number | null): string {
-    if (points === null || points === undefined) {
-      return '-';
-    }
-    return points.toLocaleString('en-US');
-  }
-
-  formatDate(date: string): string {
-    return new Date(date).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
   }
 }
