@@ -1,7 +1,7 @@
-@import '../../../shared/colors-css.scss';
+@use '../../../shared/colors';
 
 p-table {
-  border: 2px solid $color-secondary;
+  border: 2px solid colors.$secondary;
   border-radius: 6px;
   overflow: hidden;
 }
@@ -9,16 +9,16 @@ p-table {
 .pi-plus,
 .pi-angle-up {
   font-size: 10px;
-  color: $color-primary;
+  color: colors.$primary;
 }
 
 .pi-angle-down {
   font-size: 10px;
-  color: $color-danger;
+  color: colors.$danger;
 }
 
 .gain-percentage {
-  color: $color-gray-light;
+  color: colors.$gray-light;
   font-size: smaller;
   margin-left: 0.25em;
 }

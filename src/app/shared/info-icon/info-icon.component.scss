@@ -1,7 +1,7 @@
-@import '../colors-css.scss';
+@use '../colors';
 
 .info-icon {
   cursor: help;
-  color: $color-gray-light;
+  color: colors.$gray-light;
   opacity: 0.65;
 }

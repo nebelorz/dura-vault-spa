@@ -1,4 +1,4 @@
-@import '../../../shared/colors-css.scss';
+@use '../../../shared/colors';
 
 .highscore-title {
   margin: 0;
@@ -7,7 +7,7 @@
 }
 
 .date-range-label {
-  color: $color-gray-light;
+  color: colors.$gray-light;
   font-size: smaller;
   margin-left: 0.25em;
 }

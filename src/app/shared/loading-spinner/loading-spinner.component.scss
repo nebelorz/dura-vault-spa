@@ -1,4 +1,4 @@
-@import '../colors-css.scss';
+@use '../colors';
 
 .loading-spinner {
   display: inline-flex;
@@ -8,7 +8,7 @@
   vertical-align: middle;
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
-  color: $color-primary;
+  color: colors.$primary;
 
   &.visible {
     opacity: 1;
