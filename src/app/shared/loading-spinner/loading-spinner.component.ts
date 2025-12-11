@@ -9,6 +9,6 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./loading-spinner.component.scss'],
 })
 export class LoadingSpinnerComponent {
-  visible = input<boolean>(false);
-  size = input<string>('1rem');
+  loading = input.required<boolean>();
+  size = input<string>('small');
 }

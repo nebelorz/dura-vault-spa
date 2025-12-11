@@ -1,7 +1,8 @@
 @if (!loading() || data().length > 0) {
   <p-table
     #dataTable
-    class="p-datatable-sm"
+    class="p-datatable-sm animation-fade"
+    [hidden]="loading() && data().length === 0"
     selectionMode="single"
     [value]="data()"
     [globalFilterFields]="globalFilterFields()"

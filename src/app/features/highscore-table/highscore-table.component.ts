@@ -6,6 +6,7 @@ import { HighscoreDataTableComponent } from './highscore-data-table/highscore-da
 import { HighscoreFilterTableByNameComponent } from './highscore-filter-table-by-name/highscore-filter-table-by-name.component';
 import { HighscorePeriodSelectorComponent } from './highscore-period-selector/highscore-period-selector.component';
 import { HighscoreHeaderComponent } from './highscore-header/highscore-header.component';
+import { HighscoreAvailableDataInfoComponent } from './highscore-available-data-info/highscore-available-data-info.component';
 import { HighscoreRecord, HighscoreSection } from '../../core/models/highscore.model';
 import { HighscoreService } from '../../core/services/highscore.service';
 import { MetadataService } from '../../core/services/metadata.service';
@@ -22,6 +23,7 @@ import { TimePeriod } from '../../core/models/common.model';
     HighscoreFilterTableByNameComponent,
     HighscorePeriodSelectorComponent,
     HighscoreDataTableComponent,
+    HighscoreAvailableDataInfoComponent,
   ],
 })
 export class HighscoreTableComponent implements OnInit {

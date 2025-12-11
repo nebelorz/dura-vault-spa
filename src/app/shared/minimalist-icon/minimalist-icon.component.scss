@@ -1,7 +1,6 @@
-@use '../colors';
+@use '../SCSS/colors';
 
-.info-icon {
-  cursor: help;
+.minimalist-icon {
   color: colors.$gray-light;
   opacity: 0.75;
 }

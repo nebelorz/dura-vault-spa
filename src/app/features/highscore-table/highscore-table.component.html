@@ -22,5 +22,9 @@
     <p-message severity="error" [text]="error()!" />
   }
 
-  <app-highscore-data-table [data]="data()" [loading]="loading()" [section]="section()" />
+  @if (data() && !loading()) {
+    <app-highscore-data-table [data]="data()" [loading]="loading()" [section]="section()" />
+
+    <app-highscore-available-data-info [availableDateRange]="scrapeDateRange()" />
+  }
 </div>

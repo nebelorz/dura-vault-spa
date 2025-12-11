@@ -4,6 +4,7 @@ import { Table, TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { HighscoreRecord } from '../../../core/models/highscore.model';
 import { AbsolutValuePipe } from '../../../shared/abs-value.pipe';
+import { ScrapeDateRange } from '../../../core/models/metadata.model';
 
 @Component({
   selector: 'app-highscore-data-table',
@@ -14,8 +15,9 @@ import { AbsolutValuePipe } from '../../../shared/abs-value.pipe';
 export class HighscoreDataTableComponent {
   data = input.required<HighscoreRecord[]>();
   loading = input.required<boolean>();
-  globalFilterFields = input<string[]>(['name']);
   section = input.required<string>();
+  globalFilterFields = input<string[]>(['name']);
+  scrapeDateRange = input<ScrapeDateRange | null>(null);
 
   dataTable = viewChild<Table>('dataTable');
 
