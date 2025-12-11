@@ -3,7 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { MessageModule } from 'primeng/message';
 
 import { HighscoreDataTableComponent } from './highscore-data-table/highscore-data-table.component';
-import { HighscoreFiltersComponent } from './highscore-filters/highscore-filters.component';
+import { HighscoreFilterTableByNameComponent } from './highscore-filter-table-by-name/highscore-filter-table-by-name.component';
+import { HighscorePeriodSelectorComponent } from './highscore-period-selector/highscore-period-selector.component';
 import { HighscoreHeaderComponent } from './highscore-header/highscore-header.component';
 import { HighscoreRecord, HighscoreSection } from '../../core/models/highscore.model';
 import { HighscoreService } from '../../core/services/highscore.service';
@@ -18,7 +19,8 @@ import { TimePeriod } from '../../core/models/common.model';
   imports: [
     MessageModule,
     HighscoreHeaderComponent,
-    HighscoreFiltersComponent,
+    HighscoreFilterTableByNameComponent,
+    HighscorePeriodSelectorComponent,
     HighscoreDataTableComponent,
   ],
 })
