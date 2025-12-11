@@ -5,7 +5,7 @@
 
 @if (availableDateRange()) {
   <div class="available-data-info">
-    <span class="date-range-label">
+    <span class="additional-info">
       The vault stores highscores data from
       {{ availableDateRange()!.min_date | date: 'dd MMM yyyy' }} to
       {{ availableDateRange()!.max_date | date: 'dd MMM yyyy' }}
@@ -19,11 +19,11 @@
 }
 
 @if (dateRange().length === 1) {
-  <span class="date-range-label">
+  <span class="additional-info">
     {{ dateRange()[0] | date: 'dd MMM yyyy' }}
   </span>
 } @else if (dateRange().length > 1) {
-  <span class="date-range-label">
+  <span class="additional-info">
     {{ dateRange()[0] | date: 'dd MMM yyyy' }} - {{ dateRange()[1] | date: 'dd MMM yyyy' }}
   </span>
 }

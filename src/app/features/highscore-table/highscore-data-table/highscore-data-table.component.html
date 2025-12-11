@@ -45,7 +45,7 @@
             }
             {{ formatPoints(record.gain_points | absolutValue) }}
             @if (record.points > 0) {
-              <span class="gain-percentage" pTooltip="Gain as % of XP" showDelay="600">
+              <span class="additional-info" pTooltip="Gain as % of XP" showDelay="600">
                 ({{ ((record.gain_points || 0) / record.points) * 100 | number: '1.2-2' }}%)
               </span>
             }
