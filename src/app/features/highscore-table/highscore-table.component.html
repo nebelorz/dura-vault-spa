@@ -7,12 +7,15 @@
       [availableDateRange]="scrapeDateRange()"
     />
 
-    <app-highscore-filters
-      [periodOptions]="periodOptions"
-      [selectedPeriod]="selectedPeriod()"
-      (searchChange)="onSearchChange($event)"
-      (periodChange)="onPeriodChange($event)"
-    />
+    <div class="highscore-filters">
+      <app-highscore-filter-table-by-name (searchChange)="onSearchChange($event)" />
+
+      <app-highscore-period-selector
+        [periodOptions]="periodOptions"
+        [selectedPeriod]="selectedPeriod()"
+        (periodChange)="onPeriodChange($event)"
+      />
+    </div>
   </div>
 
   @if (error()) {

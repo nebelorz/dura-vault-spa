@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { NavBarComponent } from './features/nav-bar/nav-bar.component';
+import { ThemeService } from './core/services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +11,6 @@ import { NavBarComponent } from './features/nav-bar/nav-bar.component';
   styleUrl: './app.scss',
 })
 export class App {
-  protected readonly title = signal('Dura Vault');
+  private readonly themeService = inject(ThemeService);
+  protected readonly title = 'Dura Vault';
 }
