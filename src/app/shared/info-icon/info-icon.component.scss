@@ -1,15 +1,7 @@
 @import '../colors-css.scss';
 
 .info-icon {
-  cursor: pointer;
+  cursor: help;
   color: $color-gray-light;
-  display: inline-flex;
-  align-items: center;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-  opacity: 0.55;
-}
-
-::ng-deep .p-tooltip-text {
-  font-size: x-small;
+  opacity: 0.65;
 }

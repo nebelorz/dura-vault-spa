@@ -1,6 +1,10 @@
 <div class="highscore-container">
   <div class="highscore-header">
-    <app-highscore-header [section]="section()" [loading]="loading()" />
+    <app-highscore-header
+      [section]="section()"
+      [loading]="loading()"
+      [dateRange]="getDateRange()"
+    />
 
     <app-highscore-filters
       [periodOptions]="periodOptions"

@@ -1,6 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
+
 import { SupabaseService } from './supabase.service';
-import { HighscoreRecord, HighscoreSection, TimePeriod } from '../models/highscore.model';
+import { HighscoreRecord, TopGainersParams } from '../models/highscore.model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,49 +17,50 @@ export class HighscoreService {
   error = signal<string | null>(null);
 
   /**
-   * Gets highscore data for a specific period
-   * Uses views: view_highscore_top25_day, week, month, year
+   * Fetches the top gainers.
+   *
+   * Example:
+   * {
+   *   p_period: 'day',
+   *   p_limit: 25,
+   *   p_section: 'experience'
+   * }
+   *
+   * @param params - Parameters for the query:
+   *   - period: Time period for gainers (default: 'week').
+   *   - section: Section/category to filter (default: null for all).
+   *   - limit: Maximum number of records to return (default: 25).
+   * @returns Promise resolving to an array of HighscoreRecord objects, or null if an error occurs.
+   *
    */
-  async getHighscores(
-    period: TimePeriod,
-    section?: HighscoreSection,
-  ): Promise<HighscoreRecord[] | null> {
-    if (!period || typeof period !== 'string') {
-      this.error.set('Invalid period provided');
-      return null;
-    }
+  async getTopGainers(params: TopGainersParams = {}): Promise<HighscoreRecord[] | null> {
+    const { period = 'week', section = null, limit = 25 } = params;
 
-    const storeKey = `highscores_${period}_${section || 'all'}`;
+    const storeKey = `top_gainers_${period}_${section || 'all'}_${limit}`;
 
     // Return cached data if already fetched
-    if (this.dataStore.has(storeKey)) return this.dataStore.get(storeKey) as HighscoreRecord[];
+    if (this.dataStore.has(storeKey)) {
+      return this.dataStore.get(storeKey) as HighscoreRecord[];
+    }
 
     this.loading.set(true);
     this.error.set(null);
 
     try {
-      const viewName = `view_highscore_top25_${period}`;
-      let query = this.supabase.from(viewName).select('*');
-
-      if (section) {
-        query = query.eq('section', section);
-      }
-
-      query = query
-        .order('gain_points', { ascending: false })
-        .order('gain_level', { ascending: false })
-        .order('gain_rank', { ascending: false });
-
-      const { data, error } = await query;
+      const { data, error } = await this.supabase.rpc('get_top_gainers', {
+        p_period: period,
+        p_section: section,
+        p_limit: limit,
+      });
 
       if (error) {
-        console.error('Error fetching highscores:', error);
+        console.error('Error fetching top gainers:', error);
         this.error.set(error.message);
         return null;
       }
 
       this.dataStore.set(storeKey, data);
-      return data;
+      return data as HighscoreRecord[];
     } catch (err) {
       console.error('Unexpected error:', err);
       this.error.set('An unexpected error occurred');
@@ -69,26 +71,33 @@ export class HighscoreService {
   }
 
   /**
-   * Get latest scrape date
+   * Fetches the oldest and latest scrape dates.
+   *
+   * @returns Promise resolving to an object with min_date and max_date, or null if an error occurs.
+   *
+   * Example return:
+   * {
+   *   min_date: '2025-01-01',
+   *   max_date: '2025-12-11'
+   * }
    */
-  async getLatestScrapeDate(): Promise<string | null> {
-    const storeKey = 'latest_scrape_date';
+  async getMinMaxScrapedDates(): Promise<{ min_date: string; max_date: string } | null> {
+    const storeKey = 'min_max_scrape_dates';
 
     // Return cached data if already fetched
     if (this.dataStore.has(storeKey)) {
-      return this.dataStore.get(storeKey) as string;
+      return this.dataStore.get(storeKey) as { min_date: string; max_date: string };
     }
 
     try {
-      const { data, error } = await this.supabase.rpc('get_latest_scrape_date');
-
+      const { data, error } = await this.supabase.rpc('get_min_max_scrape_dates');
       if (error) {
-        console.error('Error fetching latest scrape date:', error);
+        console.error('Error fetching scrape dates:', error);
         return null;
       }
 
       this.dataStore.set(storeKey, data);
-      return data;
+      return data as { min_date: string; max_date: string };
     } catch (err) {
       console.error('Unexpected error:', err);
       return null;
@@ -96,7 +105,12 @@ export class HighscoreService {
   }
 
   /**
-   * Gets available sections
+   * Fetches all available sections.
+   *
+   * @returns Promise resolving to an array of section names (strings), or null if an error occurs.
+   *
+   * Example return:
+   *   ['experience', 'magic', 'fist', ...]
    */
   async getAvailableSections(): Promise<string[] | null> {
     const storeKey = 'available_sections';
@@ -124,15 +138,20 @@ export class HighscoreService {
   }
 
   /**
-   * Clears all stored data (re-fetch data from backend)
+   * Clears all cached data in the service.
+   *
+   * This will force all future queries to re-fetch data from the backend.
    */
   clearAllData(): void {
     this.dataStore.clear();
   }
 
   /**
-   * Clear stored data for specific key pattern
-   * E.G.: clearDataByPattern('experience') clears all experience-related data
+   * Clears cached data for keys matching a specific pattern.
+   *
+   * For example, clearDataByPattern('experience') will remove all cached experience-related data.
+   *
+   * @param pattern - Substring to match in cache keys for deletion.
    */
   clearDataByPattern(pattern: string): void {
     const keysToDelete: string[] = [];

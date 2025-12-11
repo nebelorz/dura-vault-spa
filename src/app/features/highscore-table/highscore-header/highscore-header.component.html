@@ -2,3 +2,14 @@
   {{ section() | titlecase }} Highscore
   <app-loading-spinner [visible]="loading()" />
 </h2>
+
+@if (dateRange().length === 1) {
+  <span class="date-range-label">
+    {{ dateRange()[0] | date: 'dd MMM yyyy' }}
+  </span>
+} @else if (dateRange().length > 1) {
+  <span class="date-range-label">
+    {{ dateRange()[0] | date: 'dd MMM yyyy' }} - {{ dateRange()[1] | date: 'dd MMM yyyy' }}
+  </span>
+  <app-info-icon [text]="'Data in date-range'" [tooltipPosition]="'right'" [size]="'x-small'" />
+}

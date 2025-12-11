@@ -1,28 +1,5 @@
-/**
- * Highscore data model for top 25 players
- */
-export interface HighscoreRecord {
-  id: number;
-  scrape_date: string;
-  section: string;
-  level: number;
-  points: number;
-  name: string;
-  vocation: string;
-  rank: number;
-  gain_points: number | null;
-  gain_level: number | null;
-  gain_rank: number | null;
-}
-
-/**
- * Available time periods for queries
- */
 export type TimePeriod = 'day' | 'week' | 'month' | 'year';
 
-/**
- * Available sections in highscores
- */
 export type HighscoreSection =
   | 'experience'
   | 'magic'
@@ -32,4 +9,26 @@ export type HighscoreSection =
   | 'sword'
   | 'axe'
   | 'fist'
-  | 'fishing';
+  | 'fishing'
+  | 'achievements'
+  | 'charms'
+  | 'bosses';
+
+export interface HighscoreRecord {
+  section: string;
+  name: string;
+  vocation: string;
+  rank: number;
+  level: number;
+  points: number | null;
+  gain_points: number;
+  gain_level: number;
+  gain_rank: number;
+  scrape_date: string;
+}
+
+export interface TopGainersParams {
+  period?: TimePeriod;
+  section?: HighscoreSection | null;
+  limit?: number;
+}

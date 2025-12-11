@@ -25,7 +25,7 @@ export class HighscoreTableComponent implements OnInit {
 
   dataTable = viewChild(HighscoreDataTableComponent);
 
-  section = signal<string>('experience');
+  section = signal<HighscoreSection>('experience');
   selectedPeriod = signal<TimePeriod>('day');
   data = signal<HighscoreRecord[]>([]);
   loading = signal<boolean>(false);
@@ -40,7 +40,7 @@ export class HighscoreTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      const section = params['section'];
+      const section = params['section'] as HighscoreSection;
       if (section) {
         this.section.set(section);
         this.loadData();
@@ -57,7 +57,11 @@ export class HighscoreTableComponent implements OnInit {
     this.error.set(null);
 
     try {
-      const result = await this.highscoreService.getHighscores(period, section as HighscoreSection);
+      const result = await this.highscoreService.getTopGainers({
+        period,
+        section,
+        limit: 25,
+      });
 
       if (result) {
         this.data.set(result);
@@ -87,9 +91,37 @@ export class HighscoreTableComponent implements OnInit {
   refreshData(): void {
     const period = this.selectedPeriod();
     const section = this.section();
-    const storeKey = `${section}_${period}`;
+    const storeKey = `top_gainers_${period}_${section}`;
 
     this.highscoreService.clearDataByPattern(storeKey);
     this.loadData();
+  }
+
+  getDateRange(): string[] {
+    const period = this.selectedPeriod();
+    const today = new Date();
+    const format = (date: Date) => date.toISOString().slice(0, 10);
+
+    switch (period) {
+      case 'day':
+        return [format(today)];
+      case 'week': {
+        const start = new Date(today);
+        start.setDate(today.getDate() - 7);
+        return [format(start), format(today)];
+      }
+      case 'month': {
+        const start = new Date(today);
+        start.setMonth(today.getMonth() - 1);
+        return [format(start), format(today)];
+      }
+      case 'year': {
+        const start = new Date(today);
+        start.setFullYear(today.getFullYear() - 1);
+        return [format(start), format(today)];
+      }
+      default:
+        return [];
+    }
   }
 }

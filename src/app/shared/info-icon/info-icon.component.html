@@ -1,3 +1,6 @@
-<span class="info-icon" pTooltip="{{ text }}" tooltipPosition="top" tabindex="0" aria-label="Info">
-  <i class="pi pi-info-circle"></i>
-</span>
+<i
+  class="info-icon pi pi-info-circle"
+  [pTooltip]="text()"
+  [tooltipPosition]="tooltipPosition()"
+  [style.fontSize]="size()"
+></i>

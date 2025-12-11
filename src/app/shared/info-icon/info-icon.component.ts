@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
+
 import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
@@ -9,5 +10,7 @@ import { TooltipModule } from 'primeng/tooltip';
   styleUrls: ['./info-icon.component.scss'],
 })
 export class InfoIconComponent {
-  @Input() text = '';
+  text = input.required<string>();
+  size = input<string>('');
+  tooltipPosition = input<string>('top');
 }

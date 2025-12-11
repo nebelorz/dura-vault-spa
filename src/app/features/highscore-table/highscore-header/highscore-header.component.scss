@@ -1,5 +1,13 @@
+@import '../../../shared/colors-css.scss';
+
 .highscore-title {
   margin: 0;
   font-size: x-large;
   font-weight: bold;
+}
+
+.date-range-label {
+  color: $color-gray-light;
+  font-size: smaller;
+  margin-left: 0.25em;
 }
