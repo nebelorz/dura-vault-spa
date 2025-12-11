@@ -2,16 +2,14 @@ import { Component, inject, OnInit, signal, viewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageModule } from 'primeng/message';
 
-import { HighscoreService } from '../../core/services/highscore.service';
-import {
-  HighscoreRecord,
-  HighscoreSection,
-  ScrapeDateRange,
-  TimePeriod,
-} from '../../core/models/highscore.model';
-import { HighscoreHeaderComponent } from './highscore-header/highscore-header.component';
-import { HighscoreFiltersComponent } from './highscore-filters/highscore-filters.component';
 import { HighscoreDataTableComponent } from './highscore-data-table/highscore-data-table.component';
+import { HighscoreFiltersComponent } from './highscore-filters/highscore-filters.component';
+import { HighscoreHeaderComponent } from './highscore-header/highscore-header.component';
+import { HighscoreRecord, HighscoreSection } from '../../core/models/highscore.model';
+import { HighscoreService } from '../../core/services/highscore.service';
+import { MetadataService } from '../../core/services/metadata.service';
+import { ScrapeDateRange } from '../../core/models/metadata.model';
+import { TimePeriod } from '../../core/models/common.model';
 
 @Component({
   selector: 'app-highscore-table',
@@ -27,6 +25,7 @@ import { HighscoreDataTableComponent } from './highscore-data-table/highscore-da
 export class HighscoreTableComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private highscoreService = inject(HighscoreService);
+  private metadataService = inject(MetadataService);
 
   dataTable = viewChild(HighscoreDataTableComponent);
 
@@ -58,7 +57,7 @@ export class HighscoreTableComponent implements OnInit {
   }
 
   async loadScrapeDateRange(): Promise<void> {
-    const dateRange = await this.highscoreService.getMinMaxScrapeDates('highscore_top25');
+    const dateRange = await this.metadataService.getMinMaxScrapeDates('highscore_top25');
     if (dateRange) {
       this.scrapeDateRange.set(dateRange);
       console.log('Data available from:', dateRange.min_date, 'to', dateRange.max_date);

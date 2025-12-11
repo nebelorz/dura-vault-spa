@@ -2,9 +2,9 @@ import { Component, input } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
 import { DatePipe } from '@angular/common';
 
-import { LoadingSpinnerComponent } from '../../../shared/loading-spinner/loading-spinner.component';
 import { InfoIconComponent } from '../../../shared/info-icon/info-icon.component';
-import { ScrapeDateRange } from '../../../core/models/highscore.model';
+import { LoadingSpinnerComponent } from '../../../shared/loading-spinner/loading-spinner.component';
+import { ScrapeDateRange } from '../../../core/models/metadata.model';
 
 @Component({
   selector: 'app-highscore-header',

@@ -1,9 +1,11 @@
 import { Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
+import { TimePeriod } from '../../../core/models/common.model';
+
 import { FloatLabel } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectButtonModule } from 'primeng/selectbutton';
-import { TimePeriod } from '../../../core/models/highscore.model';
 
 interface PeriodOption {
   label: string;
