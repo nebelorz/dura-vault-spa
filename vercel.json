@@ -35,7 +35,5 @@
   "github": {
     "enabled": true,
     "productionBranch": "main"
-  },
-  "functions": {},
-  "ignoredBuildStep": "[ \"$VERCEL_GIT_COMMIT_REF\" != \"main\" ] && exit 0\nexit 1"
+  }
 }
