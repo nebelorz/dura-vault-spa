@@ -3,6 +3,15 @@
   <app-loading-spinner [visible]="loading()" />
 </h2>
 
+@if (availableDateRange()) {
+  <div class="available-data-info">
+    <span class="date-range-label">
+      The vault stores data from {{ availableDateRange()!.min_date | date: 'dd MMM yyyy' }} to
+      {{ availableDateRange()!.max_date | date: 'dd MMM yyyy' }}
+    </span>
+  </div>
+}
+
 @if (dateRange().length === 1) {
   <span class="date-range-label">
     {{ dateRange()[0] | date: 'dd MMM yyyy' }}
@@ -11,5 +20,9 @@
   <span class="date-range-label">
     {{ dateRange()[0] | date: 'dd MMM yyyy' }} - {{ dateRange()[1] | date: 'dd MMM yyyy' }}
   </span>
-  <app-info-icon [text]="'Data in date-range'" [tooltipPosition]="'right'" [size]="'x-small'" />
+  <app-info-icon
+    [text]="'The actual day data is fetched around 30 minutes after server save'"
+    [tooltipPosition]="'right'"
+    [size]="'x-small'"
+  />
 }

@@ -1,7 +1,12 @@
 import { inject, Injectable, signal } from '@angular/core';
 
 import { SupabaseService } from './supabase.service';
-import { HighscoreRecord, TopGainersParams } from '../models/highscore.model';
+import {
+  HighscoreRecord,
+  ScrapeDateRange,
+  ScrapeDateTable,
+  TopGainersParams,
+} from '../models/highscore.model';
 
 @Injectable({
   providedIn: 'root',
@@ -72,7 +77,7 @@ export class HighscoreService {
 
   /**
    * Fetches the oldest and latest scrape dates.
-   *
+   * @param tableName - Name of the table to query (default: 'highscore_top25')
    * @returns Promise resolving to an object with min_date and max_date, or null if an error occurs.
    *
    * Example return:
@@ -81,23 +86,33 @@ export class HighscoreService {
    *   max_date: '2025-12-11'
    * }
    */
-  async getMinMaxScrapedDates(): Promise<{ min_date: string; max_date: string } | null> {
-    const storeKey = 'min_max_scrape_dates';
+  async getMinMaxScrapeDates(
+    tableName: ScrapeDateTable = 'highscore_top25',
+  ): Promise<ScrapeDateRange | null> {
+    const storeKey = `min_max_scrape_dates_${tableName}`;
 
     // Return cached data if already fetched
     if (this.dataStore.has(storeKey)) {
-      return this.dataStore.get(storeKey) as { min_date: string; max_date: string };
+      return this.dataStore.get(storeKey) as ScrapeDateRange;
     }
 
     try {
-      const { data, error } = await this.supabase.rpc('get_min_max_scrape_dates');
+      const { data, error } = await this.supabase.rpc('get_min_max_scrape_dates', {
+        p_table_name: tableName,
+      });
+
       if (error) {
-        console.error('Error fetching scrape dates:', error);
+        console.error(`Error fetching min/max scrape dates for ${tableName}:`, error);
         return null;
       }
 
-      this.dataStore.set(storeKey, data);
-      return data as { min_date: string; max_date: string };
+      const result = data && data.length > 0 ? data[0] : null;
+
+      if (result) {
+        this.dataStore.set(storeKey, result);
+      }
+
+      return result as ScrapeDateRange;
     } catch (err) {
       console.error('Unexpected error:', err);
       return null;

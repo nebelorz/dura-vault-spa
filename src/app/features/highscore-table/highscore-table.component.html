@@ -3,7 +3,8 @@
     <app-highscore-header
       [section]="section()"
       [loading]="loading()"
-      [dateRange]="getDateRange()"
+      [dateRange]="getDateRangeForPeriod()"
+      [availableDateRange]="scrapeDateRange()"
     />
 
     <app-highscore-filters

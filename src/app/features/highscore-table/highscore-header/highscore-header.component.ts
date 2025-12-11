@@ -4,6 +4,7 @@ import { DatePipe } from '@angular/common';
 
 import { LoadingSpinnerComponent } from '../../../shared/loading-spinner/loading-spinner.component';
 import { InfoIconComponent } from '../../../shared/info-icon/info-icon.component';
+import { ScrapeDateRange } from '../../../core/models/highscore.model';
 
 @Component({
   selector: 'app-highscore-header',
@@ -15,4 +16,5 @@ export class HighscoreHeaderComponent {
   section = input.required<string>();
   loading = input.required<boolean>();
   dateRange = input<string[]>([]);
+  availableDateRange = input<ScrapeDateRange | null>(null);
 }

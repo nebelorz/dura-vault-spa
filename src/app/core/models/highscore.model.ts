@@ -1,5 +1,7 @@
 export type TimePeriod = 'day' | 'week' | 'month' | 'year';
 
+export type ScrapeDateTable = 'highscore_top25';
+
 export type HighscoreSection =
   | 'experience'
   | 'magic'
@@ -31,4 +33,9 @@ export interface TopGainersParams {
   period?: TimePeriod;
   section?: HighscoreSection | null;
   limit?: number;
+}
+
+export interface ScrapeDateRange {
+  min_date: string | null;
+  max_date: string | null;
 }
