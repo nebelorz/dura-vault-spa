@@ -1,6 +1,7 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 
 import { ButtonModule } from 'primeng/button';
+import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
   selector: 'app-mode-button',
@@ -10,12 +11,12 @@ import { ButtonModule } from 'primeng/button';
   styleUrls: ['./mode-button.component.scss'],
 })
 export class ModeButtonComponent {
-  public readonly darkMode = signal(false);
-  public readonly icon = computed(() => (this.darkMode() ? 'pi pi-sun' : 'pi pi-moon'));
+  private readonly themeService = inject(ThemeService);
+  protected readonly icon = computed(() =>
+    this.themeService.darkMode() ? 'pi pi-sun' : 'pi pi-moon',
+  );
 
   toggleDarkMode() {
-    const element = document.querySelector('html')!;
-    element.classList.toggle('darkmode');
-    this.darkMode.update((value) => !value);
+    this.themeService.toggleDarkMode();
   }
 }
