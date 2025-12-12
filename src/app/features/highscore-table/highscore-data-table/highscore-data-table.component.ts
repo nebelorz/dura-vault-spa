@@ -42,6 +42,7 @@ export class HighscoreDataTableComponent {
     {
       label: 'Highscores',
       icon: 'pi pi-chart-bar',
+      disabled: true,
       command: () => this.searchOnHighscores(),
     },
     {
