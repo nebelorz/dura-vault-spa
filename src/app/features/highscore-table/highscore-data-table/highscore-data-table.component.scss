@@ -19,6 +19,11 @@ p-table {
   color: colors.$danger;
 }
 
+// LOADING STATE
+::ng-deep .p-datatable-loading-icon {
+  display: none;
+}
+
 // EMPTY MESSAGE
 .empty-message-container {
   display: flex;

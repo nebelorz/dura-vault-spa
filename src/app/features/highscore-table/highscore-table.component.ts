@@ -38,7 +38,7 @@ export class HighscoreTableComponent implements OnInit {
   data = signal<HighscoreRecord[]>([]);
   scrapeDateRange = signal<ScrapeDateRange | null>(null);
 
-  loading = signal<boolean>(false);
+  loading = signal<boolean>(true);
   error = signal<string | null>(null);
 
   periodOptions = [
@@ -64,7 +64,6 @@ export class HighscoreTableComponent implements OnInit {
     const dateRange = await this.metadataService.getMinMaxScrapeDates('highscore_top25');
     if (dateRange) {
       this.scrapeDateRange.set(dateRange);
-      console.log('Data available from:', dateRange.min_date, 'to', dateRange.max_date);
     }
   }
 
@@ -72,8 +71,8 @@ export class HighscoreTableComponent implements OnInit {
     const period = this.selectedPeriod();
     const section = this.section();
 
-    this.data.set([]);
     this.loading.set(true);
+    this.data.set([]);
     this.error.set(null);
 
     try {

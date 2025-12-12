@@ -11,8 +11,13 @@ body {
 }
 
 .clean-input-field {
-  background: transparent !important;
   border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+
+  &:enabled:focus {
+    border: 1px solid colors.$primary !important;
+  }
 }
 
 .p-tooltip .p-tooltip-text {
