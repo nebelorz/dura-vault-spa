@@ -37,7 +37,7 @@ export class MetadataService {
     }
 
     try {
-      const { data, error } = await this.supabase.rpc('get_min_max_scrape_dates', {
+      const { data, error } = await this.supabase.rpc('get-min-max-scrape-dates', {
         p_table_name: tableName,
       });
 
@@ -60,16 +60,15 @@ export class MetadataService {
   }
 
   /**
-   * Fetches all available sections from the backend.
-   * This is typically used for filtering or navigation purposes.
+   * Fetches all available sections for highscores.
    *
    * @returns Promise resolving to an array of section names (strings), or null if an error occurs.
    *
    * Example return:
    *   ['experience', 'magic', 'fist', ...]
    */
-  async getAvailableSections(): Promise<string[] | null> {
-    const cacheKey = 'available_sections';
+  async getHighscoreSections(): Promise<string[] | null> {
+    const cacheKey = 'highscore_sections';
 
     // Return cached data if already fetched
     if (this.cacheService.has(cacheKey)) {
@@ -78,10 +77,10 @@ export class MetadataService {
     }
 
     try {
-      const { data, error } = await this.supabase.rpc('get_available_sections');
+      const { data, error } = await this.supabase.rpc('get-highscore-sections');
 
       if (error) {
-        console.error('Error fetching available sections:', error);
+        console.error('Error fetching highscore sections:', error);
         return null;
       }
 

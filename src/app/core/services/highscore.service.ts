@@ -47,7 +47,7 @@ export class HighscoreService {
     this.error.set(null);
 
     try {
-      const { data, error } = await this.supabase.rpc('get_top_gainers', {
+      const { data, error } = await this.supabase.rpc('get-top-gainers', {
         p_period: period,
         p_section: section,
         p_limit: limit,
