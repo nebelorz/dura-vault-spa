@@ -64,7 +64,6 @@ export class HighscoreTableComponent implements OnInit {
     const dateRange = await this.metadataService.getMinMaxScrapeDates('highscore_top25');
     if (dateRange) {
       this.scrapeDateRange.set(dateRange);
-      console.log('Data available from:', dateRange.min_date, 'to', dateRange.max_date);
     }
   }
 
