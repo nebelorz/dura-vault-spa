@@ -1,10 +1,11 @@
 import { Component, input, viewChild } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
-import { Table, TableModule } from 'primeng/table';
-import { TooltipModule } from 'primeng/tooltip';
+
 import { HighscoreRecord } from '../../../core/models/highscore.model';
 import { AbsolutValuePipe } from '../../../shared/abs-value.pipe';
-import { ScrapeDateRange } from '../../../core/models/metadata.model';
+
+import { Table, TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-highscore-data-table',
@@ -17,7 +18,6 @@ export class HighscoreDataTableComponent {
   loading = input.required<boolean>();
   section = input.required<string>();
   globalFilterFields = input<string[]>(['name']);
-  scrapeDateRange = input<ScrapeDateRange | null>(null);
 
   dataTable = viewChild<Table>('dataTable');
 

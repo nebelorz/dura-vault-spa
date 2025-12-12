@@ -7,6 +7,6 @@
   }
 }
 
-@mixin fadeAnimation($duration: 0.5s) {
+@mixin fadeAnimation($duration: 0.3s) {
   animation: fadeInAndOut $duration ease-in-out;
 }

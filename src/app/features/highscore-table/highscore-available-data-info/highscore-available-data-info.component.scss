@@ -1,5 +1,1 @@
-@use '../../../shared/SCSS/animation-fade' as animationFade;
 
-.animation-fade-custom-time {
-  @include animationFade.fadeAnimation(2s);
-}
