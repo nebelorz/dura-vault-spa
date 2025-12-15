@@ -40,8 +40,8 @@ export class HighscoreDataTableComponent {
 
   contextMenuItems: MenuItem[] = [
     {
-      label: 'Highscores',
-      icon: 'pi pi-chart-bar',
+      label: 'Historical Highscores',
+      icon: 'pi pi-trophy',
       disabled: true,
       command: () => this.searchOnHighscores(),
     },
@@ -49,12 +49,12 @@ export class HighscoreDataTableComponent {
       separator: true,
     },
     {
-      label: 'Dura',
+      label: 'Search on Dura',
       icon: 'pi pi-search',
       command: () => this.searchOnDura(),
     },
     {
-      label: 'Copy Name',
+      label: 'Copy',
       icon: 'pi pi-copy',
       command: () => this.copyCharacterName(),
     },
@@ -91,13 +91,23 @@ export class HighscoreDataTableComponent {
   }
 
   async copyCharacterName(): Promise<void> {
-    if (this.selectedRecord) {
-      try {
-        await navigator.clipboard.writeText(this.selectedRecord.name);
-        console.log(`"${this.selectedRecord.name}" copied to clipboard`);
-      } catch (err) {
-        console.error('Failed to copy:', err);
-      }
-    }
+    const selectedRecord = this.selectedRecord!;
+    if (!selectedRecord) return;
+
+    const lines = [
+      `Name: ${selectedRecord.name}`,
+      `Section: ${selectedRecord.section}`,
+      `Level: ${selectedRecord.level}`,
+    ];
+
+    if (selectedRecord.section === 'experience')
+      lines.push(`Gain points: ${selectedRecord.gain_points}`);
+
+    lines.push(`Gain level: ${selectedRecord.gain_level}`);
+    lines.push(`Date: ${selectedRecord.scrape_date}`);
+    lines.push('dura-vault.vercel.app');
+
+    const message = lines.join(' | ');
+    await navigator.clipboard.writeText(message);
   }
 }

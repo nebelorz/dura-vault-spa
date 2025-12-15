@@ -1,6 +1,5 @@
 import { Component, inject, OnInit, signal, viewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MessageModule } from 'primeng/message';
 
 import { HighscoreDataTableComponent } from './highscore-data-table/highscore-data-table.component';
 import { HighscoreFilterTableByNameComponent } from './highscore-filter-table-by-name/highscore-filter-table-by-name.component';
@@ -18,7 +17,6 @@ import { TimePeriod } from '../../core/models/common.model';
   templateUrl: './highscore-table.component.html',
   styleUrls: ['./highscore-table.component.scss'],
   imports: [
-    MessageModule,
     HighscoreHeaderComponent,
     HighscoreFilterTableByNameComponent,
     HighscorePeriodSelectorComponent,
@@ -39,7 +37,6 @@ export class HighscoreTableComponent implements OnInit {
   scrapeDateRange = signal<ScrapeDateRange | null>(null);
 
   loading = signal<boolean>(true);
-  error = signal<string | null>(null);
 
   periodOptions = [
     { label: 'Day', value: 'day' as TimePeriod },
@@ -73,7 +70,6 @@ export class HighscoreTableComponent implements OnInit {
 
     this.loading.set(true);
     this.data.set([]);
-    this.error.set(null);
 
     try {
       const result = await this.highscoreService.getTopGainers({
@@ -84,12 +80,7 @@ export class HighscoreTableComponent implements OnInit {
 
       if (result) {
         this.data.set(result);
-      } else {
-        this.error.set('Failed to load highscore data');
       }
-    } catch (err) {
-      console.error('Error loading data:', err);
-      this.error.set('An unexpected error occurred');
     } finally {
       this.loading.set(false);
     }
