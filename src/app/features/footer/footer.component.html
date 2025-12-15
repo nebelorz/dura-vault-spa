@@ -1,0 +1,24 @@
+<footer class="footer-container">
+  <div class="footer-content">
+    <div class="footer-left">
+      <!-- Version -->
+      <span>{{ version }}</span>
+    </div>
+
+    <div class="footer-right">
+      <!-- Github -->
+      <a
+        [href]="githubUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="footer-link"
+        aria-label="GitHub Repository"
+      >
+        <i class="pi pi-github"></i>
+        <span>GitHub</span>
+      </a>
+      <!-- Copyright & Current year -->
+      <span>© {{ currentYear }} Dura Vault</span>
+    </div>
+  </div>
+</footer>
