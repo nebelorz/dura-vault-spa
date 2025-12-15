@@ -1,13 +1,5 @@
 @use '../../shared/SCSS/colors';
 
-.footer-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-}
-
 .footer-content {
   display: flex;
   font-size: x-small;

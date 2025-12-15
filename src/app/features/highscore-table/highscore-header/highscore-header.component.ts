@@ -2,14 +2,13 @@ import { Component, input } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
 import { DatePipe } from '@angular/common';
 
-import { LoadingSpinnerComponent } from '../../../shared/loading-spinner/loading-spinner.component';
 import { ScrapeDateRange } from '../../../core/models/metadata.model';
 
 @Component({
   selector: 'app-highscore-header',
   templateUrl: './highscore-header.component.html',
   styleUrls: ['./highscore-header.component.scss'],
-  imports: [TitleCasePipe, LoadingSpinnerComponent, DatePipe],
+  imports: [TitleCasePipe, DatePipe],
 })
 export class HighscoreHeaderComponent {
   section = input.required<string>();
