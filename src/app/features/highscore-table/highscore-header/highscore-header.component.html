@@ -1,7 +1,4 @@
-<h2 class="highscore-title">
-  {{ section() | titlecase }} Highscore
-  <app-loading-spinner [loading]="loading()" />
-</h2>
+<h2 class="highscore-title">{{ section() | titlecase }} Highscore</h2>
 
 @if (dateRange().length === 1) {
   <span class="additional-info">

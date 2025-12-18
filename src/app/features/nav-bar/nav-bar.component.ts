@@ -1,8 +1,7 @@
-import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 
 import { MenubarModule } from 'primeng/menubar';
-import { ButtonModule } from 'primeng/button';
+import { MenuItem } from 'primeng/api';
 
 import { ModeButtonComponent } from './mode-button/mode-button.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
@@ -10,10 +9,11 @@ import { SearchBoxComponent } from './search-box/search-box.component';
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
-  imports: [CommonModule, MenubarModule, ButtonModule, ModeButtonComponent, SearchBoxComponent],
+  styleUrls: ['./nav-bar.component.scss'],
+  imports: [MenubarModule, ModeButtonComponent, SearchBoxComponent],
 })
 export class NavBarComponent {
-  public readonly menuItems = signal([
+  readonly menuItems: MenuItem[] = [
     {
       label: 'Tops',
       icon: 'pi pi-database',
@@ -65,5 +65,5 @@ export class NavBarComponent {
         },
       ],
     },
-  ]);
+  ];
 }

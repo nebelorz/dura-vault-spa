@@ -1,16 +1,16 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ToastModule } from 'primeng/toast';
 
 import { NavBarComponent } from './features/nav-bar/nav-bar.component';
-import { ThemeService } from './core/services/theme.service';
+import { FooterComponent } from './features/footer/footer.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavBarComponent],
+  imports: [RouterOutlet, ToastModule, NavBarComponent, FooterComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
 export class App {
-  private readonly themeService = inject(ThemeService);
   protected readonly title = 'Dura Vault';
 }

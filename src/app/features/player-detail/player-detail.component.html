@@ -1,0 +1,38 @@
+<div class="player-detail-container">
+  <div class="player-column">
+    <!-- Header -->
+    <div class="player-column-header animation-fade">
+      <app-player-detail-header
+        [playerName]="playerName()"
+        [section]="section()"
+        [playerInfo]="playerInfo()"
+        (backClick)="goBack()"
+        (sectionChange)="onSectionChange($event)"
+      />
+
+      <!-- Summary -->
+      @if (summary()) {
+        <app-player-detail-summary [summary]="summary()!" />
+      }
+    </div>
+
+    <!-- Chart Section -->
+    <div class="player-column-body">
+      <!-- Period Selector -->
+      <div class="period-selector-wrapper">
+        <app-period-selector
+          [disabledPeriods]="['day']"
+          [selectedPeriod]="selectedPeriod()"
+          (periodChange)="onPeriodChange($event)"
+        />
+      </div>
+
+      <!-- Chart -->
+      <app-player-detail-chart
+        class="animation-fade"
+        [historyData]="historyData()"
+        [loading]="loading()"
+      />
+    </div>
+  </div>
+</div>

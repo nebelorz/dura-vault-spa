@@ -5,18 +5,16 @@ import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
   selector: 'app-mode-button',
-  imports: [ButtonModule],
-  standalone: true,
   templateUrl: './mode-button.component.html',
   styleUrls: ['./mode-button.component.scss'],
+  imports: [ButtonModule],
 })
 export class ModeButtonComponent {
-  private readonly themeService = inject(ThemeService);
-  protected readonly icon = computed(() =>
-    this.themeService.darkMode() ? 'pi pi-sun' : 'pi pi-moon',
-  );
+  private themeService: ThemeService = inject(ThemeService);
 
-  toggleDarkMode() {
+  icon = computed(() => (this.themeService.darkMode() ? 'pi pi-sun' : 'pi pi-moon'));
+
+  toggleDarkMode(): void {
     this.themeService.toggleDarkMode();
   }
 }

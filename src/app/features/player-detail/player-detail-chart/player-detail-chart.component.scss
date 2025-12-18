@@ -1,0 +1,8 @@
+@use '../../../shared/SCSS/colors';
+
+p-card {
+  border: 1px solid colors.$secondary;
+  border-radius: 6px;
+  overflow: hidden;
+  display: block;
+}

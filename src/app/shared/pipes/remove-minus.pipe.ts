@@ -1,10 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'absolutValue',
+  name: 'removeMinus',
   standalone: true,
 })
-export class AbsolutValuePipe implements PipeTransform {
+export class RemoveMinusPipe implements PipeTransform {
   transform(value: number | null | undefined): number | null {
     if (value === null || value === undefined) return null;
     return Math.abs(value);

@@ -1,15 +1,15 @@
-import { Component, input, viewChild, computed } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
+import { Component, input, viewChild, computed, inject } from '@angular/core';
 import { environment } from '../../../../environments/environment';
+import { Router } from '@angular/router';
 
 import { HighscoreRecord } from '../../../core/models/highscore.model';
-import { AbsolutValuePipe } from '../../../shared/abs-value.pipe';
+import { RemoveMinusPipe } from '../../../shared/pipes/remove-minus.pipe';
 
-import { Table, TableModule } from 'primeng/table';
-import { SkeletonModule } from 'primeng/skeleton';
-import { TooltipModule } from 'primeng/tooltip';
-import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
+import { ContextMenuModule } from 'primeng/contextmenu';
 import { MenuItem } from 'primeng/api';
+import { Table, TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-highscore-data-table',
@@ -21,82 +21,119 @@ import { MenuItem } from 'primeng/api';
     TooltipModule,
     ContextMenuModule,
     DecimalPipe,
-    AbsolutValuePipe,
-    SkeletonModule,
+    RemoveMinusPipe,
   ],
 })
 export class HighscoreDataTableComponent {
+  private readonly router = inject(Router);
+
+  // Inputs
   data = input.required<HighscoreRecord[]>();
   loading = input.required<boolean>();
   section = input.required<string>();
   globalFilterFields = input<string[]>(['name']);
 
-  dataTable = viewChild<Table>('dataTable');
-  contextMenu = viewChild<ContextMenu>('cm');
-  selectedRecord: HighscoreRecord | null = null;
-
+  // Computed properties
   isExperienceSection = computed(() => this.section() === 'experience');
   colspanEmpty = computed(() => (this.isExperienceSection() ? 8 : 6));
 
-  contextMenuItems: MenuItem[] = [
+  // Childs
+  private dataTable = viewChild<Table>('dataTable');
+
+  // Context menu
+  selectedRecord: HighscoreRecord | null = null;
+  readonly contextMenuItems: MenuItem[] = [
     {
-      label: 'Highscores',
-      icon: 'pi pi-chart-bar',
-      command: () => this.searchOnHighscores(),
+      label: 'Player History',
+      icon: 'pi pi-chart-line',
+      command: () => this.viewPlayerHistory(),
     },
     {
       separator: true,
     },
     {
-      label: 'Dura',
+      label: 'Search on Dura',
       icon: 'pi pi-search',
       command: () => this.searchOnDura(),
     },
     {
-      label: 'Copy Name',
+      label: 'Copy',
       icon: 'pi pi-copy',
-      command: () => this.copyCharacterName(),
+      command: () => this.copyCharacterInfo(),
     },
   ];
 
+  /**
+   * Filters the table by the given value
+   */
   filterGlobal(value: string): void {
     this.dataTable()?.filterGlobal(value, 'contains');
   }
 
+  /**
+   * Formats points with thousand separators
+   */
   formatPoints(points: number | null): string {
-    if (points === null || points === undefined) {
-      return '-';
-    }
+    if (!points) return '-'; // Display dash for null/undefined points
     return points.toLocaleString('en-US');
   }
 
+  /**
+   * Returns the appropriate icon class based on the gain value
+   */
   getGainIcon(value: number | null | undefined): string | null {
-    if (!value) return null;
-    return value > 0 ? 'pi pi-angle-up' : value < 0 ? 'pi pi-angle-down' : null;
+    if (value === null || value === undefined) return null;
+    if (value > 0) return 'pi pi-angle-up';
+    if (value < 0) return 'pi pi-angle-down';
+    return 'pi pi-equals';
   }
 
-  // CONTEXT MENU ACTIONS
-  searchOnHighscores(): void {
-    if (this.selectedRecord) {
-      // Implementar búsqueda en highscores
-      console.log('Search on highscores:', this.selectedRecord);
+  // Context Menu Actions
+  private viewPlayerHistory(): void {
+    const record = this.selectedRecord;
+    if (!record) return;
+
+    this.router.navigate(['/player', record.section], {
+      queryParams: { name: record.name },
+    });
+  }
+
+  private searchOnDura(): void {
+    const record = this.selectedRecord;
+    if (!record) return;
+
+    const url = `${environment.dura.baseURL}/?characters/${record.name}`;
+    window.open(url, '_blank');
+  }
+
+  private async copyCharacterInfo(): Promise<void> {
+    const record = this.selectedRecord;
+    if (!record) return;
+
+    try {
+      const message = this.formatCharacterInfo(record);
+      await navigator.clipboard.writeText(message);
+    } catch (error) {
+      console.error('Error copying to clipboard:', error);
     }
   }
 
-  searchOnDura(): void {
-    if (this.selectedRecord) {
-      window.open(`${environment.dura.baseURL}/?characters/${this.selectedRecord.name}`, '_blank');
-    }
-  }
+  /**
+   * Formats character information for clipboard
+   */
+  private formatCharacterInfo(record: HighscoreRecord): string {
+    const parts = [`Name: ${record.name}`, `Section: ${record.section}`, `Level: ${record.level}`];
 
-  async copyCharacterName(): Promise<void> {
-    if (this.selectedRecord) {
-      try {
-        await navigator.clipboard.writeText(this.selectedRecord.name);
-        console.log(`"${this.selectedRecord.name}" copied to clipboard`);
-      } catch (err) {
-        console.error('Failed to copy:', err);
-      }
+    if (record.section === 'experience' && record.gain_points !== null) {
+      parts.push(`Gain points: ${record.gain_points}`);
     }
+
+    parts.push(
+      `Gain level: ${record.gain_level}`,
+      `Date: ${record.scrape_date}`,
+      'dura-vault.vercel.app',
+    );
+
+    return parts.join(' | ');
   }
 }

@@ -29,6 +29,6 @@ export interface HighscoreRecord {
 
 export interface TopGainersParams {
   period?: TimePeriod;
-  section?: HighscoreSection | null;
-  limit?: number;
+  section: HighscoreSection | null;
+  limit: number;
 }

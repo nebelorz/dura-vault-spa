@@ -1,0 +1,25 @@
+@use '../../../shared/SCSS/colors' as colors;
+
+.player-header-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+
+  .player-title-section {
+    display: flex;
+    flex-direction: column;
+
+    .player-title-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+
+      .player-title {
+        font-size: x-large;
+        font-weight: bold;
+        margin: 0;
+      }
+    }
+  }
+}

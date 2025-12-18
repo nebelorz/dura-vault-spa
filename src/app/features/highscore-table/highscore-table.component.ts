@@ -1,56 +1,59 @@
-import { Component, inject, OnInit, signal, viewChild } from '@angular/core';
+import { Component, OnInit, signal, viewChild, computed, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MessageModule } from 'primeng/message';
 
+import { ScrapeDateRange } from '../../core/models/metadata.model';
+import { TimePeriod } from '../../core/models/common.model';
+
+import { calculateAvailableDataDateRange } from '../../shared/functions/calculate-available-data-date-range';
+import { HighscoreAvailableDataInfoComponent } from './highscore-available-data-info/highscore-available-data-info.component';
 import { HighscoreDataTableComponent } from './highscore-data-table/highscore-data-table.component';
 import { HighscoreFilterTableByNameComponent } from './highscore-filter-table-by-name/highscore-filter-table-by-name.component';
-import { HighscorePeriodSelectorComponent } from './highscore-period-selector/highscore-period-selector.component';
 import { HighscoreHeaderComponent } from './highscore-header/highscore-header.component';
-import { HighscoreAvailableDataInfoComponent } from './highscore-available-data-info/highscore-available-data-info.component';
 import { HighscoreRecord, HighscoreSection } from '../../core/models/highscore.model';
 import { HighscoreService } from '../../core/services/highscore.service';
 import { MetadataService } from '../../core/services/metadata.service';
-import { ScrapeDateRange } from '../../core/models/metadata.model';
-import { TimePeriod } from '../../core/models/common.model';
+import { PeriodSelectorComponent } from '../../shared/period-selector/period-selector.component';
 
 @Component({
   selector: 'app-highscore-table',
   templateUrl: './highscore-table.component.html',
   styleUrls: ['./highscore-table.component.scss'],
   imports: [
-    MessageModule,
     HighscoreHeaderComponent,
     HighscoreFilterTableByNameComponent,
-    HighscorePeriodSelectorComponent,
+    PeriodSelectorComponent,
     HighscoreDataTableComponent,
     HighscoreAvailableDataInfoComponent,
   ],
 })
 export class HighscoreTableComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private highscoreService = inject(HighscoreService);
-  private metadataService = inject(MetadataService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly highscoreService = inject(HighscoreService);
+  private readonly metadataService = inject(MetadataService);
 
-  dataTable = viewChild(HighscoreDataTableComponent);
-
+  // State
+  data = signal<HighscoreRecord[]>([]);
+  loading = signal<boolean>(true);
+  scrapeDateRange = signal<ScrapeDateRange | null>(null);
   section = signal<HighscoreSection>('experience');
   selectedPeriod = signal<TimePeriod>('day');
-  data = signal<HighscoreRecord[]>([]);
-  scrapeDateRange = signal<ScrapeDateRange | null>(null);
 
-  loading = signal<boolean>(true);
-  error = signal<string | null>(null);
+  // Child
+  private dataTable = viewChild(HighscoreDataTableComponent);
 
-  periodOptions = [
-    { label: 'Day', value: 'day' as TimePeriod },
-    { label: 'Week', value: 'week' as TimePeriod },
-    { label: 'Month', value: 'month' as TimePeriod },
-    { label: 'Year', value: 'year' as TimePeriod },
-  ];
+  // Computed date range for period
+  dateRange = computed(() => {
+    const period = this.selectedPeriod();
+    const dateRange = this.scrapeDateRange();
+    if (!dateRange?.max_date) return [];
+    return calculateAvailableDataDateRange(period, dateRange.min_date ?? null, dateRange.max_date);
+  });
 
   async ngOnInit(): Promise<void> {
+    // Load metadata
     await this.loadScrapeDateRange();
 
+    // Route changes
     this.route.params.subscribe((params) => {
       const section = params['section'] as HighscoreSection;
       if (section) {
@@ -60,45 +63,7 @@ export class HighscoreTableComponent implements OnInit {
     });
   }
 
-  async loadScrapeDateRange(): Promise<void> {
-    const dateRange = await this.metadataService.getMinMaxScrapeDates('highscore_top25');
-    if (dateRange) {
-      this.scrapeDateRange.set(dateRange);
-    }
-  }
-
-  async loadData(): Promise<void> {
-    const period = this.selectedPeriod();
-    const section = this.section();
-
-    this.loading.set(true);
-    this.data.set([]);
-    this.error.set(null);
-
-    try {
-      const result = await this.highscoreService.getTopGainers({
-        period,
-        section,
-        limit: 25,
-      });
-
-      if (result) {
-        this.data.set(result);
-      } else {
-        this.error.set('Failed to load highscore data');
-      }
-    } catch (err) {
-      console.error('Error loading data:', err);
-      this.error.set('An unexpected error occurred');
-    } finally {
-      this.loading.set(false);
-    }
-  }
-
   onPeriodChange(period: TimePeriod): void {
-    if (!period || typeof period !== 'string') return;
-    if (period === this.selectedPeriod()) return;
-
     this.selectedPeriod.set(period);
     this.loadData();
   }
@@ -107,34 +72,35 @@ export class HighscoreTableComponent implements OnInit {
     this.dataTable()?.filterGlobal(value);
   }
 
-  getDateRangeForPeriod(): string[] {
-    const dateRange = this.scrapeDateRange();
-    if (!dateRange?.max_date) return [];
+  private async loadScrapeDateRange(): Promise<void> {
+    try {
+      const dateRange = await this.metadataService.getMinMaxScrapeDates('highscore_top25');
+      if (dateRange) {
+        this.scrapeDateRange.set(dateRange);
+      }
+    } catch (error) {
+      console.error('Error loading scrape date range:', error);
+    }
+  }
 
-    const maxDate = new Date(dateRange.max_date);
-    const period = this.selectedPeriod();
-    const format = (date: Date) => date.toISOString().slice(0, 10);
+  private async loadData(): Promise<void> {
+    this.loading.set(true);
+    this.data.set([]);
 
-    switch (period) {
-      case 'day':
-        return [format(maxDate)];
-      case 'week': {
-        const start = new Date(maxDate);
-        start.setDate(maxDate.getDate() - 7);
-        return [format(start), format(maxDate)];
+    try {
+      const result = await this.highscoreService.getTopGainers({
+        period: this.selectedPeriod(),
+        section: this.section(),
+        limit: 25,
+      });
+
+      if (result) {
+        this.data.set(result);
       }
-      case 'month': {
-        const start = new Date(maxDate);
-        start.setMonth(maxDate.getMonth() - 1);
-        return [format(start), format(maxDate)];
-      }
-      case 'year': {
-        const start = new Date(maxDate);
-        start.setFullYear(maxDate.getFullYear() - 1);
-        return [format(start), format(maxDate)];
-      }
-      default:
-        return [];
+    } catch (error) {
+      console.error('Error loading highscore data:', error);
+    } finally {
+      this.loading.set(false);
     }
   }
 }

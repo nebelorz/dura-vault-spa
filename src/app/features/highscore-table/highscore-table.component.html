@@ -1,28 +1,22 @@
 <div class="highscore-container">
+  <!-- Header -->
   <div class="highscore-header">
-    <app-highscore-header
-      [section]="section()"
-      [loading]="loading()"
-      [dateRange]="getDateRangeForPeriod()"
-      [availableDateRange]="scrapeDateRange()"
-    />
+    <app-highscore-header [section]="section()" [dateRange]="dateRange()" />
 
+    <!-- Filters -->
     <div class="highscore-filters">
       <app-highscore-filter-table-by-name (searchChange)="onSearchChange($event)" />
 
-      <app-highscore-period-selector
-        [periodOptions]="periodOptions"
+      <app-period-selector
         [selectedPeriod]="selectedPeriod()"
         (periodChange)="onPeriodChange($event)"
       />
     </div>
   </div>
 
-  @if (error()) {
-    <p-message severity="error" [text]="error()!" />
-  }
-
+  <!-- Data Table -->
   <app-highscore-data-table [data]="data()" [loading]="loading()" [section]="section()" />
 
+  <!-- Available Data Info -->
   <app-highscore-available-data-info [availableDateRange]="scrapeDateRange()" />
 </div>
