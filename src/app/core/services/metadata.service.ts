@@ -19,7 +19,7 @@ export class MetadataService {
 
   /**
    * Fetches the oldest and latest scrape dates for a given table.
-   * @param tableName - Name of the table to query (default: 'highscore_top25')
+   * @param tableName - Name of the table to query (default: 'highscore_top')
    * @param showErrorToast - Whether to show error toast if the request fails (default: true).
    * @returns Promise resolving to an object with min_date and max_date, or null if an error occurs.
    *
@@ -30,7 +30,7 @@ export class MetadataService {
    * }
    */
   async getMinMaxScrapeDates(
-    tableName: ScrapeDateTable = 'highscore_top25',
+    tableName: ScrapeDateTable = 'highscore_top',
     showErrorToast: boolean = true,
   ): Promise<ScrapeDateRange | null> {
     const cacheKey = `min_max_scrape_dates_${tableName}`;

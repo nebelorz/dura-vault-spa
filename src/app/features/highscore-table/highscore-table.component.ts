@@ -74,7 +74,7 @@ export class HighscoreTableComponent implements OnInit {
 
   private async loadScrapeDateRange(): Promise<void> {
     try {
-      const dateRange = await this.metadataService.getMinMaxScrapeDates('highscore_top25');
+      const dateRange = await this.metadataService.getMinMaxScrapeDates('highscore_top');
       if (dateRange) {
         this.scrapeDateRange.set(dateRange);
       }
