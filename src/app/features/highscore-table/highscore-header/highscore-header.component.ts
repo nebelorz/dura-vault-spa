@@ -1,8 +1,5 @@
 import { Component, input } from '@angular/core';
-import { TitleCasePipe } from '@angular/common';
-import { DatePipe } from '@angular/common';
-
-import { ScrapeDateRange } from '../../../core/models/metadata.model';
+import { TitleCasePipe, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-highscore-header',
@@ -12,7 +9,5 @@ import { ScrapeDateRange } from '../../../core/models/metadata.model';
 })
 export class HighscoreHeaderComponent {
   section = input.required<string>();
-  loading = input.required<boolean>();
   dateRange = input<string[]>([]);
-  availableDateRange = input<ScrapeDateRange | null>(null);
 }

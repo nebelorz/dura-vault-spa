@@ -5,7 +5,7 @@
     pSize="small"
     type="text"
     autocomplete="off"
-    (input)="onSearchInput($any($event.target).value)"
+    (input)="onSearchInput($event.target.value)"
   />
   <label for="search_character_table">Filter by name</label>
 </p-floatlabel>

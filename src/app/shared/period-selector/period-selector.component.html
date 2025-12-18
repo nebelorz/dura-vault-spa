@@ -1,9 +1,8 @@
 <p-selectButton
-  [options]="periodOptions()"
+  [options]="computedPeriodOptions()"
   [ngModel]="selectedPeriod()"
   (onChange)="onPeriodSelect($event.value)"
   optionLabel="label"
   optionValue="value"
-  optionDisabled="disabled"
-  [disabled]="isDisabled()"
+  [disabled]="allDisabled()"
 />

@@ -31,9 +31,9 @@
   <ng-template pTemplate="loadingbody">
     <tr>
       <td [attr.colspan]="colspanEmpty()">
-        <div class="empty-message-container">
+        <div class="loading-message-container">
           <i class="pi pi-spinner pi-spin"></i>
-          <p class="empty-message-title">Loading...</p>
+          <h3>Loading...</h3>
         </div>
       </td>
     </tr>
@@ -53,7 +53,7 @@
           @if (getGainIcon(record.gain_points)) {
             <i [class]="getGainIcon(record.gain_points)"></i>
           }
-          {{ formatPoints(record.gain_points | absolutValue) }}
+          {{ formatPoints(record.gain_points | removeMinus) }}
           @if (record.points > 0) {
             <span class="additional-info" pTooltip="Gain as % of XP" showDelay="600">
               ({{ ((record.gain_points || 0) / record.points) * 100 | number: '1.2-2' }}%)
@@ -63,17 +63,21 @@
       }
 
       <td>
-        {{ record.gain_level | absolutValue }}
         @if (getGainIcon(record.gain_level)) {
           <i [class]="getGainIcon(record.gain_level)"></i>
         }
+        {{ record.gain_level | removeMinus }}
       </td>
 
       <td>
-        {{ record.gain_rank | absolutValue }}
         @if (getGainIcon(record.gain_rank)) {
           <i [class]="getGainIcon(record.gain_rank)"></i>
         }
+        {{ record.gain_rank | removeMinus }}
+
+        <span class="additional-info" pTooltip="Actual rank" showDelay="600">
+          ({{ record.rank }})
+        </span>
       </td>
     </tr>
   </ng-template>
@@ -84,11 +88,9 @@
       <td [attr.colspan]="colspanEmpty()">
         <div class="empty-message-container">
           <i class="pi pi-exclamation-circle"></i>
-          <p class="empty-message-title">No data available</p>
+          <h3>No data available</h3>
 
-          <p class="empty-message-description">
-            No highscores for {{ section() }} during this period.
-          </p>
+          <p>No highscores for {{ section() }} during this period.</p>
         </div>
       </td>
     </tr>

@@ -41,7 +41,7 @@ export class MetadataService {
     }
 
     try {
-      const { data, error } = await this.supabase.rpc('get-min-max-scrape-dates', {
+      const { data, error } = await this.supabase.rpc('get_min_max_scrape_dates', {
         p_table_name: tableName,
       });
 
@@ -94,7 +94,7 @@ export class MetadataService {
     }
 
     try {
-      const { data, error } = await this.supabase.rpc('get-highscore-sections');
+      const { data, error } = await this.supabase.rpc('get_highscore_sections');
 
       if (error) {
         const errorMessage = 'Failed to fetch highscore sections';

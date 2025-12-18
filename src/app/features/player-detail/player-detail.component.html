@@ -21,7 +21,7 @@
       <!-- Period Selector -->
       <div class="period-selector-wrapper">
         <app-period-selector
-          [periodOptions]="periodOptions"
+          [disabledPeriods]="['day']"
           [selectedPeriod]="selectedPeriod()"
           (periodChange)="onPeriodChange($event)"
         />

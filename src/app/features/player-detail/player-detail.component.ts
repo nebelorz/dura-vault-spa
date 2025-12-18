@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, computed } from '@angular/core';
+import { Component, OnInit, signal, computed, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, tap } from 'rxjs/operators';
 
@@ -15,12 +15,6 @@ import { PlayerDetailSummaryComponent } from './player-detail-summary/player-det
 import { PeriodSelectorComponent } from '../../shared/period-selector/period-selector.component';
 import { PlayerDetailChartComponent } from './player-detail-chart/player-detail-chart.component';
 
-interface PeriodOption {
-  label: string;
-  value: TimePeriod;
-  disabled?: boolean;
-}
-
 @Component({
   selector: 'app-player-detail',
   templateUrl: './player-detail.component.html',
@@ -33,6 +27,10 @@ interface PeriodOption {
   ],
 })
 export class PlayerDetailComponent implements OnInit {
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly playerHistoryService = inject(PlayerHistoryService);
+
   // Player state
   playerName = signal<string>('');
   playerInfo = signal<PlayerHistoryInfo | null>(null);
@@ -43,21 +41,6 @@ export class PlayerDetailComponent implements OnInit {
   selectedPeriod = signal<TimePeriod>('week');
   loading = signal<boolean>(false);
   historyData = signal<PlayerHistoryResponse | null>(null);
-
-  // Period configuration
-  readonly periodOptions: PeriodOption[] = [
-    { label: 'Day', value: 'day', disabled: true },
-    { label: 'Week', value: 'week' },
-    { label: 'Month', value: 'month' },
-    { label: 'Year', value: 'year' },
-    { label: 'All', value: 'all' },
-  ];
-
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private playerHistoryService: PlayerHistoryService,
-  ) {}
 
   ngOnInit(): void {
     // Subscribe to route changes to load player data
