@@ -54,9 +54,9 @@ export class NavBarComponent {
           routerLink: ['/top/distance'],
         },
         {
-          label: 'Shielding',
+          label: 'Shield',
           icon: 'pi pi-box',
-          routerLink: ['/top/shielding'],
+          routerLink: ['/top/shield'],
         },
         {
           label: 'Fishing',

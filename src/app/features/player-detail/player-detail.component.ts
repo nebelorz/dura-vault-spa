@@ -95,7 +95,7 @@ export class PlayerDetailComponent implements OnInit {
         p_period: this.selectedPeriod(),
       };
 
-      const data = await this.playerHistoryService.getPlayerHistory(request);
+      const data = await this.playerHistoryService.getPlayerHistoric(request);
 
       if (data) {
         this.historyData.set(data);

@@ -33,7 +33,7 @@ export class PlayerDetailHeaderComponent {
   readonly sectionOptions: SectionOption[] = [
     { label: 'Experience', value: 'experience' },
     { label: 'Magic', value: 'magic' },
-    { label: 'Shielding', value: 'shielding' },
+    { label: 'Shield', value: 'shield' },
     { label: 'Distance', value: 'distance' },
     { label: 'Club', value: 'club' },
     { label: 'Sword', value: 'sword' },

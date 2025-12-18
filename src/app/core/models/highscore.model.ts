@@ -3,7 +3,7 @@ import { TimePeriod } from './common.model';
 export type HighscoreSection =
   | 'experience'
   | 'magic'
-  | 'shielding'
+  | 'shield'
   | 'distance'
   | 'club'
   | 'sword'

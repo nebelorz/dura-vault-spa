@@ -198,7 +198,7 @@ export class PlayerDetailChartComponent {
     drawGridOnChart: boolean,
     tickCallback: (value: number) => string,
   ): any {
-    return {
+    const config: any = {
       type: 'linear',
       display: true,
       position,
@@ -222,5 +222,12 @@ export class PlayerDetailChartComponent {
         },
       },
     };
+
+    // stepSize of 1 to avoid repeated values
+    if (title === 'LEVEL') {
+      config.ticks.stepSize = 1;
+    }
+
+    return config;
   }
 }

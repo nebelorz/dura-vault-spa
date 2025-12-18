@@ -28,7 +28,7 @@ export class PlayerHistoryService {
    * @param showErrorToast - Whether to show error toast if the request fails (default: true)
    * @returns Promise resolving to PlayerHistoryResponse or null if an error occurs
    */
-  async getPlayerHistory(
+  async getPlayerHistoric(
     request: PlayerHistoryRequest,
     showErrorToast: boolean = true,
   ): Promise<PlayerHistoryResponse | null> {
