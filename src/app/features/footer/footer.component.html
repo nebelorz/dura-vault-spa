@@ -1,12 +1,13 @@
 <footer>
   <div class="footer-content">
+    <!-- Version -->
     <div class="footer-left">
-      <!-- Version -->
       <span>{{ version }}</span>
     </div>
 
+    <!-- Links and Copyright -->
     <div class="footer-right">
-      <!-- Github -->
+      <!-- GitHub Link -->
       <a
         [href]="githubUrl"
         target="_blank"
@@ -17,8 +18,9 @@
         <i class="pi pi-github"></i>
         <span>GitHub</span>
       </a>
-      <!-- Copyright & Current year -->
-      <span>© {{ currentYear }} Dura Vault</span>
+
+      <!-- Copyright -->
+      <span>© {{ currentYear() }} Dura Vault</span>
     </div>
   </div>
 </footer>
