@@ -3,8 +3,9 @@
 .footer-content {
   display: flex;
   font-size: x-small;
-  background: colors.$secondary;
   color: colors.$gray-light;
+  border: 2px solid colors.$secondary;
+  
   justify-content: space-between;
   align-items: center;
   padding-right: 1.5rem;
