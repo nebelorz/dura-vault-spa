@@ -1,0 +1,33 @@
+<div class="player-header-container">
+  <!-- Back button -->
+  <p-button
+    icon="pi pi-arrow-left"
+    [text]="true"
+    severity="secondary"
+    (click)="onBackClick()"
+    label="Back"
+  />
+  <!-- Name + section selector -->
+  <div class="player-title-section">
+    <div class="player-title-row">
+      <h1 class="player-title">{{ playerName() }}</h1>
+      <p-select
+        [options]="sectionOptions"
+        [ngModel]="section()"
+        (ngModelChange)="onSectionChange($event)"
+        size="small"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Select Section"
+      />
+    </div>
+
+    <!-- Player info -->
+    @if (playerInfo()) {
+      <div class="additional-info">
+        <app-minimalist-icon tooltipText="In {{ section() }} section" tooltipPosition="bottom" />
+        {{ playerInfo()?.level }} | {{ playerInfo()?.vocation }}
+      </div>
+    }
+  </div>
+</div>

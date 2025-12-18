@@ -1,0 +1,16 @@
+<p-card>
+  @if (loading()) {
+    <div class="loading-message-container">
+      <i class="pi pi-spinner pi-spin"></i>
+      <h3>Loading...</h3>
+    </div>
+  } @else if (chartData()) {
+    <p-chart type="line" [data]="chartData()!" [options]="chartOptions()" />
+  } @else {
+    <div class="empty-message-container">
+      <i class="pi pi-exclamation-circle"></i>
+      <h3>No Data Available</h3>
+      <p>There is no historical data for this player in the selected period.</p>
+    </div>
+  }
+</p-card>

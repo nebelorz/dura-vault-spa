@@ -1,0 +1,87 @@
+@use '../../../shared/SCSS/colors' as colors;
+
+@mixin card-type-bg($color) {
+  i {
+    color: $color;
+  }
+}
+
+.summary-container {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.summary-card {
+  display: flex;
+  align-items: center;
+  // background: colors.$secondary;
+  // border-radius: 36px;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  transition: all 0.2s ease;
+  min-width: 100px;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+
+  i {
+    font-size: normal;
+  }
+
+  .pi-angle-double-down {
+    color: colors.$danger !important;
+  }
+
+  .experience & {
+    @include card-type-bg(colors.$experience);
+  }
+
+  .level & {
+    @include card-type-bg(colors.$level);
+  }
+
+  .rank & {
+    @include card-type-bg(colors.$rank);
+  }
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.card-label {
+  font-size: x-small;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.6;
+  line-height: 1;
+}
+
+.card-value {
+  font-size: small;
+  font-weight: bolder;
+  line-height: 1.2;
+}
+
+.card-average {
+  font-size: x-small;
+  opacity: 0.5;
+  line-height: 1;
+}

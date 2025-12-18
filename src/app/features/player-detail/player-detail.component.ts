@@ -1,0 +1,132 @@
+import { Component, OnInit, signal, computed } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap, tap } from 'rxjs/operators';
+
+import { PlayerHistoryService } from '../../core/services/player-history.service';
+import { TimePeriod } from '../../core/models/common.model';
+import { HighscoreSection } from '../../core/models/highscore.model';
+import {
+  PlayerHistoryRequest,
+  PlayerHistoryResponse,
+  PlayerHistoryInfo,
+} from '../../core/models/player-history.model';
+import { PlayerDetailHeaderComponent } from './player-detail-header/player-detail-header.component';
+import { PlayerDetailSummaryComponent } from './player-detail-summary/player-detail-summary.component';
+import { PeriodSelectorComponent } from '../../shared/period-selector/period-selector.component';
+import { PlayerDetailChartComponent } from './player-detail-chart/player-detail-chart.component';
+
+interface PeriodOption {
+  label: string;
+  value: TimePeriod;
+  disabled?: boolean;
+}
+
+@Component({
+  selector: 'app-player-detail',
+  templateUrl: './player-detail.component.html',
+  styleUrls: ['./player-detail.component.scss'],
+  imports: [
+    PlayerDetailHeaderComponent,
+    PlayerDetailSummaryComponent,
+    PeriodSelectorComponent,
+    PlayerDetailChartComponent,
+  ],
+})
+export class PlayerDetailComponent implements OnInit {
+  // Player state
+  playerName = signal<string>('');
+  playerInfo = signal<PlayerHistoryInfo | null>(null);
+  section = signal<HighscoreSection>('experience');
+  summary = computed(() => this.historyData()?.summary || null);
+
+  // Chart state
+  selectedPeriod = signal<TimePeriod>('week');
+  loading = signal<boolean>(false);
+  historyData = signal<PlayerHistoryResponse | null>(null);
+
+  // Period configuration
+  readonly periodOptions: PeriodOption[] = [
+    { label: 'Day', value: 'day', disabled: true },
+    { label: 'Week', value: 'week' },
+    { label: 'Month', value: 'month' },
+    { label: 'Year', value: 'year' },
+    { label: 'All', value: 'all' },
+  ];
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private playerHistoryService: PlayerHistoryService,
+  ) {}
+
+  ngOnInit(): void {
+    // Subscribe to route changes to load player data
+    this.route.paramMap
+      .pipe(
+        tap((params) => {
+          const section = params.get('section') as HighscoreSection;
+          if (!section) {
+            this.router.navigate(['/']);
+            throw new Error('No section provided');
+          }
+          this.section.set(section);
+        }),
+        switchMap(() => this.route.queryParamMap),
+      )
+      .subscribe((queryParams) => {
+        const name = queryParams.get('name');
+        if (!name) {
+          this.router.navigate(['/']);
+          return;
+        }
+
+        this.playerName.set(name);
+        this.loadPlayerHistory();
+      });
+  }
+
+  onPeriodChange(period: TimePeriod): void {
+    this.selectedPeriod.set(period);
+    this.loadPlayerHistory();
+  }
+
+  onSectionChange(section: HighscoreSection): void {
+    this.section.set(section);
+    // Navigation will trigger ngOnInit which reloads data
+    this.router.navigate(['/player', section], {
+      queryParams: { name: this.playerName() },
+    });
+  }
+
+  goBack(): void {
+    this.router.navigate(['/top', this.section()]);
+  }
+
+  private async loadPlayerHistory(): Promise<void> {
+    this.loading.set(true);
+
+    try {
+      const request: PlayerHistoryRequest = {
+        p_name: this.playerName(),
+        p_section: this.section(),
+        p_period: this.selectedPeriod(),
+      };
+
+      const data = await this.playerHistoryService.getPlayerHistory(request);
+
+      if (data) {
+        this.historyData.set(data);
+        this.playerInfo.set(data.player);
+      } else {
+        this.historyData.set(null);
+        this.playerInfo.set(null);
+      }
+    } catch (error) {
+      console.error('Error loading player history:', error);
+      this.historyData.set(null);
+      this.playerInfo.set(null);
+    } finally {
+      this.loading.set(false);
+    }
+  }
+}
