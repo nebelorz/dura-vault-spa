@@ -5,8 +5,8 @@ import { HighscoreSection } from '../../../core/models/highscore.model';
 import { PlayerHistoryInfo } from '../../../core/models/player-history.model';
 
 import { SelectModule } from 'primeng/select';
-import { ButtonModule } from 'primeng/button';
 import { MinimalistIconComponent } from '../../../shared/minimalist-icon/minimalist-icon.component';
+import { GoBackButtonComponent } from '../../../shared/go-back-button/go-back-button.component';
 
 interface SectionOption {
   label: string;
@@ -17,7 +17,7 @@ interface SectionOption {
   selector: 'app-player-detail-header',
   templateUrl: './player-detail-header.component.html',
   styleUrls: ['./player-detail-header.component.scss'],
-  imports: [ButtonModule, SelectModule, FormsModule, MinimalistIconComponent],
+  imports: [SelectModule, FormsModule, MinimalistIconComponent, GoBackButtonComponent],
 })
 export class PlayerDetailHeaderComponent {
   // Inputs
@@ -26,7 +26,6 @@ export class PlayerDetailHeaderComponent {
   playerInfo = input<PlayerHistoryInfo | null>(null);
 
   // Outputs
-  backClick = output<void>();
   sectionChange = output<HighscoreSection>();
 
   // Section options
@@ -41,10 +40,6 @@ export class PlayerDetailHeaderComponent {
     { label: 'Fist', value: 'fist' },
     { label: 'Fishing', value: 'fishing' },
   ];
-
-  onBackClick(): void {
-    this.backClick.emit();
-  }
 
   onSectionChange(newSection: HighscoreSection): void {
     this.sectionChange.emit(newSection);

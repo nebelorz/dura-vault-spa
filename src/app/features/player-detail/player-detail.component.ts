@@ -81,10 +81,6 @@ export class PlayerDetailComponent implements OnInit {
     });
   }
 
-  goBack(): void {
-    this.router.navigate(['/top', this.section()]);
-  }
-
   private async loadPlayerHistory(): Promise<void> {
     this.loading.set(true);
 
