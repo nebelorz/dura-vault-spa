@@ -91,7 +91,7 @@ export class HighscoreTableComponent implements OnInit {
       const result = await this.highscoreService.getTopGainers({
         period: this.selectedPeriod(),
         section: this.section(),
-        limit: 25,
+        limit: 100,
       });
 
       if (result) {
