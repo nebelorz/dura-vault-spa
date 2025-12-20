@@ -19,6 +19,16 @@ interface DevInfoEntry {
 export class DevInfoPanelComponent {
   entries = signal<DevInfoEntry[]>([
     {
+      date: new Date('2025-12-21'),
+      title: 'Working on...',
+      content: [
+        'Currently I am focusing on implementing some quick info in small gadgets for the landing page and a better approach to display these posts.',
+        'Also I am thinking about creating a monthly "prize" system for the most active/top Dura players, more info will come soon!',
+        'If you have any suggestions or feedback, feel free to reach out! neBelorz#8759',
+      ],
+      type: 'fix',
+    },
+    {
       date: new Date('2025-12-20'),
       title: 'v0.0.1b released',
       content: [

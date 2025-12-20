@@ -8,6 +8,14 @@
 
     <!-- Center Content -->
     <main class="landing-main">
+      <!-- Banner -->
+      <section class="landing-banner-section">
+        @if (!darkMode()) {
+          <img src="banner-default.png" alt="DuraVault Banner" class="landing-banner" />
+        } @else {
+          <img src="banner-darkmode.png" alt="DuraVault Banner" class="landing-banner" />
+        }
+      </section>
       <!-- Dev Info -->
       <section class="landing-info-section">
         <app-dev-info-panel />

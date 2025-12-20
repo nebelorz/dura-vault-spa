@@ -1,25 +1,15 @@
 .landing-container {
   padding: 1rem;
-  max-width: 100%;
-  width: 100%;
 }
 
 .landing-grid {
   display: grid;
   grid-template-columns: 250px 1fr 280px;
   gap: 1.5rem;
-  width: 100%;
 }
 
-// Main Content Area
-.landing-main {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  min-width: 0;
-}
-
-// Right Sidebar
+.landing-sidebar-left,
+.landing-main,
 .landing-sidebar-right {
   display: flex;
   flex-direction: column;
@@ -27,12 +17,21 @@
   min-width: 0;
 }
 
-// Carousel
-.landing-carousel-section {
-  width: 100%;
+// Banner
+.landing-banner-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
 }
 
-// Dev Info Panel
-.landing-info-section {
-  width: 100%;
+::ng-deep html.darkmode .landing-banner-section {
+  opacity: 0.85;
+}
+
+.landing-banner {
+  max-width: 100%;
+  height: auto;
+  max-height: 200px;
+  object-fit: contain;
 }
