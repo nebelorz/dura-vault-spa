@@ -9,5 +9,5 @@ import { version } from '../../../../package.json';
 export class FooterComponent {
   readonly version = `v${version}`;
   readonly currentYear = computed(() => new Date().getFullYear());
-  readonly githubUrl = 'https://github.com/nebelorz/';
+  readonly githubUrl = 'https://github.com/nebelorz/dura-vault-spa';
 }

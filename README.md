@@ -1,59 +1,116 @@
-# DuraVaultSpa
+# Dura Vault SPA
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.2.
+Modern Angular Single Page Application for Dura Online statistics and player data.
 
-## Development server
+## Overview
 
-To start a local development server, run:
+Dura Vault SPA is a feature-rich, responsive web app for exploring Dura Online highscores, player histories, and global stats. It leverages Angular 21, Angular Signals, PrimeNG UI, and Supabase for a fast, modern user experience.
+
+## Features
+
+- Highscore tables by skill/section and period (day, week, month, year, all)
+- Player detail pages with history, charts, and summaries
+- Data caching for performance
+- Dark mode toggle and theming
+
+## Technologies
+
+- [Angular 21+](https://angular.dev/) (standalone components, signals)
+- [PrimeNG](https://primeng.org/) & PrimeIcons for UI
+- [Supabase](https://supabase.com/) for backend data
+- [Chart.js](https://www.chartjs.org/) for charts
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+ and npm
+
+### Installation
 
 ```bash
+git clone https://github.com/nebelorz/dura-vault-spa.git
+cd dura-vault-spa
+npm install
+```
+
+### Development
+
+Start the local dev server:
+
+```bash
+npm start
+# or
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Visit [http://localhost:4200](http://localhost:4200)
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+### Build
 
 ```bash
 ng build
+# Output in dist/
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### Testing
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Run unit tests with Vitest:
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+### Linting
 
 ```bash
-ng e2e
+npm run eslint
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Project Structure
 
-## Additional Resources
+```
+src/
+	app/
+		core/         # Models & services (API, cache, theme, navigation etc.)
+			models/     # TypeScript interfaces for data
+			services/   # Angular services (data, cache, toast, etc.)
+		features/     # Main UI features (highscore-table, player-detail, nav-bar, landing-page, footer)
+		shared/       # Reusable components, pipes, functions, SCSS
+			functions/  # Utility functions (date, number formatting, etc.)
+			pipes/      # Angular pipes (abbreviate, remove minus, etc.)
+			SCSS/       # Shared SCSS variables/mixins
+	environments/   # Environment configs (Supabase, API URLs)
+	index.html      # App entry point
+	main.ts         # Angular bootstrap
+	styles.scss     # Global styles
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Coding Standards & Best Practices
+
+- Angular 21+ with strict TypeScript
+- Standalone components and signals for state
+- Feature-based folder structure
+- PrimeNG for consistent UI
+- Caching and error handling in services
+- See `.github/instructions/angular.instructions.md` for detailed conventions
+
+## Key Scripts
+
+- `npm start` / `ng serve` — Start dev server
+- `ng build` — Build for production
+- `ng test` — Run unit tests
+- `npm run eslint` — Lint code
+
+## Deployment
+
+- Static build output in `dist/`
+- Vercel config in `vercel.json` for deployment
+
+## Contributing
+
+Pull requests and issues are welcome! Please follow Angular and project coding standards.
+
+## License
+
+MIT License — see [LICENSE](LICENSE)
