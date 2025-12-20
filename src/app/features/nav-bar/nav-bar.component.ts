@@ -15,6 +15,11 @@ import { SearchBoxComponent } from './search-box/search-box.component';
 export class NavBarComponent {
   readonly menuItems: MenuItem[] = [
     {
+      label: 'Home',
+      icon: 'pi pi-home',
+      routerLink: ['/'],
+    },
+    {
       label: 'Tops',
       icon: 'pi pi-database',
       items: [

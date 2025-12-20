@@ -1,0 +1,50 @@
+@use '../../../shared/SCSS/colors' as colors;
+
+.carousel-container {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.carousel-item {
+  padding: 1.5rem;
+  min-height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  border-radius: 8px;
+  background-color: colors.$secondary;
+}
+
+.carousel-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  text-align: center;
+}
+
+.carousel-icon {
+  font-size: xx-large;
+  opacity: 0.5;
+}
+
+.carousel-text {
+  width: 100%;
+}
+
+.carousel-title {
+  margin: 0 0 0.3rem 0;
+  font-size: small;
+  font-weight: bold;
+  opacity: 0.85;
+}
+
+.carousel-description {
+  margin: 0;
+  font-size: small;
+  opacity: 0.85;
+}

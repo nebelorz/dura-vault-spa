@@ -1,0 +1,73 @@
+@use '../../../shared/SCSS/colors' as colors;
+
+// Hide opposite content
+::ng-deep .p-timeline-event-opposite {
+  display: none;
+}
+
+.dev-info-container {
+  width: 100%;
+}
+
+.p-timeline {
+  .p-timeline-event-opposite,
+  .p-timeline-event-separator {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+}
+
+::ng-deep .p-timeline-event-content {
+  background: colors.$secondary;
+  color: colors.$secondary-contrast;
+  border-radius: 8px;
+  margin: 0.5rem 0;
+}
+
+.timeline-marker {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: colors.$secondary-contrast;
+  opacity: 0.85;
+  z-index: 1;
+}
+
+.timeline-content {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.timeline-title {
+  margin: 0;
+  font-weight: bold;
+}
+
+.timeline-date {
+  font-size: small;
+  color: colors.$gray-light;
+  flex-shrink: 0;
+}
+
+.timeline-text {
+  margin: 0;
+  font-size: small;
+  line-height: 1.6;
+}

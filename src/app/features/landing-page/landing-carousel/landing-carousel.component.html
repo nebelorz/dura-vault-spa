@@ -1,0 +1,24 @@
+<div class="carousel-container">
+  <p-carousel
+    [value]="carouselItems()"
+    [numVisible]="1"
+    [numScroll]="1"
+    [circular]="false"
+    [autoplayInterval]="5000"
+    [showIndicators]="true"
+  >
+    <ng-template let-item pTemplate="item">
+      <div class="carousel-item">
+        <div class="carousel-content">
+          @if (item.icon) {
+            <i [class]="item.icon + ' carousel-icon'"></i>
+          }
+          <div class="carousel-text">
+            <h2 class="carousel-title">{{ item.title }}</h2>
+            <p class="carousel-description">{{ item.description }}</p>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+</div>

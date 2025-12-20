@@ -1,0 +1,23 @@
+<div class="dev-info-container">
+  <p-timeline [value]="entries()" align="left">
+    <ng-template pTemplate="marker" let-entry>
+      <div class="timeline-marker" [class]="getTypeClass(entry.type)">
+        <i [class]="getTypeIcon(entry.type)"></i>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="content" let-entry>
+      <div class="timeline-content">
+        <div class="timeline-header">
+          <h3 class="timeline-title">{{ entry.title }}</h3>
+          <span class="timeline-date">{{ entry.date | date: 'dd MMM yyyy' }}</span>
+        </div>
+        <ng-container>
+          @for (line of entry.content; track entries()) {
+            <p class="timeline-text">{{ line }}</p>
+          }
+        </ng-container>
+      </div>
+    </ng-template>
+  </p-timeline>
+</div>
