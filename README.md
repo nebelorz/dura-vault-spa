@@ -1,3 +1,5 @@
+[<img src="https://dura-vault.vercel.app/banner-darkmode.png" alt="dura-vault-banner"/>](https://dura-vault.vercel.app/) <!-- Banner -->
+
 # Dura Vault SPA
 
 Modern Angular Single Page Application for Dura Online statistics and player data.
@@ -53,20 +55,6 @@ ng build
 # Output in dist/
 ```
 
-### Testing
-
-Run unit tests with Vitest:
-
-```bash
-ng test
-```
-
-### Linting
-
-```bash
-npm run eslint
-```
-
 ## Project Structure
 
 ```
@@ -93,7 +81,6 @@ src/
 - Feature-based folder structure
 - PrimeNG for consistent UI
 - Caching and error handling in services
-- See `.github/instructions/angular.instructions.md` for detailed conventions
 
 ## Key Scripts
 
