@@ -1,6 +1,6 @@
 <p-table
   #dataTable
-  class="p-datatable-sm animation-fade"
+  class="p-datatable-sm"
   [loading]="loading()"
   selectionMode="single"
   [value]="data()"
@@ -41,7 +41,7 @@
 
   <!-- BODY -->
   <ng-template pTemplate="body" let-record let-rowIndex="rowIndex">
-    <tr [pContextMenuRow]="record">
+    <tr class="animation-fade" [pContextMenuRow]="record">
       <td>{{ rowIndex + 1 }}</td>
       <td>{{ record.name }}</td>
       <td>{{ record.vocation }}</td>
@@ -84,7 +84,7 @@
 
   <!-- EMPTY MESSAGE -->
   <ng-template pTemplate="emptymessage">
-    <tr>
+    <tr class="animation-fade">
       <td [attr.colspan]="colspanEmpty()">
         <div class="empty-message-container">
           <i class="pi pi-exclamation-circle"></i>
