@@ -1,0 +1,155 @@
+@use '../../../shared/SCSS/colors' as colors;
+
+// Container & Layout
+.daily-top {
+  border: 2px solid colors.$secondary;
+  box-shadow: 0 1px 4px colors.$secondary;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+// Sections
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: x-small;
+  letter-spacing: 1.5px;
+  opacity: 0.6;
+}
+
+.header-date {
+  letter-spacing: 0px;
+  opacity: 0.6;
+}
+
+// Carousel
+.carousel-container {
+  ::ng-deep .p-carousel {
+    .p-carousel-content {
+      overflow: visible;
+    }
+
+    .p-carousel-indicators {
+      padding: 0.5rem 0 0;
+      gap: 0.25rem;
+
+      .p-carousel-indicator button {
+        width: 1.5rem;
+        height: 0.25rem;
+        border-radius: 2px;
+        background: colors.$secondary;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: colors.$secondary-hover;
+        }
+      }
+
+      .p-carousel-indicator.p-highlight button {
+        background: colors.$primary;
+      }
+    }
+  }
+}
+
+// Player
+.player-row {
+  display: block;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+
+  &.top-one {
+    background: colors.$rank-opacity-1;
+
+    &:hover {
+      background: colors.$rank-opacity-2;
+    }
+  }
+
+  &.top-two {
+    background: colors.$secondary;
+
+    &:hover {
+      background: colors.$secondary-hover;
+    }
+  }
+
+  &.top-three {
+    background: colors.$danger-opacity-1;
+
+    &:hover {
+      background: colors.$danger-opacity-2;
+    }
+  }
+}
+
+.player-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.player-name {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: small;
+  font-weight: bold;
+  letter-spacing: 0.25px;
+}
+
+.player-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: x-small;
+  opacity: 0.6;
+  letter-spacing: 0.25px;
+}
+
+.player-stats {
+  display: flex;
+  flex-shrink: 0;
+  align-self: flex-end;
+}
+
+// Stat Badges
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+  margin-right: 1rem;
+  font-size: x-small;
+  color: colors.$primary;
+
+  i {
+    font-size: xx-small;
+  }
+
+  &.stat-level {
+    color: colors.$primary;
+  }
+
+  &.stat-experience {
+    color: colors.$experience;
+  }
+
+  &.stat-rank {
+    color: colors.$rank;
+  }
+}

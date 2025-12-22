@@ -1,0 +1,116 @@
+<div class="daily-top">
+  @if (loading()) {
+    <div class="loading-message-container">
+      <i class="pi pi-spinner pi-spin"></i>
+      <span>Loading...</span>
+    </div>
+  } @else {
+    <!-- Experience Section -->
+    @if (experiencePlayers().length > 0) {
+      <section class="animation-fade">
+        <div class="section-header">
+          <span>EXPERIENCE</span>
+          <span class="header-date">
+            {{ maxDate()! | date: 'dd MMM yyyy' }}
+          </span>
+        </div>
+        @for (player of experiencePlayers(); track player.name; let i = $index) {
+          <div
+            class="player-row"
+            [class.top-one]="i === 0"
+            [class.top-two]="i === 1"
+            [class.top-three]="i === 2"
+          >
+            <div class="player-main">
+              <div class="player-name">{{ player.name }}</div>
+              <div class="player-meta">
+                <span>Lvl {{ player.level }}</span>
+                <span>{{ player.vocation }}</span>
+              </div>
+            </div>
+
+            <div class="player-stats">
+              <div class="stat stat-experience" pTooltip="Experience" tooltipPosition="bottom">
+                <i class="pi pi-angle-double-up"></i>
+                <span>{{ player.gain_points | abbreviateNumber }}</span>
+              </div>
+              <div class="stat stat-level" pTooltip="Level" tooltipPosition="bottom">
+                <i class="pi pi-angle-double-up"></i>
+                <span>{{ player.gain_level }}</span>
+              </div>
+              <div class="stat stat-rank" pTooltip="Rank" tooltipPosition="bottom">
+                <i class="pi pi-crown"></i>
+                <span>
+                  @if (player.gain_rank > 0) {
+                    +
+                  } @else if (player.gain_rank < 0) {
+                    -
+                  }
+                  {{ player.gain_rank }}
+                </span>
+              </div>
+            </div>
+          </div>
+        }
+      </section>
+    }
+
+    <!-- Skills Carousel -->
+    @if (otherSections().length > 0) {
+      <div class="carousel-container">
+        <p-carousel
+          [value]="otherSections()"
+          [numVisible]="1"
+          [numScroll]="1"
+          [circular]="true"
+          [autoplayInterval]="5000"
+          [showIndicators]="true"
+          [showNavigators]="false"
+        >
+          <ng-template let-section pTemplate="item">
+            <section class="animation-fade">
+              <div class="section-header">{{ section.label | uppercase }}</div>
+              @for (player of section.players; track player.name) {
+                <div class="player-row">
+                  <div class="player-main">
+                    <div class="player-name">{{ player.name }}</div>
+                    <div class="player-meta">
+                      <span>Skill {{ player.level }}</span>
+                      <span>{{ player.vocation }}</span>
+                    </div>
+                  </div>
+
+                  <div class="player-stats">
+                    <div class="stat stat-level" pTooltip="Level" tooltipPosition="bottom">
+                      <i class="pi pi-angle-double-up"></i>
+                      <span>{{ player.gain_level }}</span>
+                    </div>
+                    <div class="stat stat-rank" pTooltip="Rank" tooltipPosition="bottom">
+                      <i class="pi pi-crown"></i>
+                      <span>
+                        @if (player.gain_rank > 0) {
+                          +
+                        } @else if (player.gain_rank < 0) {
+                          -
+                        }
+                        {{ player.gain_rank }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              }
+            </section>
+          </ng-template>
+        </p-carousel>
+      </div>
+    }
+
+    <!-- Empty State -->
+    @if (experiencePlayers().length === 0 && otherSections().length === 0) {
+      <div class="empty-message-container">
+        <i class="pi pi-info-circle"></i>
+        <span>No data available</span>
+      </div>
+    }
+  }
+</div>

@@ -18,7 +18,7 @@ interface CarouselItem {
 export class LandingCarouselComponent {
   carouselItems = signal<CarouselItem[]>([
     {
-      title: 'Advertise?',
+      title: 'Any event / service?',
       description: 'Drop a message and get it featured here',
       icon: 'pi pi-calendar',
     },

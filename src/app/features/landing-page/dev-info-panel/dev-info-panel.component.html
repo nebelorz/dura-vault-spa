@@ -13,7 +13,7 @@
           <span class="timeline-date">{{ entry.date | date: 'dd MMM yyyy' }}</span>
         </div>
         <ng-container>
-          @for (line of entry.content; track entries()) {
+          @for (line of entry.content; track line) {
             <p class="timeline-text">{{ line }}</p>
           }
         </ng-container>

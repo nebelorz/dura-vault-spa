@@ -1,36 +1,92 @@
-$primary: var(--p-primary-color);
-$secondary: var(--p-button-secondary-background);
-$gray-light: #777777;
-$experience: var(--p-button-help-background);
-$level: var(--p-primary-color);
-$rank: #ffbc40;
+// ===============================
+// Base Colors
+// ===============================
+$primary: var(--p-primary-color); // Main brand color
+$secondary: var(--p-button-secondary-background); // Secondary color
+$rank: #ffbc40; // Rank color
+$level: var(--p-primary-color); // Level color (same as primary)
+$experience: var(--p-button-help-background); // Experience color
+$gray-light: #777777; // Light gray
 
+// ===============================
+// Opacity Variants (0.1)
+// ===============================
+// Backgrounds, shadows, overlays, etc.
+$primary-opacity-1: rgba(34, 197, 94, 0.1);
+$secondary-opacity-1: rgba(59, 130, 246, 0.1);
+$rank-opacity-1: rgba(255, 188, 64, 0.1);
+$level-opacity-1: rgba(34, 197, 94, 0.1);
+$experience-opacity-1: rgba(173, 88, 247, 0.1);
+$danger-opacity-1: rgba(239, 68, 68, 0.1);
+
+// ===============================
+// Opacity Variants (0.2)
+// ===============================
+// Backgrounds, shadows, overlays, etc.
+$primary-opacity-2: rgba(34, 197, 94, 0.2);
+$secondary-opacity-2: rgba(59, 130, 246, 0.2);
+$rank-opacity-2: rgba(255, 188, 64, 0.2);
+$level-opacity-2: rgba(34, 197, 94, 0.2);
+$experience-opacity-2: rgba(173, 88, 247, 0.2);
+$danger-opacity-2: rgba(239, 68, 68, 0.2);
+
+// ===============================
+// Primary Color Variants
+// ===============================
 $primary-contrast: var(--p-primary-contrast-color);
 $primary-hover: var(--p-primary-hover-color);
 $primary-active: var(--p-primary-active-color);
+
+// ===============================
+// Secondary Color Variants
+// ===============================
 $secondary-hover: var(--p-button-secondary-hover-background);
 $secondary-active: var(--p-button-secondary-active-background);
 $secondary-contrast: var(--p-button-secondary-color);
+
+// ===============================
+// Info Colors
+// ===============================
 $info: var(--p-button-info-background);
 $info-contrast: var(--p-button-info-color);
 $info-hover: var(--p-button-info-hover-background);
 $info-active: var(--p-button-info-active-background);
+
+// ===============================
+// Success Colors
+// ===============================
 $success: var(--p-button-success-background);
 $success-contrast: var(--p-button-success-color);
 $success-hover: var(--p-button-success-hover-background);
 $success-active: var(--p-button-success-active-background);
+
+// ===============================
+// Warn Colors
+// ===============================
 $warn: var(--p-button-warn-background);
 $warn-contrast: var(--p-button-warn-color);
 $warn-hover: var(--p-button-warn-hover-background);
 $warn-active: var(--p-button-warn-active-background);
+
+// ===============================
+// Danger Colors
+// ===============================
 $danger: var(--p-button-danger-background);
 $danger-contrast: var(--p-button-danger-color);
 $danger-hover: var(--p-button-danger-hover-background);
 $danger-active: var(--p-button-danger-active-background);
+
+// ===============================
+// Help Colors
+// ===============================
 $help: var(--p-button-help-background);
 $help-contrast: var(--p-button-help-color);
 $help-hover: var(--p-button-help-hover-background);
 $help-active: var(--p-button-help-active-background);
+
+// ===============================
+// Surface Colors
+// ===============================
 $surface: var(--p-surface-0);
 $surface-dark: var(--p-surface-800);
 $surface-light: var(--p-surface-100);

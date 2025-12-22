@@ -1,7 +1,11 @@
 import { inject, Injectable, signal } from '@angular/core';
 
 import { CacheService } from './cache.service';
-import { HighscoreRecord, TopGainersParams } from '../models/highscore.model';
+import {
+  HighscoreRecord,
+  TopGainersParams,
+  DailyHighscoresSummary,
+} from '../models/highscore.model';
 import { SupabaseService } from './supabase.service';
 import { ToastService } from './toast.service';
 
@@ -106,5 +110,59 @@ export class HighscoreService {
    */
   clearAllData(): void {
     this.cacheService.clearByPattern('top_gainers');
+  }
+
+  /**
+   * Fetches the daily highscores summary.
+   *
+   * Retrieves top gainers for all sections in a single request,
+   * showing top 3 for experience and top 1 for other sections.
+   *
+   * @param showErrorToast - Whether to show error toast if the request fails (default: true).
+   * @returns Promise resolving to DailyHighscoresSummary object, or null if an error occurs.
+   */
+  async getDailyHighscoresSummary(
+    showErrorToast: boolean = true,
+  ): Promise<DailyHighscoresSummary | null> {
+    const cacheKey = 'daily_highscores_summary';
+
+    // Return cached data if already fetched
+    if (this.cacheService.has(cacheKey)) {
+      return this.cacheService.get<DailyHighscoresSummary>(cacheKey)!;
+    }
+
+    this.loading.set(true);
+    this.error.set(null);
+
+    try {
+      const { data, error } = await this.supabase.rpc('get_daily_highscores_summary');
+
+      if (error) {
+        const errorMessage = 'Failed to load daily highscores summary';
+        console.error('Error fetching daily highscores summary:', error);
+        this.error.set(errorMessage);
+
+        if (showErrorToast) {
+          this.toastService.error(errorMessage, 'Highscore Error');
+        }
+
+        return null;
+      }
+
+      this.cacheService.set(cacheKey, data);
+      return data as DailyHighscoresSummary;
+    } catch (err) {
+      const errorMessage = 'An unexpected error occurred while loading daily highscores';
+      console.error('Unexpected error:', err);
+      this.error.set(errorMessage);
+
+      if (showErrorToast) {
+        this.toastService.error(errorMessage, 'Highscore Error');
+      }
+
+      return null;
+    } finally {
+      this.loading.set(false);
+    }
   }
 }
