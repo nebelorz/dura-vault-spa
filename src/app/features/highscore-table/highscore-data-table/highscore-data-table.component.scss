@@ -1,7 +1,8 @@
 @use '../../../shared/SCSS/colors';
 
 p-table {
-  border: 2px solid colors.$secondary;
+  border: 1px solid colors.$secondary;
+  box-shadow: 0 1px 1px colors.$secondary;
   border-radius: 6px;
   overflow: hidden;
   display: block;

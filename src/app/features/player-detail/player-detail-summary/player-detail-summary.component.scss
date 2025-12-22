@@ -15,17 +15,14 @@
 
 .summary-card {
   display: flex;
-  align-items: center;
-  // background: colors.$secondary;
-  // border-radius: 36px;
+  align-items: center;  
+  border-radius: 8px;
+  border: 2px solid colors.$secondary;
+  box-shadow: 0 1px 1px colors.$secondary;
   gap: 0.5rem;
   padding: 0.5rem 0.75rem;
   transition: all 0.2s ease;
   min-width: 100px;
-
-  &:hover {
-    transform: translateY(-2px);
-  }
 }
 
 .card-icon {
