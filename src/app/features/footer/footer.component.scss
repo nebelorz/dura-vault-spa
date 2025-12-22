@@ -1,4 +1,4 @@
-@use '../../shared/SCSS/colors';
+@use '../../shared/SCSS/colors' as colors;
 
 .footer-content {
   display: flex;
@@ -9,7 +9,12 @@
   margin: 0 auto;
   font-size: x-small;
   color: colors.$gray-light;
+  background: colors.$surface;
   border: 2px solid colors.$secondary;
+}
+
+::ng-deep html.darkmode .footer-content {
+  background: colors.$surface-dark;
 }
 
 .footer-left,
