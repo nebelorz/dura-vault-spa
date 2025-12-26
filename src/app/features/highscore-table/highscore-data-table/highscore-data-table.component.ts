@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 
 import { HighscoreRecord } from '../../../core/models/highscore.model';
 import { RemoveMinusPipe } from '../../../shared/pipes/remove-minus.pipe';
+import { ToastService } from '../../../core/services/toast.service';
 
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { MenuItem } from 'primeng/api';
@@ -26,6 +27,7 @@ import { TooltipModule } from 'primeng/tooltip';
 })
 export class HighscoreDataTableComponent {
   private readonly router = inject(Router);
+  private readonly toastService = inject(ToastService);
 
   // Inputs
   data = input.required<HighscoreRecord[]>();
@@ -44,7 +46,7 @@ export class HighscoreDataTableComponent {
   selectedRecord: HighscoreRecord | null = null;
   readonly contextMenuItems: MenuItem[] = [
     {
-      label: 'Player History',
+      label: 'Details',
       icon: 'pi pi-chart-line',
       command: () => this.viewPlayerHistory(),
     },
@@ -62,6 +64,15 @@ export class HighscoreDataTableComponent {
       command: () => this.copyCharacterInfo(),
     },
   ];
+
+  ngOnInit(): void {
+    this.toastService.info(
+      'Right-click on a row to see more options',
+      undefined,
+      undefined,
+      'bottom-right',
+    );
+  }
 
   /**
    * Filters the table by the given value
@@ -86,6 +97,10 @@ export class HighscoreDataTableComponent {
     if (value > 0) return 'pi pi-angle-up';
     if (value < 0) return 'pi pi-angle-down';
     return 'pi pi-equals';
+  }
+
+  ngOnDestroy(): void {
+    this.toastService.clear();
   }
 
   // Context Menu Actions
