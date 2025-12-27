@@ -1,0 +1,71 @@
+@use '../../../shared/SCSS/colors' as colors;
+
+// Container
+.side-menu {
+  border: 2px solid colors.$secondary;
+  box-shadow: 0 1px 4px colors.$secondary;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: fit-content;
+  min-width: 180px;
+}
+
+// Sections
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: x-small;
+  letter-spacing: 1.5px;
+  opacity: 0.6;
+}
+
+// Menu styling
+::ng-deep .side-menu {
+  .p-menu {
+    border: none;
+    background: transparent;
+    padding: 0;
+    font-size: small;
+
+    .p-menu-list {
+      padding: 0;
+    }
+
+    .p-menuitem {
+      margin: 0;
+    }
+
+    .p-menuitem-content {
+      border-radius: 8px;
+      transition: all 0.2s ease;
+
+      .p-menuitem-link {
+        padding: 0.5rem 0.75rem;
+        gap: 0.5rem;
+
+        .p-menuitem-icon {
+          font-size: x-small;
+          color: colors.$secondary;
+        }
+
+        .p-menuitem-text {
+          font-size: small;
+          color: colors.$secondary;
+        }
+      }
+
+      &:hover {
+        background: colors.$secondary-opacity-1;
+      }
+    }
+  }
+}
