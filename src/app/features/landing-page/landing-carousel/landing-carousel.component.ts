@@ -19,7 +19,7 @@ export class LandingCarouselComponent {
   carouselItems = signal<CarouselItem[]>([
     {
       title: 'Any event / service?',
-      description: 'Drop a message and get it featured here',
+      description: 'Drop a message on Discord and get it featured here!',
       icon: 'pi pi-calendar',
     },
   ]);
