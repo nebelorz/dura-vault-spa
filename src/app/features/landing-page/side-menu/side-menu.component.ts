@@ -66,15 +66,15 @@ export class SideMenuComponent {
       target: '_blank',
     },
     {
-      label: 'Wiki (Gryn Djinn)',
+      label: 'Dura Tools',
       icon: 'pi pi-link',
-      url: 'https://sites.google.com/view/durawiki/home',
+      url: 'https://ahnert1.github.io/DuraTools/',
       target: '_blank',
     },
     {
-      label: 'Raids & Prices (Godlike)',
+      label: 'Wiki',
       icon: 'pi pi-link',
-      url: 'https://ahnert1.github.io/DuraTools/',
+      url: 'https://sites.google.com/view/durawiki/home',
       target: '_blank',
     },
   ];
