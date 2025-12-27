@@ -60,6 +60,12 @@ export class SideMenuComponent {
 
   readonly otherSitesItems: MenuItem[] = [
     {
+      label: 'Dura',
+      icon: 'pi pi-link',
+      url: 'https://dura-online.com/',
+      target: '_blank',
+    },
+    {
       label: 'Wiki (Gryn Djinn)',
       icon: 'pi pi-link',
       url: 'https://sites.google.com/view/durawiki/home',

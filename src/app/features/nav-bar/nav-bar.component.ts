@@ -16,7 +16,7 @@ export class NavBarComponent {
   readonly menuItems: MenuItem[] = [
     {
       label: 'Home',
-      icon: 'pi pi-home',
+      icon: 'pi pi-building-columns',
       routerLink: ['/'],
     },
     {
