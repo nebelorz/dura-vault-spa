@@ -70,7 +70,6 @@ export class SideMenuComponent {
       icon: 'pi pi-link',
       url: 'https://sites.google.com/view/durawiki/home',
       target: '_blank',
-      title: "Gryn Djinn's Wiki",
     },
     {
       label: 'Raids & Prices (Godlike)',
