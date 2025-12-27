@@ -9,5 +9,6 @@ import { version } from '../../../../package.json';
 export class FooterComponent {
   readonly version = `v${version}`;
   readonly currentYear = computed(() => new Date().getFullYear());
+  readonly discordUrl = 'https://discord.com/users/neBelorz%238759';
   readonly githubUrl = 'https://github.com/nebelorz/dura-vault-spa';
 }
