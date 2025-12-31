@@ -1,17 +1,13 @@
 import { Component, OnInit, signal, viewChild, computed, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { ScrapeDateRange } from '../../core/models/metadata.model';
-import { TimePeriod } from '../../core/models/common.model';
-
-import { calculateAvailableDataDateRange } from '../../shared/functions/calculate-available-data-date-range';
+import { HighscoreRecord, HighscoreSection, ScrapeDateRange, TimePeriod } from '@core/models';
+import { HighscoreService, MetadataService } from '@core/services';
+import { calculateAvailableDataDateRange } from '@shared/functions';
 import { HighscoreAvailableDataInfoComponent } from './highscore-available-data-info/highscore-available-data-info.component';
 import { HighscoreDataTableComponent } from './highscore-data-table/highscore-data-table.component';
 import { HighscoreFilterTableByNameComponent } from './highscore-filter-table-by-name/highscore-filter-table-by-name.component';
 import { HighscoreHeaderComponent } from './highscore-header/highscore-header.component';
-import { HighscoreRecord, HighscoreSection } from '../../core/models/highscore.model';
-import { HighscoreService } from '../../core/services/highscore.service';
-import { MetadataService } from '../../core/services/metadata.service';
 import { PeriodSelectorComponent } from '../../shared/period-selector/period-selector.component';
 
 @Component({

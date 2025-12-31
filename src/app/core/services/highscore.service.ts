@@ -1,14 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 
-import { CacheService } from './cache.service';
-import {
-  HighscoreRecord,
-  TopGainersParams,
-  DailyHighscoresSummary,
-} from '../models/highscore.model';
-import { SupabaseService } from './supabase.service';
-import { ToastService } from './toast.service';
-import { BaseApiService } from './base-api.service';
+import { BaseApiService, CacheService, SupabaseService, ToastService } from '@core/services';
+import { DailyHighscoresSummary, HighscoreRecord, TopGainersParams } from '@core/models';
 
 @Injectable({
   providedIn: 'root',

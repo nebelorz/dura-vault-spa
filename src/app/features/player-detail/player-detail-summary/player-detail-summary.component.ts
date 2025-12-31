@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
 
-import { PlayerHistorySummary } from '../../../core/models/player-history.model';
-import { AbbreviateNumberPipe } from '../../../shared/pipes/abbreviate-number.pipe';
+import { PlayerHistorySummary } from '@core/models';
+import { AbbreviateNumberPipe } from '@shared/pipes';
 import { Tooltip } from 'primeng/tooltip';
 
 @Component({

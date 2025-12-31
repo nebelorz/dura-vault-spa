@@ -2,14 +2,14 @@ import { Component, OnInit, signal, computed, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, tap } from 'rxjs/operators';
 
-import { PlayerHistoryService } from '../../core/services/player-history.service';
-import { TimePeriod } from '../../core/models/common.model';
-import { HighscoreSection } from '../../core/models/highscore.model';
 import {
+  HighscoreSection,
+  PlayerHistoryInfo,
   PlayerHistoryRequest,
   PlayerHistoryResponse,
-  PlayerHistoryInfo,
-} from '../../core/models/player-history.model';
+  TimePeriod,
+} from '@core/models';
+import { PlayerHistoryService } from '@core/services';
 import { PlayerDetailHeaderComponent } from './player-detail-header/player-detail-header.component';
 import { PlayerDetailSummaryComponent } from './player-detail-summary/player-detail-summary.component';
 import { PeriodSelectorComponent } from '../../shared/period-selector/period-selector.component';

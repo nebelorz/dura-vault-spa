@@ -1,8 +1,8 @@
 import { signal } from '@angular/core';
 import { SupabaseClient } from '@supabase/supabase-js';
 
-import { CacheService } from './cache.service';
-import { ToastService } from './toast.service';
+import type { CacheService } from './cache.service';
+import type { ToastService } from './toast.service';
 
 export abstract class BaseApiService {
   protected abstract supabase: SupabaseClient;

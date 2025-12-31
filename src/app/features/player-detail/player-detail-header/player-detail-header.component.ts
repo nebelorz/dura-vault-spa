@@ -1,9 +1,8 @@
 import { Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { HighscoreSection } from '../../../core/models/highscore.model';
-import { PlayerHistoryInfo } from '../../../core/models/player-history.model';
-import { toSectionOptions, SectionOption } from '../../../core/constants';
+import { HighscoreSection, PlayerHistoryInfo } from '@core/models';
+import { toSectionOptions, SectionOption } from '@core/constants';
 
 import { SelectModule } from 'primeng/select';
 import { MinimalistIconComponent } from '../../../shared/minimalist-icon/minimalist-icon.component';

@@ -1,4 +1,4 @@
-import { TimePeriod } from '../../core/models/common.model';
+import { TimePeriod } from '@core/models';
 import { formatDate } from './format-date';
 
 /**

@@ -1,10 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 
-import { SupabaseService } from './supabase.service';
-import { CacheService } from './cache.service';
-import { ToastService } from './toast.service';
-import { ScrapeDateRange, ScrapeDateTable } from '../models/metadata.model';
-import { BaseApiService } from './base-api.service';
+import { BaseApiService, CacheService, SupabaseService, ToastService } from '@core/services';
+import { ScrapeDateRange, ScrapeDateTable } from '@core/models';
 
 /**
  * Service for fetching generic metadata from the backend.

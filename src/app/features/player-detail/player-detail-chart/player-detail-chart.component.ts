@@ -1,8 +1,7 @@
 import { Component, computed, input, signal, effect } from '@angular/core';
 
-import { formatDate } from '../../../shared/functions/format-date';
-import { formatLargeNumber } from '../../../shared/functions/format-large-numbers';
-import { PlayerHistoryResponse } from '../../../core/models/player-history.model';
+import { PlayerHistoryResponse } from '@core/models';
+import { formatDate, formatLargeNumber } from '@shared/functions';
 
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';

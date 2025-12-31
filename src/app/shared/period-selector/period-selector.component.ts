@@ -1,8 +1,7 @@
 import { Component, input, output, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SelectButtonModule } from 'primeng/selectbutton';
-import { TimePeriod } from '../../core/models/common.model';
-import { PeriodOption } from '../../core/models/period.model';
+import { PeriodOption, TimePeriod } from '@core/models';
 
 @Component({
   selector: 'app-period-selector',

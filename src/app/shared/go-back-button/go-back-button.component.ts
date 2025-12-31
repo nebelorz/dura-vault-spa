@@ -2,8 +2,8 @@ import { Component, inject, input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
+import { NavigationHistoryService } from '@core/services';
 import { ButtonModule } from 'primeng/button';
-import { NavigationHistoryService } from '../../core/services/navigation-history.service';
 
 @Component({
   selector: 'app-go-back-button',

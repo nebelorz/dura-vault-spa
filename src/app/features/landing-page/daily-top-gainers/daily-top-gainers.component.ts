@@ -1,11 +1,10 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AbbreviateNumberPipe } from '../../../shared/pipes/abbreviate-number.pipe';
-import { DailyHighscoresSummary, DailyTopPlayer } from '../../../core/models/highscore.model';
-import { HighscoreService } from '../../../core/services/highscore.service';
-import { MetadataService } from '../../../core/services/metadata.service';
-import { HIGHSCORE_SECTIONS } from '../../../core/constants';
+import { DailyHighscoresSummary, DailyTopPlayer } from '@core/models';
+import { HighscoreService, MetadataService } from '@core/services';
+import { HIGHSCORE_SECTIONS } from '@core/constants';
+import { AbbreviateNumberPipe } from '@shared/pipes';
 
 import { CarouselModule } from 'primeng/carousel';
 import { Tooltip } from 'primeng/tooltip';

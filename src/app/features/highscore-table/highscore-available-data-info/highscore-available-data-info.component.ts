@@ -1,9 +1,8 @@
 import { Component, input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
+import { ScrapeDateRange } from '@core/models';
 import { MinimalistIconComponent } from '../../../shared/minimalist-icon/minimalist-icon.component';
-import { ScrapeDateRange } from '../../../core/models/metadata.model';
-
 import { TooltipModule } from 'primeng/tooltip';
 
 @Component({

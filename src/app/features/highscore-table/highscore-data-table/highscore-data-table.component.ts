@@ -1,11 +1,11 @@
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { Component, input, viewChild, computed, inject } from '@angular/core';
-import { environment } from '../../../../environments/environment';
 import { Router } from '@angular/router';
+import { environment } from '@env';
 
-import { HighscoreRecord } from '../../../core/models/highscore.model';
-import { RemoveMinusPipe } from '../../../shared/pipes/remove-minus.pipe';
-import { ToastService } from '../../../core/services/toast.service';
+import { HighscoreRecord } from '@core/models';
+import { ToastService } from '@core/services';
+import { RemoveMinusPipe } from '@shared/pipes';
 
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { MenuItem } from 'primeng/api';

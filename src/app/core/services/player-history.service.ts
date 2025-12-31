@@ -1,10 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 
-import { CacheService } from './cache.service';
-import { SupabaseService } from './supabase.service';
-import { ToastService } from './toast.service';
-import { PlayerHistoryRequest, PlayerHistoryResponse } from '../models/player-history.model';
-import { BaseApiService } from './base-api.service';
+import { BaseApiService, CacheService, SupabaseService, ToastService } from '@core/services';
+import { PlayerHistoryRequest, PlayerHistoryResponse } from '@core/models';
 
 @Injectable({
   providedIn: 'root',
