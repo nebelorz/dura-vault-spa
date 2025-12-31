@@ -52,3 +52,9 @@ export interface DailyHighscoresSummary {
     experience: DailyTopPlayer[] | null;
   };
 }
+
+export interface SectionData {
+  name: string;
+  label: string;
+  players: DailyTopPlayer[];
+}

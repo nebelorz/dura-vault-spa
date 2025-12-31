@@ -100,10 +100,6 @@ export class PlayerDetailComponent implements OnInit {
         this.historyData.set(null);
         this.playerInfo.set(null);
       }
-    } catch (error) {
-      console.error('Error loading player history:', error);
-      this.historyData.set(null);
-      this.playerInfo.set(null);
     } finally {
       this.loading.set(false);
     }

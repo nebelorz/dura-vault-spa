@@ -74,8 +74,8 @@ export class HighscoreTableComponent implements OnInit {
       if (dateRange) {
         this.scrapeDateRange.set(dateRange);
       }
-    } catch (error) {
-      console.error('Error loading scrape date range:', error);
+    } finally {
+      this.loading.set(false);
     }
   }
 
@@ -93,8 +93,6 @@ export class HighscoreTableComponent implements OnInit {
       if (result) {
         this.data.set(result);
       }
-    } catch (error) {
-      console.error('Error loading highscore data:', error);
     } finally {
       this.loading.set(false);
     }

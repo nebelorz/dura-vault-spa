@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { DailyHighscoresSummary, DailyTopPlayer } from '@core/models';
+import { DailyHighscoresSummary, DailyTopPlayer, SectionData } from '@core/models';
 import { HighscoreService, MetadataService } from '@core/services';
 import { HIGHSCORE_SECTIONS } from '@core/constants';
 import { AbbreviateNumberPipe } from '@shared/pipes';
@@ -9,12 +9,6 @@ import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/component
 
 import { CarouselModule } from 'primeng/carousel';
 import { Tooltip } from 'primeng/tooltip';
-
-interface SectionData {
-  name: string;
-  label: string;
-  players: DailyTopPlayer[];
-}
 
 @Component({
   selector: 'app-daily-top-gainers',
