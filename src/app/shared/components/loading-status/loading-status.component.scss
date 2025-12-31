@@ -1,0 +1,30 @@
+@use '../../../shared/styles/colors' as colors;
+
+.loading-message-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  gap: 0.75rem;
+
+  i.pi {
+    font-size: 3rem;
+    color: colors.$primary;
+    opacity: 0.6;
+  }
+
+  h2,
+  h3,
+  h4,
+  h5 {
+    margin: 0;
+    font-weight: bold;
+  }
+
+  p {
+    margin: 0;
+    font-size: smaller;
+  }
+}

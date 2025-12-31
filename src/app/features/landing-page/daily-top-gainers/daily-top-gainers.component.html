@@ -1,9 +1,6 @@
 <div class="daily-top">
   @if (loading()) {
-    <div class="loading-message-container">
-      <i class="pi pi-spinner pi-spin"></i>
-      <span>Loading...</span>
-    </div>
+    <app-loading-status />
   } @else {
     <!-- Experience Section -->
     @if (experiencePlayers().length > 0) {
@@ -107,10 +104,7 @@
 
     <!-- Empty State -->
     @if (experiencePlayers().length === 0 && otherSections().length === 0) {
-      <div class="empty-message-container">
-        <i class="pi pi-info-circle"></i>
-        <span>No data available</span>
-      </div>
+      <app-no-data-status />
     }
   }
 </div>

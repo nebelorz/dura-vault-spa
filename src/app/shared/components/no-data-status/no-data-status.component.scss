@@ -1,8 +1,6 @@
-@use './colors';
+@use '../../../shared/styles/colors' as colors;
 
-// EMPTY
-.empty-message-container,
-.loading-message-container {
+.empty-message-container {
   display: flex;
   flex-direction: column;
   align-items: center;

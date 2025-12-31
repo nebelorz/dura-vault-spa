@@ -6,6 +6,7 @@ import { environment } from '@env';
 import { HighscoreRecord } from '@core/models';
 import { ToastService } from '@core/services';
 import { RemoveMinusPipe } from '@shared/pipes';
+import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
 
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { MenuItem } from 'primeng/api';
@@ -23,6 +24,8 @@ import { TooltipModule } from 'primeng/tooltip';
     ContextMenuModule,
     DecimalPipe,
     RemoveMinusPipe,
+    LoadingStatusComponent,
+    NoDataStatusComponent,
   ],
 })
 export class HighscoreDataTableComponent {

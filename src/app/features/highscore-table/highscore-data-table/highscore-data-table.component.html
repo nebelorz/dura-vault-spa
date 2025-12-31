@@ -31,10 +31,7 @@
   <ng-template pTemplate="loadingbody">
     <tr>
       <td [attr.colspan]="colspanEmpty()">
-        <div class="loading-message-container">
-          <i class="pi pi-spinner pi-spin"></i>
-          <h3>Loading...</h3>
-        </div>
+        <app-loading-status />
       </td>
     </tr>
   </ng-template>
@@ -86,12 +83,7 @@
   <ng-template pTemplate="emptymessage">
     <tr class="animation-fade">
       <td [attr.colspan]="colspanEmpty()">
-        <div class="empty-message-container">
-          <i class="pi pi-exclamation-circle"></i>
-          <h3>No data available</h3>
-
-          <p>No highscores for {{ section() }} during this period.</p>
-        </div>
+        <app-no-data-status [message]="'No highscores for ' + section() + ' during this period.'" />
       </td>
     </tr>
   </ng-template>

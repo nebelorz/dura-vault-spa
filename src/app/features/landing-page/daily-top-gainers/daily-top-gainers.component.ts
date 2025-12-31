@@ -5,6 +5,7 @@ import { DailyHighscoresSummary, DailyTopPlayer } from '@core/models';
 import { HighscoreService, MetadataService } from '@core/services';
 import { HIGHSCORE_SECTIONS } from '@core/constants';
 import { AbbreviateNumberPipe } from '@shared/pipes';
+import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
 
 import { CarouselModule } from 'primeng/carousel';
 import { Tooltip } from 'primeng/tooltip';
@@ -19,7 +20,14 @@ interface SectionData {
   selector: 'app-daily-top-gainers',
   templateUrl: './daily-top-gainers.component.html',
   styleUrls: ['./daily-top-gainers.component.scss'],
-  imports: [CommonModule, CarouselModule, AbbreviateNumberPipe, Tooltip],
+  imports: [
+    CommonModule,
+    CarouselModule,
+    AbbreviateNumberPipe,
+    Tooltip,
+    LoadingStatusComponent,
+    NoDataStatusComponent,
+  ],
 })
 export class DailyTopGainersComponent implements OnInit {
   private highscoreService = inject(HighscoreService);

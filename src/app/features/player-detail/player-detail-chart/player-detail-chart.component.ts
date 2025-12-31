@@ -2,6 +2,7 @@ import { Component, computed, input, signal, effect } from '@angular/core';
 
 import { PlayerHistoryResponse } from '@core/models';
 import { formatDate, formatLargeNumber } from '@shared/functions';
+import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
 
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
@@ -23,7 +24,7 @@ interface ChartDataset {
   selector: 'app-player-detail-chart',
   templateUrl: './player-detail-chart.component.html',
   styleUrls: ['./player-detail-chart.component.scss'],
-  imports: [CardModule, ChartModule],
+  imports: [CardModule, ChartModule, LoadingStatusComponent, NoDataStatusComponent],
 })
 export class PlayerDetailChartComponent {
   historyData = input.required<PlayerHistoryResponse | null>();
