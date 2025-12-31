@@ -5,6 +5,7 @@ import { AbbreviateNumberPipe } from '../../../shared/pipes/abbreviate-number.pi
 import { DailyHighscoresSummary, DailyTopPlayer } from '../../../core/models/highscore.model';
 import { HighscoreService } from '../../../core/services/highscore.service';
 import { MetadataService } from '../../../core/services/metadata.service';
+import { HIGHSCORE_SECTIONS } from '../../../core/constants';
 
 import { CarouselModule } from 'primeng/carousel';
 import { Tooltip } from 'primeng/tooltip';
@@ -57,24 +58,13 @@ export class DailyTopGainersComponent implements OnInit {
   private processSummaryData(summary: DailyHighscoresSummary): void {
     this.experiencePlayers.set(summary.top_daily.experience?.slice(0, 3) || []);
 
-    const skillConfigs = [
-      { name: 'magic', label: 'Magic' },
-      { name: 'fist', label: 'Fist' },
-      { name: 'club', label: 'Club' },
-      { name: 'sword', label: 'Sword' },
-      { name: 'axe', label: 'Axe' },
-      { name: 'distance', label: 'Distance' },
-      { name: 'shield', label: 'Shield' },
-      { name: 'fishing', label: 'Fishing' },
-    ];
-
-    const sections = skillConfigs
-      .map(({ name, label }) => ({
-        name,
-        label,
+    const sections = HIGHSCORE_SECTIONS.filter((s) => s.value !== 'experience')
+      .map((section) => ({
+        name: section.value,
+        label: section.label,
         players:
           (
-            summary.top_daily[name as keyof typeof summary.top_daily] as
+            summary.top_daily[section.value as keyof typeof summary.top_daily] as
               | DailyTopPlayer[]
               | undefined
           )?.slice(0, 1) || [],

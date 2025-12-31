@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { CacheService } from './cache.service';
 import {
@@ -8,19 +8,16 @@ import {
 } from '../models/highscore.model';
 import { SupabaseService } from './supabase.service';
 import { ToastService } from './toast.service';
+import { BaseApiService } from './base-api.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class HighscoreService {
+export class HighscoreService extends BaseApiService {
   private supabaseService = inject(SupabaseService);
-  private cacheService = inject(CacheService);
-  private toastService = inject(ToastService);
-  private supabase = this.supabaseService.getClient();
-
-  // State signals
-  loading = signal<boolean>(false);
-  error = signal<string | null>(null);
+  protected cacheService = inject(CacheService);
+  protected toastService = inject(ToastService);
+  protected supabase = this.supabaseService.getClient();
 
   /**
    * Fetches the top gainers.
@@ -45,51 +42,22 @@ export class HighscoreService {
     showErrorToast: boolean = true,
   ): Promise<HighscoreRecord[] | null> {
     const { period = 'week', section = null, limit = 25 } = params;
-
     const cacheKey = `top_gainers_${period}_${section || 'all'}_${limit}`;
 
-    // Return cached data if already fetched
-    if (this.cacheService.has(cacheKey)) {
-      return this.cacheService.get<HighscoreRecord[]>(cacheKey)!;
-    }
-
-    this.loading.set(true);
-    this.error.set(null);
-
-    try {
-      const { data, error } = await this.supabase.rpc('get_top_gainers', {
+    return this.fetchWithCache<HighscoreRecord[]>(
+      cacheKey,
+      'get_top_gainers',
+      {
         p_period: period,
         p_section: section,
         p_limit: limit,
-      });
-
-      if (error) {
-        const errorMessage = 'Failed to load highscore data';
-        console.error('Error fetching top gainers:', error);
-        this.error.set(errorMessage);
-
-        if (showErrorToast) {
-          this.toastService.error(errorMessage, 'Highscore Error');
-        }
-
-        return null;
-      }
-
-      this.cacheService.set(cacheKey, data);
-      return data as HighscoreRecord[];
-    } catch (err) {
-      const errorMessage = 'An unexpected error occurred while loading highscores';
-      console.error('Unexpected error:', err);
-      this.error.set(errorMessage);
-
-      if (showErrorToast) {
-        this.toastService.error(errorMessage, 'Highscore Error');
-      }
-
-      return null;
-    } finally {
-      this.loading.set(false);
-    }
+      },
+      {
+        errorContext: 'highscore data',
+        errorTitle: 'Highscore Error',
+        showErrorToast,
+      },
+    );
   }
 
   /**
@@ -126,43 +94,15 @@ export class HighscoreService {
   ): Promise<DailyHighscoresSummary | null> {
     const cacheKey = 'daily_highscores_summary';
 
-    // Return cached data if already fetched
-    if (this.cacheService.has(cacheKey)) {
-      return this.cacheService.get<DailyHighscoresSummary>(cacheKey)!;
-    }
-
-    this.loading.set(true);
-    this.error.set(null);
-
-    try {
-      const { data, error } = await this.supabase.rpc('get_daily_highscores_summary');
-
-      if (error) {
-        const errorMessage = 'Failed to load daily highscores summary';
-        console.error('Error fetching daily highscores summary:', error);
-        this.error.set(errorMessage);
-
-        if (showErrorToast) {
-          this.toastService.error(errorMessage, 'Highscore Error');
-        }
-
-        return null;
-      }
-
-      this.cacheService.set(cacheKey, data);
-      return data as DailyHighscoresSummary;
-    } catch (err) {
-      const errorMessage = 'An unexpected error occurred while loading daily highscores';
-      console.error('Unexpected error:', err);
-      this.error.set(errorMessage);
-
-      if (showErrorToast) {
-        this.toastService.error(errorMessage, 'Highscore Error');
-      }
-
-      return null;
-    } finally {
-      this.loading.set(false);
-    }
+    return this.fetchWithCache<DailyHighscoresSummary>(
+      cacheKey,
+      'get_daily_highscores_summary',
+      {},
+      {
+        errorContext: 'daily highscores summary',
+        errorTitle: 'Highscore Error',
+        showErrorToast,
+      },
+    );
   }
 }

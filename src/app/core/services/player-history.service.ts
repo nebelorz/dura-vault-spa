@@ -1,22 +1,19 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { CacheService } from './cache.service';
 import { SupabaseService } from './supabase.service';
 import { ToastService } from './toast.service';
 import { PlayerHistoryRequest, PlayerHistoryResponse } from '../models/player-history.model';
+import { BaseApiService } from './base-api.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PlayerHistoryService {
+export class PlayerHistoryService extends BaseApiService {
   private supabaseService = inject(SupabaseService);
-  private cacheService = inject(CacheService);
-  private toastService = inject(ToastService);
-  private supabase = this.supabaseService.getClient();
-
-  // State signals
-  loading = signal<boolean>(false);
-  error = signal<string | null>(null);
+  protected cacheService = inject(CacheService);
+  protected toastService = inject(ToastService);
+  protected supabase = this.supabaseService.getClient();
 
   /**
    * Fetches player history data for a specific player and section.
@@ -34,45 +31,11 @@ export class PlayerHistoryService {
   ): Promise<PlayerHistoryResponse | null> {
     const cacheKey = `player_history_${request.p_name}_${request.p_section}_${request.p_period}`;
 
-    // Return cached data if already fetched
-    if (this.cacheService.has(cacheKey)) {
-      return this.cacheService.get<PlayerHistoryResponse>(cacheKey)!;
-    }
-
-    this.loading.set(true);
-    this.error.set(null);
-
-    try {
-      const { data, error } = await this.supabase.rpc('get_player_historic', request);
-
-      if (error) {
-        const errorMessage = 'Failed to load player history';
-        console.error('Error fetching player history:', error);
-        this.error.set(errorMessage);
-
-        if (showErrorToast) {
-          this.toastService.error(errorMessage, 'Player History Error');
-        }
-
-        return null;
-      }
-
-      const responseData = data as PlayerHistoryResponse;
-      this.cacheService.set(cacheKey, responseData);
-      return responseData;
-    } catch (err) {
-      const errorMessage = 'An unexpected error occurred while loading player history';
-      console.error('Unexpected error:', err);
-      this.error.set(errorMessage);
-
-      if (showErrorToast) {
-        this.toastService.error(errorMessage, 'Player History Error');
-      }
-
-      return null;
-    } finally {
-      this.loading.set(false);
-    }
+    return this.fetchWithCache<PlayerHistoryResponse>(cacheKey, 'get_player_historic', request, {
+      errorContext: 'player history',
+      errorTitle: 'Player History Error',
+      showErrorToast,
+    });
   }
 
   /**

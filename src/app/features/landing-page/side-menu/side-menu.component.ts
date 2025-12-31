@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
+import { toMenuItems } from '../../../core/constants';
 
 @Component({
   selector: 'app-side-menu',
@@ -10,53 +11,7 @@ import { MenuItem } from 'primeng/api';
   imports: [MenuModule],
 })
 export class SideMenuComponent {
-  readonly topsItems: MenuItem[] = [
-    {
-      label: 'Experience',
-      icon: 'pi pi-box',
-      routerLink: ['/top/experience'],
-    },
-    {
-      label: 'Magic',
-      icon: 'pi pi-box',
-      routerLink: ['/top/magic'],
-    },
-    {
-      label: 'Fist',
-      icon: 'pi pi-box',
-      routerLink: ['/top/fist'],
-    },
-    {
-      label: 'Club',
-      icon: 'pi pi-box',
-      routerLink: ['/top/club'],
-    },
-    {
-      label: 'Sword',
-      icon: 'pi pi-box',
-      routerLink: ['/top/sword'],
-    },
-    {
-      label: 'Axe',
-      icon: 'pi pi-box',
-      routerLink: ['/top/axe'],
-    },
-    {
-      label: 'Distance',
-      icon: 'pi pi-box',
-      routerLink: ['/top/distance'],
-    },
-    {
-      label: 'Shield',
-      icon: 'pi pi-box',
-      routerLink: ['/top/shield'],
-    },
-    {
-      label: 'Fishing',
-      icon: 'pi pi-box',
-      routerLink: ['/top/fishing'],
-    },
-  ];
+  readonly topsItems: MenuItem[] = toMenuItems();
 
   readonly otherSitesItems: MenuItem[] = [
     {

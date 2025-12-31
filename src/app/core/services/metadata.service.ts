@@ -4,6 +4,7 @@ import { SupabaseService } from './supabase.service';
 import { CacheService } from './cache.service';
 import { ToastService } from './toast.service';
 import { ScrapeDateRange, ScrapeDateTable } from '../models/metadata.model';
+import { BaseApiService } from './base-api.service';
 
 /**
  * Service for fetching generic metadata from the backend.
@@ -11,11 +12,11 @@ import { ScrapeDateRange, ScrapeDateTable } from '../models/metadata.model';
 @Injectable({
   providedIn: 'root',
 })
-export class MetadataService {
+export class MetadataService extends BaseApiService {
   private supabaseService = inject(SupabaseService);
-  private cacheService = inject(CacheService);
-  private toastService = inject(ToastService);
-  private supabase = this.supabaseService.getClient();
+  protected cacheService = inject(CacheService);
+  protected toastService = inject(ToastService);
+  protected supabase = this.supabaseService.getClient();
 
   /**
    * Fetches the oldest and latest scrape dates for a given table.
@@ -35,44 +36,18 @@ export class MetadataService {
   ): Promise<ScrapeDateRange | null> {
     const cacheKey = `min_max_scrape_dates_${tableName}`;
 
-    // Return cached data if already fetched
-    if (this.cacheService.has(cacheKey)) {
-      return this.cacheService.get<ScrapeDateRange>(cacheKey)!;
-    }
+    const data = await this.fetchWithCache<ScrapeDateRange[]>(
+      cacheKey,
+      'get_min_max_scrape_dates',
+      { p_table_name: tableName },
+      {
+        errorContext: `scrape dates for ${tableName}`,
+        errorTitle: 'Metadata Error',
+        showErrorToast,
+      },
+    );
 
-    try {
-      const { data, error } = await this.supabase.rpc('get_min_max_scrape_dates', {
-        p_table_name: tableName,
-      });
-
-      if (error) {
-        const errorMessage = `Failed to fetch scrape dates for ${tableName}`;
-        console.error(`Error fetching min/max scrape dates for ${tableName}:`, error);
-
-        if (showErrorToast) {
-          this.toastService.error(errorMessage, 'Metadata Error');
-        }
-
-        return null;
-      }
-
-      const result = data && data.length > 0 ? data[0] : null;
-
-      if (result) {
-        this.cacheService.set(cacheKey, result);
-      }
-
-      return result as ScrapeDateRange;
-    } catch (err) {
-      const errorMessage = `Failed to fetch scrape dates for ${tableName}`;
-      console.error('Unexpected error:', err);
-
-      if (showErrorToast) {
-        this.toastService.error(errorMessage, 'Metadata Error');
-      }
-
-      return null;
-    }
+    return data && data.length > 0 ? data[0] : null;
   }
 
   /**
@@ -87,37 +62,22 @@ export class MetadataService {
   async getHighscoreSections(showErrorToast: boolean = true): Promise<string[] | null> {
     const cacheKey = 'highscore_sections';
 
-    // Return cached data if already fetched
     if (this.cacheService.has(cacheKey)) {
       const cached = this.cacheService.get<Array<{ section: string }>>(cacheKey)!;
       return cached.map((s) => s.section);
     }
 
-    try {
-      const { data, error } = await this.supabase.rpc('get_highscore_sections');
+    const data = await this.fetchWithCache<Array<{ section: string }>>(
+      cacheKey,
+      'get_highscore_sections',
+      {},
+      {
+        errorContext: 'highscore sections',
+        errorTitle: 'Metadata Error',
+        showErrorToast,
+      },
+    );
 
-      if (error) {
-        const errorMessage = 'Failed to fetch highscore sections';
-        console.error('Error fetching highscore sections:', error);
-
-        if (showErrorToast) {
-          this.toastService.error(errorMessage, 'Metadata Error');
-        }
-
-        return null;
-      }
-
-      this.cacheService.set(cacheKey, data);
-      return data.map((s: { section: string }) => s.section);
-    } catch (err) {
-      const errorMessage = 'Failed to fetch highscore sections';
-      console.error('Unexpected error:', err);
-
-      if (showErrorToast) {
-        this.toastService.error(errorMessage, 'Metadata Error');
-      }
-
-      return null;
-    }
+    return data ? data.map((s) => s.section) : null;
   }
 }
