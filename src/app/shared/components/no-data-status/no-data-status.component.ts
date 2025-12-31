@@ -2,7 +2,6 @@ import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-no-data-status',
-  standalone: true,
   templateUrl: './no-data-status.component.html',
   styleUrl: './no-data-status.component.scss',
 })

@@ -11,7 +11,6 @@ interface DevInfoEntry {
 
 @Component({
   selector: 'app-dev-info-panel',
-  standalone: true,
   imports: [TimelineModule, DatePipe, CommonModule],
   templateUrl: './dev-info-panel.component.html',
   styleUrls: ['./dev-info-panel.component.scss'],
