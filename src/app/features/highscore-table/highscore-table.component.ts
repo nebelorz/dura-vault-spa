@@ -8,7 +8,7 @@ import { HighscoreAvailableDataInfoComponent } from './highscore-available-data-
 import { HighscoreDataTableComponent } from './highscore-data-table/highscore-data-table.component';
 import { HighscoreFilterTableByNameComponent } from './highscore-filter-table-by-name/highscore-filter-table-by-name.component';
 import { HighscoreHeaderComponent } from './highscore-header/highscore-header.component';
-import { PeriodSelectorComponent } from '../../shared/period-selector/period-selector.component';
+import { PeriodSelectorComponent } from '../../shared/components/period-selector/period-selector.component';
 
 @Component({
   selector: 'app-highscore-table',

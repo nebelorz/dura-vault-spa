@@ -1,4 +1,4 @@
-@use '../../../shared/SCSS/colors';
+@use '../../../shared/styles/colors' as colors;
 
 p-card {
   border: 1px solid colors.$secondary;

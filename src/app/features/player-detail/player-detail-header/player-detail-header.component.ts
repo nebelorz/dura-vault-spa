@@ -5,8 +5,8 @@ import { HighscoreSection, PlayerHistoryInfo } from '@core/models';
 import { toSectionOptions, SectionOption } from '@core/constants';
 
 import { SelectModule } from 'primeng/select';
-import { MinimalistIconComponent } from '../../../shared/minimalist-icon/minimalist-icon.component';
-import { GoBackButtonComponent } from '../../../shared/go-back-button/go-back-button.component';
+import { MinimalistIconComponent } from '../../../shared/components/minimalist-icon/minimalist-icon.component';
+import { GoBackButtonComponent } from '../../../shared/components/go-back-button/go-back-button.component';
 
 @Component({
   selector: 'app-player-detail-header',

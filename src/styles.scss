@@ -1,6 +1,6 @@
-@use './app/shared/SCSS/colors' as colors;
-@use './app/shared/SCSS/animation-fade' as animationFade;
-@use './app/shared/SCSS/status-message-styles';
+@use './app/shared/styles/colors' as colors;
+@use './app/shared/styles/animation-fade' as animationFade;
+@use './app/shared/styles/status-message-styles';
 @use 'primeicons/primeicons.css';
 // Use Montserrat Medium (500) from Google Fonts
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');

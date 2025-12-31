@@ -1,4 +1,4 @@
-@use '../../../shared/SCSS/colors' as colors;
+@use '../../../shared/styles/colors' as colors;
 
 @mixin card-type-bg($color) {
   i {
@@ -15,7 +15,7 @@
 
 .summary-card {
   display: flex;
-  align-items: center;  
+  align-items: center;
   border-radius: 8px;
   border: 2px solid colors.$secondary;
   box-shadow: 0 1px 1px colors.$secondary;

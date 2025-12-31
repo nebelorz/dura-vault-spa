@@ -12,7 +12,7 @@ import {
 import { PlayerHistoryService } from '@core/services';
 import { PlayerDetailHeaderComponent } from './player-detail-header/player-detail-header.component';
 import { PlayerDetailSummaryComponent } from './player-detail-summary/player-detail-summary.component';
-import { PeriodSelectorComponent } from '../../shared/period-selector/period-selector.component';
+import { PeriodSelectorComponent } from '../../shared/components/period-selector/period-selector.component';
 import { PlayerDetailChartComponent } from './player-detail-chart/player-detail-chart.component';
 
 @Component({
