@@ -15,15 +15,18 @@
       <th></th>
       <th pSortableColumn="name">Name</th>
       <th pSortableColumn="vocation">Vocation</th>
-      <th pSortableColumn="level">Level</th>
 
       @if (isExperienceSection()) {
+        <th pSortableColumn="level">Level</th>
         <th pSortableColumn="points">Experience</th>
         <th pSortableColumn="gain_points">Gain Experience</th>
+        <th pSortableColumn="gain_level">Gain Level</th>
+        <th pSortableColumn="gain_rank">Gain Rank</th>
+      } @else {
+        <th pSortableColumn="level">Skill</th>
+        <th pSortableColumn="gain_level">Gain Skill</th>
+        <th pSortableColumn="gain_rank">Gain Rank</th>
       }
-
-      <th pSortableColumn="gain_level">Gain Level</th>
-      <th pSortableColumn="gain_rank">Gain Rank</th>
     </tr>
   </ng-template>
 
