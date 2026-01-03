@@ -13,7 +13,7 @@ export const routes: Routes = [
     component: HighscoreTableComponent,
   },
   {
-    path: 'player/:section',
+    path: 'player/:name',
     component: PlayerDetailComponent,
   },
 ];

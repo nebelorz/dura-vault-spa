@@ -17,6 +17,7 @@
             [class.top-one]="i === 0"
             [class.top-two]="i === 1"
             [class.top-three]="i === 2"
+            (click)="navigateToPlayer(player.name, 'experience')"
           >
             <div class="player-main">
               <div class="player-name">{{ player.name }}</div>
@@ -68,7 +69,7 @@
             <section class="animation-fade">
               <div class="section-header">{{ section.label | uppercase }}</div>
               @for (player of section.players; track player.name) {
-                <div class="player-row">
+                <div class="player-row" (click)="navigateToPlayer(player.name, section.name)">
                   <div class="player-main">
                     <div class="player-name">{{ player.name }}</div>
                     <div class="player-meta">

@@ -111,8 +111,8 @@ export class HighscoreDataTableComponent {
     const record = this.selectedRecord;
     if (!record) return;
 
-    this.router.navigate(['/player', record.section], {
-      queryParams: { name: record.name },
+    this.router.navigate(['/player', record.name], {
+      queryParams: { section: record.section },
     });
   }
 

@@ -38,7 +38,7 @@ export class PlayerDetailComponent implements OnInit {
   summary = computed(() => this.historyData()?.summary || null);
 
   // Chart state
-  selectedPeriod = signal<TimePeriod>('week');
+  selectedPeriod = signal<TimePeriod>('month');
   loading = signal<boolean>(false);
   historyData = signal<PlayerHistoryResponse | null>(null);
 
@@ -47,23 +47,23 @@ export class PlayerDetailComponent implements OnInit {
     this.route.paramMap
       .pipe(
         tap((params) => {
-          const section = params.get('section') as HighscoreSection;
-          if (!section) {
+          const name = params.get('name');
+          if (!name) {
             this.router.navigate(['/']);
-            throw new Error('No section provided');
+            throw new Error('No player name provided');
           }
-          this.section.set(section);
+          this.playerName.set(name);
         }),
         switchMap(() => this.route.queryParamMap),
       )
       .subscribe((queryParams) => {
-        const name = queryParams.get('name');
-        if (!name) {
+        const section = queryParams.get('section') as HighscoreSection;
+        if (!section) {
           this.router.navigate(['/']);
           return;
         }
 
-        this.playerName.set(name);
+        this.section.set(section);
         this.loadPlayerHistory();
       });
   }
@@ -76,8 +76,8 @@ export class PlayerDetailComponent implements OnInit {
   onSectionChange(section: HighscoreSection): void {
     this.section.set(section);
     // Navigation will trigger ngOnInit which reloads data
-    this.router.navigate(['/player', section], {
-      queryParams: { name: this.playerName() },
+    this.router.navigate(['/player', this.playerName()], {
+      queryParams: { section },
     });
   }
 

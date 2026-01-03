@@ -1,5 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 import { DailyHighscoresSummary, DailyTopPlayer, SectionData } from '@core/models';
 import { HighscoreService, MetadataService } from '@core/services';
@@ -26,6 +27,7 @@ import { Tooltip } from 'primeng/tooltip';
 export class DailyTopGainersComponent implements OnInit {
   private highscoreService = inject(HighscoreService);
   private metadataService = inject(MetadataService);
+  private router = inject(Router);
 
   loading = signal<boolean>(false);
   maxDate = signal<string | null>(null);
@@ -34,6 +36,12 @@ export class DailyTopGainersComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await Promise.all([this.loadDailySummary(), this.loadMaxDate()]);
+  }
+
+  navigateToPlayer(playerName: string, section: string): void {
+    this.router.navigate(['/player', playerName], {
+      queryParams: { section },
+    });
   }
 
   private async loadMaxDate(): Promise<void> {

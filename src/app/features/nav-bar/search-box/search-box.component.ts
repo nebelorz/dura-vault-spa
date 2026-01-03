@@ -18,8 +18,8 @@ export class SearchBoxComponent {
     const capitalizedQuery = this.capitalizePlayerName(input.value);
 
     if (capitalizedQuery) {
-      this.router.navigate(['/player/experience'], {
-        queryParams: { name: capitalizedQuery },
+      this.router.navigate(['/player', capitalizedQuery], {
+        queryParams: { section: 'experience' },
       });
 
       input.value = '';
