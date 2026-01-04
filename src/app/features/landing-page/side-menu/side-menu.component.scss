@@ -20,14 +20,6 @@ section {
   gap: 0.5rem;
 }
 
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  font-size: x-small;
-  letter-spacing: 1.5px;
-  opacity: 0.6;
-}
-
 // Menu styling
 ::ng-deep .side-menu {
   .p-menu {
