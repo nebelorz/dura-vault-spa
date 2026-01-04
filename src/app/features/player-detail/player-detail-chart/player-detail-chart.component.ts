@@ -1,6 +1,6 @@
 import { Component, computed, input, signal, effect } from '@angular/core';
 
-import { PlayerHistoryResponse } from '@core/models';
+import { PlayerDetailsResponse } from '@core/models';
 import { formatDate, formatLargeNumber } from '@shared/functions';
 import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
 
@@ -27,7 +27,7 @@ interface ChartDataset {
   imports: [CardModule, ChartModule, LoadingStatusComponent, NoDataStatusComponent],
 })
 export class PlayerDetailChartComponent {
-  historyData = input.required<PlayerHistoryResponse | null>();
+  playerDetailsData = input.required<PlayerDetailsResponse | null>();
   loading = input.required<boolean>();
 
   // Color signals
@@ -53,7 +53,7 @@ export class PlayerDetailChartComponent {
 
   // Prepare chart data
   chartData = computed(() => {
-    const data = this.historyData();
+    const data = this.playerDetailsData();
     if (!data?.daily?.length) return null;
 
     const labels = data.daily.map((record) => formatDate(record.scrape_date));
@@ -86,7 +86,7 @@ export class PlayerDetailChartComponent {
 
   // Chart configuration
   chartOptions = computed(() => {
-    const data = this.historyData();
+    const data = this.playerDetailsData();
     const hasPoints = data?.daily?.some((record) => record.points !== null) ?? false;
 
     return {

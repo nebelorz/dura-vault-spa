@@ -51,7 +51,7 @@ export class HighscoreDataTableComponent {
     {
       label: 'Details',
       icon: 'pi pi-chart-line',
-      command: () => this.viewPlayerHistory(),
+      command: () => this.viewPlayerDetails(),
     },
     {
       separator: true,
@@ -107,7 +107,7 @@ export class HighscoreDataTableComponent {
   }
 
   // Context Menu Actions
-  private viewPlayerHistory(): void {
+  private viewPlayerDetails(): void {
     const record = this.selectedRecord;
     if (!record) return;
 
