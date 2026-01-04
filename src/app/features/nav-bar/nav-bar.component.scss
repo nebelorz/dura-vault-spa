@@ -1,0 +1,5 @@
+@use 'colors' as colors;
+
+p-menubar {
+  border: 1px solid colors.$secondary;
+}
