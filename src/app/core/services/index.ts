@@ -3,7 +3,7 @@ export * from './cache.service';
 export * from './highscore.service';
 export * from './metadata.service';
 export * from './navigation-history.service';
-export * from './player-history.service';
+export * from './player-details.service';
 export * from './supabase.service';
 export * from './theme.service';
 export * from './toast.service';
