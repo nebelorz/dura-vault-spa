@@ -1,6 +1,6 @@
 {
   "name": "dura-vault-spa",
-  "version": "0.0.3b",
+  "version": "1.0.0b",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

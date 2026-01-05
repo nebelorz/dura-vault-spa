@@ -13,7 +13,7 @@ Built with Angular 21, this single-page application provides comprehensive data 
 **Core Functionality**
 
 - Highscore tables filtered by skill and time period (daily, weekly, monthly, yearly, all-time)
-- Detailed player profiles with progression charts and stats
+- Detailed player profiles with progression charts and summarized stats
 - Smart caching system for optimized data loading
 - Theme support with dark/light mode toggle
 - Interactive Chart.js visualizations for trend analysis
