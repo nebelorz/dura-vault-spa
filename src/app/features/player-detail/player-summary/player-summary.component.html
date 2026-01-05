@@ -1,15 +1,8 @@
 <div class="player-summary-container">
-  @if (loading()) {
-    <app-loading-status />
-  } @else if (summary()) {
+  @if (summary()) {
     <!-- Total Gains Section -->
     <app-player-total-gains-summary [summary]="summary()" [section]="section()" />
     <!-- Performance Section -->
     <app-player-performance-summary [summary]="summary()" [section]="section()" />
-  } @else {
-    <app-no-data-status
-      title="No Data Available"
-      message="There is no historical data for this player in the selected period."
-    />
   }
 </div>
