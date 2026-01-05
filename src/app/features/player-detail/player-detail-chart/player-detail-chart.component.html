@@ -1,4 +1,4 @@
-<p-card>
+<div class="default-container">
   @if (loading()) {
     <app-loading-status />
   } @else if (chartData()) {
@@ -9,4 +9,4 @@
       message="There is no historical data for this player in the selected period."
     />
   }
-</p-card>
+</div>

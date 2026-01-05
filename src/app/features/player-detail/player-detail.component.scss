@@ -1,39 +1,42 @@
 @use 'colors' as colors;
 
 .player-detail-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
   padding: 2rem;
   max-width: 100%;
   margin: 0 auto;
 }
 
-.player-column {
+// Main Content
+.player-container {
   border: 2px solid colors.$secondary;
   box-shadow: 0 1px 4px colors.$secondary;
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
   display: block;
+  min-width: 0;
 }
 
-.player-column-header {
+.player-container-header {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: space-between;
+  gap: 1rem;
   padding: 1.5rem;
 }
 
-.player-column-body {
+.player-container-body {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
   padding: 1.5rem;
   flex: 1;
 }
 
 .period-selector-wrapper {
   display: flex;
-  justify-content: flex-start;
-  margin-bottom: 0.5rem;
+  align-items: center;
+  gap: 0.5rem;
 }

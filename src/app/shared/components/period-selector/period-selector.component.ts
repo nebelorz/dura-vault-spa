@@ -1,7 +1,9 @@
 import { Component, input, output, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SelectButtonModule } from 'primeng/selectbutton';
+
 import { PeriodOption, TimePeriod } from '@core/models';
+
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 @Component({
   selector: 'app-period-selector',
@@ -14,6 +16,7 @@ export class PeriodSelectorComponent {
   selectedPeriod = input.required<TimePeriod>();
   allDisabled = input<boolean>(false);
   disabledPeriods = input<TimePeriod[]>([]);
+  displayInfoIcon = input<boolean>(false);
   periodOptions = input<PeriodOption[]>([
     { label: 'Day', value: 'day' },
     { label: 'Week', value: 'week' },

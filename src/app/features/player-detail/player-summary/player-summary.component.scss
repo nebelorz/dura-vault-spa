@@ -1,0 +1,8 @@
+@use 'colors' as colors;
+
+.player-summary-container {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}

@@ -10,6 +10,7 @@ body {
   font-size: 14px;
 }
 
+// INPUTS
 .clean-input-field {
   border: none !important;
   background: transparent !important;
@@ -20,14 +21,42 @@ body {
   }
 }
 
+// TOOLTIPS
 .p-tooltip .p-tooltip-text {
   font-size: smaller;
 }
 
+// CONTAINERS
+.default-container {
+  border: 2px solid colors.$secondary;
+  box-shadow: 0 1px 4px colors.$secondary;
+  border-radius: 8px;
+  padding: 1rem;
+  display: grid;
+  gap: 1.5rem;
+}
+
+// TEXT STYLES
 .additional-info {
   color: colors.$gray-light;
   font-size: smaller;
   margin-left: 0.25em;
+}
+
+.minimalist-info {
+  color: colors.$gray-light;
+  font-size: x-small;
+  margin-left: 0.25em;
+  opacity: 0.6;
+}
+
+// SECTION HEADERS
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: x-small;
+  letter-spacing: 1.5px;
+  opacity: 0.6;
 }
 
 // ANIMATIONS

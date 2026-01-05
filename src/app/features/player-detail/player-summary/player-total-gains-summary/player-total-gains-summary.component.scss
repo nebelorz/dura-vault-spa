@@ -1,0 +1,88 @@
+@use 'colors' as colors;
+
+.stats-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stat-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+
+  &.positive-level {
+    background: colors.$level-opacity-1;
+  }
+
+  &.positive-experience {
+    background: colors.$experience-opacity-1;
+  }
+
+  &.positive-rank {
+    background: colors.$rank-opacity-1;
+  }
+
+  &.negative {
+    background: colors.$danger-opacity-1;
+  }
+}
+
+.stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  i {
+    font-size: large;
+    opacity: 0.8;
+
+    &.level {
+      color: colors.$level;
+    }
+
+    &.experience {
+      color: colors.$experience;
+    }
+
+    &.rank {
+      color: colors.$rank;
+    }
+
+    &.negative {
+      color: colors.$danger;
+    }
+  }
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.stat-label {
+  font-size: xx-small;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.6;
+}
+
+.stat-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.stat-value {
+  font-size: small;
+  font-weight: bold;
+  line-height: 1.2;
+}

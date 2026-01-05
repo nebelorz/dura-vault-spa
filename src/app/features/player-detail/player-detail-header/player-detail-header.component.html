@@ -20,8 +20,12 @@
     <!-- Player info -->
     @if (playerInfo()) {
       <div class="additional-info">
-        <app-minimalist-icon tooltipText="In {{ section() }} section" tooltipPosition="bottom" />
-        {{ playerInfo()?.level }} | {{ playerInfo()?.vocation }}
+        @if (section() === 'experience') {
+          Lvl
+        } @else {
+          Skill
+        }
+        {{ playerInfo()!.level }} | {{ playerInfo()!.vocation }}
       </div>
     }
   </div>

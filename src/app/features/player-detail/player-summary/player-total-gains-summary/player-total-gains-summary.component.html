@@ -1,0 +1,82 @@
+<div class="stats-section">
+  <div class="section-header">TOTAL GAINS</div>
+
+  <!-- Level -->
+  <div
+    class="stat-row"
+    [class.positive-level]="summary().total_gain_level > 0"
+    [class.negative]="summary().total_gain_level < 0"
+  >
+    <div class="stat-icon">
+      @if (summary().total_gain_level < 0) {
+        <i class="pi pi-angle-double-down negative"></i>
+      } @else {
+        <i class="pi pi-angle-double-up level"></i>
+      }
+    </div>
+    <div class="stat-info">
+      @if (section() != 'experience') {
+        <div class="stat-label">Skill</div>
+      } @else {
+        <div class="stat-label">Level</div>
+      }
+      <div class="stat-value-row">
+        <span class="stat-value">{{ summary().total_gain_level }}</span>
+        <span class="additional-info">{{ summary().average_gain_level }}/day</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Experience -->
+  @if (section() === 'experience') {
+    <div
+      class="stat-row"
+      [class.positive-experience]="summary().total_gain_points > 0"
+      [class.negative]="summary().total_gain_points < 0"
+    >
+      <div class="stat-icon">
+        @if (summary().total_gain_points < 0) {
+          <i class="pi pi-angle-double-down negative"></i>
+        } @else {
+          <i class="pi pi-angle-double-up experience"></i>
+        }
+      </div>
+      <div class="stat-info">
+        <div class="stat-label">Experience</div>
+        <div class="stat-value-row">
+          <span class="stat-value">{{ summary().total_gain_points | abbreviateNumber }}</span>
+          <span class="additional-info"
+            >{{ summary().average_gain_points | abbreviateNumber }}/day</span
+          >
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Rank -->
+  <div
+    class="stat-row"
+    [class.positive-rank]="summary().total_gain_rank > 0"
+    [class.negative]="summary().total_gain_rank < 0"
+  >
+    <div class="stat-icon">
+      @if (summary().total_gain_rank < 0) {
+        <i class="pi pi-crown negative"></i>
+      } @else {
+        <i class="pi pi-crown rank"></i>
+      }
+    </div>
+    <div class="stat-info">
+      <div class="stat-label">Rank</div>
+      <div class="stat-value-row">
+        <span class="stat-value"
+          >{{ summary().total_gain_rank > 0 ? '+' : '' }}{{ summary().total_gain_rank }}</span
+        >
+        <span class="additional-info"
+          >{{ summary().average_gain_rank > 0 ? '+' : ''
+          }}{{ summary().average_gain_rank }}/day</span
+        >
+      </div>
+    </div>
+  </div>
+</div>

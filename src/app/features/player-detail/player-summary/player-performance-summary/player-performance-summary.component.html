@@ -1,0 +1,111 @@
+<div class="stats-section">
+  <div class="section-header">PERFORMANCE</div>
+
+  <!-- Best Day -->
+  <div
+    class="stat-row"
+    [class.positive]="
+      section() === 'experience'
+        ? summary().best_day.gain_points > 0
+        : summary().best_day.gain_level > 0
+    "
+    [class.negative]="
+      section() === 'experience'
+        ? summary().best_day.gain_points < 0
+        : summary().best_day.gain_level < 0
+    "
+  >
+    <div class="stat-icon">
+      <i
+        class="pi pi-circle"
+        [class.negative]="
+          section() === 'experience'
+            ? summary().best_day.gain_points < 0
+            : summary().best_day.gain_level < 0
+        "
+        [class.positive]="
+          section() === 'experience'
+            ? summary().best_day.gain_points > 0
+            : summary().best_day.gain_level > 0
+        "
+      ></i>
+    </div>
+    <div class="stat-info">
+      <div class="stat-label">Best Day</div>
+      <div class="stat-value-row">
+        <span class="stat-value">
+          @if (section() === 'experience') {
+            {{ summary().best_day.gain_points > 0 ? '+' : ''
+            }}{{ summary().best_day.gain_points | abbreviateNumber }}
+          } @else {
+            {{ summary().best_day.gain_level > 0 ? '+' : '' }}{{ summary().best_day.gain_level }}
+          }
+        </span>
+        <span class="additional-info">{{ summary().best_day.date | date: 'dd MMM yyyy' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Worst Day -->
+  <div
+    class="stat-row"
+    [class.negative]="
+      section() === 'experience'
+        ? summary().worst_day.gain_points < 0
+        : summary().worst_day.gain_level < 0
+    "
+  >
+    <div class="stat-icon">
+      <i
+        class="pi pi-circle"
+        [class.negative]="
+          section() === 'experience'
+            ? summary().worst_day.gain_points < 0
+            : summary().worst_day.gain_level < 0
+        "
+        [class.positive]="
+          section() === 'experience'
+            ? summary().worst_day.gain_points > 0
+            : summary().worst_day.gain_level > 0
+        "
+      ></i>
+    </div>
+    <div class="stat-info">
+      <div class="stat-label">Worst Day</div>
+      <div class="stat-value-row">
+        <span class="stat-value">
+          @if (section() === 'experience') {
+            {{ summary().worst_day.gain_points > 0 ? '+' : ''
+            }}{{ summary().worst_day.gain_points | abbreviateNumber }}
+          } @else {
+            {{ summary().worst_day.gain_level > 0 ? '+' : '' }}{{ summary().worst_day.gain_level }}
+          }
+        </span>
+        <span class="additional-info">{{ summary().worst_day.date | date: 'dd MMM yyyy' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Next Level/Skill Advance -->
+  <div class="stat-row">
+    <div class="stat-icon">
+      <i class="pi pi-hourglass pi-spin next"></i>
+    </div>
+    <div class="stat-info">
+      <div class="stat-label">Next advance on</div>
+      <div class="stat-value-row">
+        @if (summary().estimated_level_advance_date) {
+          <span class="stat-value">
+            {{ summary().estimated_level_advance_date | date: 'dd MMM yyyy' }}
+          </span>
+        } @else {
+          <span class="stat-value">N/A</span>
+        }
+        <app-minimalist-icon
+          tooltipPosition="right"
+          tooltipText="Based on average performance over the selected period"
+        ></app-minimalist-icon>
+      </div>
+    </div>
+  </div>
+</div>

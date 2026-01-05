@@ -4,16 +4,18 @@ import { switchMap, tap } from 'rxjs/operators';
 
 import {
   HighscoreSection,
-  PlayerHistoryInfo,
-  PlayerHistoryRequest,
-  PlayerHistoryResponse,
+  PlayerDetailsInfo,
+  PlayerDetailsRequest,
+  PlayerDetailsResponse,
   TimePeriod,
+  PeriodOption,
 } from '@core/models';
-import { PlayerHistoryService } from '@core/services';
+import { PlayerDetailsService } from '@core/services';
 import { PlayerDetailHeaderComponent } from './player-detail-header/player-detail-header.component';
-import { PlayerDetailSummaryComponent } from './player-detail-summary/player-detail-summary.component';
 import { PeriodSelectorComponent } from '../../shared/components/period-selector/period-selector.component';
 import { PlayerDetailChartComponent } from './player-detail-chart/player-detail-chart.component';
+import { PlayerSummaryComponent } from './player-summary/player-summary.component';
+import { MinimalistIconComponent } from '@shared/components';
 
 @Component({
   selector: 'app-player-detail',
@@ -21,26 +23,42 @@ import { PlayerDetailChartComponent } from './player-detail-chart/player-detail-
   styleUrls: ['./player-detail.component.scss'],
   imports: [
     PlayerDetailHeaderComponent,
-    PlayerDetailSummaryComponent,
     PeriodSelectorComponent,
     PlayerDetailChartComponent,
+    PlayerSummaryComponent,
+    MinimalistIconComponent,
   ],
 })
 export class PlayerDetailComponent implements OnInit {
-  private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
-  private readonly playerHistoryService = inject(PlayerHistoryService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private playerDetailsService = inject(PlayerDetailsService);
 
-  // Player state
+  // State
   playerName = signal<string>('');
-  playerInfo = signal<PlayerHistoryInfo | null>(null);
+  playerInfo = signal<PlayerDetailsInfo | null>(null);
   section = signal<HighscoreSection>('experience');
-  summary = computed(() => this.historyData()?.summary || null);
-
-  // Chart state
-  selectedPeriod = signal<TimePeriod>('month');
+  selectedPeriod = signal<TimePeriod>('week');
   loading = signal<boolean>(false);
-  historyData = signal<PlayerHistoryResponse | null>(null);
+  playerDetailsData = signal<PlayerDetailsResponse | null>(null);
+
+  // "All" -> "Active Days"
+  periodOptions: PeriodOption[] = [
+    { label: 'Day', value: 'day' },
+    { label: 'Week', value: 'week' },
+    { label: 'Month', value: 'month' },
+    { label: 'Year', value: 'year' },
+    { label: 'Active Days', value: 'all' },
+  ];
+
+  // Computed
+  summary = computed(() => this.playerDetailsData()?.summary || null);
+  dailyRecords = computed(() => this.playerDetailsData()?.daily || []);
+  dateRange = computed(() => {
+    const summaryData = this.summary();
+    if (!summaryData) return [];
+    return [summaryData.day_first, summaryData.day_last];
+  });
 
   ngOnInit(): void {
     // Subscribe to route changes to load player data
@@ -64,13 +82,13 @@ export class PlayerDetailComponent implements OnInit {
         }
 
         this.section.set(section);
-        this.loadPlayerHistory();
+        this.loadPlayerDetails();
       });
   }
 
   onPeriodChange(period: TimePeriod): void {
     this.selectedPeriod.set(period);
-    this.loadPlayerHistory();
+    this.loadPlayerDetails();
   }
 
   onSectionChange(section: HighscoreSection): void {
@@ -81,23 +99,23 @@ export class PlayerDetailComponent implements OnInit {
     });
   }
 
-  private async loadPlayerHistory(): Promise<void> {
+  private async loadPlayerDetails(): Promise<void> {
     this.loading.set(true);
 
     try {
-      const request: PlayerHistoryRequest = {
+      const request: PlayerDetailsRequest = {
         p_name: this.playerName(),
         p_section: this.section(),
         p_period: this.selectedPeriod(),
       };
 
-      const data = await this.playerHistoryService.getPlayerHistoric(request);
+      const data = await this.playerDetailsService.getPlayerDetails(request);
 
       if (data) {
-        this.historyData.set(data);
+        this.playerDetailsData.set(data);
         this.playerInfo.set(data.player);
       } else {
-        this.historyData.set(null);
+        this.playerDetailsData.set(null);
         this.playerInfo.set(null);
       }
     } finally {
