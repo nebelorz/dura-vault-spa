@@ -38,14 +38,13 @@
       />
 
       <!-- Summary -->
-      @if (summary() && dailyRecords().length > 0) {
-        <app-player-summary
-          class="animation-fade"
-          [summary]="summary()!"
-          [section]="section()"
-          [selectedPeriod]="selectedPeriod()"
-        />
-      }
+      <app-player-summary
+        class="animation-fade"
+        [loading]="loading()"
+        [summary]="summary()!"
+        [section]="section()"
+        [selectedPeriod]="selectedPeriod()"
+      />
     </div>
   </div>
 </div>
