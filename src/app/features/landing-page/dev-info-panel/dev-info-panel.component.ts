@@ -18,6 +18,17 @@ interface DevInfoEntry {
 export class DevInfoPanelComponent {
   entries = signal<DevInfoEntry[]>([
     {
+      date: new Date('2026-03-08'),
+      title: 'v 1.0.1b released❗',
+      content: [
+        '+ Due to a recent change in the highscore pages on Dura, skills data between February 4th and March 8th has been permanently removed.',
+        '+ Skills highscores will be fully back to normal in two days.',
+        '',
+        'Unfortunately, skills values for this period will be compromised :/',
+      ],
+      type: 'fix',
+    },
+    {
       date: new Date('2026-01-05'),
       title: 'v 1.0.0b released',
       content: [
