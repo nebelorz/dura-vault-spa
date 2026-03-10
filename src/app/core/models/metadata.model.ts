@@ -1,6 +1,7 @@
 export type ScrapeDateTable = 'highscore_top';
 
 export interface ScrapeDateRange {
-  min_date: string | null;
-  max_date: string | null;
+  min_scrape_date: string | null;
+  max_scrape_date: string | null;
+  active_comparison_date: string | null;
 }

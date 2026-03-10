@@ -35,7 +35,7 @@ export class DailyTopGainersComponent implements OnInit {
   otherSections = signal<SectionData[]>([]);
 
   async ngOnInit(): Promise<void> {
-    await Promise.all([this.loadDailySummary(), this.loadMaxDate()]);
+    await Promise.all([this.loadDailySummary(), this.loadActiveComparisonDate()]);
   }
 
   navigateToPlayer(playerName: string, section: string): void {
@@ -44,10 +44,10 @@ export class DailyTopGainersComponent implements OnInit {
     });
   }
 
-  private async loadMaxDate(): Promise<void> {
-    const dateRange = await this.metadataService.getMinMaxScrapeDates('highscore_top', false);
-    if (dateRange?.max_date) {
-      this.maxDate.set(dateRange.max_date);
+  private async loadActiveComparisonDate(): Promise<void> {
+    const dateRange = await this.metadataService.getScrapeDates('highscore_top', false);
+    if (dateRange?.active_comparison_date) {
+      this.maxDate.set(dateRange.active_comparison_date);
     }
   }
 

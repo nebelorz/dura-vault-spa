@@ -16,26 +16,27 @@ export class MetadataService extends BaseApiService {
   protected supabase = this.supabaseService.getClient();
 
   /**
-   * Fetches the oldest and latest scrape dates for a given table.
+   * Fetches the oldest, latest and active comparison scrape dates for a given table.
    * @param tableName - Name of the table to query (default: 'highscore_top')
    * @param showErrorToast - Whether to show error toast if the request fails (default: true).
-   * @returns Promise resolving to an object with min_date and max_date, or null if an error occurs.
+   * @returns Promise resolving to an object with min_scrape_date and max_scrape_date and active_comparison_date, or null if an error occurs.
    *
    * Example return:
    * {
-   *   min_date: '2025-01-01',
-   *   max_date: '2025-12-11'
+   *   min_scrape_date: '2025-01-01',
+   *   max_scrape_date: '2025-12-11',
+   *   active_comparison_date: '2025-12-10'
    * }
    */
-  async getMinMaxScrapeDates(
+  async getScrapeDates(
     tableName: ScrapeDateTable = 'highscore_top',
     showErrorToast: boolean = true,
   ): Promise<ScrapeDateRange | null> {
-    const cacheKey = `min_max_scrape_dates_${tableName}`;
+    const cacheKey = `scrape_dates_${tableName}`;
 
     const data = await this.fetchWithCache<ScrapeDateRange[]>(
       cacheKey,
-      'get_min_max_scrape_dates',
+      'get_scrape_dates',
       { p_table_name: tableName },
       {
         errorContext: `scrape dates for ${tableName}`,

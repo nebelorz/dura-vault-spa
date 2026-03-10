@@ -41,8 +41,12 @@ export class HighscoreTableComponent implements OnInit {
   dateRange = computed(() => {
     const period = this.selectedPeriod();
     const dateRange = this.scrapeDateRange();
-    if (!dateRange?.max_date) return [];
-    return calculateAvailableDataDateRange(period, dateRange.min_date ?? null, dateRange.max_date);
+    if (!dateRange?.active_comparison_date) return [];
+    return calculateAvailableDataDateRange(
+      period,
+      dateRange.min_scrape_date ?? null,
+      dateRange.active_comparison_date,
+    );
   });
 
   async ngOnInit(): Promise<void> {
@@ -70,7 +74,7 @@ export class HighscoreTableComponent implements OnInit {
 
   private async loadScrapeDateRange(): Promise<void> {
     try {
-      const dateRange = await this.metadataService.getMinMaxScrapeDates('highscore_top');
+      const dateRange = await this.metadataService.getScrapeDates('highscore_top');
       if (dateRange) {
         this.scrapeDateRange.set(dateRange);
       }
