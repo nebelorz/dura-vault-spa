@@ -9,7 +9,16 @@
     <ng-template pTemplate="content" let-entry>
       <div class="timeline-content">
         <div class="timeline-header">
-          <h3 class="timeline-title">{{ entry.title }}</h3>
+          <div class="timeline-title-group">
+            <h3 class="timeline-title">{{ entry.title }}</h3>
+            @if (entry.tags && entry.tags.length) {
+              <div class="timeline-tags">
+                @for (tag of entry.tags; track tag.label) {
+                  <span class="timeline-tag" [class]="'tag-' + (tag.color ?? 'primary')">{{ tag.label }}</span>
+                }
+              </div>
+            }
+          </div>
           <span class="timeline-date">{{ entry.date | date: 'dd MMM yyyy' }}</span>
         </div>
         <ng-container>

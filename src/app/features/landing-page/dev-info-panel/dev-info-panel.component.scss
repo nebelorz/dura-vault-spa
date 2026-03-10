@@ -60,9 +60,71 @@
   flex-wrap: wrap;
 }
 
+.timeline-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
 .timeline-title {
   margin: 0;
   font-weight: bold;
+  line-height: 1;
+}
+
+.timeline-tags {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  align-items: center;
+  transform: translateY(1px);
+}
+
+.timeline-tag {
+  font-size: 0.6rem;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  line-height: 1.2;
+  white-space: nowrap;
+
+  // default (primary)
+  background: colors.$primary-opacity-2;
+  color: colors.$primary;
+  border: 1px solid colors.$primary-opacity-2;
+
+  &.tag-error {
+    background: colors.$danger-opacity-2;
+    color: colors.$danger;
+    border-color: colors.$danger-opacity-2;
+  }
+
+  &.tag-warn {
+    background: colors.$warn-opacity-2;
+    color: colors.$warn;
+    border-color: colors.$warn-opacity-2;
+  }
+
+  &.tag-info {
+    background: colors.$info-opacity-2;
+    color: colors.$info;
+    border-color: colors.$info-opacity-2;
+  }
+
+  &.tag-experience {
+    background: colors.$experience-opacity-2;
+    color: colors.$experience;
+    border-color: colors.$experience-opacity-2;
+  }
+
+  &.tag-rank {
+    background: colors.$rank-opacity-2;
+    color: colors.$rank;
+    border-color: colors.$rank-opacity-2;
+  }
 }
 
 .timeline-date {

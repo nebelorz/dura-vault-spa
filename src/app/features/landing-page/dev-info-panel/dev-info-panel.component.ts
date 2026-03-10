@@ -2,11 +2,19 @@ import { Component, signal } from '@angular/core';
 import { DatePipe, CommonModule } from '@angular/common';
 import { TimelineModule } from 'primeng/timeline';
 
+type TagColor = 'error' | 'warn' | 'info' | 'rank' | 'experience';
+
+interface DevInfoTag {
+  label: string;
+  color?: TagColor;
+}
+
 interface DevInfoEntry {
   date: Date;
   title: string;
   content: string[];
   type?: 'versionMajor' | 'versionMinor' | 'info' | 'fix';
+  tags?: DevInfoTag[];
 }
 
 @Component({
@@ -18,24 +26,43 @@ interface DevInfoEntry {
 export class DevInfoPanelComponent {
   entries = signal<DevInfoEntry[]>([
     {
-      date: new Date('2026-03-08'),
-      title: 'v 1.0.1b released❗',
+      date: new Date('2026-03-10'),
+      title: 'v 1.0.2b released',
       content: [
-        '+ Due to a recent change in the highscore pages on Dura, skills data between February 4th and March 8th has been permanently removed.',
-        '+ Skills highscores will be fully back to normal in two days.',
+        '> Fixed dates on highscore summary and highscore tables displaying incorrect date values (was showing +1 from actual comparison).',
+        'Now it should display the correct active comparison date for all sections.',
+        '',
+        '> Fixed level/rank gains on the top daily summary not displaying neutral values correctly.',
+        '',
+        'Skills are back to normal and should display correct values for all dates, excluding the affected period between February 4th and March 8th.',
+      ],
+      type: 'fix',
+      tags: [{ label: 'fix', color: 'warn' }],
+    },
+    {
+      date: new Date('2026-03-08'),
+      title: 'v 1.0.1b released',
+      content: [
+        '> Due to a recent change in the highscore pages on Dura, skills data between February 4th and March 8th has been permanently removed.',
+        '> Skills highscores will be fully back to normal in two days.',
         '',
         'Unfortunately, skills values for this period will be compromised :/',
       ],
       type: 'fix',
+      tags: [
+        { label: 'data loss', color: 'error' },
+        { label: 'fix', color: 'warn' },
+        { label: 'skills' },
+      ],
     },
     {
       date: new Date('2026-01-05'),
       title: 'v 1.0.0b released',
       content: [
-        '+ Player details now include simple and clear performance and gain metrics for quick interpretation.',
-        '+ Improved data querying in player details to support deeper insights in future updates.',
-        '+ Daily Top entries on the landing page are now clickable and link directly to player details.',
-        '+ Multiple UI and performance upgrades across the application.',
+        '> Player details now include simple and clear performance and gain metrics for quick interpretation.',
+        '> Improved data querying in player details to support deeper insights in future updates.',
+        '> Daily Top entries on the landing page are now clickable and link directly to player details.',
+        '> Multiple UI and performance upgrades across the application.',
         '',
         'With the current feature set, Dura Vault now provides a solid experience for a first major release.',
         'Welcome to Dura Vault.',
@@ -46,9 +73,9 @@ export class DevInfoPanelComponent {
       date: new Date('2025-12-26'),
       title: 'v 0.3b released',
       content: [
-        '+ New side menu added to improve navigation across the app.',
-        '+ Top highscore tables now include toast messages to give clear possible user actions.',
-        '+ Small UX and layout adjustments across the page.',
+        '> New side menu added to improve navigation across the app.',
+        '> Top highscore tables now include toast messages to give clear possible user actions.',
+        '> Small UX and layout adjustments across the page.',
       ],
       type: 'versionMinor',
     },
@@ -56,8 +83,8 @@ export class DevInfoPanelComponent {
       date: new Date('2025-12-22'),
       title: 'v 0.2b released',
       content: [
-        '+ Added Daily Top Gainers gadget on the landing page.',
-        '+ Shows the top 3 experience gainers and the top skill player with the highest gain in the last 24 hours.',
+        '> Added Daily Top Gainers gadget on the landing page.',
+        '> Shows the top 3 experience gainers and the top skill player with the highest gain in the last 24 hours.',
         '',
         'This is the first step towards short-term progression tracking.',
       ],
@@ -78,8 +105,9 @@ export class DevInfoPanelComponent {
       date: new Date('2025-12-20'),
       title: 'v 0.1b released',
       content: [
-        'Initial release focused on tracking player statistics, highscores and the Dura player base.',
-        'This is just the foundation. More features and improvements are coming!',
+        '> Initial release focused on tracking player statistics, highscores and the Dura player base.',
+        '',
+        'This is just the foundation. More features and improvements are coming.',
       ],
       type: 'versionMinor',
     },
