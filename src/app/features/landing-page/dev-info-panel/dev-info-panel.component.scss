@@ -1,28 +1,18 @@
 @use 'colors' as colors;
 
-// Icon styles
+// ─── PrimeNG overrides ───────────────────────────────────────────────────────
+
+// Spinning stop icon used for versionMajor marker
 .pi-stop {
   font-size: small;
 }
 
-// Hide opposite content
+// Hide the left-side opposite column (unused in left-align mode)
 ::ng-deep .p-timeline-event-opposite {
   display: none;
 }
 
-.dev-info-container {
-  width: 100%;
-}
-
-.p-timeline {
-  .p-timeline-event-opposite,
-  .p-timeline-event-separator {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-  }
-}
-
+// Card-style background for each timeline entry
 ::ng-deep .p-timeline-event-content {
   background: colors.$secondary;
   color: colors.$secondary-contrast;
@@ -30,6 +20,12 @@
   margin: 0.5rem 0;
 }
 
+// ─── Layout ──────────────────────────────────────────────────────────────────
+.dev-info-container {
+  width: 100%;
+}
+
+// ─── Marker ──────────────────────────────────────────────────────────────────
 .timeline-marker {
   flex-shrink: 0;
   width: 40px;
@@ -43,6 +39,7 @@
   z-index: 1;
 }
 
+// ─── Entry content ───────────────────────────────────────────────────────────
 .timeline-content {
   flex: 1;
   min-width: 0;
@@ -73,11 +70,19 @@
   line-height: 1;
 }
 
+.timeline-date {
+  font-size: small;
+  color: colors.$gray-light;
+  flex-shrink: 0;
+}
+
+// ─── Tags ────────────────────────────────────────────────────────────────────
 .timeline-tags {
   display: flex;
   gap: 0.35rem;
   flex-wrap: wrap;
   align-items: center;
+  // Alignment with title baseline
   transform: translateY(1px);
 }
 
@@ -91,55 +96,147 @@
   line-height: 1.2;
   white-space: nowrap;
 
-  // default (primary)
-  background: colors.$primary-opacity-2;
+  // Default color (no color specified)
+  background: colors.$primary-opacity-1;
   color: colors.$primary;
   border: 1px solid colors.$primary-opacity-2;
 
   &.tag-error {
-    background: colors.$danger-opacity-2;
+    background: colors.$danger-opacity-1;
     color: colors.$danger;
     border-color: colors.$danger-opacity-2;
   }
-
   &.tag-warn {
-    background: colors.$warn-opacity-2;
+    background: colors.$warn-opacity-1;
     color: colors.$warn;
     border-color: colors.$warn-opacity-2;
   }
-
   &.tag-info {
-    background: colors.$info-opacity-2;
+    background: colors.$info-opacity-1;
     color: colors.$info;
     border-color: colors.$info-opacity-2;
   }
-
   &.tag-experience {
-    background: colors.$experience-opacity-2;
+    background: colors.$experience-opacity-1;
     color: colors.$experience;
     border-color: colors.$experience-opacity-2;
   }
-
   &.tag-rank {
-    background: colors.$rank-opacity-2;
+    background: colors.$rank-opacity-1;
     color: colors.$rank;
     border-color: colors.$rank-opacity-2;
   }
 }
 
-.timeline-date {
-  font-size: small;
-  color: colors.$gray-light;
-  flex-shrink: 0;
-}
-
-.timeline-text {
+// ─── Content blocks ──────────────────────────────────────────────────────────
+.content-text {
   margin: 0;
   font-size: small;
   line-height: 1.6;
 }
 
-.timeline-text:empty {
-  height: 0.5rem;
-  margin: 0.5rem 0;
+.content-heading {
+  margin: 0.25rem 0 0.1rem;
+  font-size: small;
+  font-weight: 600;
+}
+
+// Icon + text row
+.content-icon-text {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-size: small;
+  line-height: 1.6;
+
+  i {
+    font-size: 0.65rem;
+    flex-shrink: 0;
+    color: colors.$gray-light;
+    position: relative;
+    top: -0.05em;
+  }
+
+  span {
+    flex: 1;
+  }
+}
+
+.content-image {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 0.25rem 0;
+
+  img {
+    width: 100%;
+    border-radius: 6px;
+    display: block;
+  }
+
+  .content-image-caption {
+    font-size: 0.7rem;
+    color: colors.$gray-light;
+    text-align: center;
+  }
+}
+
+.content-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: small;
+  color: colors.$primary;
+  text-decoration: none;
+  opacity: 0.85;
+
+  &:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  i {
+    font-size: 0.65rem;
+  }
+}
+
+// Highlighted note with colored left border (like GitHub/Notion callouts)
+.content-callout {
+  font-size: small;
+  line-height: 1.5;
+  padding: 0.4rem 0.65rem;
+  border-radius: 5px;
+  border-left: 3px solid;
+  margin: 0.15rem 0;
+
+  &.callout-info {
+    background: colors.$info-opacity-1;
+    color: colors.$info;
+    border-color: colors.$info-opacity-2;
+  }
+  &.callout-warn {
+    background: colors.$warn-opacity-1;
+    color: colors.$warn;
+    border-color: colors.$warn-opacity-2;
+  }
+  &.callout-error {
+    background: colors.$danger-opacity-1;
+    color: colors.$danger;
+    border-color: colors.$danger-opacity-2;
+  }
+  &.callout-rank {
+    background: colors.$rank-opacity-1;
+    color: colors.$rank;
+    border-color: colors.$rank-opacity-2;
+  }
+  &.callout-experience {
+    background: colors.$experience-opacity-1;
+    color: colors.$experience;
+    border-color: colors.$experience-opacity-2;
+  }
+}
+
+// Vertical spacer between block groups
+.content-divider {
+  height: 0.4rem;
 }

@@ -1,31 +1,71 @@
 <div class="dev-info-container">
   <p-timeline [value]="entries()" align="left">
+    <!-- Marker: icon + color class determined by entry type -->
     <ng-template pTemplate="marker" let-entry>
       <div class="timeline-marker" [class]="getTypeClass(entry.type)">
         <i [class]="getTypeIcon(entry.type)"></i>
       </div>
     </ng-template>
 
+    <!-- Content: header (title + tags + date) and typed content blocks -->
     <ng-template pTemplate="content" let-entry>
       <div class="timeline-content">
+        <!-- Header -->
         <div class="timeline-header">
           <div class="timeline-title-group">
             <h3 class="timeline-title">{{ entry.title }}</h3>
             @if (entry.tags && entry.tags.length) {
               <div class="timeline-tags">
                 @for (tag of entry.tags; track tag.label) {
-                  <span class="timeline-tag" [class]="'tag-' + (tag.color ?? 'primary')">{{ tag.label }}</span>
+                  <span class="timeline-tag" [class]="'tag-' + (tag.color ?? 'primary')">{{
+                    tag.label
+                  }}</span>
                 }
               </div>
             }
           </div>
           <span class="timeline-date">{{ entry.date | date: 'dd MMM yyyy' }}</span>
         </div>
-        <ng-container>
-          @for (line of entry.content; track line) {
-            <p class="timeline-text">{{ line }}</p>
+
+        <!-- Content blocks -->
+        @for (block of entry.content; track $index) {
+          @switch (block.type) {
+            @case ('text') {
+              <p class="content-text">{{ block.text }}</p>
+            }
+            @case ('heading') {
+              <p class="content-heading">{{ block.text }}</p>
+            }
+            @case ('icon-text') {
+              <div class="content-icon-text">
+                <i [class]="block.icon"></i>
+                <span>{{ block.text }}</span>
+              </div>
+            }
+            @case ('image') {
+              <div class="content-image">
+                <img [src]="block.src" [alt]="block.alt ?? ''" />
+                @if (block.caption) {
+                  <span class="content-image-caption">{{ block.caption }}</span>
+                }
+              </div>
+            }
+            @case ('link') {
+              <a class="content-link" [href]="block.href" target="_blank" rel="noopener noreferrer">
+                <i class="pi pi-external-link"></i>
+                {{ block.text }}
+              </a>
+            }
+            @case ('callout') {
+              <div class="content-callout" [class]="'callout-' + (block.color ?? 'info')">
+                <span>{{ block.text }}</span>
+              </div>
+            }
+            @case ('divider') {
+              <div class="content-divider"></div>
+            }
           }
-        </ng-container>
+        }
       </div>
     </ng-template>
   </p-timeline>
