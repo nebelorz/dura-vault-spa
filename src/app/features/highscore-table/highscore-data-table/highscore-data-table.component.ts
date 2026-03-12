@@ -39,7 +39,10 @@ export class HighscoreDataTableComponent {
   globalFilterFields = input<string[]>(['name']);
 
   // Computed properties
-  isExperienceSection = computed(() => this.section() === 'experience');
+  isExperienceSection = computed(
+    () => this.section() === 'experience' || this.section() === 'experience_loss',
+  );
+  isLossSection = computed(() => this.section() === 'experience_loss');
   colspanEmpty = computed(() => (this.isExperienceSection() ? 8 : 6));
 
   // Childs
@@ -111,8 +114,9 @@ export class HighscoreDataTableComponent {
     const record = this.selectedRecord;
     if (!record) return;
 
+    const section = record.section === 'experience_loss' ? 'experience' : record.section;
     this.router.navigate(['/player', record.name], {
-      queryParams: { section: record.section },
+      queryParams: { section },
     });
   }
 
