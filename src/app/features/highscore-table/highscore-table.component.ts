@@ -1,7 +1,7 @@
 import { Component, OnInit, signal, viewChild, computed, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { HighscoreRecord, HighscoreSection, ScrapeDateRange, TimePeriod } from '@core/models';
+import { HighscoreRecord, Section, ScrapeDateRange, TimePeriod } from '@core/models';
 import { HighscoreService, MetadataService } from '@core/services';
 import { calculateAvailableDataDateRange } from '@shared/functions';
 import { HighscoreAvailableDataInfoComponent } from './highscore-available-data-info/highscore-available-data-info.component';
@@ -31,7 +31,7 @@ export class HighscoreTableComponent implements OnInit {
   data = signal<HighscoreRecord[]>([]);
   loading = signal<boolean>(true);
   scrapeDateRange = signal<ScrapeDateRange | null>(null);
-  section = signal<HighscoreSection>('experience');
+  section = signal<Section>('experience');
   selectedPeriod = signal<TimePeriod>('day');
 
   // Child
@@ -55,7 +55,7 @@ export class HighscoreTableComponent implements OnInit {
 
     // Route changes
     this.route.params.subscribe((params) => {
-      const section = params['section'] as HighscoreSection;
+      const section = params['section'] as Section;
       if (section) {
         this.section.set(section);
         this.loadData();

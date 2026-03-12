@@ -2,11 +2,11 @@
   <div>
     <span
       class="animation-fade additional-info"
-      pTooltip="New data is available around 30 minutes after server save"
+      pTooltip="New data is available shortly after server save"
       tooltipPosition="right"
     >
       <app-minimalist-icon />
-      The vault displays highscores data from
+      The vault displays data from
       {{ availableDateRange()!.min_scrape_date | date: 'dd MMM yyyy' }} to
       {{ availableDateRange()!.active_comparison_date | date: 'dd MMM yyyy' }}
     </span>

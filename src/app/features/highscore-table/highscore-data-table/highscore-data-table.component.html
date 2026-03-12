@@ -19,9 +19,11 @@
       @if (isExperienceSection()) {
         <th pSortableColumn="level">Level</th>
         <th pSortableColumn="points">Experience</th>
-        <th pSortableColumn="gain_points">Gain Experience</th>
-        <th pSortableColumn="gain_level">Gain Level</th>
-        <th pSortableColumn="gain_rank">Gain Rank</th>
+        <th pSortableColumn="gain_points">
+          {{ isLossSection() ? 'Lost Experience' : 'Gain Experience' }}
+        </th>
+        <th pSortableColumn="gain_level">{{ isLossSection() ? 'Lost Level' : 'Gain Level' }}</th>
+        <th pSortableColumn="gain_rank">{{ isLossSection() ? 'Lost Rank' : 'Gain Rank' }}</th>
       } @else {
         <th pSortableColumn="level">Skill</th>
         <th pSortableColumn="gain_level">Gain Skill</th>

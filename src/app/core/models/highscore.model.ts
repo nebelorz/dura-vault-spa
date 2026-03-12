@@ -30,7 +30,7 @@ export interface HighscoreRecord {
 
 export interface TopGainersParams {
   period?: TimePeriod;
-  section: HighscoreSection | null;
+  section: Section | null;
   limit: number;
 }
 
