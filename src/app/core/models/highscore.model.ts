@@ -11,6 +11,10 @@ export type HighscoreSection =
   | 'fist'
   | 'fishing';
 
+export type CustomSection = 'experience_loss';
+
+export type Section = HighscoreSection | CustomSection;
+
 export interface HighscoreRecord {
   section: string;
   name: string;
@@ -50,6 +54,7 @@ export interface DailyHighscoresSummary {
     fishing: DailyTopPlayer[] | null;
     distance: DailyTopPlayer[] | null;
     experience: DailyTopPlayer[] | null;
+    experience_loss: DailyTopPlayer[] | null;
   };
 }
 

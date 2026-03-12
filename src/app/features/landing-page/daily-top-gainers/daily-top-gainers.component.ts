@@ -32,7 +32,8 @@ export class DailyTopGainersComponent implements OnInit {
   loading = signal<boolean>(false);
   maxDate = signal<string | null>(null);
   experiencePlayers = signal<DailyTopPlayer[]>([]);
-  otherSections = signal<SectionData[]>([]);
+  experienceLossPlayer = signal<DailyTopPlayer | null>(null);
+  skillsSection = signal<SectionData[]>([]);
 
   async ngOnInit(): Promise<void> {
     await Promise.all([this.loadDailySummary(), this.loadActiveComparisonDate()]);
@@ -66,6 +67,7 @@ export class DailyTopGainersComponent implements OnInit {
 
   private processSummaryData(summary: DailyHighscoresSummary): void {
     this.experiencePlayers.set(summary.top_daily.experience?.slice(0, 3) || []);
+    this.experienceLossPlayer.set(summary.top_daily.experience_loss?.[0] ?? null);
 
     const sections = HIGHSCORE_SECTIONS.filter((s) => s.value !== 'experience')
       .map((section) => ({
@@ -80,6 +82,6 @@ export class DailyTopGainersComponent implements OnInit {
       }))
       .filter((s) => s.players.length > 0);
 
-    this.otherSections.set(sections);
+    this.skillsSection.set(sections);
   }
 }
