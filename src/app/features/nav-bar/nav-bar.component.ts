@@ -5,7 +5,7 @@ import { MenuItem } from 'primeng/api';
 
 import { ModeButtonComponent } from './mode-button/mode-button.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
-import { toMenuItems } from '../../core/constants';
+import { toMenuItems, toCustomMenuItems } from '../../core/constants';
 
 @Component({
   selector: 'app-nav-bar',
@@ -22,7 +22,7 @@ export class NavBarComponent {
     {
       label: 'Tops',
       icon: 'pi pi-database',
-      items: toMenuItems(),
+      items: [...toMenuItems(), ...toCustomMenuItems()],
     },
   ];
 }

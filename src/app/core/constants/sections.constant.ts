@@ -1,8 +1,14 @@
 import { MenuItem } from 'primeng/api';
-import { HighscoreSection } from '../models/highscore.model';
+import { CustomSection, HighscoreSection, Section } from '../models/highscore.model';
 
 export interface SectionConfig {
   readonly value: HighscoreSection;
+  readonly label: string;
+  readonly icon: string;
+}
+
+export interface CustomSectionConfig {
+  readonly value: CustomSection;
   readonly label: string;
   readonly icon: string;
 }
@@ -19,10 +25,26 @@ export const HIGHSCORE_SECTIONS: readonly SectionConfig[] = [
   { value: 'fishing', label: 'Fishing', icon: 'pi pi-box' },
 ] as const;
 
+export const CUSTOM_SECTIONS: readonly CustomSectionConfig[] = [
+  { value: 'experience_loss', label: 'Experience Loss', icon: 'pi pi-box' },
+] as const;
+
 export function toMenuItems(sections: readonly SectionConfig[] = HIGHSCORE_SECTIONS): MenuItem[] {
   return sections.map((section) => ({
     label: section.label,
     icon: section.icon,
+    routerLink: [`/top/${section.value}`],
+  }));
+}
+
+export function toCustomMenuItems(
+  sections: readonly CustomSectionConfig[] = CUSTOM_SECTIONS,
+): MenuItem[] {
+  return sections.map((section) => ({
+    label: section.label,
+    icon: section.icon,
+    badge: 'NEW',
+    badgeStyleClass: 'badge-new',
     routerLink: [`/top/${section.value}`],
   }));
 }
@@ -41,6 +63,8 @@ export function toSectionOptions(
   }));
 }
 
-export function getSectionLabel(sectionValue: HighscoreSection): string {
-  return HIGHSCORE_SECTIONS.find((s) => s.value === sectionValue)?.label ?? sectionValue;
+export function getSectionLabel(sectionValue: Section): string {
+  const standard = HIGHSCORE_SECTIONS.find((s) => s.value === sectionValue);
+  if (standard) return standard.label;
+  return CUSTOM_SECTIONS.find((s) => s.value === sectionValue)?.label ?? sectionValue;
 }

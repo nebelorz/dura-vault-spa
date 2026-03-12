@@ -21,6 +21,22 @@ body {
   }
 }
 
+// BADGES
+.p-badge.badge-new {
+  font-size: 0.6rem;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  line-height: 1.2;
+  min-width: unset;
+  height: auto;
+  background: colors.$danger-opacity-1;
+  color: colors.$danger;
+  border: 1px solid colors.$danger-opacity-2;
+}
+
 // TOOLTIPS
 .p-tooltip .p-tooltip-text {
   font-size: smaller;

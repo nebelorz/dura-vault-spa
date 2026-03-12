@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
-import { toMenuItems } from '../../../core/constants';
+import { toMenuItems, toCustomMenuItems } from '../../../core/constants';
 
 @Component({
   selector: 'app-side-menu',
@@ -11,7 +11,7 @@ import { toMenuItems } from '../../../core/constants';
   imports: [MenuModule],
 })
 export class SideMenuComponent {
-  readonly topsItems: MenuItem[] = toMenuItems();
+  readonly topsItems: MenuItem[] = [...toMenuItems(), ...toCustomMenuItems()];
 
   readonly otherSitesItems: MenuItem[] = [
     {

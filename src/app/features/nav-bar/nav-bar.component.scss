@@ -3,3 +3,14 @@
 p-menubar {
   border: 1px solid colors.$secondary;
 }
+
+::ng-deep a.p-menubar-item-link[href='/top/experience_loss'] {
+  .p-menubar-item-icon {
+    color: colors.$danger !important;
+    opacity: 0.6;
+  }
+
+  &:hover {
+    background: colors.$danger-opacity-2;
+  }
+}

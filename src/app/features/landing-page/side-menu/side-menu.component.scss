@@ -60,5 +60,16 @@ section {
         background: colors.$secondary-opacity-1;
       }
     }
+
+    a.p-menu-item-link[href='/top/experience_loss'] {
+      .p-menu-item-icon {
+        color: colors.$danger;
+        opacity: 0.6;
+      }
+
+      &:hover {
+        background: colors.$danger-opacity-2;
+      }
+    }
   }
 }
