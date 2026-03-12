@@ -41,39 +41,39 @@ export class DevInfoPanelComponent {
       title: 'v 1.1.0b released',
       content: [
         {
-          type: 'text',
-          text: 'The daily top summary now includes an Experience Loss section, highlighting the player with the highest experience loss of the day.',
-        },
-        { type: 'divider' },
-        {
-          type: 'text',
-          text: 'Experience Loss values should now display correctly for all players, including those with high loss values.',
-        },
-
-        { type: 'divider' },
-        {
           type: 'icon-text',
           icon: 'pi pi-wrench',
           text: 'Fixed an issue that was causing experience loss values to display incorrectly for certain players.',
         },
         {
+          type: 'text',
+          text: 'Experience Loss values should now display correctly for all players, including those with high loss values.',
+        },
+        { type: 'divider' },
+        { type: 'divider' },
+        {
           type: 'icon-text',
           icon: 'pi pi-code',
-          text: 'Added Experience Loss section to the daily top widget — shows the top daily loser with experience points lost, level lost and rank change.',
+          text: 'Added Experience Loss section — shows the top daily losers with experience points lost, level lost and rank change.',
         },
+        {
+          type: 'text',
+          text: 'The tops and daily top summary sections now include Experience Loss, displaying the character with highest experience loss of the day.',
+        },
+        { type: 'divider' },
+        { type: 'divider' },
         {
           type: 'icon-text',
           icon: 'pi pi-code',
           text: 'Updated and improved the data processing logic to start collecting online times.',
         },
-        { type: 'divider' },
         {
           type: 'text',
           text: 'Working on a new feature to display online times for players. This will be released soon.',
         },
       ],
       type: 'versionMinor',
-      tags: [{ label: 'fix', color: 'warn' }, { label: 'feature' }],
+      tags: [{ label: 'fix', color: 'warn' }, { label: 'new feature' }],
     },
     {
       date: new Date('2026-03-10'),
@@ -101,10 +101,7 @@ export class DevInfoPanelComponent {
         },
       ],
       type: 'fix',
-      tags: [
-        { label: 'fix', color: 'warn' },
-        { label: 'revamp', color: 'info' },
-      ],
+      tags: [{ label: 'fix', color: 'warn' }],
     },
     {
       date: new Date('2026-03-08'),
@@ -126,8 +123,7 @@ export class DevInfoPanelComponent {
           text: 'Fixed data retrieving process.',
         },
         {
-          type: 'icon-text',
-          icon: 'pi pi-info-circle',
+          type: 'text',
           text: 'Skill highscores will be populating fully back to normal in two days.',
         },
       ],
