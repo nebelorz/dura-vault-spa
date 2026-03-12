@@ -38,14 +38,7 @@
             </div>
             <div class="stat stat-rank" pTooltip="Rank" tooltipPosition="bottom">
               <i class="pi pi-crown"></i>
-              <span>
-                @if (experienceLossPlayer()!.gain_rank > 0) {
-                  +
-                } @else if (experienceLossPlayer()!.gain_rank < 0) {
-                  -
-                }
-                {{ experienceLossPlayer()!.gain_rank }}
-              </span>
+              <span>{{ experienceLossPlayer()!.gain_rank }}</span>
             </div>
           </div>
         </div>
