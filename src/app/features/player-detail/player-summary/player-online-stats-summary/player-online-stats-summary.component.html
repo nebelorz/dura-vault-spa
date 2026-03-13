@@ -1,0 +1,56 @@
+<div class="stats-section">
+  <div class="section-header">ONLINE STATS</div>
+
+  @if (onlineSummary() && onlineSummary()!.average_online_time > 0) {
+    <!-- Avg Online Time -->
+    <div class="stat-row">
+      <div class="stat-icon">
+        <i class="pi pi-wave-pulse"></i>
+      </div>
+      <div class="stat-info">
+        <div class="stat-label">Avg Online</div>
+        <div class="stat-value-row">
+          <span class="stat-value">{{
+            formatOnlineAvg(onlineSummary()!.average_online_time)
+          }}</span>
+          <span class="additional-info">{{ onlineSummary()!.days_count }} days tracked</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Time Window -->
+    @if (onlineSummary()!.avg_first_seen && onlineSummary()!.avg_last_seen) {
+      <div class="stat-row">
+        <div class="stat-icon">
+          <i class="pi pi-clock"></i>
+        </div>
+        <div class="stat-info">
+          <div class="stat-label">Avg Active Window</div>
+          <div class="stat-value-row">
+            <span class="stat-value"
+              >{{ onlineSummary()!.avg_first_seen | date: 'HH:mm' }} →
+              {{ onlineSummary()!.avg_last_seen | date: 'HH:mm' }}</span
+            >
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Last Seen -->
+    @if (onlineSummary()!.last_seen_at) {
+      <div class="stat-row">
+        <div class="stat-icon">
+          <i class="pi pi-eye"></i>
+        </div>
+        <div class="stat-info">
+          <div class="stat-label">Last Seen</div>
+          <div class="stat-value-row">
+            <span class="stat-value">{{
+              onlineSummary()!.last_seen_at | date: 'dd MMM yyyy, HH:mm'
+            }}</span>
+          </div>
+        </div>
+      </div>
+    }
+  }
+</div>

@@ -18,6 +18,7 @@ interface ChartDataset {
   yAxisID: string;
   pointRadius: number;
   pointHoverRadius: number;
+  order?: number;
 }
 
 @Component({
