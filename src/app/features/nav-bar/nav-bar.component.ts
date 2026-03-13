@@ -24,5 +24,12 @@ export class NavBarComponent {
       icon: 'pi pi-database',
       items: [...toMenuItems(), ...toCustomMenuItems()],
     },
+    {
+      label: 'Online Activity',
+      icon: 'pi pi-wave-pulse',
+      badge: 'NEW',
+      badgeStyleClass: 'badge-new',
+      routerLink: ['/online'],
+    },
   ];
 }

@@ -13,6 +13,11 @@ export interface CustomSectionConfig {
   readonly icon: string;
 }
 
+export interface SectionOption {
+  label: string;
+  value: HighscoreSection;
+}
+
 export const HIGHSCORE_SECTIONS: readonly SectionConfig[] = [
   { value: 'experience', label: 'Experience', icon: 'pi pi-box' },
   { value: 'magic', label: 'Magic', icon: 'pi pi-box' },
@@ -43,15 +48,8 @@ export function toCustomMenuItems(
   return sections.map((section) => ({
     label: section.label,
     icon: section.icon,
-    badge: 'NEW',
-    badgeStyleClass: 'badge-new',
     routerLink: [`/top/${section.value}`],
   }));
-}
-
-export interface SectionOption {
-  label: string;
-  value: HighscoreSection;
 }
 
 export function toSectionOptions(
@@ -61,6 +59,18 @@ export function toSectionOptions(
     label: section.label,
     value: section.value,
   }));
+}
+
+export function toOnlineMenuItems(): MenuItem[] {
+  return [
+    {
+      label: 'Online Activity',
+      badge: 'NEW',
+      badgeStyleClass: 'badge-new',
+      icon: 'pi pi-wave-pulse',
+      routerLink: ['/online'],
+    },
+  ];
 }
 
 export function getSectionLabel(sectionValue: Section): string {

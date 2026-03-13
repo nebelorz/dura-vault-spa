@@ -1,0 +1,27 @@
+<div class="online-container animation-fade">
+  <!-- Header -->
+  <div class="online-header">
+    <app-online-header [dateRange]="dateRange()" />
+
+    <app-period-selector
+      [selectedPeriod]="selectedPeriod()"
+      (periodChange)="onPeriodChange($event)"
+    />
+  </div>
+
+  <!-- Body: left (podium + list) | right (stats + charts) -->
+  <div class="online-body">
+    <div class="online-left">
+      <app-online-data-table [data]="data()" [loading]="loading()" [period]="selectedPeriod()" />
+    </div>
+    <div class="online-right">
+      <app-online-stats
+        [data]="data()"
+        [timeline]="timeline()"
+        [loading]="loading()"
+        [period]="selectedPeriod()"
+        [activeComparisonDate]="scrapeDateRange()?.active_comparison_date ?? null"
+      />
+    </div>
+  </div>
+</div>

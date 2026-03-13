@@ -1,0 +1,79 @@
+@use 'colors' as colors;
+
+// ===========================
+// STATS CARDS
+// ===========================
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.75rem 0.5rem;
+  border: 1px solid colors.$secondary;
+  border-radius: 8px;
+  text-align: center;
+
+  &--muted {
+    opacity: 0.5;
+  }
+}
+
+.stat-icon {
+  font-size: 0.9rem;
+  color: colors.$primary;
+  opacity: 0.7;
+}
+
+.stat-value {
+  font-size: 1rem;
+  font-weight: bold;
+
+  &--sm {
+    font-size: 0.8rem;
+  }
+}
+
+.stat-label {
+  font-size: x-small;
+  opacity: 0.6;
+  letter-spacing: 0.25px;
+}
+
+// ===========================
+// CHARTS
+// ===========================
+.chart-section {
+  margin-bottom: 0.75rem;
+}
+
+.chart-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: x-small;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 0.75rem;
+
+  i {
+    color: colors.$primary;
+    font-size: 0.8rem;
+  }
+}
+
+.chart-container {
+  height: 240px;
+
+  &--hbar {
+    height: 155px;
+  }
+}

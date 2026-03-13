@@ -1,0 +1,17 @@
+<div class="online-title-row">
+  <h2 class="online-title">Online Activity</h2>
+  <app-minimalist-icon
+    tooltipText="Online times are approximate and based on periodic snapshots"
+    tooltipPosition="right"
+  />
+</div>
+
+@if (dateRange().length === 1) {
+  <span class="additional-info">
+    {{ dateRange()[0] | date: 'dd MMM yyyy' }}
+  </span>
+} @else if (dateRange().length > 1) {
+  <span class="additional-info">
+    {{ dateRange()[0] | date: 'dd MMM yyyy' }} - {{ dateRange()[1] | date: 'dd MMM yyyy' }}
+  </span>
+}

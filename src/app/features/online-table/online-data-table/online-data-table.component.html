@@ -1,0 +1,102 @@
+<p-contextMenu #cm [model]="contextMenuItems" appendTo="body" />
+
+@if (loading()) {
+  <app-loading-status />
+} @else if (!data().length) {
+  <app-no-data-status message="No online activity data for this period." />
+} @else {
+  <!-- PODIUM: top 1-3 -->
+  @if (topThree().length >= 1) {
+    <div class="podium animation-fade">
+      <!-- 2nd place -->
+      @if (topThree()[1]; as second) {
+        <div
+          class="podium-slot"
+          (click)="navigateToPlayer(second)"
+          (contextmenu)="onRightClick($event, second)"
+        >
+          <div class="podium-card">
+            <div class="podium-time podium-time--silver">
+              {{ second.online_time | minutesToHours }}
+            </div>
+            <div class="podium-name">{{ second.name }}</div>
+            <div class="podium-meta">{{ second.vocation }} · Lvl {{ second.level }}</div>
+          </div>
+          <div class="podium-base podium-base--silver">
+            <span class="podium-rank">2</span>
+          </div>
+        </div>
+      } @else {
+        <div class="podium-slot podium-slot--empty"></div>
+      }
+
+      <!-- 1st place -->
+      <div
+        class="podium-slot"
+        (click)="navigateToPlayer(topThree()[0])"
+        (contextmenu)="onRightClick($event, topThree()[0])"
+      >
+        <div class="podium-card">
+          <div class="podium-time podium-time--gold">
+            {{ topThree()[0].online_time | minutesToHours }}
+          </div>
+          <div class="podium-name">{{ topThree()[0].name }}</div>
+          <div class="podium-meta">
+            {{ topThree()[0].vocation }} · Lvl {{ topThree()[0].level }}
+          </div>
+        </div>
+        <div class="podium-base podium-base--gold">
+          <span class="podium-rank">1</span>
+        </div>
+      </div>
+
+      <!-- 3rd place -->
+      @if (topThree()[2]; as third) {
+        <div
+          class="podium-slot"
+          (click)="navigateToPlayer(third)"
+          (contextmenu)="onRightClick($event, third)"
+        >
+          <div class="podium-card">
+            <div class="podium-time podium-time--bronze">
+              {{ third.online_time | minutesToHours }}
+            </div>
+            <div class="podium-name">{{ third.name }}</div>
+            <div class="podium-meta">{{ third.vocation }} · Lvl {{ third.level }}</div>
+          </div>
+          <div class="podium-base podium-base--bronze">
+            <span class="podium-rank">3</span>
+          </div>
+        </div>
+      } @else {
+        <div class="podium-slot podium-slot--empty"></div>
+      }
+    </div>
+  }
+
+  <!-- REST: rank 4+ -->
+  @if (restOfList().length) {
+    <div class="rest-list">
+      @for (record of restOfList(); track record.name) {
+        <div
+          class="list-row animation-fade"
+          [class]="rowTimeClass(record)"
+          (click)="navigateToPlayer(record)"
+          (contextmenu)="onRightClick($event, record)"
+        >
+          <span class="list-rank">{{ record.rank }}</span>
+          <div class="list-info">
+            <span class="list-name">{{ record.name }}</span>
+            <span class="list-meta">{{ record.vocation }} · Lvl {{ record.level }}</span>
+          </div>
+          <div class="list-time-col">
+            <span class="list-time">{{ record.online_time | minutesToHours }}</span>
+            @if (showAvg()) {
+              <span class="list-avg">~{{ avgPerDay(record) | minutesToHours }}/d</span>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+}
