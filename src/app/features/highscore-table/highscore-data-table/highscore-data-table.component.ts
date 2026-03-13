@@ -53,7 +53,7 @@ export class HighscoreDataTableComponent {
   readonly contextMenuItems: MenuItem[] = [
     {
       label: 'Details',
-      icon: 'pi pi-chart-line',
+      icon: 'pi pi-eye',
       command: () => this.viewPlayerDetails(),
     },
     {
