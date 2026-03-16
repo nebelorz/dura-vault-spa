@@ -1,98 +1,11 @@
-<p-table
-  #dataTable
-  class="p-datatable-sm"
+<p-contextMenu #cm [model]="contextMenuItems" appendTo="body" />
+
+<app-podium-list
+  [items]="displayItems()"
   [loading]="loading()"
-  selectionMode="single"
-  [value]="data()"
-  [globalFilterFields]="globalFilterFields()"
-  [contextMenu]="cm"
-  [(contextMenuSelection)]="selectedRecord"
-  scrollHeight="calc(100vh - 200px)"
->
-  <!-- HEADER -->
-  <ng-template pTemplate="header">
-    <tr>
-      <th></th>
-      <th pSortableColumn="name">Name</th>
-      <th pSortableColumn="vocation">Vocation</th>
-
-      @if (isExperienceSection()) {
-        <th pSortableColumn="level">Level</th>
-        <th pSortableColumn="points">Experience</th>
-        <th pSortableColumn="gain_points">
-          {{ isLossSection() ? 'Lost Experience' : 'Gain Experience' }}
-        </th>
-        <th pSortableColumn="gain_level">{{ isLossSection() ? 'Lost Level' : 'Gain Level' }}</th>
-        <th pSortableColumn="gain_rank">{{ isLossSection() ? 'Lost Rank' : 'Gain Rank' }}</th>
-      } @else {
-        <th pSortableColumn="level">Skill</th>
-        <th pSortableColumn="gain_level">Gain Skill</th>
-        <th pSortableColumn="gain_rank">Gain Rank</th>
-      }
-    </tr>
-  </ng-template>
-
-  <!-- LOADING BODY -->
-  <ng-template pTemplate="loadingbody">
-    <tr>
-      <td [attr.colspan]="colspanEmpty()">
-        <app-loading-status />
-      </td>
-    </tr>
-  </ng-template>
-
-  <!-- BODY -->
-  <ng-template pTemplate="body" let-record let-rowIndex="rowIndex">
-    <tr class="animation-fade" [pContextMenuRow]="record">
-      <td>{{ rowIndex + 1 }}</td>
-      <td>{{ record.name }}</td>
-      <td>{{ record.vocation }}</td>
-      <td>{{ record.level }}</td>
-
-      @if (isExperienceSection()) {
-        <td>{{ formatPoints(record.points) }}</td>
-        <td>
-          @if (getGainIcon(record.gain_points)) {
-            <i [class]="getGainIcon(record.gain_points)"></i>
-          }
-          {{ formatPoints(record.gain_points | removeMinus) }}
-          @if (record.points > 0) {
-            <span class="additional-info" pTooltip="Gain as % of XP" showDelay="600">
-              ({{ ((record.gain_points || 0) / record.points) * 100 | number: '1.2-2' }}%)
-            </span>
-          }
-        </td>
-      }
-
-      <td>
-        @if (getGainIcon(record.gain_level)) {
-          <i [class]="getGainIcon(record.gain_level)"></i>
-        }
-        {{ record.gain_level | removeMinus }}
-      </td>
-
-      <td>
-        @if (getGainIcon(record.gain_rank)) {
-          <i [class]="getGainIcon(record.gain_rank)"></i>
-        }
-        {{ record.gain_rank | removeMinus }}
-
-        <span class="additional-info" pTooltip="Actual rank" showDelay="600">
-          ({{ record.rank }})
-        </span>
-      </td>
-    </tr>
-  </ng-template>
-
-  <!-- EMPTY MESSAGE -->
-  <ng-template pTemplate="emptymessage">
-    <tr class="animation-fade">
-      <td [attr.colspan]="colspanEmpty()">
-        <app-no-data-status [message]="'No highscores for ' + section() + ' during this period.'" />
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
-
-<!-- CONTEXT MENU (RIGHT CLICK ON ROWS) -->
-<p-contextmenu #cm [model]="contextMenuItems" />
+  [disablePodium]="hasFilter()"
+  [emptyMessage]="'No highscores for ' + section() + ' during this period.'"
+  (filterChange)="onFilterChange($event)"
+  (itemClick)="onItemClick($event)"
+  (itemRightClick)="onItemRightClick($event)"
+/>
