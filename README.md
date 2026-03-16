@@ -118,11 +118,12 @@ src/
 │   │   ├── footer/              # Application footer
 │   │   ├── highscore-table/     # Highscore rankings and filtering
 │   │   ├── landing-page/        # Home page with dashboard widgets
+│   │   ├── online-table/        # Online activity tables and stats
 │   │   ├── nav-bar/             # Navigation bar with search
-│   │   └── player-detail/       # Player profile and statistics
+│   │   └── player-detail/       # Player profile, statistics, and online stats
 │   │
 │   ├── shared/                  # Reusable components and utilities
-│   │   ├── components/          # Shared UI components
+│   │   ├── components/          # Shared UI components (incl. podium-list, period-selector, toast)
 │   │   ├── functions/           # Utility functions (formatting, calculations)
 │   │   ├── pipes/               # Custom Angular pipes
 │   │   └── styles/              # SCSS variables, mixins, and themes
@@ -153,6 +154,7 @@ This project maintains high code quality through:
 - **Angular Signals**: Modern reactive state management
 - **Component Architecture**: Atomic design with smart/presentational component separation
 - **Service Layer**: Centralized business logic and API communication via `BaseApiService`
+- **Centralized Constants**: Shared thresholds and config for online activity
 - **Style Organization**: SCSS with `includePaths` for simplified imports
 - **Barrel Exports**: Clean module exports through index files
 - **ESLint**: Automated code quality checks
