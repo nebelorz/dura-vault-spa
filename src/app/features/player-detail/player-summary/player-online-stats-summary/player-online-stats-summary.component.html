@@ -3,8 +3,8 @@
 
   @if (onlineSummary() && onlineSummary()!.average_online_time > 0) {
     <!-- Avg Online Time -->
-    <div class="stat-row">
-      <div class="stat-icon">
+    <div class="stat-row" [ngClass]="avgRowClass()">
+      <div class="stat-icon" [ngClass]="avgIconClass()">
         <i class="pi pi-wave-pulse"></i>
       </div>
       <div class="stat-info">
@@ -21,7 +21,7 @@
     <!-- Active Time Window -->
     @if (onlineSummary()!.avg_first_seen && onlineSummary()!.avg_last_seen) {
       <div class="stat-row">
-        <div class="stat-icon">
+        <div class="stat-icon stat-icon--primary">
           <i class="pi pi-clock"></i>
         </div>
         <div class="stat-info">

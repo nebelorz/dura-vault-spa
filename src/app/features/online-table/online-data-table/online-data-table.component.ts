@@ -13,14 +13,12 @@ import { environment } from '@env';
 
 import { OnlineTopRecord, TimePeriod } from '@core/models';
 import { ToastService } from '@core/services';
+import { DAILY_WARN_MIN, DAILY_DANGER_MIN } from '@core/constants';
 import { MinutesToHoursPipe } from '@shared/pipes';
 import { PodiumListComponent, PodiumListItem, ListColumn } from '@shared/components';
 
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 import { MenuItem } from 'primeng/api';
-
-const DAILY_WARN_MIN = 600; // 10h
-const DAILY_DANGER_MIN = 840; // 14h
 
 @Component({
   selector: 'app-online-data-table',

@@ -27,6 +27,21 @@
     color: colors.$gray-light;
     opacity: 0.8;
   }
+
+  &--primary i {
+    color: colors.$primary;
+    opacity: 1;
+  }
+
+  &--warn i {
+    color: colors.$warn;
+    opacity: 1;
+  }
+
+  &--danger i {
+    color: colors.$danger;
+    opacity: 1;
+  }
 }
 
 .stat-info {
@@ -55,4 +70,12 @@
   font-size: small;
   font-weight: bold;
   line-height: 1.2;
+}
+
+.stat-row--warn {
+  background: colors.$warn-opacity-1;
+}
+
+.stat-row--danger {
+  background: colors.$danger-opacity-1;
 }
