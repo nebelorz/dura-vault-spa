@@ -2,8 +2,8 @@
   <p-timeline [value]="entries()" align="left">
     <!-- Marker: icon + color class determined by entry type -->
     <ng-template pTemplate="marker" let-entry>
-      <div class="timeline-marker" [class]="getTypeClass(entry.type)">
-        <i [class]="getTypeIcon(entry.type)"></i>
+      <div class="timeline-marker" [class]="getTypeClass(entry.entryType)">
+        <i [class]="getTypeIcon(entry.entryType)"></i>
       </div>
     </ng-template>
 
@@ -29,7 +29,7 @@
 
         <!-- Content blocks -->
         @for (block of entry.content; track $index) {
-          @switch (block.type) {
+          @switch (block.contentType) {
             @case ('text') {
               <p class="content-text">{{ block.text }}</p>
             }

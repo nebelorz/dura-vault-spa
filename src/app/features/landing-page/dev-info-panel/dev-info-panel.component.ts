@@ -10,7 +10,7 @@ interface DevInfoTag {
 }
 
 interface ContentBlock {
-  type: 'text' | 'heading' | 'icon-text' | 'image' | 'link' | 'callout' | 'divider';
+  contentType: 'text' | 'heading' | 'icon-text' | 'image' | 'link' | 'callout' | 'divider';
   text?: string; // text, heading, icon-text, link, callout
   icon?: string; // icon-text
   src?: string; // image
@@ -24,7 +24,7 @@ interface DevInfoEntry {
   date: Date;
   title: string;
   content: ContentBlock[];
-  type?: 'versionMajor' | 'versionMinor' | 'info' | 'fix';
+  entryType?: 'versionMajor' | 'versionMinor' | 'info' | 'fix';
   tags?: DevInfoTag[];
 }
 
@@ -41,108 +41,111 @@ export class DevInfoPanelComponent {
       title: 'v 2.0.0 released',
       content: [
         {
-          type: 'heading',
+          contentType: 'heading',
           text: 'Online Activity',
         },
         {
-          type: 'text',
+          contentType: 'text',
           text: 'New Online Activity section! Explore player and world activity, with different graphs displaying vocation, level, and time period.',
         },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-code',
           text: 'New interactive charts show online time distribution by vocation, level, and period. Check most active vocations, most active times by day of week or hour etc.',
         },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-code',
           text: 'Online Activity also displays the top most active players, with breakdowns for daily average, total hours, and days active.',
         },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-code',
           text: 'Player details now include a dedicated Online Stats section: view activity window, average online, days active and last seen timestamp.',
         },
-        { type: 'divider' },
-        { type: 'divider' },
+        { contentType: 'divider' },
+        { contentType: 'divider' },
         {
-          type: 'heading',
+          contentType: 'heading',
           text: 'Tops Highscores',
         },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-code',
           text: 'Brand new podium component highlights the top 3 in all rankings, with improved visuals.',
         },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-code',
           text: 'Highscore tables revamped: all relevant values at a glance, with overlays for the podium details.',
         },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-code',
           text: 'Integrated filters and real-time search in all tables.',
         },
-        { type: 'divider' },
-        { type: 'divider' },
+        { contentType: 'divider' },
+        { contentType: 'divider' },
         {
-          type: 'heading',
+          contentType: 'heading',
           text: 'Design Overhaul',
         },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-code',
           text: 'Unified color and style system for a more consistent and attractive visual experience.',
         },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-wrench',
           text: 'Centralized constants and technical improvements to remove hardcoded values.',
         },
-        { type: 'divider' },
-        { type: 'divider' },
+        { contentType: 'divider' },
+        { contentType: 'divider' },
         {
-          type: 'text',
+          contentType: 'text',
           text: 'This release lays the foundation for advanced analytics and community tracking features in the future.',
         },
+      ],
+      entryType: 'versionMajor',
+    },
     {
       date: new Date('2026-03-12'),
       title: 'v 1.1.0b released',
       content: [
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-wrench',
           text: 'Fixed an issue that was causing experience loss values to display incorrectly for certain players.',
         },
         {
-          type: 'text',
+          contentType: 'text',
           text: 'Experience Loss values should now display correctly for all players, including those with high loss values.',
         },
-        { type: 'divider' },
-        { type: 'divider' },
+        { contentType: 'divider' },
+        { contentType: 'divider' },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-code',
           text: 'Added Experience Loss section — shows the top daily losers with experience points lost, level lost and rank change.',
         },
         {
-          type: 'text',
+          contentType: 'text',
           text: 'The tops and daily top summary sections now include Experience Loss, displaying the character with highest experience loss of the day.',
         },
-        { type: 'divider' },
-        { type: 'divider' },
+        { contentType: 'divider' },
+        { contentType: 'divider' },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-code',
           text: 'Updated and improved the data processing logic to start collecting online times.',
         },
         {
-          type: 'text',
+          contentType: 'text',
           text: 'Working on a new feature to display online times for players. This will be released soon.',
         },
       ],
-      type: 'versionMinor',
+      entryType: 'versionMinor',
       tags: [{ label: 'fix', color: 'warn' }, { label: 'new feature' }],
     },
     {
@@ -150,27 +153,27 @@ export class DevInfoPanelComponent {
       title: 'v 1.0.2b released',
       content: [
         {
-          type: 'text',
+          contentType: 'text',
           text: 'Skills are back to normal and should display correct values for all dates, excluding the affected period between February 4th and March 8th.',
         },
-        { type: 'divider' },
+        { contentType: 'divider' },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-wrench',
           text: 'Fixed dates on highscore summary and highscore tables displaying incorrect date values (was showing +1 from actual comparison).',
         },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-wrench',
           text: 'Fixed level/rank gains on the top daily summary not displaying neutral values correctly.',
         },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-code',
           text: 'Revamped the dev-posts system to add better support for visually distinct post types (e.g. fixes vs new features).',
         },
       ],
-      type: 'fix',
+      entryType: 'fix',
       tags: [{ label: 'fix', color: 'warn' }],
     },
     {
@@ -178,26 +181,26 @@ export class DevInfoPanelComponent {
       title: 'v 1.0.1b released',
       content: [
         {
-          type: 'callout',
+          contentType: 'callout',
           color: 'error',
           text: 'Due to a recent change in the highscore pages on Dura, skills data between February 4th and March 8th has been permanently removed.',
         },
         {
-          type: 'text',
+          contentType: 'text',
           text: 'Unfortunately, skill values for this period will be compromised :/',
         },
-        { type: 'divider' },
+        { contentType: 'divider' },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-wrench',
           text: 'Fixed data retrieving process.',
         },
         {
-          type: 'text',
+          contentType: 'text',
           text: 'Skill highscores will be populating fully back to normal in two days.',
         },
       ],
-      type: 'fix',
+      entryType: 'fix',
       tags: [
         { label: 'fix', color: 'warn' },
         { label: 'data loss', color: 'error' },
@@ -208,118 +211,118 @@ export class DevInfoPanelComponent {
       title: 'v 1.0.0b released',
       content: [
         {
-          type: 'text',
+          contentType: 'text',
           text: 'With the current feature set, Dura Vault now provides a solid experience for a first major release.',
         },
-        { type: 'divider' },
-        { type: 'text', text: 'Welcome to Dura Vault.' },
-        { type: 'divider' },
+        { contentType: 'divider' },
+        { contentType: 'text', text: 'Welcome to Dura Vault.' },
+        { contentType: 'divider' },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-code',
           text: 'Player details now include simple and clear performance and gain metrics for quick interpretation.',
         },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-code',
           text: 'Improved data querying in player details to support deeper insights in future updates.',
         },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-code',
           text: 'Daily Top entries on the landing page are now clickable and link directly to player details.',
         },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-code',
           text: 'Multiple UI and performance upgrades across the application.',
         },
       ],
-      type: 'versionMajor',
+      entryType: 'versionMajor',
     },
     {
       date: new Date('2025-12-26'),
       title: 'v 0.3b released',
       content: [
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-code',
           text: 'New side menu added to improve navigation across the app.',
         },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-code',
           text: 'Top highscore tables now include toast messages to give clear possible user actions.',
         },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-wrench',
           text: 'Small UX and layout adjustments across the page.',
         },
       ],
-      type: 'versionMinor',
+      entryType: 'versionMinor',
     },
     {
       date: new Date('2025-12-22'),
       title: 'v 0.2b released',
       content: [
         {
-          type: 'text',
+          contentType: 'text',
           text: 'Added a highscore summary for the day on the landing page (right side) for quick overviews.',
         },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-code',
           text: 'Added Daily Top Gainers gadget on the landing page.',
         },
       ],
-      type: 'versionMinor',
+      entryType: 'versionMinor',
     },
     {
       date: new Date('2025-12-21'),
       title: 'Next steps',
       content: [
         {
-          type: 'text',
+          contentType: 'text',
           text: 'Currently working on small info widgets for the landing page.',
         },
         {
-          type: 'text',
+          contentType: 'text',
           text: 'Exploring better ways to display dev posts and general project updates.',
         },
         {
-          type: 'text',
+          contentType: 'text',
           text: 'Planning a monthly reward system for the most active or top Dura players.',
         },
-        { type: 'divider' },
+        { contentType: 'divider' },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-discord',
           text: 'Feedback and suggestions are always welcome: neBelorz#8759',
         },
       ],
-      type: 'info',
+      entryType: 'info',
     },
     {
       date: new Date('2025-12-20'),
       title: 'v 0.1b released',
       content: [
         {
-          type: 'text',
+          contentType: 'text',
           text: 'This is just the foundation. More features and improvements are coming.',
         },
-        { type: 'divider' },
+        { contentType: 'divider' },
         {
-          type: 'icon-text',
+          contentType: 'icon-text',
           icon: 'pi pi-code',
           text: 'Initial release focused on tracking player statistics, highscores and the Dura player base.',
         },
       ],
-      type: 'versionMinor',
+      entryType: 'versionMinor',
     },
   ]);
 
-  getTypeIcon(type?: DevInfoEntry['type']) {
+  getTypeIcon(type?: DevInfoEntry['entryType']) {
     return {
       versionMajor: 'pi pi-stop pi-spin',
       versionMinor: 'pi pi-code',
@@ -328,7 +331,7 @@ export class DevInfoPanelComponent {
     }[type ?? 'info'];
   }
 
-  getTypeClass(type?: DevInfoEntry['type']) {
+  getTypeClass(type?: DevInfoEntry['entryType']) {
     return `entry-type-${type ?? 'info'}`;
   }
 }
