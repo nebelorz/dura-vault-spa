@@ -37,6 +37,76 @@ interface DevInfoEntry {
 export class DevInfoPanelComponent {
   entries = signal<DevInfoEntry[]>([
     {
+      date: new Date('2026-03-16'),
+      title: 'v 2.0.0 released',
+      content: [
+        {
+          type: 'heading',
+          text: 'Online Activity',
+        },
+        {
+          type: 'text',
+          text: 'New Online Activity section! Explore player and world activity, with different graphs displaying vocation, level, and time period.',
+        },
+        {
+          type: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'New interactive charts show online time distribution by vocation, level, and period. Check most active vocations, most active times by day of week or hour etc.',
+        },
+        {
+          type: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Online Activity also displays the top most active players, with breakdowns for daily average, total hours, and days active.',
+        },
+        {
+          type: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Player details now include a dedicated Online Stats section: view activity window, average online, days active and last seen timestamp.',
+        },
+        { type: 'divider' },
+        { type: 'divider' },
+        {
+          type: 'heading',
+          text: 'Tops Highscores',
+        },
+        {
+          type: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Brand new podium component highlights the top 3 in all rankings, with improved visuals.',
+        },
+        {
+          type: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Highscore tables revamped: all relevant values at a glance, with overlays for the podium details.',
+        },
+        {
+          type: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Integrated filters and real-time search in all tables.',
+        },
+        { type: 'divider' },
+        { type: 'divider' },
+        {
+          type: 'heading',
+          text: 'Design Overhaul',
+        },
+        {
+          type: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Unified color and style system for a more consistent and attractive visual experience.',
+        },
+        {
+          type: 'icon-text',
+          icon: 'pi pi-wrench',
+          text: 'Centralized constants and technical improvements to remove hardcoded values.',
+        },
+        { type: 'divider' },
+        { type: 'divider' },
+        {
+          type: 'text',
+          text: 'This release lays the foundation for advanced analytics and community tracking features in the future.',
+        },
+    {
       date: new Date('2026-03-12'),
       title: 'v 1.1.0b released',
       content: [
