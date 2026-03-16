@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, viewChild, computed, inject } from '@angular/core';
+import { Component, OnInit, signal, computed, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { HighscoreRecord, Section, ScrapeDateRange, TimePeriod } from '@core/models';
@@ -6,7 +6,6 @@ import { HighscoreService, MetadataService } from '@core/services';
 import { calculateAvailableDataDateRange } from '@shared/functions';
 import { HighscoreAvailableDataInfoComponent } from './highscore-available-data-info/highscore-available-data-info.component';
 import { HighscoreDataTableComponent } from './highscore-data-table/highscore-data-table.component';
-import { HighscoreFilterTableByNameComponent } from './highscore-filter-table-by-name/highscore-filter-table-by-name.component';
 import { HighscoreHeaderComponent } from './highscore-header/highscore-header.component';
 import { PeriodSelectorComponent } from '../../shared/components/period-selector/period-selector.component';
 
@@ -16,7 +15,6 @@ import { PeriodSelectorComponent } from '../../shared/components/period-selector
   styleUrls: ['./highscore-table.component.scss'],
   imports: [
     HighscoreHeaderComponent,
-    HighscoreFilterTableByNameComponent,
     PeriodSelectorComponent,
     HighscoreDataTableComponent,
     HighscoreAvailableDataInfoComponent,
@@ -33,9 +31,6 @@ export class HighscoreTableComponent implements OnInit {
   scrapeDateRange = signal<ScrapeDateRange | null>(null);
   section = signal<Section>('experience');
   selectedPeriod = signal<TimePeriod>('day');
-
-  // Child
-  private dataTable = viewChild(HighscoreDataTableComponent);
 
   // Computed date range for period
   dateRange = computed(() => {
@@ -66,10 +61,6 @@ export class HighscoreTableComponent implements OnInit {
   onPeriodChange(period: TimePeriod): void {
     this.selectedPeriod.set(period);
     this.loadData();
-  }
-
-  onSearchChange(value: string): void {
-    this.dataTable()?.filterGlobal(value);
   }
 
   private async loadScrapeDateRange(): Promise<void> {

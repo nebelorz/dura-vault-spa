@@ -1,73 +1,79 @@
-import { CommonModule, DecimalPipe } from '@angular/common';
-import { Component, input, viewChild, computed, inject } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  inject,
+  viewChild,
+  signal,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '@env';
 
-import { HighscoreRecord } from '@core/models';
+import { HighscoreRecord, Section } from '@core/models';
 import { ToastService } from '@core/services';
-import { RemoveMinusPipe } from '@shared/pipes';
-import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
+import { formatNumber } from '@shared/functions';
+import { PodiumListComponent, PodiumListItem, ListColumn } from '@shared/components';
 
-import { ContextMenuModule } from 'primeng/contextmenu';
+import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 import { MenuItem } from 'primeng/api';
-import { Table, TableModule } from 'primeng/table';
-import { TooltipModule } from 'primeng/tooltip';
+
+function gainWord(n: number, singular: string, plural: string): string {
+  return Math.abs(n) === 1 ? singular : plural;
+}
+
+function capitalize(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 @Component({
   selector: 'app-highscore-data-table',
   templateUrl: './highscore-data-table.component.html',
   styleUrls: ['./highscore-data-table.component.scss'],
-  imports: [
-    CommonModule,
-    TableModule,
-    TooltipModule,
-    ContextMenuModule,
-    DecimalPipe,
-    RemoveMinusPipe,
-    LoadingStatusComponent,
-    NoDataStatusComponent,
-  ],
+  imports: [ContextMenuModule, PodiumListComponent],
 })
-export class HighscoreDataTableComponent {
+export class HighscoreDataTableComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
   private readonly toastService = inject(ToastService);
 
   // Inputs
   data = input.required<HighscoreRecord[]>();
   loading = input.required<boolean>();
-  section = input.required<string>();
-  globalFilterFields = input<string[]>(['name']);
+  section = input.required<Section>();
 
-  // Computed properties
-  isExperienceSection = computed(
-    () => this.section() === 'experience' || this.section() === 'experience_loss',
+  // State
+  private readonly filterValue = signal<string>('');
+  private selectedRecord: HighscoreRecord | null = null;
+
+  // Child
+  private readonly cm = viewChild<ContextMenu>('cm');
+
+  // Computed
+  private readonly trimmedFilter = computed(() => this.filterValue().trim());
+  readonly hasFilter = computed(() => this.trimmedFilter().length > 0);
+  private readonly filteredData = computed(() => {
+    const filter = this.trimmedFilter().toLowerCase();
+    if (!filter) return this.data();
+    return this.data().filter((r) => r.name.toLowerCase().includes(filter));
+  });
+
+  readonly displayItems = computed<PodiumListItem[]>(() =>
+    this.filteredData().map((record) => this.toDisplayItem(record, this.section())),
   );
-  isLossSection = computed(() => this.section() === 'experience_loss');
-  colspanEmpty = computed(() => (this.isExperienceSection() ? 8 : 6));
-
-  // Childs
-  private dataTable = viewChild<Table>('dataTable');
 
   // Context menu
-  selectedRecord: HighscoreRecord | null = null;
   readonly contextMenuItems: MenuItem[] = [
     {
       label: 'Details',
       icon: 'pi pi-eye',
       command: () => this.viewPlayerDetails(),
     },
-    {
-      separator: true,
-    },
+    { separator: true },
     {
       label: 'Search on Dura',
       icon: 'pi pi-search',
       command: () => this.searchOnDura(),
-    },
-    {
-      label: 'Copy',
-      icon: 'pi pi-copy',
-      command: () => this.copyCharacterInfo(),
     },
   ];
 
@@ -80,82 +86,111 @@ export class HighscoreDataTableComponent {
     );
   }
 
-  /**
-   * Filters the table by the given value
-   */
-  filterGlobal(value: string): void {
-    this.dataTable()?.filterGlobal(value, 'contains');
-  }
-
-  /**
-   * Formats points with thousand separators
-   */
-  formatPoints(points: number | null): string {
-    if (!points) return '-'; // Display dash for null/undefined points
-    return points.toLocaleString('en-US');
-  }
-
-  /**
-   * Returns the appropriate icon class based on the gain value
-   */
-  getGainIcon(value: number | null | undefined): string | null {
-    if (value === null || value === undefined) return null;
-    if (value > 0) return 'pi pi-angle-up';
-    if (value < 0) return 'pi pi-angle-down';
-    return 'pi pi-equals';
-  }
-
   ngOnDestroy(): void {
     this.toastService.clear();
   }
 
-  // Context Menu Actions
-  private viewPlayerDetails(): void {
-    const record = this.selectedRecord;
-    if (!record) return;
+  protected onFilterChange(value: string): void {
+    this.filterValue.set(value);
+  }
 
+  onItemClick(item: PodiumListItem): void {
+    const record = this.data().find((r) => r.name === item.id);
+    if (record) this.navigateToRecord(record);
+  }
+
+  onItemRightClick({ event, item }: { event: MouseEvent; item: PodiumListItem }): void {
+    this.selectedRecord = this.data().find((r) => r.name === item.id) ?? null;
+    this.cm()?.show(event);
+  }
+
+  private gainClass(value: number, positiveClass: string): string {
+    if (value > 0) return positiveClass;
+    if (value < 0) return 'metric--danger';
+    return '';
+  }
+
+  private toDisplayItem(record: HighscoreRecord, section: Section): PodiumListItem {
+    const isExperience = section === 'experience' || section === 'experience_loss';
+    const isLoss = section === 'experience_loss';
+
+    let columns: ListColumn[];
+
+    if (isExperience) {
+      const gainPoints = record.gain_points ?? 0;
+      const xpFormatted = `${formatNumber(gainPoints)} XP`;
+      const xpPercent =
+        record.points && record.points > 0
+          ? `${((gainPoints / record.points) * 100).toFixed(2)}%`
+          : undefined;
+      const xpClass = this.gainClass(gainPoints, isLoss ? '' : 'metric--xp');
+
+      columns = [
+        {
+          label: isLoss ? 'Exp Lost' : 'Exp Gained',
+          value: xpFormatted,
+          valueClass: xpClass,
+          subValue: xpPercent,
+          subValueClass: xpClass,
+        },
+        {
+          label: isLoss ? 'Levels Lost' : 'Levels Gained',
+          value: `${record.gain_level}`,
+          podiumValue: `${record.gain_level} ${gainWord(record.gain_level, 'LEVEL', 'LEVELS')}`,
+          valueClass: this.gainClass(record.gain_level, 'metric--skill'),
+          subValue: `Lvl ${record.level}`,
+        },
+        {
+          label: isLoss ? 'Rank Lost' : 'Rank Gained',
+          value: `${record.gain_rank}`,
+          podiumValue: `${record.gain_rank} ${gainWord(record.gain_rank, 'RANK', 'RANKS')}`,
+          valueClass: this.gainClass(record.gain_rank, 'metric--rank'),
+          subValue: `#${record.rank}`,
+          subValueClass: 'metric--rank',
+        },
+      ];
+    } else {
+      columns = [
+        {
+          label: 'Skill Gained',
+          value: `${record.gain_level}`,
+          podiumValue: `${record.gain_level} ${capitalize(section)}`,
+          valueClass: this.gainClass(record.gain_level, 'metric--skill'),
+          subValue: `${capitalize(section)} ${record.level}`,
+        },
+        {
+          label: 'Rank Gained',
+          value: `${record.gain_rank}`,
+          podiumValue: `${record.gain_rank} ${gainWord(record.gain_rank, 'RANK', 'RANKS')}`,
+          valueClass: this.gainClass(record.gain_rank, 'metric--rank'),
+          subValue: `#${record.rank}`,
+          subValueClass: 'metric--rank',
+        },
+      ];
+    }
+
+    return {
+      id: record.name,
+      rank: record.rank,
+      name: record.name,
+      meta: record.vocation,
+      columns,
+    };
+  }
+
+  private navigateToRecord(record: HighscoreRecord): void {
     const section = record.section === 'experience_loss' ? 'experience' : record.section;
-    this.router.navigate(['/player', record.name], {
-      queryParams: { section },
-    });
+    this.router.navigate(['/player', record.name], { queryParams: { section } });
+  }
+
+  private viewPlayerDetails(): void {
+    if (this.selectedRecord) this.navigateToRecord(this.selectedRecord);
   }
 
   private searchOnDura(): void {
     const record = this.selectedRecord;
     if (!record) return;
-
     const url = `${environment.dura.baseURL}/?characters/${record.name}`;
     window.open(url, '_blank');
-  }
-
-  private async copyCharacterInfo(): Promise<void> {
-    const record = this.selectedRecord;
-    if (!record) return;
-
-    try {
-      const message = this.formatCharacterInfo(record);
-      await navigator.clipboard.writeText(message);
-    } catch (error) {
-      console.error('Error copying to clipboard:', error);
-    }
-  }
-
-  /**
-   * Formats character information for clipboard
-   */
-  private formatCharacterInfo(record: HighscoreRecord): string {
-    const parts = [`Name: ${record.name}`, `Section: ${record.section}`, `Level: ${record.level}`];
-
-    if (record.section === 'experience' && record.gain_points !== null) {
-      parts.push(`Gain points: ${record.gain_points}`);
-    }
-
-    parts.push(
-      `Gain level: ${record.gain_level}`,
-      `Date: ${record.scrape_date}`,
-      'dura-vault.vercel.app',
-    );
-
-    return parts.join(' | ');
   }
 }

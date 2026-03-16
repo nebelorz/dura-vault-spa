@@ -1,0 +1,365 @@
+@use 'colors' as colors;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+// ===========================
+// PODIUM
+// ===========================
+.podium {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.podium-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  flex: 1;
+  max-width: 180px;
+
+  &--empty {
+    cursor: default;
+  }
+
+  &:not(&--empty):hover .podium-card {
+    transform: translateY(-3px);
+  }
+}
+
+.podium-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.75rem 0.5rem 0.5rem;
+  text-align: center;
+  width: 100%;
+  transition: transform 0.2s ease;
+}
+
+// ===========================
+// PODIUM METRIC
+// ===========================
+.podium-metric {
+  font-size: 1.3rem;
+  font-weight: bold;
+
+  &--gold {
+    color: var(--podium-accent, #{colors.$rank});
+    font-size: 1.6rem;
+  }
+
+  &--silver {
+    color: #c0c0c0;
+  }
+
+  &--bronze {
+    color: #cd7f32;
+  }
+}
+
+// Semantic metric color classes
+.metric--xp {
+  color: colors.$experience;
+}
+
+.metric--skill {
+  color: colors.$primary;
+}
+
+.metric--rank {
+  color: colors.$rank;
+}
+
+.metric--warn {
+  color: colors.$warn;
+}
+
+.metric--danger {
+  color: colors.$danger;
+}
+
+.podium-name {
+  font-size: small;
+  font-weight: bold;
+  letter-spacing: 0.25px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.podium-meta {
+  font-size: x-small;
+  opacity: 0.6;
+}
+
+.podium-metric-visible {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  opacity: 0.85;
+}
+
+// ===========================
+// PODIUM OVERLAY (mouseover)
+// ===========================
+.podium-overlay {
+  position: absolute;
+  inset: 0;
+  background: colors.$secondary;
+  border-radius: 8px;
+  backdrop-filter: blur(3px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.podium-slot:not(.podium-slot--empty):hover .podium-overlay {
+  opacity: 1;
+}
+
+.podium-overlay-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.05rem;
+}
+
+.podium-overlay-label {
+  font-size: 0.55rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.45;
+}
+
+.podium-overlay-values {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.podium-overlay-value {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.podium-overlay-sub {
+  font-size: 0.65rem;
+  font-weight: 500;
+  opacity: 0.65;
+}
+
+.podium-base {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px 6px 0 0;
+  margin-top: 0.5rem;
+
+  &--gold {
+    height: 90px;
+    background: colors.$rank-opacity-2;
+    border: 1px solid rgba(255, 188, 64, 0.35);
+    border-bottom: none;
+  }
+
+  &--silver {
+    height: 80px;
+    background: rgba(192, 192, 192, 0.12);
+    border: 1px solid rgba(192, 192, 192, 0.25);
+    border-bottom: none;
+  }
+
+  &--bronze {
+    height: 65px;
+    background: rgba(205, 127, 50, 0.12);
+    border: 1px solid rgba(205, 127, 50, 0.25);
+    border-bottom: none;
+  }
+}
+
+.podium-rank {
+  font-size: 1.4rem;
+  font-weight: bold;
+  opacity: 0.45;
+
+  .podium-base--silver & {
+    color: #c0c0c0;
+  }
+
+  .podium-base--gold & {
+    color: var(--podium-accent, #{colors.$rank});
+    opacity: 0.7;
+  }
+
+  .podium-base--bronze & {
+    color: #cd7f32;
+  }
+}
+
+// ===========================
+// REST LIST
+// ===========================
+.rest-list {
+  border: 1px solid colors.$secondary;
+  border-radius: 8px;
+  overflow: hidden;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.list-filter-row {
+  display: flex;
+  align-items: center;
+  padding: 0.4rem 0.75rem;
+  position: sticky;
+  top: 0;
+  background: colors.$secondary;
+  z-index: 1;
+}
+
+.list-filter-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 0.8rem;
+  color: inherit;
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
+
+  &::placeholder {
+    opacity: 0.6;
+  }
+
+  &:focus {
+    opacity: 1;
+  }
+}
+
+.list-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid colors.$secondary;
+  }
+
+  &:hover {
+    background: colors.$secondary;
+  }
+
+  &--warn {
+    background: colors.$warn-opacity-1;
+
+    &:hover {
+      background: colors.$warn-opacity-2;
+    }
+  }
+
+  &--danger {
+    background: colors.$danger-opacity-1;
+
+    &:hover {
+      background: colors.$danger-opacity-2;
+    }
+  }
+}
+
+.list-rank {
+  min-width: 2rem;
+  font-size: small;
+  text-align: center;
+  opacity: 0.4;
+}
+
+.list-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.list-name {
+  font-size: small;
+  font-weight: bold;
+  letter-spacing: 0.25px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.list-meta {
+  font-size: x-small;
+  opacity: 0.6;
+}
+
+// ====================================
+// LIST COLUMNS (metrics at right side)
+// ====================================
+.list-columns {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.list-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.125rem;
+}
+
+.list-column-label {
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  opacity: 0.4;
+}
+
+.list-column-value {
+  font-size: small;
+  font-weight: bold;
+}
+
+.list-column-sub-value {
+  font-size: 0.65rem;
+  font-weight: 500;
+  opacity: 0.6;
+}
+
+.list-empty-row {
+  padding: 1rem 0.75rem;
+  font-size: small;
+  opacity: 0.4;
+  text-align: center;
+}
