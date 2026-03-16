@@ -3,15 +3,10 @@
   <div class="highscore-header">
     <app-highscore-header [section]="section()" [dateRange]="dateRange()" />
 
-    <!-- Filters -->
-    <div class="highscore-filters">
-      <app-highscore-filter-table-by-name (searchChange)="onSearchChange($event)" />
-
-      <app-period-selector
-        [selectedPeriod]="selectedPeriod()"
-        (periodChange)="onPeriodChange($event)"
-      />
-    </div>
+    <app-period-selector
+      [selectedPeriod]="selectedPeriod()"
+      (periodChange)="onPeriodChange($event)"
+    />
   </div>
 
   <!-- Data Table -->

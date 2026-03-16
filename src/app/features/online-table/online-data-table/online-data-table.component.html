@@ -3,8 +3,8 @@
 <app-podium-list
   [items]="displayItems()"
   [loading]="loading()"
+  emptyMessage="No online activity data for this period."
   [disablePodium]="hasFilter()"
-  [emptyMessage]="'No highscores for ' + section() + ' during this period.'"
   [showFilter]="true"
   (filterChange)="onFilterChange($event)"
   (itemClick)="onItemClick($event)"

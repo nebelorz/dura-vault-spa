@@ -1,0 +1,17 @@
+.online-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  app-minimalist-icon {
+    display: flex;
+    align-self: flex-end;
+    padding-bottom: 0.5rem;
+  }
+}
+
+.online-title {
+  margin: 0;
+  font-size: x-large;
+  font-weight: bold;
+}

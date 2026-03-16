@@ -4,15 +4,10 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-}
 
-app-podium-list {
-  flex: 1;
-  min-height: 0;
-}
-
-// Red podium for experience_loss section
-:host.podium-danger-mode {
+  // Red colored podium
+  // Rank 1 = brightest
+  // Rank 3 = same color as list bg
   --podium-gold-color: #{colors.$danger};
   --podium-gold-bg: rgba(239, 68, 68, 0.4);
   --podium-gold-border: rgba(239, 68, 68, 0.55);
@@ -22,4 +17,9 @@ app-podium-list {
   --podium-bronze-color: #{colors.$danger};
   --podium-bronze-bg: #{colors.$danger-opacity-1};
   --podium-bronze-border: #{colors.$danger-opacity-2};
+}
+
+app-podium-list {
+  flex: 1;
+  min-height: 0;
 }

@@ -7,10 +7,11 @@ import {
   PlayerDetailsInfo,
   PlayerDetailsRequest,
   PlayerDetailsResponse,
+  PlayerOnlineResponse,
   TimePeriod,
   PeriodOption,
 } from '@core/models';
-import { PlayerDetailsService } from '@core/services';
+import { PlayerDetailsService, OnlineService } from '@core/services';
 import { PlayerDetailHeaderComponent } from './player-detail-header/player-detail-header.component';
 import { PeriodSelectorComponent } from '../../shared/components/period-selector/period-selector.component';
 import { PlayerDetailChartComponent } from './player-detail-chart/player-detail-chart.component';
@@ -33,6 +34,7 @@ export class PlayerDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private playerDetailsService = inject(PlayerDetailsService);
+  private onlineService = inject(OnlineService);
 
   // State
   playerName = signal<string>('');
@@ -41,6 +43,7 @@ export class PlayerDetailComponent implements OnInit {
   selectedPeriod = signal<TimePeriod>('week');
   loading = signal<boolean>(false);
   playerDetailsData = signal<PlayerDetailsResponse | null>(null);
+  playerOnlineData = signal<PlayerOnlineResponse | null>(null);
 
   // "All" -> "Active Days"
   periodOptions: PeriodOption[] = [
@@ -109,7 +112,10 @@ export class PlayerDetailComponent implements OnInit {
         p_period: this.selectedPeriod(),
       };
 
-      const data = await this.playerDetailsService.getPlayerDetails(request);
+      const [data, onlineData] = await Promise.all([
+        this.playerDetailsService.getPlayerDetails(request),
+        this.onlineService.getPlayerOnlineHistory(this.playerName(), this.selectedPeriod(), false),
+      ]);
 
       if (data) {
         this.playerDetailsData.set(data);
@@ -118,6 +124,8 @@ export class PlayerDetailComponent implements OnInit {
         this.playerDetailsData.set(null);
         this.playerInfo.set(null);
       }
+
+      this.playerOnlineData.set(onlineData);
     } finally {
       this.loading.set(false);
     }
