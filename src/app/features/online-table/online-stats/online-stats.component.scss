@@ -71,7 +71,14 @@
 }
 
 .chart-container {
+  position: relative;
   height: 240px;
+  overflow: hidden;
+
+  p-chart {
+    display: block;
+    height: 80%;
+  }
 
   &--hbar {
     height: 155px;
