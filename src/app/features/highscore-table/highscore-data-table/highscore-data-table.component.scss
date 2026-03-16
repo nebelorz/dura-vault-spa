@@ -1,3 +1,5 @@
+@use 'colors' as colors;
+
 :host {
   display: flex;
   flex-direction: column;
@@ -7,4 +9,17 @@
 app-podium-list {
   flex: 1;
   min-height: 0;
+}
+
+// Red podium for experience_loss section
+:host.podium-danger-mode {
+  --podium-gold-color: #{colors.$danger};
+  --podium-gold-bg: rgba(239, 68, 68, 0.4);
+  --podium-gold-border: rgba(239, 68, 68, 0.55);
+  --podium-silver-color: #{colors.$danger};
+  --podium-silver-bg: rgba(239, 68, 68, 0.22);
+  --podium-silver-border: rgba(239, 68, 68, 0.35);
+  --podium-bronze-color: #{colors.$danger};
+  --podium-bronze-bg: #{colors.$danger-opacity-1};
+  --podium-bronze-border: #{colors.$danger-opacity-2};
 }

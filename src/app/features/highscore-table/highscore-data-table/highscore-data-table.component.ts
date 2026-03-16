@@ -31,6 +31,7 @@ function capitalize(str: string): string {
   selector: 'app-highscore-data-table',
   templateUrl: './highscore-data-table.component.html',
   styleUrls: ['./highscore-data-table.component.scss'],
+  host: { '[class.podium-danger-mode]': 'isLoss()' },
   imports: [ContextMenuModule, PodiumListComponent],
 })
 export class HighscoreDataTableComponent implements OnInit, OnDestroy {
@@ -57,6 +58,8 @@ export class HighscoreDataTableComponent implements OnInit, OnDestroy {
     if (!filter) return this.data();
     return this.data().filter((r) => r.name.toLowerCase().includes(filter));
   });
+
+  protected readonly isLoss = computed(() => this.section() === 'experience_loss');
 
   readonly displayItems = computed<PodiumListItem[]>(() =>
     this.filteredData().map((record) => this.toDisplayItem(record, this.section())),
@@ -94,12 +97,12 @@ export class HighscoreDataTableComponent implements OnInit, OnDestroy {
     this.filterValue.set(value);
   }
 
-  onItemClick(item: PodiumListItem): void {
+  protected onItemClick(item: PodiumListItem): void {
     const record = this.data().find((r) => r.name === item.id);
     if (record) this.navigateToRecord(record);
   }
 
-  onItemRightClick({ event, item }: { event: MouseEvent; item: PodiumListItem }): void {
+  protected onItemRightClick({ event, item }: { event: MouseEvent; item: PodiumListItem }): void {
     this.selectedRecord = this.data().find((r) => r.name === item.id) ?? null;
     this.cm()?.show(event);
   }

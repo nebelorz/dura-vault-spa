@@ -5,6 +5,7 @@
   [loading]="loading()"
   [disablePodium]="hasFilter()"
   [emptyMessage]="'No highscores for ' + section() + ' during this period.'"
+  [showFilter]="true"
   (filterChange)="onFilterChange($event)"
   (itemClick)="onItemClick($event)"
   (itemRightClick)="onItemRightClick($event)"

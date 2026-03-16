@@ -34,7 +34,7 @@ export class PodiumListComponent {
   emptyMessage = input<string>('No data available.');
   disablePodium = input<boolean>(false); // If true, all items are rendered in the list and no podium
   hideOverlay = input<boolean>(false); // If true, no mouse-over overlay is shown for podium characters
-  showFilter = input<boolean>(true); // If true, a search field is shown at the top of the list
+  showFilter = input<boolean>(false); // If true, a search field is shown at the top of the list
   filterLabel = input<string>('Filter by name'); // Label for the search field
 
   itemClick = output<PodiumListItem>();

@@ -59,18 +59,20 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
   readonly displayItems = computed<PodiumListItem[]>(() => {
     const showAvg = this.showAvg();
     return this.filteredData().map((record) => {
-      const columns: ListColumn[] = [
-        { label: 'Online Time', value: this.pipe.transform(record.online_time) },
-      ];
+      const columns: ListColumn[] = [];
       if (showAvg) {
-        const avgValue = this.pipe.transform(
-          Math.round(record.online_time / Math.max(1, record.days_active)),
-        );
+        const avgMinutes = Math.round(record.online_time / Math.max(1, record.days_active));
+        const avgValue = this.pipe.transform(avgMinutes);
         columns.push({
           label: 'Avg / Day',
           value: avgValue,
-          podiumValue: `${avgValue} AVG/DAY`,
+          valueClass: this.metricTimeClass(avgMinutes),
         });
+      }
+      columns.push({ label: 'Online Time', value: this.pipe.transform(record.online_time) });
+      if (showAvg) {
+        const dayWord = record.days_active === 1 ? 'day' : 'days';
+        columns.push({ label: 'Days Active', value: `${record.days_active} ${dayWord}` });
       }
       return {
         id: record.name,
@@ -111,12 +113,12 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
     this.toastService.clear();
   }
 
-  onItemClick(item: PodiumListItem): void {
+  protected onItemClick(item: PodiumListItem): void {
     const record = this.data().find((r) => r.name === item.id);
     if (record) this.navigateToPlayer(record);
   }
 
-  onItemRightClick({ event, item }: { event: MouseEvent; item: PodiumListItem }): void {
+  protected onItemRightClick({ event, item }: { event: MouseEvent; item: PodiumListItem }): void {
     this.selectedRecord = this.data().find((r) => r.name === item.id) ?? null;
     this.cm()?.show(event);
   }
@@ -129,6 +131,12 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
     const avg = record.online_time / Math.max(1, record.days_active);
     if (avg >= DAILY_DANGER_MIN) return 'list-row--danger';
     if (avg >= DAILY_WARN_MIN) return 'list-row--warn';
+    return '';
+  }
+
+  private metricTimeClass(minutes: number): string {
+    if (minutes >= DAILY_DANGER_MIN) return 'metric--danger';
+    if (minutes >= DAILY_WARN_MIN) return 'metric--warn';
     return '';
   }
 
