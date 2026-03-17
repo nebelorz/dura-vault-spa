@@ -108,6 +108,7 @@ export class DevInfoPanelComponent {
         },
       ],
       entryType: 'versionMajor',
+      tags: [{ label: 'major version', color: 'experience' }, { label: 'new feature' }],
     },
     {
       date: new Date('2026-03-12'),
