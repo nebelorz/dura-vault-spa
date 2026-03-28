@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
 import { toMenuItems, toCustomMenuItems, toOnlineMenuItems } from '@core/constants';
+import { environment } from '@env';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,7 +21,7 @@ export class SideMenuComponent {
     {
       label: 'Dura',
       icon: 'pi pi-link',
-      url: 'https://dura-online.com/',
+      url: `${environment.dura.baseURL}/`,
       target: '_blank',
     },
     {
