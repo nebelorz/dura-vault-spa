@@ -3,9 +3,6 @@ import { inject, Injectable } from '@angular/core';
 import { BaseApiService, CacheService, SupabaseService, ToastService } from '@core/services';
 import { ScrapeDateRange, ScrapeDateTable } from '@core/models';
 
-/**
- * Service for fetching generic metadata from the backend.
- */
 @Injectable({
   providedIn: 'root',
 })
@@ -15,19 +12,6 @@ export class MetadataService extends BaseApiService {
   protected toastService = inject(ToastService);
   protected supabase = this.supabaseService.getClient();
 
-  /**
-   * Fetches the oldest, latest and active comparison scrape dates for a given table.
-   * @param tableName - Name of the table to query (default: 'highscore_top')
-   * @param showErrorToast - Whether to show error toast if the request fails (default: true).
-   * @returns Promise resolving to an object with min_scrape_date and max_scrape_date and active_comparison_date, or null if an error occurs.
-   *
-   * Example return:
-   * {
-   *   min_scrape_date: '2025-01-01',
-   *   max_scrape_date: '2025-12-11',
-   *   active_comparison_date: '2025-12-10'
-   * }
-   */
   async getScrapeDates(
     tableName: ScrapeDateTable = 'highscore_top',
     showErrorToast: boolean = true,
@@ -48,15 +32,6 @@ export class MetadataService extends BaseApiService {
     return data && data.length > 0 ? data[0] : null;
   }
 
-  /**
-   * Fetches all available sections for highscores.
-   *
-   * @param showErrorToast - Whether to show error toast if the request fails (default: true).
-   * @returns Promise resolving to an array of section names (strings), or null if an error occurs.
-   *
-   * Example return:
-   *   ['experience', 'magic', 'fist', ...]
-   */
   async getHighscoreSections(showErrorToast: boolean = true): Promise<string[] | null> {
     const cacheKey = 'highscore_sections';
 

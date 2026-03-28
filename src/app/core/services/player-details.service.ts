@@ -12,16 +12,6 @@ export class PlayerDetailsService extends BaseApiService {
   protected toastService = inject(ToastService);
   protected supabase = this.supabaseService.getClient();
 
-  /**
-   * Fetches player details data for a specific player and section.
-   *
-   * @param request - Request parameters:
-   *   - p_name: Player name
-   *   - p_section: Section/category
-   *   - p_period: Time period ('day', 'week', 'month', 'year', 'all')
-   * @param showErrorToast - Whether to show error toast if the request fails (default: true)
-   * @returns Promise resolving to PlayerDetailsResponse or null if an error occurs
-   */
   async getPlayerDetails(
     request: PlayerDetailsRequest,
     showErrorToast: boolean = true,
@@ -35,11 +25,6 @@ export class PlayerDetailsService extends BaseApiService {
     });
   }
 
-  /**
-   * Clears all cached player details data.
-   *
-   * This will force all future queries to re-fetch data from the backend.
-   */
   clearAllData(): void {
     this.cacheService.clearByPattern('player_details');
   }

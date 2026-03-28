@@ -12,24 +12,6 @@ export class HighscoreService extends BaseApiService {
   protected toastService = inject(ToastService);
   protected supabase = this.supabaseService.getClient();
 
-  /**
-   * Fetches the top gainers.
-   *
-   * Example:
-   * {
-   *   p_period: 'day',
-   *   p_limit: 25,
-   *   p_section: 'experience'
-   * }
-   *
-   * @param params - Parameters for the query:
-   *   - period: Time period for gainers (default: 'week').
-   *   - section: Section/category to filter (default: null for all).
-   *   - limit: Maximum number of records to return (default: 25).
-   * @param showErrorToast - Whether to show error toast if the request fails (default: true).
-   * @returns Promise resolving to an array of HighscoreRecord objects, or null if an error occurs.
-   *
-   */
   async getTopGainers(
     params: TopGainersParams = { section: 'experience', period: 'day', limit: 25 },
     showErrorToast: boolean = true,
@@ -53,35 +35,15 @@ export class HighscoreService extends BaseApiService {
     );
   }
 
-  /**
-   * Clears cached highscore data for keys matching a specific pattern.
-   *
-   * For example, clearDataByPattern('experience') will remove all cached experience-related data.
-   *
-   * @param pattern - Substring to match in cache keys for deletion.
-   */
   clearDataByPattern(pattern: string): void {
     this.cacheService.clearByPattern(pattern);
   }
 
-  /**
-   * Clears all cached highscore data.
-   *
-   * This will force all future queries to re-fetch data from the backend.
-   */
   clearAllData(): void {
     this.cacheService.clearByPattern('top_gainers');
   }
 
-  /**
-   * Fetches the daily highscores summary.
-   *
-   * Retrieves top gainers for all sections in a single request,
-   * showing top 3 for experience and top 1 for other sections.
-   *
-   * @param showErrorToast - Whether to show error toast if the request fails (default: true).
-   * @returns Promise resolving to DailyHighscoresSummary object, or null if an error occurs.
-   */
+  // Returns top 3 players for experience and top 1 for each skill section
   async getDailyHighscoresSummary(
     showErrorToast: boolean = true,
   ): Promise<DailyHighscoresSummary | null> {
