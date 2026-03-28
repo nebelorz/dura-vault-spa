@@ -15,7 +15,7 @@ import { environment } from '@env';
 import { OnlineTopRecord, TimePeriod } from '@core/models';
 import { ToastService } from '@core/services';
 import { DAILY_WARN_MIN, DAILY_DANGER_MIN } from '@core/constants';
-import { MinutesToHoursPipe } from '@shared/pipes';
+import { formatMinutesToHours } from '@shared/functions';
 import { PodiumListComponent, PodiumListItem, ListColumn } from '@shared/components';
 
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
@@ -54,7 +54,6 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
   });
 
   private readonly showAvg = computed(() => this.period() !== 'day');
-  private readonly pipe = new MinutesToHoursPipe();
 
   readonly displayItems = computed<PodiumListItem[]>(() => {
     const showAvg = this.showAvg();
@@ -62,14 +61,14 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
       const columns: ListColumn[] = [];
       if (showAvg) {
         const avgMinutes = Math.round(record.online_time / Math.max(1, record.days_active));
-        const avgValue = this.pipe.transform(avgMinutes);
+        const avgValue = formatMinutesToHours(avgMinutes);
         columns.push({
           label: 'Avg / Day',
           value: avgValue,
           valueClass: this.metricTimeClass(avgMinutes),
         });
       }
-      columns.push({ label: 'Online Time', value: this.pipe.transform(record.online_time) });
+      columns.push({ label: 'Online Time', value: formatMinutesToHours(record.online_time) });
       if (showAvg) {
         const dayWord = record.days_active === 1 ? 'day' : 'days';
         columns.push({ label: 'Days Active', value: `${record.days_active} ${dayWord}` });

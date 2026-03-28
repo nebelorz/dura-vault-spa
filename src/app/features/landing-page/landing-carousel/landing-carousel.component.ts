@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
@@ -17,11 +17,11 @@ interface CarouselItem {
   imports: [CarouselModule, ButtonModule],
 })
 export class LandingCarouselComponent {
-  carouselItems = signal<CarouselItem[]>([
+  protected readonly carouselItems: CarouselItem[] = [
     {
       title: 'Have an announcement?',
       description: 'Reach out on Discord to get it featured here.',
       icon: 'pi pi-megaphone',
     },
-  ]);
+  ];
 }

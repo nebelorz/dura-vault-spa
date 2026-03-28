@@ -61,11 +61,10 @@ export class MetadataService extends BaseApiService {
     const cacheKey = 'highscore_sections';
 
     if (this.cacheService.has(cacheKey)) {
-      const cached = this.cacheService.get<Array<{ section: string }>>(cacheKey)!;
-      return cached.map((s) => s.section);
+      return this.cacheService.get<string[]>(cacheKey)!;
     }
 
-    const data = await this.fetchWithCache<Array<{ section: string }>>(
+    const raw = await this.fetchWithCache<Array<{ section: string }>>(
       cacheKey,
       'get_highscore_sections',
       {},
@@ -76,6 +75,9 @@ export class MetadataService extends BaseApiService {
       },
     );
 
-    return data ? data.map((s) => s.section) : null;
+    if (!raw) return null;
+    const sections = raw.map((s) => s.section);
+    this.cacheService.set(cacheKey, sections);
+    return sections;
   }
 }
