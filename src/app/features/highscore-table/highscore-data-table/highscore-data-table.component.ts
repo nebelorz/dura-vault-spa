@@ -14,6 +14,7 @@ import { environment } from '@env';
 
 import { HighscoreRecord, Section } from '@core/models';
 import { ToastService } from '@core/services';
+import { getSectionLabel } from '@core/constants';
 import { formatNumber } from '@shared/functions';
 import { PodiumListComponent, PodiumListItem, ListColumn } from '@shared/components';
 
@@ -22,10 +23,6 @@ import { MenuItem } from 'primeng/api';
 
 function gainWord(n: number, singular: string, plural: string): string {
   return Math.abs(n) === 1 ? singular : plural;
-}
-
-function capitalize(str: string): string {
-  return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 @Component({
@@ -159,9 +156,9 @@ export class HighscoreDataTableComponent implements OnInit, OnDestroy {
         {
           label: 'Skill Gained',
           value: `${record.gain_level}`,
-          podiumValue: `${record.gain_level} ${capitalize(section)}`,
+          podiumValue: `${record.gain_level} ${getSectionLabel(section)}`,
           valueClass: this.gainClass(record.gain_level, 'metric--skill'),
-          subValue: `${capitalize(section)} ${record.level}`,
+          subValue: `${getSectionLabel(section)} ${record.level}`,
         },
         {
           label: 'Rank Gained',
