@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { TitlecaseSpacesPipe } from '@shared/pipes/titlecase-spaces.pipe';
+import { TitlecaseSpacesPipe } from '@shared/pipes';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,5 +1,4 @@
 import { Component, inject, signal, DestroyRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastMessage, ToastService } from '@core/services';
 
@@ -7,7 +6,7 @@ import { ToastMessage, ToastService } from '@core/services';
   selector: 'app-toast',
   templateUrl: './toast.component.html',
   styleUrls: ['./toast.component.scss'],
-  imports: [CommonModule],
+  imports: [],
 })
 export class ToastComponent {
   private readonly toastService = inject(ToastService);

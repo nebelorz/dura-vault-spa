@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 
 import { HighscoreSection, PlayerDetailsInfo } from '@core/models';
 import { toSectionOptions, SectionOption } from '@core/constants';
-import { GoBackButtonComponent } from '../../../shared/components/go-back-button/go-back-button.component';
+import { GoBackButtonComponent } from '@shared/components';
 
 import { SelectModule } from 'primeng/select';
 

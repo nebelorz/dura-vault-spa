@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { ThemeService } from '@core/services';
 import { DailyTopGainersComponent } from './daily-top-gainers/daily-top-gainers.component';
@@ -12,7 +11,6 @@ import { SideMenuComponent } from './side-menu/side-menu.component';
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.scss'],
   imports: [
-    CommonModule,
     LandingCarouselComponent,
     DevInfoPanelComponent,
     DailyTopGainersComponent,

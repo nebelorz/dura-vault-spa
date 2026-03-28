@@ -1,5 +1,5 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { DatePipe, UpperCasePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { DailyHighscoresSummary, DailyTopPlayer, SectionData } from '@core/models';
@@ -12,11 +12,13 @@ import { CarouselModule } from 'primeng/carousel';
 import { Tooltip } from 'primeng/tooltip';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-daily-top-gainers',
   templateUrl: './daily-top-gainers.component.html',
   styleUrls: ['./daily-top-gainers.component.scss'],
   imports: [
-    CommonModule,
+    DatePipe,
+    UpperCasePipe,
     CarouselModule,
     AbbreviateNumberPipe,
     Tooltip,

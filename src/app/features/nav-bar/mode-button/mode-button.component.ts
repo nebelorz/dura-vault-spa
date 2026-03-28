@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 
 import { ButtonModule } from 'primeng/button';
-import { ThemeService } from '../../../core/services/theme.service';
+import { ThemeService } from '@core/services';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

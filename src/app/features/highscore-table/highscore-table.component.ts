@@ -8,7 +8,7 @@ import { calculateAvailableDataDateRange } from '@shared/functions';
 import { HighscoreAvailableDataInfoComponent } from './highscore-available-data-info/highscore-available-data-info.component';
 import { HighscoreDataTableComponent } from './highscore-data-table/highscore-data-table.component';
 import { HighscoreHeaderComponent } from './highscore-header/highscore-header.component';
-import { PeriodSelectorComponent } from '../../shared/components/period-selector/period-selector.component';
+import { PeriodSelectorComponent } from '@shared/components';
 
 @Component({
   selector: 'app-highscore-table',

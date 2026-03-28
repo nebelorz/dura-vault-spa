@@ -14,7 +14,7 @@ import {
 } from '@core/models';
 import { PlayerDetailsService, OnlineService } from '@core/services';
 import { PlayerDetailHeaderComponent } from './player-detail-header/player-detail-header.component';
-import { PeriodSelectorComponent } from '../../shared/components/period-selector/period-selector.component';
+import { PeriodSelectorComponent } from '@shared/components';
 import { PlayerDetailChartComponent } from './player-detail-chart/player-detail-chart.component';
 import { PlayerSummaryComponent } from './player-summary/player-summary.component';
 import { MinimalistIconComponent } from '@shared/components';

@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { DatePipe, CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { TimelineModule } from 'primeng/timeline';
 
 type TagColor = 'error' | 'warn' | 'info' | 'rank' | 'experience';
@@ -30,7 +30,7 @@ interface DevInfoEntry {
 
 @Component({
   selector: 'app-dev-info-panel',
-  imports: [TimelineModule, DatePipe, CommonModule],
+  imports: [TimelineModule, DatePipe],
   templateUrl: './dev-info-panel.component.html',
   styleUrls: ['./dev-info-panel.component.scss'],
 })
