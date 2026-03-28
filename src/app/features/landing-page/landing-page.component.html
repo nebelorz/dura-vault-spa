@@ -31,7 +31,13 @@
 
       <!-- Daily Top Gainers -->
       <section class="landing-daily-tops-section">
-        <app-daily-top-gainers />
+        <app-daily-top-gainers
+          [loading]="loading()"
+          [maxDate]="maxDate()"
+          [experiencePlayers]="experiencePlayers()"
+          [experienceLossPlayer]="experienceLossPlayer()"
+          [skillsSection]="skillsSection()"
+        />
       </section>
     </aside>
   </div>

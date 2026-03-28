@@ -1,10 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
-import { DailyHighscoresSummary, DailyTopPlayer, SectionData } from '@core/models';
-import { HighscoreService, MetadataService } from '@core/services';
-import { HIGHSCORE_SECTIONS } from '@core/constants';
+import { DailyTopPlayer, SectionData } from '@core/models';
 import { AbbreviateNumberPipe } from '@shared/pipes';
 import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
 
@@ -26,64 +24,19 @@ import { Tooltip } from 'primeng/tooltip';
     NoDataStatusComponent,
   ],
 })
-export class DailyTopGainersComponent implements OnInit {
-  private highscoreService = inject(HighscoreService);
-  private metadataService = inject(MetadataService);
-  private router = inject(Router);
+export class DailyTopGainersComponent {
+  private readonly router = inject(Router);
 
-  loading = signal<boolean>(false);
-  maxDate = signal<string | null>(null);
-  experiencePlayers = signal<DailyTopPlayer[]>([]);
-  experienceLossPlayer = signal<DailyTopPlayer | null>(null);
-  skillsSection = signal<SectionData[]>([]);
-
-  async ngOnInit(): Promise<void> {
-    await Promise.all([this.loadDailySummary(), this.loadActiveComparisonDate()]);
-  }
+  // Inputs
+  loading = input.required<boolean>();
+  maxDate = input<string | null>(null);
+  experiencePlayers = input<DailyTopPlayer[]>([]);
+  experienceLossPlayer = input<DailyTopPlayer | null>(null);
+  skillsSection = input<SectionData[]>([]);
 
   navigateToPlayer(playerName: string, section: string): void {
     this.router.navigate(['/player', playerName], {
       queryParams: { section },
     });
-  }
-
-  private async loadActiveComparisonDate(): Promise<void> {
-    const dateRange = await this.metadataService.getScrapeDates('highscore_top', false);
-    if (dateRange?.active_comparison_date) {
-      this.maxDate.set(dateRange.active_comparison_date);
-    }
-  }
-
-  private async loadDailySummary(): Promise<void> {
-    this.loading.set(true);
-
-    try {
-      const summary = await this.highscoreService.getDailyHighscoresSummary(true);
-      if (summary) {
-        this.processSummaryData(summary);
-      }
-    } finally {
-      this.loading.set(false);
-    }
-  }
-
-  private processSummaryData(summary: DailyHighscoresSummary): void {
-    this.experiencePlayers.set(summary.top_daily.experience?.slice(0, 3) || []);
-    this.experienceLossPlayer.set(summary.top_daily.experience_loss?.[0] ?? null);
-
-    const sections = HIGHSCORE_SECTIONS.filter((s) => s.value !== 'experience')
-      .map((section) => ({
-        name: section.value,
-        label: section.label,
-        players:
-          (
-            summary.top_daily[section.value as keyof typeof summary.top_daily] as
-              | DailyTopPlayer[]
-              | undefined
-          )?.slice(0, 1) || [],
-      }))
-      .filter((s) => s.players.length > 0);
-
-    this.skillsSection.set(sections);
   }
 }
