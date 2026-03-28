@@ -1,6 +1,6 @@
-import { Component, inject, signal, OnDestroy } from '@angular/core';
+import { Component, inject, signal, DestroyRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Subscription } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastMessage, ToastService } from '@core/services';
 
 @Component({
@@ -9,25 +9,18 @@ import { ToastMessage, ToastService } from '@core/services';
   styleUrls: ['./toast.component.scss'],
   imports: [CommonModule],
 })
-export class ToastComponent implements OnDestroy {
+export class ToastComponent {
   private readonly toastService = inject(ToastService);
-  private readonly subscription: Subscription;
+  private readonly destroyRef = inject(DestroyRef);
 
   protected readonly messages = signal<ToastMessage[]>([]);
 
   constructor() {
-    this.subscription = this.toastService.messages$.subscribe((messages) => {
-      this.messages.set(messages);
-    });
+    this.toastService.messages$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((messages) => this.messages.set(messages));
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
-  /**
-   * Closes a specific toast message
-   */
   protected closeToast(id: string): void {
     this.toastService.remove(id);
   }

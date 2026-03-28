@@ -1,5 +1,6 @@
-import { Component, OnInit, signal, computed, inject } from '@angular/core';
+import { Component, OnInit, signal, computed, inject, DestroyRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { HighscoreRecord, Section, ScrapeDateRange, TimePeriod } from '@core/models';
 import { HighscoreService, MetadataService } from '@core/services';
@@ -24,6 +25,7 @@ export class HighscoreTableComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly highscoreService = inject(HighscoreService);
   private readonly metadataService = inject(MetadataService);
+  private readonly destroyRef = inject(DestroyRef);
 
   // State
   data = signal<HighscoreRecord[]>([]);
@@ -49,7 +51,7 @@ export class HighscoreTableComponent implements OnInit {
     await this.loadScrapeDateRange();
 
     // Route changes
-    this.route.params.subscribe((params) => {
+    this.route.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
       const section = params['section'] as Section;
       if (section) {
         this.section.set(section);

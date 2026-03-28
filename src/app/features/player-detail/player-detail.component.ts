@@ -1,6 +1,7 @@
-import { Component, OnInit, signal, computed, inject } from '@angular/core';
+import { Component, OnInit, signal, computed, inject, DestroyRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, tap } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import {
   HighscoreSection,
@@ -31,10 +32,11 @@ import { MinimalistIconComponent } from '@shared/components';
   ],
 })
 export class PlayerDetailComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private playerDetailsService = inject(PlayerDetailsService);
-  private onlineService = inject(OnlineService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly playerDetailsService = inject(PlayerDetailsService);
+  private readonly onlineService = inject(OnlineService);
+  private readonly destroyRef = inject(DestroyRef);
 
   // State
   playerName = signal<string>('');
@@ -76,6 +78,7 @@ export class PlayerDetailComponent implements OnInit {
           this.playerName.set(name);
         }),
         switchMap(() => this.route.queryParamMap),
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((queryParams) => {
         const section = queryParams.get('section') as HighscoreSection;
