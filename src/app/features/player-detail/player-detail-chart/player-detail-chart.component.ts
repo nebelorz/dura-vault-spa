@@ -1,4 +1,4 @@
-import { Component, computed, input, signal, effect } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, signal, effect } from '@angular/core';
 
 import { PlayerDetailsResponse } from '@core/models';
 import { formatDate, formatLargeNumber } from '@shared/functions';
@@ -22,6 +22,7 @@ interface ChartDataset {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-player-detail-chart',
   templateUrl: './player-detail-chart.component.html',
   styleUrls: ['./player-detail-chart.component.scss'],

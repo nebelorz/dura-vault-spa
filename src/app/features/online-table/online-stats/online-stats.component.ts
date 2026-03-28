@@ -1,4 +1,4 @@
-import { Component, computed, input, signal, effect } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, signal, effect } from '@angular/core';
 
 import { OnlineTopRecord, OnlineTimelineRecord, TimePeriod } from '@core/models';
 import { formatDate } from '@shared/functions';
@@ -51,6 +51,7 @@ interface LevelStat {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-online-stats',
   templateUrl: './online-stats.component.html',
   styleUrls: ['./online-stats.component.scss'],

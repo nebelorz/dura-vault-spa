@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { HighscoreSection, PlayerDetailsInfo } from '@core/models';
@@ -8,6 +8,7 @@ import { GoBackButtonComponent } from '../../../shared/components/go-back-button
 import { SelectModule } from 'primeng/select';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-player-detail-header',
   templateUrl: './player-detail-header.component.html',
   styleUrls: ['./player-detail-header.component.scss'],

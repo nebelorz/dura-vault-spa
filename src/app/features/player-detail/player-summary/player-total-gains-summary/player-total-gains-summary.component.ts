@@ -1,9 +1,10 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 import { HighscoreSection, PlayerDetailsSummary } from '@core/models';
 import { AbbreviateNumberPipe } from '@shared/pipes';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-player-total-gains-summary',
   templateUrl: './player-total-gains-summary.component.html',
   styleUrls: ['./player-total-gains-summary.component.scss'],

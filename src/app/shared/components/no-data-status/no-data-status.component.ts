@@ -1,6 +1,7 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-no-data-status',
   templateUrl: './no-data-status.component.html',
   styleUrl: './no-data-status.component.scss',

@@ -1,8 +1,9 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-minimalist-icon',
   imports: [TooltipModule],
   templateUrl: './minimalist-icon.component.html',

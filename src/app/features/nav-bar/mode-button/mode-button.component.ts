@@ -1,9 +1,10 @@
-import { Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 
 import { ButtonModule } from 'primeng/button';
 import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-mode-button',
   templateUrl: './mode-button.component.html',
   styleUrls: ['./mode-button.component.scss'],

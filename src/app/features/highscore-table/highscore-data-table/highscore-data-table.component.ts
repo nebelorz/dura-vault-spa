@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
   input,
@@ -28,6 +29,7 @@ function capitalize(str: string): string {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-highscore-data-table',
   templateUrl: './highscore-data-table.component.html',
   styleUrls: ['./highscore-data-table.component.scss'],

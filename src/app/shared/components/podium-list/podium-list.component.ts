@@ -1,4 +1,4 @@
-import { Component, computed, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { NgClass } from '@angular/common';
 
 import { LoadingStatusComponent } from '../loading-status/loading-status.component';
@@ -23,6 +23,7 @@ export interface PodiumListItem {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-podium-list',
   templateUrl: './podium-list.component.html',
   styleUrls: ['./podium-list.component.scss'],

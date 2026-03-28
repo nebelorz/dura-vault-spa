@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
 import { toMenuItems, toCustomMenuItems, toOnlineMenuItems } from '../../../core/constants';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-side-menu',
   templateUrl: './side-menu.component.html',
   styleUrls: ['./side-menu.component.scss'],

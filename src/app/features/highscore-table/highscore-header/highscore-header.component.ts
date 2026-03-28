@@ -1,8 +1,9 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { TitlecaseSpacesPipe } from '@shared/pipes/titlecase-spaces.pipe';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-highscore-header',
   templateUrl: './highscore-header.component.html',
   styleUrls: ['./highscore-header.component.scss'],

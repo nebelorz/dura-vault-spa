@@ -1,4 +1,4 @@
-import { Component, input, output, computed } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { PeriodOption, TimePeriod } from '@core/models';
@@ -6,6 +6,7 @@ import { PeriodOption, TimePeriod } from '@core/models';
 import { SelectButtonModule } from 'primeng/selectbutton';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-period-selector',
   templateUrl: './period-selector.component.html',
   styleUrls: ['./period-selector.component.scss'],

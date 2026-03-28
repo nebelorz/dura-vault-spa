@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 import {
   PlayerDetailsSummary,
@@ -11,6 +11,7 @@ import { PlayerPerformanceSummaryComponent } from './player-performance-summary/
 import { PlayerOnlineStatsSummaryComponent } from './player-online-stats-summary/player-online-stats-summary.component';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-player-summary',
   templateUrl: './player-summary.component.html',
   styleUrls: ['./player-summary.component.scss'],

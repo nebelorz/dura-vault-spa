@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -6,6 +6,7 @@ import { NavigationHistoryService } from '@core/services';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-go-back-button',
   templateUrl: './go-back-button.component.html',
   styleUrls: ['./go-back-button.component.scss'],

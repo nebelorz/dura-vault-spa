@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import { ScrapeDateRange } from '@core/models';
@@ -6,6 +6,7 @@ import { MinimalistIconComponent } from '../../../shared/components/minimalist-i
 import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-highscore-available-data-info',
   templateUrl: './highscore-available-data-info.component.html',
   styleUrls: ['./highscore-available-data-info.component.scss'],
