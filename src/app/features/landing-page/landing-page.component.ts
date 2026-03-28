@@ -55,18 +55,14 @@ export class LandingPageComponent implements OnInit {
 
   private processSummaryData(summary: DailyHighscoresSummary): void {
     const topDaily = summary.top_daily as Record<string, DailyTopPlayer[] | null>;
-
-    this.experiencePlayers.set(topDaily['experience']?.slice(0, 3) ?? []);
+    this.experiencePlayers.set(topDaily['experience'] ?? []);
     this.experienceLossPlayer.set(topDaily['experience_loss']?.[0] ?? null);
 
-    // Gets all highscore sections except experience,
-    // taking only the top 1 of each to display in the "Skills"
-    // section carousel on the landing page
     const sections = HIGHSCORE_SECTIONS.filter((s) => s.value !== 'experience')
       .map((s) => ({
         name: s.value,
         label: s.label,
-        players: topDaily[s.value]?.slice(0, 1) ?? [],
+        players: topDaily[s.value] ?? [],
       }))
       .filter((s) => s.players.length > 0);
 

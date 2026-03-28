@@ -43,7 +43,7 @@ export class HighscoreService extends BaseApiService {
     this.cacheService.clearByPattern('top_gainers');
   }
 
-  // Returns top 3 players for experience and top 1 for each skill section
+  // Returns top 3 for experience and top 1 for exp loss and each skill section
   async getDailyHighscoresSummary(
     showErrorToast: boolean = true,
   ): Promise<DailyHighscoresSummary | null> {
@@ -52,7 +52,7 @@ export class HighscoreService extends BaseApiService {
     return this.fetchWithCache<DailyHighscoresSummary>(
       cacheKey,
       'get_daily_highscores_summary',
-      {},
+      { p_experience_limit: 3, p_experience_loss_limit: 1, p_skills_limit: 1 },
       {
         errorContext: 'daily highscores summary',
         errorTitle: 'Highscore Error',

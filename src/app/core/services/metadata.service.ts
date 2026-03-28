@@ -31,28 +31,4 @@ export class MetadataService extends BaseApiService {
 
     return data && data.length > 0 ? data[0] : null;
   }
-
-  async getHighscoreSections(showErrorToast: boolean = true): Promise<string[] | null> {
-    const cacheKey = 'highscore_sections';
-
-    if (this.cacheService.has(cacheKey)) {
-      return this.cacheService.get<string[]>(cacheKey)!;
-    }
-
-    const raw = await this.fetchWithCache<Array<{ section: string }>>(
-      cacheKey,
-      'get_highscore_sections',
-      {},
-      {
-        errorContext: 'highscore sections',
-        errorTitle: 'Metadata Error',
-        showErrorToast,
-      },
-    );
-
-    if (!raw) return null;
-    const sections = raw.map((s) => s.section);
-    this.cacheService.set(cacheKey, sections);
-    return sections;
-  }
 }
