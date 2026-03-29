@@ -1,6 +1,15 @@
 import { TimePeriod } from './common.model';
 import { HighscoreSection } from './highscore.model';
 
+export interface PlayerStatsRecord {
+  section: string;
+  level: number;
+  points: number | null;
+  rank: number;
+  vocation: string;
+  last_gain_date: string | null;
+}
+
 export interface PlayerDetailsInfo {
   name: string;
   rank: number;
@@ -32,6 +41,7 @@ export interface PlayerDetailsSummary {
   average_gain_level: number;
   average_gain_rank: number;
   days_count: number;
+  days_with_data: number;
   day_first: string;
   day_last: string;
   best_day: PlayerDetailsDayStats;

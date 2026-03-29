@@ -75,6 +75,26 @@ body {
   opacity: 0.6;
 }
 
+// METRIC COLOR CLASSES (used in podium-list, performance-summary, etc.)
+.metric--xp {
+  color: colors.$experience;
+}
+.metric--skill {
+  color: colors.$primary;
+}
+.metric--rank {
+  color: colors.$rank;
+}
+.metric--warn {
+  color: colors.$warn;
+}
+.metric--danger {
+  color: colors.$danger;
+}
+.metric--info {
+  color: colors.$info;
+}
+
 // ANIMATIONS
 .animation-fade {
   @include animationFade.fadeAnimation();

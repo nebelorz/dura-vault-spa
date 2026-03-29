@@ -5,19 +5,20 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import {
   HighscoreSection,
-  PlayerDetailsInfo,
   PlayerDetailsRequest,
   PlayerDetailsResponse,
   PlayerOnlineResponse,
+  PlayerStatsRecord,
   TimePeriod,
   PeriodOption,
 } from '@core/models';
 import { PlayerDetailsService, OnlineService } from '@core/services';
 import { PlayerDetailHeaderComponent } from './player-detail-header/player-detail-header.component';
-import { PeriodSelectorComponent } from '@shared/components';
+import { PeriodSelectorComponent, MinimalistIconComponent } from '@shared/components';
 import { PlayerDetailChartComponent } from './player-detail-chart/player-detail-chart.component';
-import { PlayerSummaryComponent } from './player-summary/player-summary.component';
-import { MinimalistIconComponent } from '@shared/components';
+import { PlayerStatsCardComponent } from './player-stats-card/player-stats-card.component';
+import { PlayerPerformanceSummaryComponent } from './player-summary/player-performance-summary/player-performance-summary.component';
+import { PlayerOnlineStatsSummaryComponent } from './player-summary/player-online-stats-summary/player-online-stats-summary.component';
 
 @Component({
   selector: 'app-player-detail',
@@ -27,7 +28,9 @@ import { MinimalistIconComponent } from '@shared/components';
     PlayerDetailHeaderComponent,
     PeriodSelectorComponent,
     PlayerDetailChartComponent,
-    PlayerSummaryComponent,
+    PlayerStatsCardComponent,
+    PlayerPerformanceSummaryComponent,
+    PlayerOnlineStatsSummaryComponent,
     MinimalistIconComponent,
   ],
 })
@@ -40,15 +43,15 @@ export class PlayerDetailComponent implements OnInit {
 
   // State
   playerName = signal<string>('');
-  playerInfo = signal<PlayerDetailsInfo | null>(null);
   section = signal<HighscoreSection>('experience');
   selectedPeriod = signal<TimePeriod>('week');
   loading = signal<boolean>(false);
   playerDetailsData = signal<PlayerDetailsResponse | null>(null);
   playerOnlineData = signal<PlayerOnlineResponse | null>(null);
+  playerStats = signal<PlayerStatsRecord[]>([]);
 
   // "All" -> "Active Days"
-  periodOptions: PeriodOption[] = [
+  readonly periodOptions: PeriodOption[] = [
     { label: 'Day', value: 'day' },
     { label: 'Week', value: 'week' },
     { label: 'Month', value: 'month' },
@@ -57,8 +60,11 @@ export class PlayerDetailComponent implements OnInit {
   ];
 
   // Computed
-  summary = computed(() => this.playerDetailsData()?.summary || null);
-  dailyRecords = computed(() => this.playerDetailsData()?.daily || []);
+  summary = computed(() => this.playerDetailsData()?.summary ?? null);
+  dailyRecords = computed(() => this.playerDetailsData()?.daily ?? []);
+  vocation = computed(
+    () => this.playerStats().find((s) => s.section === 'experience')?.vocation ?? '',
+  );
   dateRange = computed(() => {
     const summaryData = this.summary();
     if (!summaryData) return [];
@@ -115,19 +121,19 @@ export class PlayerDetailComponent implements OnInit {
         p_period: this.selectedPeriod(),
       };
 
-      const [data, onlineData] = await Promise.all([
+      const [data, stats, onlineData] = await Promise.all([
         this.playerDetailsService.getPlayerDetails(request),
+        this.playerDetailsService.getPlayerStats(this.playerName()),
         this.onlineService.getPlayerOnlineHistory(this.playerName(), this.selectedPeriod(), false),
       ]);
 
       if (data) {
         this.playerDetailsData.set(data);
-        this.playerInfo.set(data.player);
       } else {
         this.playerDetailsData.set(null);
-        this.playerInfo.set(null);
       }
 
+      this.playerStats.set(stats ?? []);
       this.playerOnlineData.set(onlineData);
     } finally {
       this.loading.set(false);

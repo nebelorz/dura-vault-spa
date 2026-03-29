@@ -1,0 +1,80 @@
+<div class="stats-section">
+  <div class="section-header">PLAYER STATS</div>
+
+  @if (loading() && !stats().length) {
+    <app-loading-status />
+  } @else if (!stats().length) {
+    <div class="stat-row">
+      <div class="stat-info"><span class="additional-info">No data available.</span></div>
+    </div>
+  } @else {
+    <!-- Experience -->
+    @if (experienceStat(); as exp) {
+      <div
+        class="stat-row"
+        [class.active-section]="activeSection() === 'experience'"
+        (click)="onStatClick('experience')"
+      >
+        <div class="stat-icon">
+          <i
+            class="pi pi-angle-double-up"
+            [class.stat-active]="activeSection() === 'experience'"
+          ></i>
+        </div>
+        <div class="stat-info">
+          <div class="stat-label">Level</div>
+          <div class="stat-value-row">
+            <span class="stat-value">{{ exp.level }}</span>
+            <span class="stat-rank">#{{ exp.rank }}</span>
+          </div>
+        </div>
+        <div class="stat-overlay">
+          @if (exp.last_gain_date) {
+            <div class="stat-overlay-col">
+              <span class="stat-overlay-label">Last Gain</span>
+              <span class="stat-overlay-value">{{ exp.last_gain_date | date: 'dd MMM yyyy' }}</span>
+            </div>
+          }
+          <div class="stat-overlay-col">
+            <span class="stat-overlay-label">Rank</span>
+            <span class="stat-overlay-value rank">#{{ exp.rank }}</span>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Skills -->
+    @for (stat of skillStats(); track stat.section) {
+      <div
+        class="stat-row"
+        [class.active-section]="stat.section === activeSection()"
+        (click)="onStatClick(stat.section)"
+      >
+        <div class="stat-icon">
+          <i class="pi pi-box" [class.stat-active]="stat.section === activeSection()"></i>
+        </div>
+        <div class="stat-info">
+          <div class="stat-label">{{ getSectionLabel(stat.section) }}</div>
+          <div class="stat-value-row">
+            <span class="stat-value">{{ stat.level }}</span>
+            <span class="stat-rank">#{{ stat.rank }}</span>
+          </div>
+        </div>
+        <div class="stat-overlay">
+          @if (stat.last_gain_date) {
+            <div class="stat-overlay-col">
+              <span class="stat-overlay-label">Last Gain</span>
+              <span class="stat-overlay-value">{{
+                stat.last_gain_date | date: 'dd MMM yyyy'
+              }}</span>
+            </div>
+          }
+          <div class="stat-overlay-col">
+            <span class="stat-overlay-label">Rank</span>
+            <span class="stat-overlay-value rank">#{{ stat.rank }}</span>
+          </div>
+        </div>
+      </div>
+    }
+  }
+</div>

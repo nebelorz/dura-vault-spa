@@ -1,16 +1,13 @@
 <div class="player-detail-container animation-fade">
-  <!-- Main Content -->
   <div class="player-container">
-    <!-- Header -->
-    <div class="player-container-header">
+    <!-- TOP: name + section + period -->
+    <div class="player-container-top">
       <app-player-detail-header
         [playerName]="playerName()"
+        [vocation]="vocation()"
         [section]="section()"
-        [playerInfo]="playerInfo()"
         (sectionChange)="onSectionChange($event)"
       />
-
-      <!-- Period Selector -->
       <div class="period-selector-wrapper">
         <app-period-selector
           [disabledPeriods]="['day']"
@@ -19,7 +16,6 @@
           [periodOptions]="periodOptions"
           (periodChange)="onPeriodChange($event)"
         />
-
         <app-minimalist-icon
           size="x-small"
           tooltipText="Active Days provides the most accurate metrics by playtime."
@@ -28,23 +24,36 @@
       </div>
     </div>
 
-    <!-- Data Section -->
+    <!-- BODY -->
     <div class="player-container-body">
-      <!-- Chart -->
-      <app-player-detail-chart
-        class="animation-fade"
-        [playerDetailsData]="playerDetailsData()"
-        [loading]="loading()"
-      />
+      <!-- Left: player stats + online stats -->
+      <div class="player-left-column">
+        <app-player-stats-card
+          [stats]="playerStats()"
+          [loading]="loading()"
+          [activeSection]="section()"
+          (sectionSelect)="onSectionChange($event)"
+        />
+        <div class="left-divider"></div>
+        <app-player-online-stats-summary
+          [onlineSummary]="playerOnlineData()?.summary ?? null"
+          [summary]="summary()"
+        />
+      </div>
 
-      <!-- Summary -->
-      <app-player-summary
-        class="animation-fade"
-        [summary]="summary()!"
-        [section]="section()"
-        [selectedPeriod]="selectedPeriod()"
-        [onlineSummary]="playerOnlineData()?.summary ?? null"
-      />
+      <!-- Right: performance panel wrapping chart via ng-content -->
+      <div class="player-right-column">
+        <app-player-performance-summary
+          class="animation-fade"
+          [summary]="summary()"
+          [section]="section()"
+        >
+          <app-player-detail-chart
+            [playerDetailsData]="playerDetailsData()"
+            [loading]="loading()"
+          />
+        </app-player-performance-summary>
+      </div>
     </div>
   </div>
 </div>

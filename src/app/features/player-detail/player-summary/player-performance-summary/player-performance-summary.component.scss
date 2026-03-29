@@ -1,29 +1,65 @@
 @use 'colors' as colors;
 
-.stats-section {
+:host {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  flex: 1;
+  min-height: 0;
 }
 
-.stat-row {
+// Chart
+.chart-slot {
+  flex: 1;
+  min-height: 0;
   display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  padding: 0.75rem;
-  border-radius: 8px;
-  transition: all 0.2s ease;
+  flex-direction: column;
+}
 
-  &.positive-level {
-    background: colors.$level-opacity-1;
+// Performance
+.perf-bar {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-top: 1px solid var(--surface-border);
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.perf-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  align-self: stretch;
+}
+
+.perf-separator {
+  width: 2px;
+  background: colors.$secondary;
+  align-self: stretch;
+  margin: 0 1rem;
+  border-radius: 2px;
+
+  @media (max-width: 700px) {
+    width: 100%;
+    height: 2px;
+    margin: 0.5rem 0;
   }
+}
 
-  &.positive-experience {
-    background: colors.$experience-opacity-1;
-  }
+// Gain metrics (left group)
+.perf-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.15rem 1rem;
+  border-radius: 4px;
+  transition: background 0.15s ease;
 
-  &.positive-rank {
-    background: colors.$rank-opacity-1;
+  &:first-child {
+    padding-left: 0;
   }
 
   &.negative {
@@ -31,57 +67,58 @@
   }
 }
 
-.stat-icon {
+// Days gains/losses (right group)
+.perf-extreme {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
+  gap: 0.4rem;
+  padding: 0.15rem 1rem;
+  border-radius: 4px;
+  transition: background 0.15s ease;
 
-  i {
-    font-size: large;
-    color: colors.$gray-light;
-    opacity: 0.8;
-
-    &.positive {
-      color: colors.$level;
-    }
-
-    &.negative {
-      color: colors.$danger;
-    }
-
-    &.next {
-      color: colors.$info;
-    }
+  &.negative {
+    background: colors.$danger-opacity-1;
   }
 }
 
-.stat-info {
+.perf-extreme-info {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
-  flex: 1;
-  min-width: 0;
+  gap: 0.05rem;
 }
 
-.stat-label {
-  font-size: xx-small;
-  font-weight: bold;
+.perf-extreme .perf-value {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+// Shared text styles
+.perf-label {
+  font-size: 0.58rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
-.stat-value-row {
+.perf-value {
+  font-size: 0.85rem;
+  font-weight: 700;
   display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 0.35rem;
+  line-height: 1.2;
 }
 
-.stat-value {
-  font-size: small;
-  font-weight: bold;
-  line-height: 1.2;
+.perf-avg {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  font-weight: 500;
+}
+
+.perf-date {
+  font-size: 0.75rem;
+  opacity: 0.6;
+  font-weight: 500;
 }

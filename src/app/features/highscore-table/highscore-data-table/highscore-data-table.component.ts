@@ -10,12 +10,11 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from '@env';
 
 import { HighscoreRecord, Section } from '@core/models';
 import { ToastService } from '@core/services';
 import { getSectionLabel } from '@core/constants';
-import { formatNumber } from '@shared/functions';
+import { formatNumber, getDuraPlayerUrl } from '@shared/functions';
 import { PodiumListComponent, PodiumListItem, ListColumn } from '@shared/components';
 
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
@@ -192,7 +191,6 @@ export class HighscoreDataTableComponent implements OnInit, OnDestroy {
   private searchOnDura(): void {
     const record = this.selectedRecord;
     if (!record) return;
-    const url = `${environment.dura.baseURL}/?characters/${record.name}`;
-    window.open(url, '_blank');
+    window.open(getDuraPlayerUrl(record.name), '_blank');
   }
 }

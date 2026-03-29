@@ -10,10 +10,8 @@
       <div class="stat-info">
         <div class="stat-label">Avg Online</div>
         <div class="stat-value-row">
-          <span class="stat-value">{{
-            formatOnlineAvg(onlineSummary()!.average_online_time)
-          }}</span>
-          <span class="additional-info">{{ onlineSummary()!.days_count }} days tracked</span>
+          <span class="stat-value">{{ onlineSummary()!.average_online_time | minutesToHours }}</span>
+          <span class="additional-info">/day avg</span>
         </div>
       </div>
     </div>
@@ -21,7 +19,7 @@
     <!-- Active Time Window -->
     @if (onlineSummary()!.avg_first_seen && onlineSummary()!.avg_last_seen) {
       <div class="stat-row">
-        <div class="stat-icon stat-icon--primary">
+        <div class="stat-icon">
           <i class="pi pi-clock"></i>
         </div>
         <div class="stat-info">
@@ -48,6 +46,24 @@
             <span class="stat-value">{{
               onlineSummary()!.last_seen_at | date: 'dd MMM yyyy, HH:mm'
             }}</span>
+          </div>
+        </div>
+      </div>
+    }
+  }
+
+  <!-- Consistency (from highscore data) -->
+  @if (summary(); as s) {
+    @if (s.days_count > 0) {
+      <div class="stat-row">
+        <div class="stat-icon">
+          <i class="pi pi-circle"></i>
+        </div>
+        <div class="stat-info">
+          <div class="stat-label">Consistency</div>
+          <div class="stat-value-row">
+            <span class="stat-value">{{ (s.days_with_data / s.days_count * 100).toFixed(0) }}%</span>
+            <span class="additional-info">{{ s.days_with_data }} / {{ s.days_count }} days</span>
           </div>
         </div>
       </div>

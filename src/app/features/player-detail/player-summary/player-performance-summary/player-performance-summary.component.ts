@@ -13,6 +13,6 @@ import { AbbreviateNumberPipe } from '@shared/pipes';
   imports: [MinimalistIconComponent, DatePipe, AbbreviateNumberPipe],
 })
 export class PlayerPerformanceSummaryComponent {
-  summary = input.required<PlayerDetailsSummary>();
+  summary = input<PlayerDetailsSummary | null>(null);
   section = input.required<HighscoreSection>();
 }

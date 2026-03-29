@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 
 import { BaseApiService, CacheService, SupabaseService, ToastService } from '@core/services';
-import { PlayerDetailsRequest, PlayerDetailsResponse } from '@core/models';
+import { PlayerDetailsRequest, PlayerDetailsResponse, PlayerStatsRecord } from '@core/models';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +25,24 @@ export class PlayerDetailsService extends BaseApiService {
     });
   }
 
+  async getPlayerStats(name: string): Promise<PlayerStatsRecord[]> {
+    const cacheKey = `player_stats_${name}`;
+    return (
+      (await this.fetchWithCache<PlayerStatsRecord[]>(
+        cacheKey,
+        'get_player_stats',
+        { p_name: name },
+        {
+          errorContext: 'player stats',
+          errorTitle: 'Player Stats Error',
+          showErrorToast: false,
+        },
+      )) ?? []
+    );
+  }
+
   clearAllData(): void {
     this.cacheService.clearByPattern('player_details');
+    this.cacheService.clearByPattern('player_stats');
   }
 }

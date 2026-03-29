@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, input, signal, effect } from '@angular/core';
 
 import { PlayerDetailsResponse } from '@core/models';
-import { formatDate, formatLargeNumber } from '@shared/functions';
+import { formatDate, formatNumber } from '@shared/functions';
 import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
 
 import { CardModule } from 'primeng/card';
@@ -123,7 +123,7 @@ export class PlayerDetailChartComponent {
               const label = context.dataset.label || '';
               const value = context.parsed.y;
               const formattedValue =
-                label === 'Experience' ? formatLargeNumber(value) : Math.floor(value).toString();
+                label === 'Experience' ? formatNumber(value) : Math.floor(value).toString();
               return `${label}: ${formattedValue}`;
             },
           },
@@ -183,7 +183,7 @@ export class PlayerDetailChartComponent {
         this.pointsColor(),
         'right',
         false,
-        (value: number) => formatLargeNumber(value),
+        (value: number) => formatNumber(value),
       );
     }
 

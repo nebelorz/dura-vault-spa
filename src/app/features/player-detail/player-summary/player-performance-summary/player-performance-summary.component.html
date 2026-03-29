@@ -1,110 +1,145 @@
-<div class="stats-section">
-  <div class="section-header">PERFORMANCE</div>
-  <!-- Best Day -->
-  <div
-    class="stat-row"
-    [class.positive]="
-      section() === 'experience'
-        ? summary().best_day.gain_points > 0
-        : summary().best_day.gain_level > 0
-    "
-    [class.negative]="
-      section() === 'experience'
-        ? summary().best_day.gain_points < 0
-        : summary().best_day.gain_level < 0
-    "
-  >
-    <div class="stat-icon">
-      <i
-        class="pi pi-circle"
-        [class.negative]="
-          section() === 'experience'
-            ? summary().best_day.gain_points < 0
-            : summary().best_day.gain_level < 0
-        "
-        [class.positive]="
-          section() === 'experience'
-            ? summary().best_day.gain_points > 0
-            : summary().best_day.gain_level > 0
-        "
-      ></i>
-    </div>
-    <div class="stat-info">
-      <div class="stat-label">Best Day</div>
-      <div class="stat-value-row">
-        <span class="stat-value">
-          @if (section() === 'experience') {
-            {{ summary().best_day.gain_points > 0 ? '+' : ''
-            }}{{ summary().best_day.gain_points | abbreviateNumber }}
-          } @else {
-            {{ summary().best_day.gain_level > 0 ? '+' : '' }}{{ summary().best_day.gain_level }}
-          }
-        </span>
-        <span class="additional-info">{{ summary().best_day.date | date: 'dd MMM yyyy' }}</span>
+@if (summary(); as s) {
+  <div class="perf-bar">
+    <!-- Group 1: Gains -->
+    <div class="perf-group">
+      <div class="perf-metric" [class.negative]="s.total_gain_level < 0">
+        <span class="perf-label">{{
+          section() === 'experience' ? 'Level Gain' : 'Skill Gain'
+        }}</span>
+        <span
+          class="perf-value"
+          [class.metric--skill]="s.total_gain_level > 0"
+          [class.metric--danger]="s.total_gain_level < 0"
+          >{{ s.total_gain_level }}</span
+        >
+        <span
+          class="perf-avg"
+          [class.metric--skill]="s.total_gain_level > 0"
+          [class.metric--danger]="s.total_gain_level < 0"
+          >{{ s.average_gain_level }}/day avg</span
+        >
+      </div>
+      @if (section() === 'experience') {
+        <div class="perf-metric" [class.negative]="s.total_gain_points < 0">
+          <span class="perf-label">Experience Gain</span>
+          <span
+            class="perf-value"
+            [class.metric--xp]="s.total_gain_points > 0"
+            [class.metric--danger]="s.total_gain_points < 0"
+            >{{ s.total_gain_points | abbreviateNumber }}</span
+          >
+          <span
+            class="perf-avg"
+            [class.metric--xp]="s.total_gain_points > 0"
+            [class.metric--danger]="s.total_gain_points < 0"
+            >{{ s.average_gain_points | abbreviateNumber }}/day avg</span
+          >
+        </div>
+      }
+      <div class="perf-metric" [class.negative]="s.total_gain_rank < 0">
+        <span class="perf-label">Rank Gain</span>
+        <span
+          class="perf-value"
+          [class.metric--rank]="s.total_gain_rank > 0"
+          [class.metric--danger]="s.total_gain_rank < 0"
+          >{{ s.total_gain_rank }}</span
+        >
+        <span
+          class="perf-avg"
+          [class.metric--rank]="s.total_gain_rank > 0"
+          [class.metric--danger]="s.total_gain_rank < 0"
+          >{{ s.average_gain_rank }}/day avg</span
+        >
       </div>
     </div>
-  </div>
 
-  <!-- Worst Day -->
-  <div
-    class="stat-row"
-    [class.negative]="
-      section() === 'experience'
-        ? summary().worst_day.gain_points < 0
-        : summary().worst_day.gain_level < 0
-    "
-  >
-    <div class="stat-icon">
-      <i
-        class="pi pi-circle"
+    <div class="perf-separator"></div>
+
+    <!-- Group 2: Best Day, Worst Day, Next Advance -->
+    <div class="perf-group">
+      <!-- Best Day -->
+      <div
+        class="perf-extreme"
         [class.negative]="
-          section() === 'experience'
-            ? summary().worst_day.gain_points < 0
-            : summary().worst_day.gain_level < 0
+          (section() === 'experience' ? s.best_day.gain_points : s.best_day.gain_level) < 0
         "
-        [class.positive]="
-          section() === 'experience'
-            ? summary().worst_day.gain_points > 0
-            : summary().worst_day.gain_level > 0
-        "
-      ></i>
-    </div>
-    <div class="stat-info">
-      <div class="stat-label">Worst Day</div>
-      <div class="stat-value-row">
-        <span class="stat-value">
-          @if (section() === 'experience') {
-            {{ summary().worst_day.gain_points > 0 ? '+' : ''
-            }}{{ summary().worst_day.gain_points | abbreviateNumber }}
-          } @else {
-            {{ summary().worst_day.gain_level > 0 ? '+' : '' }}{{ summary().worst_day.gain_level }}
-          }
-        </span>
-        <span class="additional-info">{{ summary().worst_day.date | date: 'dd MMM yyyy' }}</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Next Level/Skill Advance -->
-  <div class="stat-row">
-    <div class="stat-icon">
-      <i class="pi pi-hourglass pi-spin next"></i>
-    </div>
-    <div class="stat-info">
-      <div class="stat-label">Next advance on</div>
-      <div class="stat-value-row">
-        @if (summary().estimated_level_advance_date) {
-          <span class="stat-value">
-            {{ summary().estimated_level_advance_date | date: 'dd MMM yyyy' }}
+      >
+        <i
+          class="pi pi-circle-fill"
+          [class.metric--skill]="
+            (section() === 'experience' ? s.best_day.gain_points : s.best_day.gain_level) > 0
+          "
+          [class.metric--danger]="
+            (section() === 'experience' ? s.best_day.gain_points : s.best_day.gain_level) <= 0
+          "
+        ></i>
+        <div class="perf-extreme-info">
+          <span class="perf-label">Best Day</span>
+          <span class="perf-value">
+            @if (section() === 'experience') {
+              {{ s.best_day.gain_points | abbreviateNumber }}
+            } @else {
+              {{ s.best_day.gain_level }}
+            }
           </span>
-        } @else {
-          <span class="stat-value">N/A</span>
-        }
-        <app-minimalist-icon
-          tooltipPosition="right"
-          tooltipText="Based on average performance over the selected period"
-        ></app-minimalist-icon>
+          <span class="perf-date">{{ s.best_day.date | date: 'dd MMM' }}</span>
+        </div>
+      </div>
+      <!-- Worst Day -->
+      <div
+        class="perf-extreme"
+        [class.negative]="
+          (section() === 'experience' ? s.worst_day.gain_points : s.worst_day.gain_level) < 0
+        "
+      >
+        <i
+          class="pi pi-circle"
+          [class.metric--skill]="
+            (section() === 'experience' ? s.worst_day.gain_points : s.worst_day.gain_level) > 0
+          "
+          [class.metric--danger]="
+            (section() === 'experience' ? s.worst_day.gain_points : s.worst_day.gain_level) <= 0
+          "
+        ></i>
+        <div class="perf-extreme-info">
+          <span class="perf-label">Worst Day</span>
+          <span class="perf-value">
+            @if (section() === 'experience') {
+              {{ s.worst_day.gain_points | abbreviateNumber }}
+            } @else {
+              {{ s.worst_day.gain_level }}
+            }
+          </span>
+          <span class="perf-date">{{ s.worst_day.date | date: 'dd MMM' }}</span>
+        </div>
+      </div>
+
+      <div class="perf-separator"></div>
+
+      <!-- Next Advance -->
+      <div class="perf-extreme">
+        <i class="pi pi-hourglass metric--info"></i>
+        <div class="perf-extreme-info">
+          <span class="perf-label">Next Advance</span>
+          <span class="perf-value">
+            @if (s.estimated_level_advance_date) {
+              {{ s.estimated_level_advance_date | date: 'dd MMM yyyy' }}
+            } @else {
+              N/A
+            }
+            <app-minimalist-icon
+              tooltipText="Based on average performance over the selected period"
+              tooltipPosition="left"
+              size="xx-small"
+            />
+          </span>
+        </div>
       </div>
     </div>
   </div>
+}
+
+<!-- Chart -->
+<div class="chart-slot">
+  <ng-content />
 </div>

@@ -1,1 +1,29 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1.5rem;
+  min-height: 0;
+}
 
+.default-container {
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0;
+  padding: 0;
+  flex: 1;
+  min-height: 350px;
+  display: flex;
+  flex-direction: column;
+
+  app-loading-status,
+  app-no-data-status {
+    flex: 1;
+  }
+
+  p-chart {
+    display: block;
+    flex: 1;
+    min-height: 0;
+  }
+}

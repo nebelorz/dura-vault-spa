@@ -1,42 +1,72 @@
 @use 'colors' as colors;
 
 .player-detail-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding: 2rem;
+  padding: 1rem;
   max-width: 100%;
-  margin: 0 auto;
 }
 
-// Main Content
 .player-container {
   border: 2px solid colors.$secondary;
   box-shadow: 0 1px 4px colors.$secondary;
   border-radius: 8px;
   overflow: hidden;
-  display: block;
+  display: flex;
+  flex-direction: column;
   min-width: 0;
 }
 
-.player-container-header {
+// Top: name + section + period
+.player-container-top {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
   padding: 1.5rem;
-}
-
-.player-container-body {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding: 1.5rem;
-  flex: 1;
+  border-bottom: 1px solid var(--surface-border);
 }
 
 .period-selector-wrapper {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+// Body: fixed left column + flexible right column
+.player-container-body {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 600px;
+
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr;
+    min-height: unset;
+  }
+}
+
+// Left: player stats + online stats
+.player-left-column {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  border-right: 1px solid var(--surface-border);
+  overflow-y: auto;
+
+  @media (max-width: 960px) {
+    border-right: none;
+    border-bottom: 1px solid var(--surface-border);
+  }
+}
+
+.left-divider {
+  height: 1px;
+  background: var(--surface-border);
+  margin: 1rem 0;
+}
+
+// Right: chart wrapped in performance panel
+.player-right-column {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }

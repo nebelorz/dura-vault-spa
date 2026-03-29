@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { TimelineModule } from 'primeng/timeline';
 
@@ -29,6 +29,7 @@ interface DevInfoEntry {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-dev-info-panel',
   imports: [TimelineModule, DatePipe],
   templateUrl: './dev-info-panel.component.html',

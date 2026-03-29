@@ -16,17 +16,8 @@
         placeholder="Select Section"
       />
     </div>
-
-    <!-- Player info -->
-    @if (playerInfo()) {
-      <div class="additional-info">
-        @if (section() === 'experience') {
-          Lvl
-        } @else {
-          Skill
-        }
-        {{ playerInfo()!.level }} | {{ playerInfo()!.vocation }}
-      </div>
+    @if (vocation()) {
+      <div class="additional-info player-vocation">{{ vocation() }}</div>
     }
   </div>
 </div>

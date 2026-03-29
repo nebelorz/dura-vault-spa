@@ -69,27 +69,6 @@
   }
 }
 
-// Semantic metric color classes
-.metric--xp {
-  color: colors.$experience;
-}
-
-.metric--skill {
-  color: colors.$primary;
-}
-
-.metric--rank {
-  color: colors.$rank;
-}
-
-.metric--warn {
-  color: colors.$warn;
-}
-
-.metric--danger {
-  color: colors.$danger;
-}
-
 .podium-name {
   font-size: small;
   font-weight: bold;

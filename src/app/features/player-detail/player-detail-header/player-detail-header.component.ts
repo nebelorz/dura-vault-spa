@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { HighscoreSection, PlayerDetailsInfo } from '@core/models';
+import { HighscoreSection } from '@core/models';
 import { toSectionOptions, SectionOption } from '@core/constants';
 import { GoBackButtonComponent } from '@shared/components';
 
@@ -17,8 +17,8 @@ import { SelectModule } from 'primeng/select';
 export class PlayerDetailHeaderComponent {
   // Inputs
   playerName = input.required<string>();
+  vocation = input<string>('');
   section = input.required<HighscoreSection>();
-  playerInfo = input<PlayerDetailsInfo | null>(null);
 
   // Outputs
   sectionChange = output<HighscoreSection>();
