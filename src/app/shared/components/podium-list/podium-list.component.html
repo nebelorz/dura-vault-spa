@@ -33,13 +33,13 @@
               <div class="podium-overlay">
                 @for (col of second.columns; track col.label) {
                   <div class="podium-overlay-row">
-                    <span class="podium-overlay-label">{{ col.label }}</span>
+                    <span class="text-overlay-label">{{ col.label }}</span>
                     <div class="podium-overlay-values">
-                      <span class="podium-overlay-value" [ngClass]="col.valueClass ?? ''">
+                      <span class="podium-overlay-value text-overlay-value" [ngClass]="col.valueClass ?? ''">
                         {{ col.podiumValue ?? col.value }}
                       </span>
                       @if (col.subValue) {
-                        <span class="podium-overlay-sub" [ngClass]="col.subValueClass ?? ''">
+                        <span class="podium-overlay-sub text-sub-value" [ngClass]="col.subValueClass ?? ''">
                           {{ col.subValue }}
                         </span>
                       }
@@ -82,13 +82,13 @@
             <div class="podium-overlay">
               @for (col of first.columns; track col.label) {
                 <div class="podium-overlay-row">
-                  <span class="podium-overlay-label">{{ col.label }}</span>
+                  <span class="text-overlay-label">{{ col.label }}</span>
                   <div class="podium-overlay-values">
-                    <span class="podium-overlay-value" [ngClass]="col.valueClass ?? ''">
+                    <span class="podium-overlay-value text-overlay-value" [ngClass]="col.valueClass ?? ''">
                       {{ col.podiumValue ?? col.value }}
                     </span>
                     @if (col.subValue) {
-                      <span class="podium-overlay-sub" [ngClass]="col.subValueClass ?? ''">
+                      <span class="podium-overlay-sub text-sub-value" [ngClass]="col.subValueClass ?? ''">
                         {{ col.subValue }}
                       </span>
                     }
@@ -130,13 +130,13 @@
               <div class="podium-overlay">
                 @for (col of third.columns; track col.label) {
                   <div class="podium-overlay-row">
-                    <span class="podium-overlay-label">{{ col.label }}</span>
+                    <span class="text-overlay-label">{{ col.label }}</span>
                     <div class="podium-overlay-values">
-                      <span class="podium-overlay-value" [ngClass]="col.valueClass ?? ''">
+                      <span class="podium-overlay-value text-overlay-value" [ngClass]="col.valueClass ?? ''">
                         {{ col.podiumValue ?? col.value }}
                       </span>
                       @if (col.subValue) {
-                        <span class="podium-overlay-sub" [ngClass]="col.subValueClass ?? ''">
+                        <span class="podium-overlay-sub text-sub-value" [ngClass]="col.subValueClass ?? ''">
                           {{ col.subValue }}
                         </span>
                       }
@@ -189,11 +189,14 @@
             @for (col of item.columns; track col.label) {
               <div class="list-column">
                 <span class="list-column-label">{{ col.label }}</span>
-                <span class="list-column-value" [ngClass]="col.valueClass ?? ''">
+                <span class="list-column-value text-value" [ngClass]="col.valueClass ?? ''">
                   {{ col.value }}
                 </span>
                 @if (col.subValue) {
-                  <span class="list-column-sub-value" [ngClass]="col.subValueClass ?? ''">
+                  <span
+                    class="list-column-sub-value text-sub-value"
+                    [ngClass]="col.subValueClass ?? ''"
+                  >
                     {{ col.subValue }}
                   </span>
                 }
@@ -209,3 +212,5 @@
     </div>
   }
 }
+
+

@@ -22,22 +22,24 @@
           ></i>
         </div>
         <div class="stat-info">
-          <div class="stat-label">Level</div>
+          <div class="text-label">Level</div>
           <div class="stat-value-row">
-            <span class="stat-value">{{ exp.level }}</span>
-            <span class="stat-rank">#{{ exp.rank }}</span>
+            <span class="stat-value text-value">{{ exp.level }}</span>
+            <span class="stat-rank metric--rank">#{{ exp.rank }}</span>
           </div>
         </div>
         <div class="stat-overlay">
           @if (exp.last_gain_date) {
             <div class="stat-overlay-col">
-              <span class="stat-overlay-label">Last Gain</span>
-              <span class="stat-overlay-value">{{ exp.last_gain_date | date: 'dd MMM yyyy' }}</span>
+              <span class="text-overlay-label">Last Gain</span>
+              <span class="stat-overlay-value text-overlay-value">{{
+                exp.last_gain_date | date: 'dd MMM yyyy'
+              }}</span>
             </div>
           }
           <div class="stat-overlay-col">
-            <span class="stat-overlay-label">Rank</span>
-            <span class="stat-overlay-value rank">#{{ exp.rank }}</span>
+            <span class="text-overlay-label">Rank</span>
+            <span class="stat-overlay-value text-value metric--rank">#{{ exp.rank }}</span>
           </div>
         </div>
       </div>
@@ -54,24 +56,24 @@
           <i class="pi pi-box" [class.stat-active]="stat.section === activeSection()"></i>
         </div>
         <div class="stat-info">
-          <div class="stat-label">{{ getSectionLabel(stat.section) }}</div>
+          <div class="text-label">{{ getSectionLabel(stat.section) }}</div>
           <div class="stat-value-row">
-            <span class="stat-value">{{ stat.level }}</span>
-            <span class="stat-rank">#{{ stat.rank }}</span>
+            <span class="stat-value text-value">{{ stat.level }}</span>
+            <span class="stat-rank metric--rank">#{{ stat.rank }}</span>
           </div>
         </div>
         <div class="stat-overlay">
           @if (stat.last_gain_date) {
             <div class="stat-overlay-col">
-              <span class="stat-overlay-label">Last Gain</span>
-              <span class="stat-overlay-value">{{
+              <span class="text-overlay-label">Last Gain</span>
+              <span class="stat-overlay-value text-overlay-value">{{
                 stat.last_gain_date | date: 'dd MMM yyyy'
               }}</span>
             </div>
           }
           <div class="stat-overlay-col">
-            <span class="stat-overlay-label">Rank</span>
-            <span class="stat-overlay-value rank">#{{ stat.rank }}</span>
+            <span class="text-overlay-label">Rank</span>
+            <span class="stat-overlay-value text-value metric--rank">#{{ stat.rank }}</span>
           </div>
         </div>
       </div>

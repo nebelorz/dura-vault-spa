@@ -50,13 +50,13 @@ export class PlayerDetailComponent implements OnInit {
   playerOnlineData = signal<PlayerOnlineResponse | null>(null);
   playerStats = signal<PlayerStatsRecord[]>([]);
 
-  // "All" -> "Active Days"
+  // "All" -> "Active Period"
   readonly periodOptions: PeriodOption[] = [
     { label: 'Day', value: 'day' },
     { label: 'Week', value: 'week' },
     { label: 'Month', value: 'month' },
     { label: 'Year', value: 'year' },
-    { label: 'Active Days', value: 'all' },
+    { label: 'Active Period', value: 'all' },
   ];
 
   // Computed

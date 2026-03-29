@@ -8,10 +8,12 @@
         <i class="pi pi-wave-pulse"></i>
       </div>
       <div class="stat-info">
-        <div class="stat-label">Avg Online</div>
+        <div class="text-label">Avg Online</div>
         <div class="stat-value-row">
-          <span class="stat-value">{{ onlineSummary()!.average_online_time | minutesToHours }}</span>
-          <span class="additional-info">/day avg</span>
+          <span class="stat-value text-value">{{
+            onlineSummary()!.average_online_time | minutesToHours
+          }}</span>
+          <span class="text-sub-value">/day</span>
         </div>
       </div>
     </div>
@@ -23,15 +25,42 @@
           <i class="pi pi-clock"></i>
         </div>
         <div class="stat-info">
-          <div class="stat-label">Avg Active Window</div>
+          <div class="text-label">Avg Active Window</div>
           <div class="stat-value-row">
-            <span class="stat-value"
+            <span class="stat-value text-value"
               >{{ onlineSummary()!.avg_first_seen | date: 'HH:mm' }} →
               {{ onlineSummary()!.avg_last_seen | date: 'HH:mm' }}</span
             >
           </div>
         </div>
       </div>
+    }
+
+    <!-- Consistency (from highscore data) -->
+    @if (summary(); as s) {
+      @if (s.days_count > 0) {
+        <div class="stat-row">
+          <div class="stat-icon">
+            <i class="pi pi-circle"></i>
+          </div>
+          <div class="stat-info">
+            <div class="text-label">
+              Coverage
+              <app-minimalist-icon
+                size="7px"
+                tooltipText="Days the player appeared in the rankings in the selected period."
+                tooltipPosition="left"
+              />
+            </div>
+            <div class="stat-value-row">
+              <span class="stat-value text-value"
+                >{{ ((s.days_with_data / s.days_count) * 100).toFixed(0) }}%</span
+              >
+              <span class="text-sub-value">{{ s.days_with_data }} / {{ s.days_count }} days</span>
+            </div>
+          </div>
+        </div>
+      }
     }
 
     <!-- Last Seen -->
@@ -41,29 +70,11 @@
           <i class="pi pi-eye"></i>
         </div>
         <div class="stat-info">
-          <div class="stat-label">Last Seen</div>
+          <div class="text-label">Last Seen</div>
           <div class="stat-value-row">
-            <span class="stat-value">{{
+            <span class="stat-value text-value">{{
               onlineSummary()!.last_seen_at | date: 'dd MMM yyyy, HH:mm'
             }}</span>
-          </div>
-        </div>
-      </div>
-    }
-  }
-
-  <!-- Consistency (from highscore data) -->
-  @if (summary(); as s) {
-    @if (s.days_count > 0) {
-      <div class="stat-row">
-        <div class="stat-icon">
-          <i class="pi pi-circle"></i>
-        </div>
-        <div class="stat-info">
-          <div class="stat-label">Consistency</div>
-          <div class="stat-value-row">
-            <span class="stat-value">{{ (s.days_with_data / s.days_count * 100).toFixed(0) }}%</span>
-            <span class="additional-info">{{ s.days_with_data }} / {{ s.days_count }} days</span>
           </div>
         </div>
       </div>
