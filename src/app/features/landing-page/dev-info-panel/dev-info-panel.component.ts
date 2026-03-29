@@ -38,6 +38,54 @@ interface DevInfoEntry {
 export class DevInfoPanelComponent {
   entries = signal<DevInfoEntry[]>([
     {
+      date: new Date('2026-03-29'),
+      title: 'v 2.1.0 released',
+      content: [
+        {
+          contentType: 'heading',
+          text: 'Visual & UX Improvements',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Unified color system across the entire app: XP values, skill gains, rank changes, and warnings now use a consistent color language everywhere.',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Consistent typography across all stat panels - player detail, online stats, and ranking overlays now share the same sizes and weights.',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Overlays are now visually consistent across all sections: highscores, online rankings, and player pages.',
+        },
+        { contentType: 'divider' },
+        { contentType: 'divider' },
+        {
+          contentType: 'heading',
+          text: 'Online Stats',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Revamped layout for online stats, providing a clearer and more consistent presentation.',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'New Player Stats section on player details, with a clear and consistent layout for all stats that Dura Vault has tracked about the player.',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'New "Consistency" metric - more accurately reflects what it measures: days with data out of the player\'s tracked span.',
+        },
+      ],
+      entryType: 'versionMinor',
+      tags: [{ label: 'UX', color: 'info' }, { label: 'new feature' }],
+    },
+    {
       date: new Date('2026-03-16'),
       title: 'v 2.0.0 released',
       content: [
@@ -47,7 +95,7 @@ export class DevInfoPanelComponent {
         },
         {
           contentType: 'text',
-          text: 'New Online Activity section! Explore player and world activity, with different graphs displaying vocation, level, and time period.',
+          text: 'New Online Activity section - Explore player and world activity, with different graphs displaying vocation, level, and time period.',
         },
         {
           contentType: 'icon-text',
