@@ -42,7 +42,7 @@ export class OnlineService extends BaseApiService {
 
     return this.fetchWithCache<PlayerOnlineResponse>(
       cacheKey,
-      'get_player_online_history',
+      'get_online_stats',
       { p_name, p_period },
       { errorContext: 'player online history', errorTitle: 'Online Error', showErrorToast },
     );
