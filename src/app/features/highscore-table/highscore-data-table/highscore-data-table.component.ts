@@ -128,21 +128,21 @@ export class HighscoreDataTableComponent implements OnInit, OnDestroy {
 
       columns = [
         {
-          label: isLoss ? 'Exp Lost' : 'Exp Gained',
+          label: isLoss ? 'Exp Lost' : 'Exp Gain',
           value: xpFormatted,
           valueClass: xpClass,
           subValue: xpPercent,
           subValueClass: xpClass,
         },
         {
-          label: isLoss ? 'Levels Lost' : 'Levels Gained',
+          label: isLoss ? 'Levels Lost' : 'Levels Gain',
           value: `${record.gain_level}`,
           podiumValue: `${record.gain_level} ${gainWord(record.gain_level, 'LEVEL', 'LEVELS')}`,
           valueClass: this.gainClass(record.gain_level, 'metric--skill'),
           subValue: `Lvl ${record.level}`,
         },
         {
-          label: isLoss ? 'Rank Lost' : 'Rank Gained',
+          label: isLoss ? 'Rank Lost' : 'Rank Gain',
           value: `${record.gain_rank}`,
           podiumValue: `${record.gain_rank} ${gainWord(record.gain_rank, 'RANK', 'RANKS')}`,
           valueClass: this.gainClass(record.gain_rank, 'metric--rank'),
@@ -153,14 +153,14 @@ export class HighscoreDataTableComponent implements OnInit, OnDestroy {
     } else {
       columns = [
         {
-          label: 'Skill Gained',
+          label: 'Skill Gain',
           value: `${record.gain_level}`,
           podiumValue: `${record.gain_level} ${getSectionLabel(section)}`,
           valueClass: this.gainClass(record.gain_level, 'metric--skill'),
           subValue: `${getSectionLabel(section)} ${record.level}`,
         },
         {
-          label: 'Rank Gained',
+          label: 'Rank Gain',
           value: `${record.gain_rank}`,
           podiumValue: `${record.gain_rank} ${gainWord(record.gain_rank, 'RANK', 'RANKS')}`,
           valueClass: this.gainClass(record.gain_rank, 'metric--rank'),
