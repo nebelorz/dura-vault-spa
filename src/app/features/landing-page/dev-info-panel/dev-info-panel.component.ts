@@ -64,6 +64,11 @@ export class DevInfoPanelComponent {
         {
           contentType: 'icon-text',
           icon: 'pi pi-wrench',
+          text: 'Minor improvements on player detail section for better consistency and clarity.',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-wrench',
           text: 'Minor backend improvements for better consistency and clarity.',
         },
       ],
