@@ -1,6 +1,6 @@
 ﻿import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
-import { PlayerDetailsSummary, HighscoreSection, PlayerDetailsResponse } from '@core/models';
+import { PlayerDetailsSummary, HighscoreSection, PlayerHistoricResponse } from '@core/models';
 import { PlayerGainsPanelComponent } from './player-gains-panel/player-gains-panel.component';
 import { PlayerPersonalScorePanelComponent } from './player-personal-score-panel/player-personal-score-panel.component';
 import { PlayerProjectedPanelComponent } from './player-projected-panel/player-projected-panel.component';
@@ -21,6 +21,6 @@ import { PlayerDetailChartComponent } from '../player-detail-chart/player-detail
 export class PlayerPerformanceComponent {
   summary = input<PlayerDetailsSummary | null>(null);
   section = input.required<HighscoreSection>();
-  playerDetailsData = input<PlayerDetailsResponse | null>(null);
+  playerDetailsData = input<PlayerHistoricResponse | null>(null);
   loading = input.required<boolean>();
 }

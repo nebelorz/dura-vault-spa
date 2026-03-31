@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input, signal, effect } from '@angular/core';
 
-import { PlayerDetailsResponse } from '@core/models';
+import { PlayerHistoricResponse } from '@core/models';
 import { formatDate, formatNumber } from '@shared/functions';
 import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
 
@@ -29,7 +29,7 @@ interface ChartDataset {
   imports: [CardModule, ChartModule, LoadingStatusComponent, NoDataStatusComponent],
 })
 export class PlayerDetailChartComponent {
-  playerDetailsData = input.required<PlayerDetailsResponse | null>();
+  playerDetailsData = input.required<PlayerHistoricResponse | null>();
   loading = input.required<boolean>();
 
   // Color signals

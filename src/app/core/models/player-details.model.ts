@@ -11,13 +11,6 @@ export interface PlayerStatsRecord {
   last_gain_level: number | null;
 }
 
-export interface PlayerDetailsInfo {
-  name: string;
-  rank: number;
-  level: number;
-  vocation: string;
-}
-
 export interface PlayerDetailsDailyRecord {
   scrape_date: string;
   rank: number;
@@ -50,13 +43,12 @@ export interface PlayerDetailsSummary {
   estimated_level_advance_date: string | null;
 }
 
-export interface PlayerDetailsResponse {
-  player: PlayerDetailsInfo;
+export interface PlayerHistoricResponse {
   daily: PlayerDetailsDailyRecord[];
   summary: PlayerDetailsSummary;
 }
 
-export interface PlayerDetailsRequest {
+export interface PlayerHistoricRequest {
   p_name: string;
   p_section: HighscoreSection;
   p_period: TimePeriod;

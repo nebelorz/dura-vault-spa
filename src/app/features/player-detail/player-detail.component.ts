@@ -5,8 +5,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import {
   HighscoreSection,
-  PlayerDetailsRequest,
-  PlayerDetailsResponse,
+  PlayerHistoricRequest,
+  PlayerHistoricResponse,
   PlayerOnlineResponse,
   PlayerStatsRecord,
   TimePeriod,
@@ -42,7 +42,7 @@ export class PlayerDetailComponent implements OnInit {
   section = signal<HighscoreSection>('experience');
   selectedPeriod = signal<TimePeriod>('all');
   loading = signal<boolean>(false);
-  playerDetailsData = signal<PlayerDetailsResponse | null>(null);
+  playerDetailsData = signal<PlayerHistoricResponse | null>(null);
   playerOnlineData = signal<PlayerOnlineResponse | null>(null);
   playerStats = signal<PlayerStatsRecord[]>([]);
 
@@ -112,14 +112,14 @@ export class PlayerDetailComponent implements OnInit {
     let redirecting = false;
 
     try {
-      const request: PlayerDetailsRequest = {
+      const request: PlayerHistoricRequest = {
         p_name: this.playerName(),
         p_section: this.section(),
         p_period: this.selectedPeriod(),
       };
 
       const [data, stats, onlineData] = await Promise.all([
-        this.playerDetailsService.getPlayerDetails(request),
+        this.playerDetailsService.getPlayerHistoric(request),
         this.playerDetailsService.getPlayerStats(this.playerName()),
         this.onlineService.getPlayerOnlineHistory(this.playerName(), this.selectedPeriod(), false),
       ]);

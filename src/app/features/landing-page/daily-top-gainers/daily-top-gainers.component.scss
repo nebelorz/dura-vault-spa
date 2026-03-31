@@ -69,7 +69,7 @@ section {
   }
 
   &.top-one {
-    border-left-color: colors.$rank;
+    border-left-color: colors.$rank-opacity-2;
     background: colors.$rank-opacity-1;
 
     &:hover {
@@ -78,7 +78,7 @@ section {
   }
 
   &.player-row--loss {
-    border-left-color: colors.$danger;
+    border-left-color: colors.$danger-opacity-2;
     background: colors.$danger-opacity-1;
 
     &:hover {

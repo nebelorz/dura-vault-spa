@@ -22,7 +22,7 @@
   cursor: pointer;
 
   &.active-section {
-    border-left-color: colors.$primary;
+    border-left-color: colors.$primary-opacity-2;
     background-color: colors.$primary-opacity-1;
   }
 
@@ -31,7 +31,7 @@
   }
 
   &.active-section.negative {
-    border-left-color: colors.$danger;
+    border-left-color: colors.$danger-opacity-2;
     background-color: colors.$danger-opacity-1;
   }
 
