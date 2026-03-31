@@ -40,7 +40,7 @@ export class PlayerDetailComponent implements OnInit {
   // State
   playerName = signal<string>('');
   section = signal<HighscoreSection>('experience');
-  selectedPeriod = signal<TimePeriod>('week');
+  selectedPeriod = signal<TimePeriod>('all');
   loading = signal<boolean>(false);
   playerDetailsData = signal<PlayerDetailsResponse | null>(null);
   playerOnlineData = signal<PlayerOnlineResponse | null>(null);
