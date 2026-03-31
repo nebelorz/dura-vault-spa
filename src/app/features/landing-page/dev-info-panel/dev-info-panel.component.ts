@@ -43,7 +43,7 @@ export class DevInfoPanelComponent {
       content: [
         {
           contentType: 'heading',
-          text: 'Visual & UX Improvements',
+          text: 'UI/UX',
         },
         {
           contentType: 'icon-text',
