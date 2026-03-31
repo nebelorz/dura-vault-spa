@@ -53,7 +53,17 @@ export class DevInfoPanelComponent {
         {
           contentType: 'icon-text',
           icon: 'pi pi-code',
+          text: 'Updated favicon.',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
           text: 'Revamped player detail section. Added empty messages and improved layout for better clarity.',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Revamped daily summary gadget to match the clarity and consistency alike other sections.',
         },
         { contentType: 'divider' },
         { contentType: 'divider' },
