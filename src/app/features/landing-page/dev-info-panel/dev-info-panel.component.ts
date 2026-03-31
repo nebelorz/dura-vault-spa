@@ -74,7 +74,7 @@ export class DevInfoPanelComponent {
         {
           contentType: 'icon-text',
           icon: 'pi pi-wrench',
-          text: 'Fixed an issue not displaying the player vocation on /player-details section.',
+          text: 'Fixed an issue not displaying the player vocation on player details section.',
         },
         {
           contentType: 'icon-text',
