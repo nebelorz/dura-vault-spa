@@ -8,6 +8,7 @@ export interface PlayerStatsRecord {
   rank: number;
   vocation: string;
   last_gain_date: string | null;
+  last_gain_level: number | null;
 }
 
 export interface PlayerDetailsInfo {

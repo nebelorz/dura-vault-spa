@@ -38,4 +38,8 @@ export class PlayerGeneralStatsComponent {
         return a.section.localeCompare(b.section);
       }),
   );
+
+  isNegativeLastGain(stat: PlayerStatsRecord): boolean {
+    return stat.last_gain_level !== null && stat.last_gain_level < 0;
+  }
 }

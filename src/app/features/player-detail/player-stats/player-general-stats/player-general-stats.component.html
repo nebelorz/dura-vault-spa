@@ -13,12 +13,14 @@
       <div
         class="stat-row"
         [class.active-section]="activeSection() === 'experience'"
+        [class.negative]="isNegativeLastGain(exp)"
         (click)="onStatClick('experience')"
       >
         <div class="stat-icon">
           <i
-            [class]="METRIC_ICONS.level.gain"
-            [class.stat-active]="activeSection() === 'experience'"
+            [class]="isNegativeLastGain(exp) ? METRIC_ICONS.level.loss : METRIC_ICONS.level.gain"
+            [class.stat-active]="activeSection() === 'experience' && !isNegativeLastGain(exp)"
+            [class.stat-loss]="isNegativeLastGain(exp)"
           ></i>
         </div>
         <div class="stat-info">
@@ -31,7 +33,9 @@
         <div class="stat-overlay">
           @if (exp.last_gain_date) {
             <div class="stat-overlay-col">
-              <span class="text-overlay-label">Last Gain</span>
+              <span class="text-overlay-label">{{
+                isNegativeLastGain(exp) ? 'Last Loss' : 'Last Gain'
+              }}</span>
               <span class="stat-overlay-value text-overlay-value">{{
                 exp.last_gain_date | date: 'dd MMM yyyy'
               }}</span>
@@ -50,10 +54,15 @@
       <div
         class="stat-row"
         [class.active-section]="stat.section === activeSection()"
+        [class.negative]="isNegativeLastGain(stat)"
         (click)="onStatClick(stat.section)"
       >
         <div class="stat-icon">
-          <i class="pi pi-box" [class.stat-active]="stat.section === activeSection()"></i>
+          <i
+            class="pi pi-box"
+            [class.stat-active]="stat.section === activeSection() && !isNegativeLastGain(stat)"
+            [class.stat-loss]="isNegativeLastGain(stat)"
+          ></i>
         </div>
         <div class="stat-info">
           <div class="text-label">{{ getSectionLabel(stat.section) }}</div>
@@ -65,7 +74,9 @@
         <div class="stat-overlay">
           @if (stat.last_gain_date) {
             <div class="stat-overlay-col">
-              <span class="text-overlay-label">Last Gain</span>
+              <span class="text-overlay-label">{{
+                isNegativeLastGain(stat) ? 'Last Loss' : 'Last Gain'
+              }}</span>
               <span class="stat-overlay-value text-overlay-value">{{
                 stat.last_gain_date | date: 'dd MMM yyyy'
               }}</span>

@@ -30,6 +30,11 @@
     background: colors.$danger-opacity-1;
   }
 
+  &.active-section.negative {
+    border-left-color: colors.$danger;
+    background-color: colors.$danger-opacity-1;
+  }
+
   &:hover .stat-overlay {
     opacity: 1;
   }
@@ -52,6 +57,11 @@
 
     &.stat-active {
       color: var(--p-primary-color);
+      opacity: 1;
+    }
+
+    &.stat-loss {
+      color: colors.$danger;
       opacity: 1;
     }
   }
