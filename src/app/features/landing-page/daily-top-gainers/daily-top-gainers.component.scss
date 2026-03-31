@@ -1,6 +1,6 @@
 @use 'colors' as colors;
 
-// ── Container ──────────────────────────────────────────────────────────────────
+// Container
 .daily-top {
   border: 2px solid colors.$secondary;
   box-shadow: 0 1px 4px colors.$secondary;
@@ -11,7 +11,7 @@
   gap: 1.5rem;
 }
 
-// ── Sections ───────────────────────────────────────────────────────────────────
+// Sections
 section {
   display: flex;
   flex-direction: column;
@@ -23,7 +23,7 @@ section {
   opacity: 0.6;
 }
 
-// ── Carousel ───────────────────────────────────────────────────────────────────
+// Carousel
 .carousel-container {
   ::ng-deep .p-carousel {
     .p-carousel-content {
@@ -53,19 +53,19 @@ section {
   }
 }
 
-// ── Player row ─────────────────────────────────────────────────────────────────
+// Player row
 .player-row {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.4rem 0.75rem 0.4rem calc(0.5rem - 2px);
+  padding: 0.4rem 0.75rem 0.4rem 0.75rem;
   border-left: 2px solid transparent;
   border-radius: 6px;
   transition: background 0.15s ease;
   cursor: pointer;
 
   &:hover {
-    background: colors.$secondary-opacity-1;
+    background: colors.$secondary;
   }
 
   &.top-one {
@@ -87,43 +87,16 @@ section {
   }
 }
 
-// ── Position badge (1, 2, 3 for experience ranking) ────────────────────────────
-.player-pos {
-  width: 1rem;
-  flex-shrink: 0;
-  font-size: x-small;
-  font-weight: bold;
-  opacity: 0.35;
-  text-align: center;
-}
-
-// ── Player info ────────────────────────────────────────────────────────────────
+// Player info
 .player-main {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  gap: 0.1rem;
   flex: 1;
   min-width: 0;
 }
 
-.player-name {
-  font-size: small;
-  font-weight: bold;
-  letter-spacing: 0.25px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.player-meta {
-  display: flex;
-  gap: 0.5rem;
-  font-size: x-small;
-  opacity: 0.6;
-  letter-spacing: 0.25px;
-}
-
-// ── Gain items ─────────────────────────────────────────────────────────────────
+// Gain items
 .player-gains {
   display: flex;
   flex-shrink: 0;

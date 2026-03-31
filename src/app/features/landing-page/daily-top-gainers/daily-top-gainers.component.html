@@ -2,26 +2,20 @@
   @if (loading()) {
     <app-loading-status />
   } @else {
-    @if (maxDate()) {
-      <div class="section-header daily-top-date">
-        <span>DAILY GAINS</span>
-        <span class="header-date">{{ maxDate()! | date: 'dd MMM yyyy' }}</span>
-      </div>
-    }
-
     <!-- Experience Loss Section -->
     @if (experienceLossPlayer(); as lp) {
       <section class="animation-fade">
         <div class="section-header">
           <span>EXPERIENCE LOSS</span>
+          @if (maxDate()) {
+            <span class="header-date">{{ maxDate()! | date: 'dd MMM yyyy' }}</span>
+          }
         </div>
         <div class="player-row player-row--loss" (click)="navigateToPlayer(lp.name, 'experience')">
           <div class="player-main">
-            <div class="player-name">{{ lp.name }}</div>
-            <div class="player-meta">
-              <span>Lvl {{ lp.level }}</span>
-              <span>{{ lp.vocation }}</span>
-            </div>
+            <div class="text-value">{{ lp.name }}</div>
+            <span class="text-sub-value">{{ lp.vocation }}</span>
+            <span class="text-sub-value">Lvl {{ lp.level }}</span>
           </div>
           <div class="player-gains">
             <span class="gain-item metric--danger" pTooltip="Experience" tooltipPosition="bottom">
@@ -53,13 +47,10 @@
             [class.top-one]="i === 0"
             (click)="navigateToPlayer(player.name, 'experience')"
           >
-            <div class="player-pos">{{ i + 1 }}</div>
             <div class="player-main">
-              <div class="player-name">{{ player.name }}</div>
-              <div class="player-meta">
-                <span>Lvl {{ player.level }}</span>
-                <span>{{ player.vocation }}</span>
-              </div>
+              <div class="text-value">{{ player.name }}</div>
+              <span class="text-sub-value">{{ player.vocation }}</span>
+              <span class="text-sub-value">Lvl {{ player.level }}</span>
             </div>
             <div class="player-gains">
               <span class="gain-item metric--xp" pTooltip="Experience" tooltipPosition="bottom">
@@ -77,7 +68,7 @@
                     player.gain_level < 0 ? METRIC_ICONS.level.loss : METRIC_ICONS.level.gain
                   "
                 ></i>
-                {{ player.gain_level > 0 ? '+' + player.gain_level : player.gain_level }}
+                {{ player.gain_level }}
               </span>
               <span
                 class="gain-item metric--rank"
@@ -88,7 +79,7 @@
                 <i
                   [class]="player.gain_rank < 0 ? METRIC_ICONS.rank.loss : METRIC_ICONS.rank.gain"
                 ></i>
-                {{ player.gain_rank > 0 ? '+' + player.gain_rank : player.gain_rank }}
+                {{ player.gain_rank }}
               </span>
             </div>
           </div>
@@ -116,17 +107,15 @@
               @for (player of section.players; track player.name) {
                 <div class="player-row" (click)="navigateToPlayer(player.name, section.name)">
                   <div class="player-main">
-                    <div class="player-name">{{ player.name }}</div>
-                    <div class="player-meta">
-                      <span>Skill {{ player.level }}</span>
-                      <span>{{ player.vocation }}</span>
-                    </div>
+                    <div class="text-value">{{ player.name }}</div>
+                    <span class="text-sub-value">{{ player.vocation }}</span>
+                    <span class="text-sub-value">{{ section.label }} {{ player.level }}</span>
                   </div>
 
                   <div class="player-gains">
                     <span class="gain-item metric--skill" pTooltip="Skill" tooltipPosition="bottom">
                       <i [class]="METRIC_ICONS.level.gain"></i>
-                      +{{ player.gain_level }}
+                      {{ player.gain_level }}
                     </span>
                     <span
                       class="gain-item metric--rank"
@@ -139,7 +128,7 @@
                           player.gain_rank < 0 ? METRIC_ICONS.rank.loss : METRIC_ICONS.rank.gain
                         "
                       ></i>
-                      {{ player.gain_rank > 0 ? '+' + player.gain_rank : player.gain_rank }}
+                      {{ player.gain_rank }}
                     </span>
                   </div>
                 </div>
