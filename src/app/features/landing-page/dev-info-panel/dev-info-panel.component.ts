@@ -49,7 +49,7 @@ export class DevInfoPanelComponent {
         {
           contentType: 'icon-text',
           icon: 'pi pi-code',
-          text: 'Refactored backend request from get_player_online_history to get_online_stats for improved consistency and clarity.',
+          text: 'Minor backend improvements for better consistency and clarity.',
         },
       ],
       entryType: 'versionMinor',

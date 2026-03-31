@@ -1,5 +1,6 @@
 @use 'colors' as colors;
 @use 'animation-fade' as animationFade;
+@use 'animation-blur-fade-in' as blurFadeIn;
 @use 'primeicons/primeicons.css';
 // Use Montserrat Medium (500) from Google Fonts
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
@@ -126,4 +127,8 @@ body {
 // ANIMATIONS
 .animation-fade {
   @include animationFade.fadeAnimation();
+}
+
+.animation-blur-fade-in {
+  @include blurFadeIn.blurFadeInAnimation();
 }
