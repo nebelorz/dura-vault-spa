@@ -7,18 +7,11 @@
     display: flex;
     flex-direction: column;
 
-    .player-title-row {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-
-      .player-title {
-        font-size: x-large;
-        font-weight: bold;
-        margin: 0;
-        margin-bottom: 0.25rem;
-      }
+    .player-title {
+      font-size: x-large;
+      font-weight: bold;
+      margin: 0;
+      margin-bottom: 0.25rem;
     }
   }
 }

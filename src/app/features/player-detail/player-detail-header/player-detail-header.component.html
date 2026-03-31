@@ -1,21 +1,8 @@
 <div class="player-header-container">
-  <!-- Back button -->
   <app-go-back-button label="Back" />
 
-  <!-- Name + section selector -->
   <div class="player-title-section">
-    <div class="player-title-row">
-      <h1 class="player-title">{{ playerName() }}</h1>
-      <p-select
-        [options]="sectionOptions"
-        [ngModel]="section()"
-        (ngModelChange)="onSectionChange($event)"
-        size="small"
-        optionLabel="label"
-        optionValue="value"
-        placeholder="Select Section"
-      />
-    </div>
+    <h1 class="player-title">{{ playerName() }}</h1>
     @if (vocation()) {
       <div class="additional-info player-vocation">{{ vocation() }}</div>
     }

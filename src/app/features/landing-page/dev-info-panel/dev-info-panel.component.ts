@@ -68,7 +68,10 @@ export class DevInfoPanelComponent {
         },
       ],
       entryType: 'versionMinor',
-      tags: [{ label: 'UX', color: 'info' }],
+      tags: [
+        { label: 'fix', color: 'warn' },
+        { label: 'UI/UX', color: 'info' },
+      ],
     },
     {
       date: new Date('2026-03-29'),
@@ -76,7 +79,7 @@ export class DevInfoPanelComponent {
       content: [
         {
           contentType: 'heading',
-          text: 'Visual & UX Improvements',
+          text: 'UI/UX',
         },
         {
           contentType: 'icon-text',
@@ -116,7 +119,7 @@ export class DevInfoPanelComponent {
         },
       ],
       entryType: 'versionMinor',
-      tags: [{ label: 'UX', color: 'info' }, { label: 'new feature' }],
+      tags: [{ label: 'UI/UX', color: 'info' }, { label: 'new feature' }],
     },
     {
       date: new Date('2026-03-16'),
