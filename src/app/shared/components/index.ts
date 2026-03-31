@@ -1,3 +1,4 @@
+export * from './actions-menu/actions-menu.component';
 export * from './go-back-button/go-back-button.component';
 export * from './loading-status/loading-status.component';
 export * from './minimalist-icon/minimalist-icon.component';

@@ -2,7 +2,10 @@
   <app-go-back-button label="Back" />
 
   <div class="player-title-section">
-    <h1 class="player-title">{{ playerName() }}</h1>
+    <div class="player-title-row">
+      <h1 class="player-title">{{ playerName() }}</h1>
+      <app-actions-menu [items]="playerActions()" />
+    </div>
     @if (vocation()) {
       <div class="additional-info player-vocation">{{ vocation() }}</div>
     }
