@@ -31,7 +31,10 @@ export class PlayerGeneralStatsComponent {
   readonly skillStats = computed(() =>
     this.stats()
       .filter((s) => s.section !== 'experience' && s.section !== 'experience_loss')
-      .sort((a, b) => a.section.localeCompare(b.section)),
+      .sort((a, b) => {
+        if (a.section === 'magic') return -1;
+        if (b.section === 'magic') return 1;
+        return a.section.localeCompare(b.section);
+      }),
   );
 }
-
