@@ -1,70 +1,72 @@
-﻿@if (summary(); as s) {
-  <div class="perf-metric" [class.negative]="s.total_gain_level < 0">
+﻿@if (summary()?.best_day?.date) {
+  <div class="perf-metric" [class.negative]="summary()!.total_gain_level < 0">
     <i
       class="pi pi-angle-double-up perf-icon"
-      [class.metric--skill]="s.total_gain_level > 0"
-      [class.metric--danger]="s.total_gain_level < 0"
+      [class.metric--skill]="summary()!.total_gain_level > 0"
+      [class.metric--danger]="summary()!.total_gain_level < 0"
     ></i>
-    <span class="text-label">{{ section() === 'experience' ? 'Level Gain' : 'Skill Gain' }}</span>
+    <span class="text-label">{{ section() === 'experience' ? 'Level' : 'Skill' }}</span>
     <div class="perf-metric-values">
       <span
         class="perf-value text-value"
-        [class.metric--skill]="s.total_gain_level > 0"
-        [class.metric--danger]="s.total_gain_level < 0"
-        >{{ s.total_gain_level }}</span
+        [class.metric--skill]="summary()!.total_gain_level > 0"
+        [class.metric--danger]="summary()!.total_gain_level < 0"
+        >{{ summary()!.total_gain_level }}</span
       >
       <span
         class="text-sub-value"
-        [class.metric--skill]="s.total_gain_level > 0"
-        [class.metric--danger]="s.total_gain_level < 0"
-        >{{ s.average_gain_level }}/day</span
+        [class.metric--skill]="summary()!.total_gain_level > 0"
+        [class.metric--danger]="summary()!.total_gain_level < 0"
+        >{{ summary()!.average_gain_level }}/day</span
       >
     </div>
   </div>
   @if (section() === 'experience') {
-    <div class="perf-metric" [class.negative]="s.total_gain_points < 0">
+    <div class="perf-metric" [class.negative]="(summary()!.total_gain_points ?? 0) < 0">
       <i
         class="pi pi-angle-double-up perf-icon"
-        [class.metric--xp]="s.total_gain_points > 0"
-        [class.metric--danger]="s.total_gain_points < 0"
+        [class.metric--xp]="(summary()!.total_gain_points ?? 0) > 0"
+        [class.metric--danger]="(summary()!.total_gain_points ?? 0) < 0"
       ></i>
-      <span class="text-label">Experience Gain</span>
+      <span class="text-label">Experience</span>
       <div class="perf-metric-values">
         <span
           class="perf-value text-value"
-          [class.metric--xp]="s.total_gain_points > 0"
-          [class.metric--danger]="s.total_gain_points < 0"
-          >{{ s.total_gain_points | abbreviateNumber }}</span
+          [class.metric--xp]="(summary()!.total_gain_points ?? 0) > 0"
+          [class.metric--danger]="(summary()!.total_gain_points ?? 0) < 0"
+          >{{ summary()!.total_gain_points | abbreviateNumber }}</span
         >
         <span
           class="text-sub-value"
-          [class.metric--xp]="s.total_gain_points > 0"
-          [class.metric--danger]="s.total_gain_points < 0"
-          >{{ s.average_gain_points | abbreviateNumber }}/day</span
+          [class.metric--xp]="(summary()!.total_gain_points ?? 0) > 0"
+          [class.metric--danger]="(summary()!.total_gain_points ?? 0) < 0"
+          >{{ summary()!.average_gain_points | abbreviateNumber }}/day</span
         >
       </div>
     </div>
   }
-  <div class="perf-metric" [class.negative]="s.total_gain_rank < 0">
+  <div class="perf-metric" [class.negative]="summary()!.total_gain_rank < 0">
     <i
       class="pi pi-crown perf-icon"
-      [class.metric--rank]="s.total_gain_rank > 0"
-      [class.metric--danger]="s.total_gain_rank < 0"
+      [class.metric--rank]="summary()!.total_gain_rank > 0"
+      [class.metric--danger]="summary()!.total_gain_rank < 0"
     ></i>
-    <span class="text-label">Rank Gain</span>
+    <span class="text-label">Rank</span>
     <div class="perf-metric-values">
       <span
         class="perf-value text-value"
-        [class.metric--rank]="s.total_gain_rank > 0"
-        [class.metric--danger]="s.total_gain_rank < 0"
-        >{{ s.total_gain_rank }}</span
+        [class.metric--rank]="summary()!.total_gain_rank > 0"
+        [class.metric--danger]="summary()!.total_gain_rank < 0"
+        >{{ summary()!.total_gain_rank }}</span
       >
       <span
         class="text-sub-value"
-        [class.metric--rank]="s.total_gain_rank > 0"
-        [class.metric--danger]="s.total_gain_rank < 0"
-        >{{ s.average_gain_rank }}/day</span
+        [class.metric--rank]="summary()!.total_gain_rank > 0"
+        [class.metric--danger]="summary()!.total_gain_rank < 0"
+        >{{ summary()!.average_gain_rank }}/day</span
       >
     </div>
   </div>
+} @else {
+  <span class="additional-info">No data available</span>
 }

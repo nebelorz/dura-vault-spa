@@ -1,16 +1,12 @@
-﻿@if (summary(); as s) {
+﻿@if (summary()?.estimated_level_advance_date) {
   <div class="perf-extreme">
     <i class="pi pi-hourglass metric--info"></i>
     <div class="perf-extreme-info">
       <span class="text-label">Next Advance</span>
       <div class="perf-extreme-values">
-        <span class="perf-value text-value">
-          @if (s.estimated_level_advance_date) {
-            {{ s.estimated_level_advance_date | date: 'dd MMM yyyy' }}
-          } @else {
-            N/A
-          }
-        </span>
+        <span class="perf-value text-value">{{
+          summary()!.estimated_level_advance_date | date: 'dd MMM yyyy'
+        }}</span>
         <app-minimalist-icon
           tooltipText="Based on average performance over the selected period"
           tooltipPosition="right"
@@ -19,4 +15,6 @@
       </div>
     </div>
   </div>
+} @else {
+  <span class="additional-info">No data available</span>
 }

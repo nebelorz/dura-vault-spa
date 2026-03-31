@@ -32,7 +32,7 @@ export interface PodiumListItem {
 export class PodiumListComponent {
   items = input.required<PodiumListItem[]>();
   loading = input.required<boolean>();
-  emptyMessage = input<string>('No data available.');
+  emptyMessage = input<string>('No data available');
   disablePodium = input<boolean>(false); // If true, all items are rendered in the list and no podium
   hideOverlay = input<boolean>(false); // If true, no mouse-over overlay is shown for podium characters
   showFilter = input<boolean>(false); // If true, a search field is shown at the top of the list

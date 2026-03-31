@@ -28,16 +28,16 @@ export interface PlayerDetailsDailyRecord {
 }
 
 export interface PlayerDetailsDayStats {
-  date: string;
-  gain_level: number;
-  gain_points: number;
+  date: string | null;
+  gain_level: number | null;
+  gain_points: number | null;
 }
 
 export interface PlayerDetailsSummary {
-  total_gain_points: number;
+  total_gain_points: number | null;
   total_gain_level: number;
   total_gain_rank: number;
-  average_gain_points: number;
+  average_gain_points: number | null;
   average_gain_level: number;
   average_gain_rank: number;
   days_count: number;

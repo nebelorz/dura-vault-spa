@@ -56,7 +56,7 @@ export class PlayerDetailChartComponent {
   // Prepare chart data
   chartData = computed(() => {
     const data = this.playerDetailsData();
-    if (!data?.daily?.length) return null;
+    if (!data?.daily?.length || data.daily.length <= 1) return null;
 
     const labels = data.daily.map((record) => formatDate(record.scrape_date));
     const hasPoints = data.daily.some((record) => record.points !== null);

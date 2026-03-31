@@ -110,28 +110,39 @@ Build artifacts will be stored in the `dist/` directory, ready for deployment to
 src/
 ├── app/
 │   ├── core/                    # Core application logic
-│   │   ├── constants/           # Application-wide constants and configuration
-│   │   ├── models/              # TypeScript interfaces and type definitions
-│   │   └── services/            # Angular services (API, cache, state management)
+│   │   ├── constants/           # Sections, menu items, online thresholds
+│   │   ├── models/              # TypeScript interfaces (highscore, online, player-details…)
+│   │   └── services/            # BaseApiService, cache, supabase, theme, toast…
 │   │
-│   ├── features/                # Feature modules and components
-│   │   ├── footer/              # Application footer
-│   │   ├── highscore-table/     # Highscore rankings and filtering
-│   │   ├── landing-page/        # Home page with dashboard widgets
-│   │   ├── online-table/        # Online activity tables and stats
-│   │   ├── nav-bar/             # Navigation bar with search
-│   │   └── player-detail/       # Player profile, statistics, and online stats
+│   ├── features/
+│   │   ├── footer/
+│   │   ├── nav-bar/             # search-box, mode-button
+│   │   ├── landing-page/        # side-menu, carousel, daily-top-gainers, dev-info-panel
+│   │   ├── highscore-table/     # header, data-table, available-data-info
+│   │   ├── online-table/        # header, data-table, online-stats (charts)
+│   │   └── player-detail/       # header (name + actions menu)
+│   │       ├── player-detail-chart/
+│   │       ├── player-stats/            # left column orchestrator
+│   │       │   ├── player-general-stats/  # level/rank per section (clickable)
+│   │       │   └── player-online-stats/   # online time, window, consistency
+│   │       └── player-performance/      # right column orchestrator
+│   │           ├── player-gains-panel/        # level/xp/rank gain + avg/day
+│   │           ├── player-personal-score-panel/ # best day + worst day
+│   │           └── player-projected-panel/    # next advance estimate
 │   │
-│   ├── shared/                  # Reusable components and utilities
-│   │   ├── components/          # Shared UI components (incl. podium-list, period-selector, toast)
-│   │   ├── functions/           # Utility functions (formatting, calculations)
-│   │   ├── pipes/               # Custom Angular pipes
-│   │   └── styles/              # SCSS variables, mixins, and themes
+│   ├── shared/
+│   │   ├── components/  # actions-menu, go-back-button, loading-status,
+│   │   │                #   minimalist-icon, no-data-status, period-selector,
+│   │   │                #   podium-list, toast
+│   │   ├── functions/   # formatNumber, formatDate, getDuraPlayerUrl,
+│   │   │                #   calculateAvailableDataDateRange, formatMinutesToHours
+│   │   ├── pipes/       # abbreviateNumber, minutesToHours, removeMinus, titlecaseSpaces
+│   │   └── styles/      # _colors.scss, _animation-fade.scss
 │   │
-│   └── environments/            # Environment-specific configuration
+│   └── environments/
 │
-├── styles.scss                  # Global styles
-└── main.ts                      # Application entry point
+├── styles.scss          # Global styles, metric classes, section-header, typography
+└── main.ts
 ```
 
 ### Architecture Principles
