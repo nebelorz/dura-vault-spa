@@ -49,16 +49,16 @@
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
-  border-right: 1px solid var(--surface-border);
+  border-right: 3px solid colors.$secondary;
   overflow-y: auto;
 
   @media (max-width: 960px) {
     border-right: none;
-    border-bottom: 1px solid var(--surface-border);
+    border-bottom: 3px solid colors.$secondary;
   }
 }
 
-// Right: chart wrapped in performance panel
+// Right: performance column
 .player-right-column {
   display: flex;
   flex-direction: column;

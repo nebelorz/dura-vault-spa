@@ -3,18 +3,20 @@
     <i class="pi pi-hourglass metric--info"></i>
     <div class="perf-extreme-info">
       <span class="text-label">Next Advance</span>
-      <span class="perf-value text-value">
-        @if (s.estimated_level_advance_date) {
-          {{ s.estimated_level_advance_date | date: 'dd MMM yyyy' }}
-        } @else {
-          N/A
-        }
+      <div class="perf-extreme-values">
+        <span class="perf-value text-value">
+          @if (s.estimated_level_advance_date) {
+            {{ s.estimated_level_advance_date | date: 'dd MMM yyyy' }}
+          } @else {
+            N/A
+          }
+        </span>
         <app-minimalist-icon
           tooltipText="Based on average performance over the selected period"
           tooltipPosition="right"
           size="xx-small"
         />
-      </span>
+      </div>
     </div>
   </div>
 }

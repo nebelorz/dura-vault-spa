@@ -1,51 +1,70 @@
 ﻿@if (summary(); as s) {
   <div class="perf-metric" [class.negative]="s.total_gain_level < 0">
-    <span class="text-label">{{
-      section() === 'experience' ? 'Level Gain' : 'Skill Gain'
-    }}</span>
-    <span
-      class="perf-value text-value"
+    <i
+      class="pi pi-angle-double-up perf-icon"
       [class.metric--skill]="s.total_gain_level > 0"
       [class.metric--danger]="s.total_gain_level < 0"
-      >{{ s.total_gain_level }}</span
-    >
-    <span
-      class="text-sub-value"
-      [class.metric--skill]="s.total_gain_level > 0"
-      [class.metric--danger]="s.total_gain_level < 0"
-      >{{ s.average_gain_level }}/day avg</span
-    >
-  </div>
-  @if (section() === 'experience') {
-    <div class="perf-metric" [class.negative]="s.total_gain_points < 0">
-      <span class="text-label">Experience Gain</span>
+    ></i>
+    <span class="text-label">{{ section() === 'experience' ? 'Level Gain' : 'Skill Gain' }}</span>
+    <div class="perf-metric-values">
       <span
         class="perf-value text-value"
-        [class.metric--xp]="s.total_gain_points > 0"
-        [class.metric--danger]="s.total_gain_points < 0"
-        >{{ s.total_gain_points | abbreviateNumber }}</span
+        [class.metric--skill]="s.total_gain_level > 0"
+        [class.metric--danger]="s.total_gain_level < 0"
+        >{{ s.total_gain_level }}</span
       >
       <span
         class="text-sub-value"
+        [class.metric--skill]="s.total_gain_level > 0"
+        [class.metric--danger]="s.total_gain_level < 0"
+        >{{ s.average_gain_level }}/day</span
+      >
+    </div>
+  </div>
+  @if (section() === 'experience') {
+    <div class="perf-metric" [class.negative]="s.total_gain_points < 0">
+      <i
+        class="pi pi-angle-double-up perf-icon"
         [class.metric--xp]="s.total_gain_points > 0"
         [class.metric--danger]="s.total_gain_points < 0"
-        >{{ s.average_gain_points | abbreviateNumber }}/day avg</span
-      >
+      ></i>
+      <span class="text-label">Experience Gain</span>
+      <div class="perf-metric-values">
+        <span
+          class="perf-value text-value"
+          [class.metric--xp]="s.total_gain_points > 0"
+          [class.metric--danger]="s.total_gain_points < 0"
+          >{{ s.total_gain_points | abbreviateNumber }}</span
+        >
+        <span
+          class="text-sub-value"
+          [class.metric--xp]="s.total_gain_points > 0"
+          [class.metric--danger]="s.total_gain_points < 0"
+          >{{ s.average_gain_points | abbreviateNumber }}/day</span
+        >
+      </div>
     </div>
   }
   <div class="perf-metric" [class.negative]="s.total_gain_rank < 0">
+    <i
+      class="pi pi-crown perf-icon"
+      [class.metric--rank]="s.total_gain_rank > 0"
+      [class.metric--danger]="s.total_gain_rank < 0"
+    ></i>
     <span class="text-label">Rank Gain</span>
-    <span
-      class="perf-value text-value"
-      [class.metric--rank]="s.total_gain_rank > 0"
-      [class.metric--danger]="s.total_gain_rank < 0"
-      >{{ s.total_gain_rank }}</span
-    >
-    <span
-      class="text-sub-value"
-      [class.metric--rank]="s.total_gain_rank > 0"
-      [class.metric--danger]="s.total_gain_rank < 0"
-      >{{ s.average_gain_rank }}/day avg</span
-    >
+    <div class="perf-metric-values">
+      <span
+        class="perf-value text-value"
+        [class.metric--rank]="s.total_gain_rank > 0"
+        [class.metric--danger]="s.total_gain_rank < 0"
+        >{{ s.total_gain_rank }}</span
+      >
+      <span
+        class="text-sub-value"
+        [class.metric--rank]="s.total_gain_rank > 0"
+        [class.metric--danger]="s.total_gain_rank < 0"
+        >{{ s.average_gain_rank }}/day</span
+      >
+    </div>
   </div>
 }
