@@ -1,0 +1,35 @@
+﻿@use 'colors' as colors;
+
+:host {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  align-self: stretch;
+}
+
+.perf-extreme {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.15rem 1rem;
+  border-radius: 4px;
+  transition: background 0.15s ease;
+
+  &.negative {
+    background: colors.$danger-opacity-1;
+  }
+}
+
+.perf-extreme-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+
+.perf-value {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  line-height: 1.2;
+}

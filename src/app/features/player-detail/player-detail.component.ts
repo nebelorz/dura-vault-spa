@@ -15,10 +15,8 @@ import {
 import { PlayerDetailsService, OnlineService } from '@core/services';
 import { PlayerDetailHeaderComponent } from './player-detail-header/player-detail-header.component';
 import { PeriodSelectorComponent, MinimalistIconComponent } from '@shared/components';
-import { PlayerDetailChartComponent } from './player-detail-chart/player-detail-chart.component';
-import { PlayerStatsCardComponent } from './player-stats-card/player-stats-card.component';
-import { PlayerPerformanceSummaryComponent } from './player-summary/player-performance-summary/player-performance-summary.component';
-import { PlayerOnlineStatsSummaryComponent } from './player-summary/player-online-stats-summary/player-online-stats-summary.component';
+import { PlayerStatsComponent } from './player-stats/player-stats.component';
+import { PlayerPerformanceComponent } from './player-performance/player-performance.component';
 
 @Component({
   selector: 'app-player-detail',
@@ -27,11 +25,9 @@ import { PlayerOnlineStatsSummaryComponent } from './player-summary/player-onlin
   imports: [
     PlayerDetailHeaderComponent,
     PeriodSelectorComponent,
-    PlayerDetailChartComponent,
-    PlayerStatsCardComponent,
-    PlayerPerformanceSummaryComponent,
-    PlayerOnlineStatsSummaryComponent,
     MinimalistIconComponent,
+    PlayerStatsComponent,
+    PlayerPerformanceComponent,
   ],
 })
 export class PlayerDetailComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+﻿import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { DatePipe, NgClass } from '@angular/common';
 
 import { PlayerOnlineSummary, PlayerDetailsSummary } from '@core/models';
@@ -8,12 +8,12 @@ import { MinimalistIconComponent } from "@shared/components";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-player-online-stats-summary',
-  templateUrl: './player-online-stats-summary.component.html',
-  styleUrls: ['./player-online-stats-summary.component.scss'],
+  selector: 'app-player-online-stats',
+  templateUrl: './player-online-stats.component.html',
+  styleUrls: ['./player-online-stats.component.scss'],
   imports: [DatePipe, NgClass, MinutesToHoursPipe, MinimalistIconComponent],
 })
-export class PlayerOnlineStatsSummaryComponent {
+export class PlayerOnlineStatsComponent {
   onlineSummary = input<PlayerOnlineSummary | null>(null);
   summary = input<PlayerDetailsSummary | null>(null);
 
@@ -31,3 +31,4 @@ export class PlayerOnlineStatsSummaryComponent {
     return 'stat-icon--primary';
   });
 }
+

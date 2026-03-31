@@ -1,0 +1,11 @@
+﻿<app-player-general-stats
+  [stats]="stats()"
+  [loading]="loading()"
+  [activeSection]="activeSection()"
+  (sectionSelect)="sectionSelect.emit($event)"
+/>
+<div class="stats-divider"></div>
+<app-player-online-stats
+  [onlineSummary]="onlineSummary()"
+  [summary]="summary()"
+/>

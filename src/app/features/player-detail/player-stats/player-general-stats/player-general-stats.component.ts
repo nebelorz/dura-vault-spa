@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+﻿import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import { PlayerStatsRecord, HighscoreSection, Section } from '@core/models';
@@ -7,12 +7,12 @@ import { LoadingStatusComponent } from '@shared/components';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-player-stats-card',
-  templateUrl: './player-stats-card.component.html',
-  styleUrls: ['./player-stats-card.component.scss'],
+  selector: 'app-player-general-stats',
+  templateUrl: './player-general-stats.component.html',
+  styleUrls: ['./player-general-stats.component.scss'],
   imports: [LoadingStatusComponent, DatePipe],
 })
-export class PlayerStatsCardComponent {
+export class PlayerGeneralStatsComponent {
   stats = input.required<PlayerStatsRecord[]>();
   loading = input.required<boolean>();
   activeSection = input.required<HighscoreSection>();
@@ -34,3 +34,4 @@ export class PlayerStatsCardComponent {
       .sort((a, b) => a.section.localeCompare(b.section)),
   );
 }
+

@@ -2,10 +2,7 @@
   <div class="player-container">
     <!-- TOP: name + section + period -->
     <div class="player-container-top">
-      <app-player-detail-header
-        [playerName]="playerName()"
-        [vocation]="vocation()"
-      />
+      <app-player-detail-header [playerName]="playerName()" [vocation]="vocation()" />
       <div class="period-selector-wrapper">
         <app-period-selector
           [disabledPeriods]="['day']"
@@ -24,33 +21,27 @@
 
     <!-- BODY -->
     <div class="player-container-body">
-      <!-- Left: player stats + online stats -->
+      <!-- Left: general stats + online stats -->
       <div class="player-left-column">
-        <app-player-stats-card
+        <app-player-stats
           [stats]="playerStats()"
           [loading]="loading()"
           [activeSection]="section()"
-          (sectionSelect)="onSectionChange($event)"
-        />
-        <div class="left-divider"></div>
-        <app-player-online-stats-summary
           [onlineSummary]="playerOnlineData()?.summary ?? null"
           [summary]="summary()"
+          (sectionSelect)="onSectionChange($event)"
         />
       </div>
 
-      <!-- Right: performance panel wrapping chart via ng-content -->
+      <!-- Right: gains + personal score + projected + chart -->
       <div class="player-right-column">
-        <app-player-performance-summary
+        <app-player-performance
           class="animation-fade"
           [summary]="summary()"
           [section]="section()"
-        >
-          <app-player-detail-chart
-            [playerDetailsData]="playerDetailsData()"
-            [loading]="loading()"
-          />
-        </app-player-performance-summary>
+          [playerDetailsData]="playerDetailsData()"
+          [loading]="loading()"
+        />
       </div>
     </div>
   </div>

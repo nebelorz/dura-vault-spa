@@ -1,0 +1,12 @@
+﻿@if (summary()) {
+  <div class="perf-bar">
+    <app-player-gains-panel [summary]="summary()" [section]="section()" />
+    <div class="perf-separator"></div>
+    <app-player-personal-score-panel [summary]="summary()" [section]="section()" />
+    <div class="perf-separator"></div>
+    <app-player-projected-panel [summary]="summary()" />
+  </div>
+}
+<div class="chart-slot">
+  <app-player-detail-chart [playerDetailsData]="playerDetailsData()" [loading]="loading()" />
+</div>

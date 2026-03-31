@@ -1,0 +1,56 @@
+﻿@if (summary(); as s) {
+  <div
+    class="perf-extreme"
+    [class.negative]="
+      (section() === 'experience' ? s.best_day.gain_points : s.best_day.gain_level) < 0
+    "
+  >
+    <i
+      class="pi pi-circle-fill"
+      [class.metric--skill]="
+        (section() === 'experience' ? s.best_day.gain_points : s.best_day.gain_level) > 0
+      "
+      [class.metric--danger]="
+        (section() === 'experience' ? s.best_day.gain_points : s.best_day.gain_level) <= 0
+      "
+    ></i>
+    <div class="perf-extreme-info">
+      <span class="text-label">Best Day</span>
+      <span class="perf-value text-value">
+        @if (section() === 'experience') {
+          {{ s.best_day.gain_points | abbreviateNumber }}
+        } @else {
+          {{ s.best_day.gain_level }}
+        }
+      </span>
+      <span class="text-sub-value">{{ s.best_day.date | date: 'dd MMM' }}</span>
+    </div>
+  </div>
+  <div
+    class="perf-extreme"
+    [class.negative]="
+      (section() === 'experience' ? s.worst_day.gain_points : s.worst_day.gain_level) < 0
+    "
+  >
+    <i
+      class="pi pi-circle"
+      [class.metric--skill]="
+        (section() === 'experience' ? s.worst_day.gain_points : s.worst_day.gain_level) > 0
+      "
+      [class.metric--danger]="
+        (section() === 'experience' ? s.worst_day.gain_points : s.worst_day.gain_level) <= 0
+      "
+    ></i>
+    <div class="perf-extreme-info">
+      <span class="text-label">Worst Day</span>
+      <span class="perf-value text-value">
+        @if (section() === 'experience') {
+          {{ s.worst_day.gain_points | abbreviateNumber }}
+        } @else {
+          {{ s.worst_day.gain_level }}
+        }
+      </span>
+      <span class="text-sub-value">{{ s.worst_day.date | date: 'dd MMM' }}</span>
+    </div>
+  </div>
+}
