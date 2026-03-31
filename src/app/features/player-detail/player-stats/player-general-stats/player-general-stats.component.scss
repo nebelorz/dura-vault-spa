@@ -22,7 +22,8 @@
   cursor: pointer;
 
   &.active-section {
-    border-left-color: var(--p-primary-color);
+    border-left-color: colors.$primary;
+    background-color: colors.$primary-opacity-1;
   }
 
   &.negative {

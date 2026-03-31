@@ -1,6 +1,6 @@
 @use 'colors' as colors;
 
-// Container & Layout
+// ── Container ──────────────────────────────────────────────────────────────────
 .daily-top {
   border: 2px solid colors.$secondary;
   box-shadow: 0 1px 4px colors.$secondary;
@@ -11,19 +11,19 @@
   gap: 1.5rem;
 }
 
-// Sections
+// ── Sections ───────────────────────────────────────────────────────────────────
 section {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.25rem;
 }
 
 .header-date {
-  letter-spacing: 0px;
+  letter-spacing: 0;
   opacity: 0.6;
 }
 
-// Carousel
+// ── Carousel ───────────────────────────────────────────────────────────────────
 .carousel-container {
   ::ng-deep .p-carousel {
     .p-carousel-content {
@@ -53,18 +53,23 @@ section {
   }
 }
 
-// Player
+// ── Player row ─────────────────────────────────────────────────────────────────
 .player-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 0.75rem;
-  padding: 0.5rem 0.75rem;
+  padding: 0.4rem 0.75rem 0.4rem calc(0.5rem - 2px);
+  border-left: 2px solid transparent;
   border-radius: 6px;
-  transition: background 0.2s ease;
+  transition: background 0.15s ease;
   cursor: pointer;
 
+  &:hover {
+    background: colors.$secondary-opacity-1;
+  }
+
   &.top-one {
+    border-left-color: colors.$rank;
     background: colors.$rank-opacity-1;
 
     &:hover {
@@ -72,84 +77,68 @@ section {
     }
   }
 
-  &.top-two,
-  &.top-three {
+  &.player-row--loss {
+    border-left-color: colors.$danger;
+    background: colors.$danger-opacity-1;
+
     &:hover {
-      background: colors.$secondary;
+      background: colors.$danger-opacity-2;
     }
   }
 }
 
-.player-row--loss {
-  background: colors.$danger-opacity-1;
-
-  &:hover {
-    background: colors.$danger-opacity-2;
-  }
+// ── Position badge (1, 2, 3 for experience ranking) ────────────────────────────
+.player-pos {
+  width: 1rem;
+  flex-shrink: 0;
+  font-size: x-small;
+  font-weight: bold;
+  opacity: 0.35;
+  text-align: center;
 }
 
+// ── Player info ────────────────────────────────────────────────────────────────
 .player-main {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.15rem;
   flex: 1;
+  min-width: 0;
 }
 
 .player-name {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
   font-size: small;
   font-weight: bold;
   letter-spacing: 0.25px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .player-meta {
   display: flex;
-  align-items: center;
   gap: 0.5rem;
   font-size: x-small;
   opacity: 0.6;
   letter-spacing: 0.25px;
 }
 
-.player-stats {
+// ── Gain items ─────────────────────────────────────────────────────────────────
+.player-gains {
   display: flex;
   flex-shrink: 0;
-  align-self: flex-end;
+  align-items: center;
+  gap: 0.6rem;
 }
 
-// Stat Badges
-.stat {
+.gain-item {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
-  margin-top: 0.25rem;
-  margin-right: 1rem;
+  gap: 0.2rem;
   font-size: x-small;
-  color: colors.$primary;
 
   i {
     font-size: xx-small;
-  }
-
-  &.stat-level {
-    color: colors.$primary;
-  }
-
-  &.stat-experience {
-    color: colors.$experience;
-  }
-
-  &.stat-experience-loss {
-    color: colors.$danger;
-  }
-
-  &.stat-level-loss {
-    color: colors.$danger;
-  }
-
-  &.stat-rank {
-    color: colors.$rank;
+    line-height: 1;
   }
 }
