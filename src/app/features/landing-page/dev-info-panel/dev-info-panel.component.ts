@@ -42,13 +42,28 @@ export class DevInfoPanelComponent {
       title: 'v 2.1.1 released',
       content: [
         {
-          contentType: 'icon-text',
-          icon: 'pi pi-code',
-          text: 'Updated landing page banner.',
+          contentType: 'heading',
+          text: 'Visual & UX Improvements',
         },
         {
           contentType: 'icon-text',
           icon: 'pi pi-code',
+          text: 'Updated landing page banner.',
+        },
+        { contentType: 'divider' },
+        { contentType: 'divider' },
+        {
+          contentType: 'heading',
+          text: 'Improvements & Fixes',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-wrench',
+          text: 'Fixed an issue not displaying the player vocation on /player-details section.',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-wrench',
           text: 'Minor backend improvements for better consistency and clarity.',
         },
       ],

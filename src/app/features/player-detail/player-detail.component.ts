@@ -62,9 +62,14 @@ export class PlayerDetailComponent implements OnInit {
   // Computed
   summary = computed(() => this.playerDetailsData()?.summary ?? null);
   dailyRecords = computed(() => this.playerDetailsData()?.daily ?? []);
-  vocation = computed(
-    () => this.playerStats().find((s) => s.section === 'experience')?.vocation ?? '',
-  );
+  vocation = computed(() => {
+    const stats = this.playerStats();
+    return (
+      stats.find((s) => s.section === 'experience')?.vocation ??
+      stats.find((s) => s.vocation)?.vocation ??
+      ''
+    );
+  });
   dateRange = computed(() => {
     const summaryData = this.summary();
     if (!summaryData) return [];

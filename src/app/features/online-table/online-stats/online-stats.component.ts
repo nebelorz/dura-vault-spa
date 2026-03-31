@@ -16,6 +16,7 @@ const VOCATION_GROUPS: Record<string, string> = {
   'Elder Druid': 'Druid',
   Paladin: 'Paladin',
   'Royal Paladin': 'Paladin',
+  None: 'None',
 };
 
 const LEVEL_BRACKETS = [
