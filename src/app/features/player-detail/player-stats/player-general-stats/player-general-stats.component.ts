@@ -2,7 +2,7 @@
 import { DatePipe } from '@angular/common';
 
 import { PlayerStatsRecord, HighscoreSection, Section } from '@core/models';
-import { getSectionLabel } from '@core/constants';
+import { getSectionLabel, METRIC_ICONS } from '@core/constants';
 import { LoadingStatusComponent } from '@shared/components';
 
 @Component({
@@ -18,6 +18,7 @@ export class PlayerGeneralStatsComponent {
   activeSection = input.required<HighscoreSection>();
   sectionSelect = output<HighscoreSection>();
 
+  protected readonly METRIC_ICONS = METRIC_ICONS;
   protected readonly getSectionLabel = (section: string) => getSectionLabel(section as Section);
 
   onStatClick(section: string): void {

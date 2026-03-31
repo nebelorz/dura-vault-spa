@@ -1,7 +1,7 @@
 ﻿@if (summary()?.best_day?.date) {
   <div class="perf-metric" [class.negative]="summary()!.total_gain_level < 0">
     <i
-      class="pi pi-angle-double-up perf-icon"
+      [class]="levelIcon() + ' perf-icon'"
       [class.metric--skill]="summary()!.total_gain_level > 0"
       [class.metric--danger]="summary()!.total_gain_level < 0"
     ></i>
@@ -24,7 +24,7 @@
   @if (section() === 'experience') {
     <div class="perf-metric" [class.negative]="(summary()!.total_gain_points ?? 0) < 0">
       <i
-        class="pi pi-angle-double-up perf-icon"
+        [class]="xpIcon() + ' perf-icon'"
         [class.metric--xp]="(summary()!.total_gain_points ?? 0) > 0"
         [class.metric--danger]="(summary()!.total_gain_points ?? 0) < 0"
       ></i>
@@ -47,7 +47,7 @@
   }
   <div class="perf-metric" [class.negative]="summary()!.total_gain_rank < 0">
     <i
-      class="pi pi-crown perf-icon"
+      [class]="rankIcon() + ' perf-icon'"
       [class.metric--rank]="summary()!.total_gain_rank > 0"
       [class.metric--danger]="summary()!.total_gain_rank < 0"
     ></i>

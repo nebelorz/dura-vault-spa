@@ -29,15 +29,15 @@
               pTooltip="Experience Lost"
               tooltipPosition="bottom"
             >
-              <i class="pi pi-angle-double-down"></i>
+              <i [class]="METRIC_ICONS.experience.loss"></i>
               <span>{{ experienceLossPlayer()!.gain_points | abbreviateNumber }}</span>
             </div>
             <div class="stat stat-level-loss" pTooltip="Level" tooltipPosition="bottom">
-              <i class="pi pi-angle-double-down"></i>
+              <i [class]="METRIC_ICONS.level.loss"></i>
               <span>{{ experienceLossPlayer()!.gain_level }}</span>
             </div>
             <div class="stat stat-rank" pTooltip="Rank" tooltipPosition="bottom">
-              <i class="pi pi-crown"></i>
+              <i [class]="METRIC_ICONS.rank.loss"></i>
               <span>{{ experienceLossPlayer()!.gain_rank }}</span>
             </div>
           </div>
@@ -69,15 +69,15 @@
 
             <div class="player-stats">
               <div class="stat stat-experience" pTooltip="Experience" tooltipPosition="bottom">
-                <i class="pi pi-angle-double-up"></i>
+                <i [class]="METRIC_ICONS.experience.gain"></i>
                 <span>{{ player.gain_points | abbreviateNumber }}</span>
               </div>
               <div class="stat stat-level" pTooltip="Level" tooltipPosition="bottom">
-                <i class="pi pi-angle-double-up"></i>
+                <i [class]="METRIC_ICONS.level.gain"></i>
                 <span>{{ player.gain_level }}</span>
               </div>
               <div class="stat stat-rank" pTooltip="Rank" tooltipPosition="bottom">
-                <i class="pi pi-crown"></i>
+                <i [class]="METRIC_ICONS.rank.gain"></i>
                 <span>
                   @if (player.gain_rank > 0) {
                     +
@@ -120,11 +120,11 @@
 
                   <div class="player-stats">
                     <div class="stat stat-level" pTooltip="Skill" tooltipPosition="bottom">
-                      <i class="pi pi-angle-double-up"></i>
+                      <i [class]="METRIC_ICONS.level.gain"></i>
                       <span>{{ player.gain_level }}</span>
                     </div>
                     <div class="stat stat-rank" pTooltip="Rank" tooltipPosition="bottom">
-                      <i class="pi pi-crown"></i>
+                      <i [class]="METRIC_ICONS.rank.gain"></i>
                       <span>
                         @if (player.gain_rank > 0) {
                           +

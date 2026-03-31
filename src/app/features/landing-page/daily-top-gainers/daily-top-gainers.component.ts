@@ -3,6 +3,7 @@ import { DatePipe, UpperCasePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { DailyTopPlayer, SectionData } from '@core/models';
+import { METRIC_ICONS } from '@core/constants';
 import { AbbreviateNumberPipe } from '@shared/pipes';
 import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
 
@@ -26,6 +27,7 @@ import { Tooltip } from 'primeng/tooltip';
 })
 export class DailyTopGainersComponent {
   private readonly router = inject(Router);
+  protected readonly METRIC_ICONS = METRIC_ICONS;
 
   // Inputs
   loading = input.required<boolean>();
