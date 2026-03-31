@@ -1,4 +1,4 @@
-[<img src="https://dura-vault.vercel.app/banner-darkmode.png" alt="dura-vault-banner"/>](https://dura-vault.vercel.app/)
+[<img src="https://dura-vault.vercel.app/banner-dark-mode.png" alt="dura-vault-banner"/>](https://dura-vault.vercel.app/)
 
 # Dura Vault SPA
 
