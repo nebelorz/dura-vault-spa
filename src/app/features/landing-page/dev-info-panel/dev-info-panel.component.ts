@@ -39,7 +39,7 @@ export class DevInfoPanelComponent {
   entries = signal<DevInfoEntry[]>([
     {
       date: new Date('2026-03-30'),
-      title: 'v 2.1.1 released',
+      title: 'v 2.2.0 released',
       content: [
         {
           contentType: 'heading',
@@ -50,11 +50,26 @@ export class DevInfoPanelComponent {
           icon: 'pi pi-code',
           text: 'Updated landing page banner.',
         },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Revamped player detail section. Added empty messages and improved layout for better clarity.',
+        },
         { contentType: 'divider' },
         { contentType: 'divider' },
         {
           contentType: 'heading',
           text: 'Improvements & Fixes',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Added a new menu on player details to search character directly on Dura.',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Set default period for a player detail view to "Active Period".',
         },
         {
           contentType: 'icon-text',
