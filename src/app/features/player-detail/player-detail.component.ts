@@ -88,12 +88,7 @@ export class PlayerDetailComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((queryParams) => {
-        const section = queryParams.get('section') as HighscoreSection;
-        if (!section) {
-          this.router.navigate(['/']);
-          return;
-        }
-
+        const section = (queryParams.get('section') as HighscoreSection) ?? 'experience';
         this.section.set(section);
         this.loadPlayerDetails();
       });
@@ -114,6 +109,7 @@ export class PlayerDetailComponent implements OnInit {
 
   private async loadPlayerDetails(): Promise<void> {
     this.loading.set(true);
+    let redirecting = false;
 
     try {
       const request: PlayerDetailsRequest = {
@@ -128,16 +124,32 @@ export class PlayerDetailComponent implements OnInit {
         this.onlineService.getPlayerOnlineHistory(this.playerName(), this.selectedPeriod(), false),
       ]);
 
+      const resolvedStats = stats ?? [];
+      const availableSections = resolvedStats.map((s) => s.section as HighscoreSection);
+      const currentSection = this.section();
+
+      // If the requested section has no data for this player, redirect to the first available
+      if (resolvedStats.length > 0 && !availableSections.includes(currentSection)) {
+        redirecting = true;
+        this.playerStats.set(resolvedStats);
+        this.router.navigate(['/player', this.playerName()], {
+          queryParams: { section: availableSections[0] },
+          replaceUrl: true,
+        });
+        return;
+      }
+
+      this.playerStats.set(resolvedStats);
+
       if (data) {
         this.playerDetailsData.set(data);
       } else {
         this.playerDetailsData.set(null);
       }
 
-      this.playerStats.set(stats ?? []);
       this.playerOnlineData.set(onlineData);
     } finally {
-      this.loading.set(false);
+      if (!redirecting) this.loading.set(false);
     }
   }
 }
