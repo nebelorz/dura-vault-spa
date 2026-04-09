@@ -50,6 +50,11 @@ export class DevInfoPanelComponent {
           icon: 'pi pi-code',
           text: 'The sections on player details now are ordered correctly.',
         },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Removed unnecessary available data info on highscores tables.',
+        },
       ],
       entryType: 'versionMinor',
       tags: [{ label: 'UI/UX', color: 'info' }],
