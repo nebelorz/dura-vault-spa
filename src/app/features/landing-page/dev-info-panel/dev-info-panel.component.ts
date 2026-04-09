@@ -38,6 +38,23 @@ interface DevInfoEntry {
 export class DevInfoPanelComponent {
   entries = signal<DevInfoEntry[]>([
     {
+      date: new Date('2026-04-09'),
+      title: 'v 2.2.1 released',
+      content: [
+        {
+          contentType: 'heading',
+          text: 'UI/UX',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'The sections on player details now are ordered correctly.',
+        },
+      ],
+      entryType: 'versionMinor',
+      tags: [{ label: 'UI/UX', color: 'info' }],
+    },
+    {
       date: new Date('2026-03-30'),
       title: 'v 2.2.0 released',
       content: [

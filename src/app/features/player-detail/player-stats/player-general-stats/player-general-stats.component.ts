@@ -2,7 +2,7 @@
 import { DatePipe } from '@angular/common';
 
 import { PlayerStatsRecord, HighscoreSection, Section } from '@core/models';
-import { getSectionLabel, METRIC_ICONS } from '@core/constants';
+import { getSectionLabel, METRIC_ICONS, HIGHSCORE_SECTIONS } from '@core/constants';
 import { LoadingStatusComponent } from '@shared/components';
 
 @Component({
@@ -32,14 +32,14 @@ export class PlayerGeneralStatsComponent {
   readonly skillStats = computed(() =>
     this.stats()
       .filter((s) => s.section !== 'experience' && s.section !== 'experience_loss')
-      .sort((a, b) => {
-        if (a.section === 'magic') return -1;
-        if (b.section === 'magic') return 1;
-        return a.section.localeCompare(b.section);
-      }),
+      .sort((a, b) => this.sectionOrder(a.section) - this.sectionOrder(b.section)),
   );
 
   isNegativeLastGain(stat: PlayerStatsRecord): boolean {
     return stat.last_gain_level !== null && stat.last_gain_level < 0;
+  }
+
+  private sectionOrder(section: string): number {
+    return HIGHSCORE_SECTIONS.findIndex((s) => s.value === section);
   }
 }
