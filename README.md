@@ -118,7 +118,7 @@ src/
 │   │   ├── footer/
 │   │   ├── nav-bar/             # search-box, mode-button
 │   │   ├── landing-page/        # side-menu, carousel, daily-top-gainers, dev-info-panel
-│   │   ├── highscore-table/     # header, data-table, available-data-info
+│   │   ├── highscore-table/     # header, data-table
 │   │   ├── online-table/        # header, data-table, online-stats (charts)
 │   │   └── player-detail/       # header (name + actions menu)
 │   │       ├── player-detail-chart/
