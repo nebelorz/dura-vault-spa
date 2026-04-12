@@ -48,7 +48,7 @@ export class DevInfoPanelComponent {
         {
           contentType: 'icon-text',
           icon: 'pi pi-code',
-          text: 'The sections on player details now are ordered correctly.',
+          text: 'The sections on player details now are ordered as displayed in-game.',
         },
         {
           contentType: 'icon-text',
