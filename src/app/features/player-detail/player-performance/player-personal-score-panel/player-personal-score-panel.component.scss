@@ -6,6 +6,28 @@
   gap: 0.25rem;
 }
 
+.score-layout {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.extremes-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.streak-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--surface-border);
+}
+
 .perf-extreme {
   display: flex;
   align-items: center;

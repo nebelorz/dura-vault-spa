@@ -43,6 +43,18 @@ export class DevInfoPanelComponent {
       content: [
         {
           contentType: 'heading',
+          text: 'Features',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Added current & best historic streak on player details for each section.',
+        },
+        {
+          contentType: 'divider',
+        },
+        {
+          contentType: 'heading',
           text: 'UI/UX',
         },
         {
@@ -95,6 +107,7 @@ export class DevInfoPanelComponent {
       tags: [
         { label: 'fix', color: 'warn' },
         { label: 'UI/UX', color: 'info' },
+        { label: 'new feature' },
       ],
     },
     {

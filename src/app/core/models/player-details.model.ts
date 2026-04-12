@@ -40,6 +40,8 @@ export interface PlayerDetailsSummary {
   day_last: string;
   best_day: PlayerDetailsDayStats;
   worst_day: PlayerDetailsDayStats;
+  current_streak: number;
+  best_streak: number;
   estimated_level_advance_date: string | null;
 }
 
