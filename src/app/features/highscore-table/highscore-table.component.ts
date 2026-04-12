@@ -5,6 +5,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HighscoreRecord, Section, ScrapeDateRange, TimePeriod } from '@core/models';
 import { HighscoreService, MetadataService } from '@core/services';
 import { calculateAvailableDataDateRange } from '@shared/functions';
+import { DatePipe } from '@angular/common';
 import { HighscoreDataTableComponent } from './highscore-data-table/highscore-data-table.component';
 import { HighscoreHeaderComponent } from './highscore-header/highscore-header.component';
 import { PeriodSelectorComponent } from '@shared/components';
@@ -13,7 +14,12 @@ import { PeriodSelectorComponent } from '@shared/components';
   selector: 'app-highscore-table',
   templateUrl: './highscore-table.component.html',
   styleUrls: ['./highscore-table.component.scss'],
-  imports: [HighscoreHeaderComponent, PeriodSelectorComponent, HighscoreDataTableComponent],
+  imports: [
+    HighscoreHeaderComponent,
+    PeriodSelectorComponent,
+    HighscoreDataTableComponent,
+    DatePipe,
+  ],
 })
 export class HighscoreTableComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);

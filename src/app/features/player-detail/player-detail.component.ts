@@ -1,4 +1,5 @@
 import { Component, OnInit, signal, computed, inject, DestroyRef } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, tap } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -28,6 +29,7 @@ import { PlayerPerformanceComponent } from './player-performance/player-performa
     MinimalistIconComponent,
     PlayerStatsComponent,
     PlayerPerformanceComponent,
+    DatePipe,
   ],
 })
 export class PlayerDetailComponent implements OnInit {

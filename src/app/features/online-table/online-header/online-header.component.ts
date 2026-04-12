@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { MinimalistIconComponent } from '@shared/components';
 
@@ -8,8 +7,6 @@ import { MinimalistIconComponent } from '@shared/components';
   selector: 'app-online-header',
   templateUrl: './online-header.component.html',
   styleUrls: ['./online-header.component.scss'],
-  imports: [DatePipe, MinimalistIconComponent],
+  imports: [MinimalistIconComponent],
 })
-export class OnlineHeaderComponent {
-  dateRange = input<string[]>([]);
-}
+export class OnlineHeaderComponent {}

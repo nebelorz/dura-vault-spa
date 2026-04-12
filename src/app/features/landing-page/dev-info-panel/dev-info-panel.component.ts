@@ -58,7 +58,12 @@ export class DevInfoPanelComponent {
         {
           contentType: 'icon-text',
           icon: 'pi pi-code',
-          text: 'Added a new componente to provide a way to help Dura Vault grow by supporting us through Buy Me a Coffee.',
+          text: 'Moved the actual period selected date range to display underneath the period selector for better clarity.',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Added a new component to provide a way to help Dura Vault grow by supporting it through Buy Me a Coffee.',
         },
         { contentType: 'divider' },
         {
@@ -73,7 +78,7 @@ export class DevInfoPanelComponent {
         {
           contentType: 'icon-text',
           icon: 'pi pi-wrench',
-          text: 'Fixed an issue not displaying last gain when mouse-over on player details section.',
+          text: 'Fixed an issue not displaying last gain correctly when mouse-over on player details section.',
         },
       ],
       entryType: 'versionMinor',

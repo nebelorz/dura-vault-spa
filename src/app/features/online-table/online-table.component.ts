@@ -1,4 +1,5 @@
 import { Component, OnInit, signal, inject, computed } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 import { OnlineTimelineRecord, OnlineTopRecord, ScrapeDateRange, TimePeriod } from '@core/models';
 import { MetadataService, OnlineService } from '@core/services';
@@ -17,6 +18,7 @@ import { OnlineStatsComponent } from './online-stats/online-stats.component';
     PeriodSelectorComponent,
     OnlineDataTableComponent,
     OnlineStatsComponent,
+    DatePipe,
   ],
 })
 export class OnlineTableComponent implements OnInit {

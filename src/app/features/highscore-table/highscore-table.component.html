@@ -1,12 +1,22 @@
 <div class="highscore-container animation-fade">
   <!-- Header -->
   <div class="highscore-header">
-    <app-highscore-header [section]="section()" [dateRange]="dateRange()" />
+    <app-highscore-header [section]="section()" />
 
-    <app-period-selector
-      [selectedPeriod]="selectedPeriod()"
-      (periodChange)="onPeriodChange($event)"
-    />
+    <div class="selector-group">
+      <app-period-selector
+        [selectedPeriod]="selectedPeriod()"
+        (periodChange)="onPeriodChange($event)"
+      />
+      @if (dateRange().length === 1) {
+        <span class="additional-info">{{ dateRange()[0] | date: 'dd MMM yyyy' }}</span>
+      } @else if (dateRange().length > 1) {
+        <span class="additional-info"
+          >{{ dateRange()[0] | date: 'dd MMM yyyy' }} —
+          {{ dateRange()[1] | date: 'dd MMM yyyy' }}</span
+        >
+      }
+    </div>
   </div>
 
   <!-- Data Table -->

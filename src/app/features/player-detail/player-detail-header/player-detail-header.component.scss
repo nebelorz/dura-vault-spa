@@ -6,6 +6,7 @@
   .player-title-section {
     display: flex;
     flex-direction: column;
+    gap: 0.2rem;
 
     .player-title-row {
       display: flex;
@@ -16,7 +17,12 @@
         font-size: x-large;
         font-weight: bold;
         margin: 0;
-        margin-bottom: 0.25rem;
+      }
+
+      app-actions-menu {
+        align-self: center;
+        line-height: 0;
+        margin-top: 5px;
       }
     }
   }

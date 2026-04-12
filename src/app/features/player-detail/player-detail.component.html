@@ -4,18 +4,28 @@
     <div class="player-container-top">
       <app-player-detail-header [playerName]="playerName()" [vocation]="vocation()" />
       <div class="period-selector-wrapper">
-        <app-period-selector
-          [disabledPeriods]="['day']"
-          [selectedPeriod]="selectedPeriod()"
-          [displayInfoIcon]="true"
-          [periodOptions]="periodOptions"
-          (periodChange)="onPeriodChange($event)"
-        />
-        <app-minimalist-icon
-          size="x-small"
-          tooltipText="Averages are spread over the full period window, not just active days — inactive days lower the daily average."
-          tooltipPosition="left"
-        />
+        <div class="selector-row">
+          <app-period-selector
+            [disabledPeriods]="['day']"
+            [selectedPeriod]="selectedPeriod()"
+            [displayInfoIcon]="true"
+            [periodOptions]="periodOptions"
+            (periodChange)="onPeriodChange($event)"
+          />
+          <app-minimalist-icon
+            size="x-small"
+            tooltipText="Averages are spread over the full period window, not just active days — inactive days lower the daily average."
+            tooltipPosition="left"
+          />
+        </div>
+        @if (dateRange().length === 1) {
+          <span class="additional-info">{{ dateRange()[0] | date: 'dd MMM yyyy' }}</span>
+        } @else if (dateRange().length > 1) {
+          <span class="additional-info"
+            >{{ dateRange()[0] | date: 'dd MMM yyyy' }} —
+            {{ dateRange()[1] | date: 'dd MMM yyyy' }}</span
+          >
+        }
       </div>
     </div>
 
