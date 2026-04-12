@@ -5,7 +5,7 @@ import { HighscoreService, MetadataService, ThemeService } from '@core/services'
 import { HIGHSCORE_SECTIONS } from '@core/constants';
 import { DailyTopGainersComponent } from './daily-top-gainers/daily-top-gainers.component';
 import { DevInfoPanelComponent } from './dev-info-panel/dev-info-panel.component';
-import { LandingCarouselComponent } from './landing-carousel/landing-carousel.component';
+import { AnnouncementCarouselComponent } from './announcement-carousel/announcement-carousel.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
 
 @Component({
@@ -13,7 +13,7 @@ import { SideMenuComponent } from './side-menu/side-menu.component';
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.scss'],
   imports: [
-    LandingCarouselComponent,
+    AnnouncementCarouselComponent,
     DevInfoPanelComponent,
     DailyTopGainersComponent,
     SideMenuComponent,

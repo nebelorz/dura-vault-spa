@@ -1,23 +1,24 @@
-<div class="carousel-container">
+﻿<div class="carousel-container">
   <p-carousel
     [value]="carouselItems"
     [numVisible]="1"
-    [numScroll]="1"
-    [circular]="false"
-    [autoplayInterval]="5000"
+    [numScroll]="0"
+    [circular]="true"
+    [autoplayInterval]="6000"
     [showIndicators]="false"
     [showNavigators]="false"
   >
     <ng-template let-item pTemplate="item">
       <div class="carousel-item">
-        <div class="carousel-content">
-          @if (item.icon) {
-            <i [class]="item.icon + ' carousel-icon'"></i>
-          }
+        <div class="carousel-content carousel-content--coffee">
+          <img [src]="bmcLogoSrc()" alt="Buy Me a Coffee" class="bmc-logo" />
           <div class="carousel-text">
             <h2 class="carousel-title">{{ item.title }}</h2>
             <p class="carousel-description">{{ item.description }}</p>
           </div>
+          <a [href]="item.coffeeUrl" target="_blank" rel="noopener noreferrer" class="coffee-btn">
+            Buy me a coffee
+          </a>
         </div>
       </div>
     </ng-template>
