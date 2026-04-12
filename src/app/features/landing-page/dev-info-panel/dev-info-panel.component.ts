@@ -77,6 +77,11 @@ export class DevInfoPanelComponent {
           icon: 'pi pi-code',
           text: 'Added info on avg. time window on player detail.',
         },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Added rank on player detail chart.',
+        },
         { contentType: 'divider' },
         {
           contentType: 'heading',
