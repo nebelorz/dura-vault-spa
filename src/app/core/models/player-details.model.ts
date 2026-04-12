@@ -16,9 +16,9 @@ export interface PlayerDetailsDailyRecord {
   rank: number;
   level: number;
   points: number | null;
-  gain_points: number;
-  gain_level: number;
-  gain_rank: number;
+  gain_points: number | null;
+  gain_level: number | null;
+  gain_rank: number | null;
 }
 
 export interface PlayerDetailsDayStats {
