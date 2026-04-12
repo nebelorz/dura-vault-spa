@@ -72,6 +72,11 @@ export class DevInfoPanelComponent {
           icon: 'pi pi-code',
           text: 'Moved the actual period selected date range to display underneath the period selector for better clarity.',
         },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Added info on avg. time window on player detail.',
+        },
         { contentType: 'divider' },
         {
           contentType: 'heading',

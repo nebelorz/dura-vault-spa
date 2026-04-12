@@ -25,7 +25,18 @@
           <i class="pi pi-clock"></i>
         </div>
         <div class="stat-info">
-          <div class="text-label">Avg Active Window</div>
+          <div class="text-label">
+            Avg Active Window
+            <app-minimalist-icon
+              size="7px"
+              [tooltipText]="
+                'Times shown in your local timezone.\n\n The server resets daily at 17:00 CET time (' +
+                serverResetLocalTime() +
+                ' your time).'
+              "
+              tooltipPosition="right"
+            />
+          </div>
           <div class="stat-value-row">
             <span class="stat-value text-value"
               >{{ onlineSummary()!.avg_first_seen | date: 'HH:mm' }} →
