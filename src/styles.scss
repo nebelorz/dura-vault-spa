@@ -64,22 +64,22 @@ body {
 
 // METRIC COLOR CLASSES (used in podium-list, performance-summary, etc.)
 .metric--xp {
-  color: colors.$experience;
+  color: var(--color-metric-xp);
 }
 .metric--skill {
-  color: colors.$primary;
+  color: var(--color-metric-level);
 }
 .metric--rank {
-  color: colors.$rank;
+  color: var(--color-metric-rank);
 }
 .metric--warn {
-  color: colors.$warn;
+  color: var(--color-metric-warn);
 }
 .metric--danger {
-  color: colors.$danger;
+  color: var(--color-metric-danger);
 }
 .metric--info {
-  color: colors.$info;
+  color: var(--color-metric-info);
 }
 
 // TYPOGRAPHY UTILITIES (shared across player-detail, podium-list, etc.)

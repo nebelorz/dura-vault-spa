@@ -7,6 +7,7 @@ $rank: #ffbc40; // Rank color
 $level: var(--p-primary-color); // Level color (same as primary)
 $experience: var(--p-button-help-background); // Experience color
 $gray-light: #777777; // Light gray
+$chart-grid: rgba(128, 128, 128, 0.2); // Subtle chart grid line
 
 // ===============================
 // Opacity Variants (0.1)
@@ -93,3 +94,22 @@ $help-active: var(--p-button-help-active-background);
 // ===============================
 $surface: var(--p-surface-0);
 $surface-dark: var(--p-surface-950);
+
+// ===============================
+// CSS Custom Properties
+// Single source of truth for colors
+// CSS: use var(--color-*) directly — browser resolves var() chains.
+// Chart: use readCssColor('--color-*') to resolve one level of var() indirection.
+// ===============================
+:root {
+  // Metric colors (match .metric--* classes in styles.scss)
+  --color-metric-level: #{$level};
+  --color-metric-xp: #{$experience};
+  --color-metric-rank: #{$rank};
+  --color-metric-warn: #{$warn};
+  --color-metric-danger: #{$danger};
+  --color-metric-info: #{$info};
+
+  // Chart-specific
+  --color-chart-grid: #{$chart-grid};
+}

@@ -1,4 +1,5 @@
 ﻿@use 'colors' as colors;
+@use 'animation-jingle' as jingle;
 
 .carousel-container {
   width: 100%;
@@ -42,10 +43,17 @@
 }
 
 // ── Coffee slide ─────────────────────────────────────
-.bmc-logo {
-  width: 32px;
+.coffee-button-and-logo-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.coffee-logo {
+  width: 22px;
   height: auto;
   opacity: 0.85;
+  @include jingle.jingleOnHover();
 }
 
 .coffee-btn {

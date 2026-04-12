@@ -11,14 +11,22 @@
     <ng-template let-item pTemplate="item">
       <div class="carousel-item">
         <div class="carousel-content carousel-content--coffee">
-          <img [src]="bmcLogoSrc()" alt="Buy Me a Coffee" class="bmc-logo" />
           <div class="carousel-text">
             <h2 class="carousel-title">{{ item.title }}</h2>
             <p class="carousel-description">{{ item.description }}</p>
           </div>
-          <a [href]="item.coffeeUrl" target="_blank" rel="noopener noreferrer" class="coffee-btn">
-            Buy me a coffee
-          </a>
+          <div class="coffee-button-and-logo-section" (mouseenter)="startJingle()">
+            <a [href]="item.coffeeUrl" target="_blank" rel="noopener noreferrer" class="coffee-btn">
+              Buy me a coffee
+            </a>
+            <img
+              [src]="bmcLogoSrc()"
+              alt="Buy Me a Coffee"
+              class="coffee-logo"
+              [class.is-jinglin]="jingleActive()"
+              (animationend)="stopJingle()"
+            />
+          </div>
         </div>
       </div>
     </ng-template>
