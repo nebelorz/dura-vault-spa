@@ -55,9 +55,32 @@ export class DevInfoPanelComponent {
           icon: 'pi pi-code',
           text: 'Removed unnecessary available data info on highscores tables.',
         },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Added a new componente to provide a way to help Dura Vault grow by supporting us through Buy Me a Coffee.',
+        },
+        { contentType: 'divider' },
+        {
+          contentType: 'heading',
+          text: 'Fixes',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-wrench',
+          text: 'Fixed an issue not displaying fist section on daily summary section.',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-wrench',
+          text: 'Fixed an issue not displaying last gain when mouse-over on player details section.',
+        },
       ],
       entryType: 'versionMinor',
-      tags: [{ label: 'UI/UX', color: 'info' }],
+      tags: [
+        { label: 'fix', color: 'warn' },
+        { label: 'UI/UX', color: 'info' },
+      ],
     },
     {
       date: new Date('2026-03-30'),
@@ -87,7 +110,6 @@ export class DevInfoPanelComponent {
           icon: 'pi pi-code',
           text: 'Revamped daily summary gadget to match the clarity and consistency alike other sections.',
         },
-        { contentType: 'divider' },
         { contentType: 'divider' },
         {
           contentType: 'heading',
@@ -149,7 +171,6 @@ export class DevInfoPanelComponent {
           text: 'Overlays are now visually consistent across all sections: highscores, online rankings, and player pages.',
         },
         { contentType: 'divider' },
-        { contentType: 'divider' },
         {
           contentType: 'heading',
           text: 'Online Stats',
@@ -201,7 +222,6 @@ export class DevInfoPanelComponent {
           text: 'Player details now include a dedicated Online Stats section: view activity window, average online, days active and last seen timestamp.',
         },
         { contentType: 'divider' },
-        { contentType: 'divider' },
         {
           contentType: 'heading',
           text: 'Tops Highscores',
@@ -222,7 +242,6 @@ export class DevInfoPanelComponent {
           text: 'Integrated filters and real-time search in all tables.',
         },
         { contentType: 'divider' },
-        { contentType: 'divider' },
         {
           contentType: 'heading',
           text: 'Design Overhaul',
@@ -237,7 +256,6 @@ export class DevInfoPanelComponent {
           icon: 'pi pi-wrench',
           text: 'Centralized constants and technical improvements to remove hardcoded values.',
         },
-        { contentType: 'divider' },
         { contentType: 'divider' },
         {
           contentType: 'text',

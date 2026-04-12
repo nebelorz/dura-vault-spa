@@ -48,6 +48,7 @@ export interface DailyHighscoresSummary {
   top_daily: {
     axe: DailyTopPlayer[] | null;
     club: DailyTopPlayer[] | null;
+    fist: DailyTopPlayer[] | null;
     magic: DailyTopPlayer[] | null;
     sword: DailyTopPlayer[] | null;
     shield: DailyTopPlayer[] | null;
