@@ -38,7 +38,7 @@ interface DevInfoEntry {
 export class DevInfoPanelComponent {
   entries = signal<DevInfoEntry[]>([
     {
-      date: new Date('2026-04-09'),
+      date: new Date('2026-04-13'),
       title: 'v 2.2.1 released',
       content: [
         {
