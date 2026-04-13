@@ -1,5 +1,5 @@
 {
-  "buildCommand": "ng build --output-path dist/dura-vault-spa/browser --configuration production",
+  "buildCommand": "ng build --configuration production",
   "outputDirectory": "dist/dura-vault-spa/browser",
   "cleanUrls": true,
   "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }],
