@@ -5,6 +5,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import {
+  CharacterProfileData,
   HighscoreSection,
   PlayerHistoricRequest,
   PlayerHistoricResponse,
@@ -13,7 +14,7 @@ import {
   TimePeriod,
   PeriodOption,
 } from '@core/models';
-import { PlayerDetailsService, OnlineService } from '@core/services';
+import { CharacterProfileService, PlayerDetailsService, OnlineService } from '@core/services';
 import { PlayerDetailHeaderComponent } from './player-detail-header/player-detail-header.component';
 import { PeriodSelectorComponent, MinimalistIconComponent } from '@shared/components';
 import { PlayerStatsComponent } from './player-stats/player-stats.component';
@@ -37,6 +38,7 @@ export class PlayerDetailComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly playerDetailsService = inject(PlayerDetailsService);
   private readonly onlineService = inject(OnlineService);
+  private readonly characterProfileService = inject(CharacterProfileService);
   private readonly destroyRef = inject(DestroyRef);
 
   // State
@@ -47,6 +49,8 @@ export class PlayerDetailComponent implements OnInit {
   playerDetailsData = signal<PlayerHistoricResponse | null>(null);
   playerOnlineData = signal<PlayerOnlineResponse | null>(null);
   playerStats = signal<PlayerStatsRecord[]>([]);
+  characterProfile = signal<CharacterProfileData | null>(null);
+  profileLoading = signal<boolean>(false);
 
   // "All" -> "Active Period"
   readonly periodOptions: PeriodOption[] = [
@@ -85,6 +89,7 @@ export class PlayerDetailComponent implements OnInit {
             throw new Error('No player name provided');
           }
           this.playerName.set(name);
+          this.loadCharacterProfile(name);
         }),
         switchMap(() => this.route.queryParamMap),
         takeUntilDestroyed(this.destroyRef),
@@ -152,6 +157,17 @@ export class PlayerDetailComponent implements OnInit {
       this.playerOnlineData.set(onlineData);
     } finally {
       if (!redirecting) this.loading.set(false);
+    }
+  }
+
+  private async loadCharacterProfile(name: string): Promise<void> {
+    this.characterProfile.set(null);
+    this.profileLoading.set(true);
+    try {
+      const profile = await this.characterProfileService.getCharacterProfile(name);
+      this.characterProfile.set(profile);
+    } finally {
+      this.profileLoading.set(false);
     }
   }
 }

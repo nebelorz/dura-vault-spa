@@ -39,7 +39,7 @@ export default defineConfig([
       sourceType: 'module',
 
       parserOptions: {
-        project: ['./tsconfig.app.json', './tsconfig.spec.json'],
+        project: ['./tsconfig.app.json', './tsconfig.spec.json', './tsconfig.api.json'],
       },
     },
 

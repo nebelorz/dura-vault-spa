@@ -34,8 +34,9 @@ Built with Angular 21, this single-page application provides comprehensive data 
 | --------------------------------------------- | ------- | --------------------------------------------------------- |
 | [Angular](https://angular.dev/)               | 21.0.0  | Frontend framework with signals and standalone components |
 | [TypeScript](https://www.typescriptlang.org/) | 5.9.2   | Type-safe development                                     |
-| [PrimeNG](https://primeng.org/)               | 18.0.0  | UI component library                                      |
-| [Supabase](https://supabase.com/)             | Latest  | Backend and data management                               |
+| [PrimeNG](https://primeng.org/)               | 19.0.0  | UI component library (Aura theme)                         |
+| [Supabase](https://supabase.com/)             | Latest  | Backend RPC data access                                   |
+| [Vercel Serverless](https://vercel.com/)      | Latest  | Server-side proxy for official site scraping              |
 | [Chart.js](https://www.chartjs.org/)          | 4.4.8   | Interactive data visualization                            |
 | [SCSS](https://sass-lang.com/)                | -       | Styling with preprocessor capabilities                    |
 
@@ -71,13 +72,25 @@ Built with Angular 21, this single-page application provides comprehensive data 
 
 ### Development Server
 
-Start the development server:
+This project requires two processes running simultaneously:
+
+**Terminal 1** — Vercel dev server (handles serverless API functions):
+
+```bash
+npx vercel dev
+```
+
+This starts the function runtime on `http://localhost:3000`.
+
+**Terminal 2** — Angular dev server (proxies `/api/*` to Vercel):
 
 ```bash
 npm start
 ```
 
-Navigate to `http://localhost:4200/`. The application will automatically reload when you make changes to source files.
+Navigate to `http://localhost:4200/`. Angular proxies all `/api/*` requests to the Vercel dev server automatically via `api/proxy.conf.json`.
+
+> **Why two processes?** The official Dura Online site doesn't send CORS headers, so all scraping happens in a server-side Vercel Serverless Function. In production both run on the same Vercel domain.
 
 ### Production Build
 
@@ -93,12 +106,14 @@ Build artifacts will be stored in the `dist/` directory, ready for deployment to
 
 ## Available Commands
 
-| Command          | Description                                         |
-| ---------------- | --------------------------------------------------- |
-| `npm start`      | Start development server on `http://localhost:4200` |
-| `npm run build`  | Build production-ready application                  |
-| `npm test`       | Execute unit tests via Karma                        |
-| `npm run eslint` | Run ESLint for code quality checks                  |
+| Command          | Description                                                      |
+| ---------------- | ---------------------------------------------------------------- |
+| `npm start`      | Start Angular dev server on `http://localhost:4200`              |
+| `npm start:api`  | Start Vercel function runtime on `http://localhost:3000`         |
+| `npm start:all`  | Starts both Angular and Vercel dev servers on different consoles |
+| `npm run build`  | Build production-ready application                               |
+| `npm test`       | Execute unit tests via Karma                                     |
+| `npm run eslint` | Run ESLint for code quality checks                               |
 
 ---
 
@@ -107,6 +122,10 @@ Build artifacts will be stored in the `dist/` directory, ready for deployment to
 ## Project Structure
 
 ```
+api/
+└── character/
+    └── [name].ts            # Vercel Serverless Function — scrapes official Dura site
+
 src/
 ├── app/
 │   ├── core/                    # Core application logic

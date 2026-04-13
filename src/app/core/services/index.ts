@@ -1,5 +1,6 @@
 export * from './base-api.service';
 export * from './cache.service';
+export * from './character-profile.service';
 export * from './highscore.service';
 export * from './metadata.service';
 export * from './navigation-history.service';

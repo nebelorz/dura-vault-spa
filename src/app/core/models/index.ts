@@ -1,3 +1,4 @@
+export * from './character-profile.model';
 export * from './common.model';
 export * from './highscore.model';
 export * from './metadata.model';
