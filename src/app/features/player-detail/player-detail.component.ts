@@ -38,7 +38,7 @@ export class PlayerDetailComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly playerDetailsService = inject(PlayerDetailsService);
   private readonly onlineService = inject(OnlineService);
-  private readonly characterProfileService = inject(CharacterProfileService);
+  protected readonly characterProfileService = inject(CharacterProfileService);
   private readonly destroyRef = inject(DestroyRef);
 
   // State
@@ -50,7 +50,6 @@ export class PlayerDetailComponent implements OnInit {
   playerOnlineData = signal<PlayerOnlineResponse | null>(null);
   playerStats = signal<PlayerStatsRecord[]>([]);
   characterProfile = signal<CharacterProfileResult | null>(null);
-  profileLoading = signal<boolean>(false);
 
   // "All" -> "Active Period"
   readonly periodOptions: PeriodOption[] = [
@@ -162,12 +161,7 @@ export class PlayerDetailComponent implements OnInit {
 
   private async loadCharacterProfile(name: string): Promise<void> {
     this.characterProfile.set(null);
-    this.profileLoading.set(true);
-    try {
-      const profile = await this.characterProfileService.getCharacterProfile(name);
-      this.characterProfile.set(profile);
-    } finally {
-      this.profileLoading.set(false);
-    }
+    const profile = await this.characterProfileService.getCharacterProfile(name);
+    this.characterProfile.set(profile);
   }
 }

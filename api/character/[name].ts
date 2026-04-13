@@ -12,13 +12,29 @@ function extractField(html: string, field: string): string | null {
   return m ? m[1].trim() : null;
 }
 
-function parseDeaths(html: string): { date: string; description: string; killers: string[] }[] {
+function toISO(dateStr: string | null): string | null {
+  if (!dateStr) return null;
+  const d = new Date(dateStr);
+  return isNaN(d.getTime()) ? dateStr : d.toISOString().replace(/\.\d{3}Z$/, 'Z');
+}
+
+function parseDeaths(html: string): {
+  date: string;
+  level: number | null;
+  description: string;
+  killers: string[];
+}[] {
   const start = html.indexOf('<!-- DEATHS -->');
   const end = html.indexOf('<!-- DEATHS_END -->');
   if (start === -1 || end === -1) return [];
   const slice = html.slice(start, end);
   const re = /<tr[^>]*>\s*<td[^>]*>([^<]+)<\/td>\s*<td[^>]*>([\s\S]+?)<\/td>/g;
-  const deaths: { date: string; description: string; killers: string[] }[] = [];
+  const deaths: {
+    date: string;
+    level: number | null;
+    description: string;
+    killers: string[];
+  }[] = [];
   let m: RegExpExecArray | null;
   while ((m = re.exec(slice)) !== null) {
     const desc = m[2].replace(/<[^>]+>/g, '').trim();
@@ -29,7 +45,13 @@ function parseDeaths(html: string): { date: string; description: string; killers
       while ((km = killerRe.exec(m[2])) !== null) {
         killers.push(decodeURIComponent(km[1].replace(/\+/g, ' ')));
       }
-      deaths.push({ date: m[1].trim(), description: desc, killers });
+      const levelMatch = desc.match(/killed at level (\d+)/i);
+      deaths.push({
+        date: toISO(m[1].trim()) ?? m[1].trim(),
+        level: levelMatch ? parseInt(levelMatch[1]) : null,
+        description: desc,
+        killers,
+      });
     }
   }
   return deaths;
@@ -37,41 +59,60 @@ function parseDeaths(html: string): { date: string; description: string; killers
 
 function parseHouses(
   html: string,
-): { name: string; rent: string; size: string; beds: string; dueDate: string }[] {
+): { name: string; rent: string; size: number | null; beds: number | null; dueDate: string }[] {
   const start = html.indexOf('<!-- HOUSES -->');
   const end = html.indexOf('<!-- HOUSES_END -->');
   if (start === -1 || end === -1) return [];
   const slice = html.slice(start, end);
-  const houses: { name: string; rent: string; size: string; beds: string; dueDate: string }[] = [];
+  const houses: {
+    name: string;
+    rent: string;
+    size: number | null;
+    beds: number | null;
+    dueDate: string;
+  }[] = [];
   const rowRe = /<tr[^>]*bgcolor[^>]*>([\s\S]+?)<\/tr>/g;
   let m: RegExpExecArray | null;
   while ((m = rowRe.exec(slice)) !== null) {
     const cells = [...m[1].matchAll(/<td[^>]*>([^<]+)<\/td>/g)].map((c) => c[1].trim());
     if (cells.length === 5 && cells[0] !== 'Name') {
+      const size = parseInt(cells[2]);
+      const beds = parseInt(cells[3]);
       houses.push({
         name: cells[0],
         rent: cells[1],
-        size: cells[2],
-        beds: cells[3],
-        dueDate: cells[4],
+        size: isNaN(size) ? null : size,
+        beds: isNaN(beds) ? null : beds,
+        dueDate: toISO(cells[4]) ?? cells[4],
       });
     }
   }
   return houses;
 }
 
-function parseAccountChars(
+function parseCharacters(
   html: string,
-): { name: string; level: number | null; vocation: string | null }[] {
+): { name: string; level: number | null; vocation: string | null; isOnline: boolean }[] {
   const start = html.indexOf('<!-- CHARACTERS_LIST -->');
   const end = html.indexOf('<!-- CHARACTERS_LIST_END -->');
   if (start === -1 || end === -1) return [];
   const slice = html.slice(start, end);
-  const chars: { name: string; level: number | null; vocation: string | null }[] = [];
-  const re = /<nobr>\d+\.&#160;([^<]+)<\/nobr>[\s\S]*?<td>(\d+)\s+([^<]+)<\/td>/g;
+  const chars: {
+    name: string;
+    level: number | null;
+    vocation: string | null;
+    isOnline: boolean;
+  }[] = [];
+  const re =
+    /<nobr>\d+\.&#160;([^<]+)<\/nobr>[\s\S]*?<td>(\d+)\s+([^<]+)<\/td>\s*<td[^>]*>([\s\S]*?)<\/td>/g;
   let m: RegExpExecArray | null;
   while ((m = re.exec(slice)) !== null) {
-    chars.push({ name: m[1].trim(), level: parseInt(m[2]), vocation: m[3].trim() });
+    chars.push({
+      name: m[1].trim(),
+      level: parseInt(m[2]),
+      vocation: m[3].trim(),
+      isOnline: /\bOnline\b/i.test(m[4]),
+    });
   }
   return chars;
 }
@@ -101,6 +142,16 @@ function parseFormerNames(html: string): string[] {
     .split(',')
     .map((s) => s.trim())
     .filter(Boolean);
+}
+
+function parseGuild(html: string): { rank: string; name: string } | null {
+  const m = html.match(
+    /Guild membership:<\/td>\s*<td[^>]*>\s*([^<]+?)\s*of the\s*<a[^>]*?>([^<]+)<\/a>/i,
+  );
+  if (!m) return null;
+  const rank = m[1].trim();
+  const name = m[2].trim();
+  return { rank, name };
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -138,22 +189,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const levelStr = extractField(html, 'Level');
   const data = {
-    name: extractField(html, 'Name'),
-    formerNames: parseFormerNames(html),
-    sex: extractField(html, 'Sex'),
-    profession: extractField(html, 'Profession'),
-    level: levelStr ? parseInt(levelStr) : null,
-    residence: extractField(html, 'Residence'),
-    lastLogin: extractField(html, 'Last login'),
-    created: extractField(html, 'Created'),
+    characterInformation: {
+      name: extractField(html, 'Name'),
+      formerNames: parseFormerNames(html),
+      sex: extractField(html, 'Sex'),
+      profession: extractField(html, 'Profession'),
+      level: levelStr ? parseInt(levelStr) : null,
+      residence: extractField(html, 'Residence'),
+      guild: parseGuild(html),
+      lastLogin: toISO(extractField(html, 'Last login')),
+      created: toISO(extractField(html, 'Created')),
+    },
     houses: parseHouses(html),
     deaths: parseDeaths(html),
-    accountCreated: parseAccountCreated(html),
-    banishedUntil: parseBanishedUntil(html),
-    accountCharacters: parseAccountChars(html),
+    accountInformation: {
+      created: toISO(parseAccountCreated(html)),
+      banishedUntil: toISO(parseBanishedUntil(html)),
+      status: extractField(html, 'Position'),
+    },
+    characters: parseCharacters(html),
   };
 
-  if (!data.name) {
+  if (!data.characterInformation.name) {
     console.error('[character-api] name not found', { url, htmlLength: html.length });
     return res.status(404).json({ error: 'NOT_FOUND' });
   }

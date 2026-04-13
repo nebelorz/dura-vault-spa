@@ -1,37 +1,54 @@
-export interface CharacterHouse {
+export interface CharacterGuild {
+  rank: string;
   name: string;
-  rent: string;
-  size: string;
-  beds: string;
-  dueDate: string;
 }
 
-export interface CharacterDeath {
-  date: string;
-  description: string;
-  killers: string[];
-}
-
-export interface CharacterEntry {
-  name: string;
-  level: number | null;
-  vocation: string | null;
-}
-
-export interface CharacterProfileData {
+export interface CharacterInformation {
   name: string | null;
   formerNames: string[];
   sex: string | null;
   profession: string | null;
   level: number | null;
   residence: string | null;
+  guild: CharacterGuild | null;
   lastLogin: string | null;
   created: string | null;
+}
+
+export interface CharacterHouse {
+  name: string;
+  rent: string;
+  size: number | null;
+  beds: number | null;
+  dueDate: string;
+}
+
+export interface CharacterDeath {
+  date: string;
+  level: number | null;
+  description: string;
+  killers: string[];
+}
+
+export interface AccountInformation {
+  created: string | null;
+  banishedUntil: string | null;
+  status: string | null;
+}
+
+export interface CharacterEntry {
+  name: string;
+  level: number | null;
+  vocation: string | null;
+  isOnline: boolean;
+}
+
+export interface CharacterProfileData {
+  characterInformation: CharacterInformation;
   houses: CharacterHouse[];
   deaths: CharacterDeath[];
-  accountCreated: string | null;
-  banishedUntil: string | null;
-  accountCharacters: CharacterEntry[];
+  accountInformation: AccountInformation;
+  characters: CharacterEntry[];
 }
 
 export type CharacterProfileResult =
