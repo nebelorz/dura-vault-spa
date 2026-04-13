@@ -2,6 +2,6 @@
   "buildCommand": "ng build --configuration production",
   "outputDirectory": "dist/dura-vault-spa/browser",
   "cleanUrls": true,
-  "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }],
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
   "github": { "enabled": true, "productionBranch": "main" }
 }
