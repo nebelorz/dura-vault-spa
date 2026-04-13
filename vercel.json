@@ -3,5 +3,8 @@
   "outputDirectory": "dist/dura-vault-spa/browser",
   "cleanUrls": true,
   "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }],
+  "functions": {
+    "api/**/*.ts": { "runtime": "@vercel/node@5" }
+  },
   "github": { "enabled": true, "productionBranch": "main" }
 }
