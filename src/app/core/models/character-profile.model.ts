@@ -33,3 +33,8 @@ export interface CharacterProfileData {
   banishedUntil: string | null;
   accountCharacters: CharacterEntry[];
 }
+
+export type CharacterProfileResult =
+  | { status: 'found'; data: CharacterProfileData }
+  | { status: 'not_found' }
+  | { status: 'error' };

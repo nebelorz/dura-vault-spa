@@ -5,7 +5,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import {
-  CharacterProfileData,
+  CharacterProfileResult,
   HighscoreSection,
   PlayerHistoricRequest,
   PlayerHistoricResponse,
@@ -49,7 +49,7 @@ export class PlayerDetailComponent implements OnInit {
   playerDetailsData = signal<PlayerHistoricResponse | null>(null);
   playerOnlineData = signal<PlayerOnlineResponse | null>(null);
   playerStats = signal<PlayerStatsRecord[]>([]);
-  characterProfile = signal<CharacterProfileData | null>(null);
+  characterProfile = signal<CharacterProfileResult | null>(null);
   profileLoading = signal<boolean>(false);
 
   // "All" -> "Active Period"

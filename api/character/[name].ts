@@ -104,6 +104,10 @@ function parseFormerNames(html: string): string[] {
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  if (req.method !== 'GET') {
+    return res.status(405).json({ error: 'METHOD_NOT_ALLOWED' });
+  }
+
   const { name } = req.query;
   const raw = Array.isArray(name) ? name[0] : name;
   const playerName = raw?.replace(/\+/g, ' ');
@@ -117,6 +121,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   let html: string;
   try {
     const upstream = await fetch(url, {
+      signal: AbortSignal.timeout(8000),
       headers: {
         'User-Agent':
           'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36',
@@ -149,11 +154,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   };
 
   if (!data.name) {
-    console.error('[character-api] name not found in upstream HTML', {
-      upstreamUrl: url,
-      htmlLength: html.length,
-      htmlPreview: html.slice(0, 300),
-    });
+    console.error('[character-api] name not found', { url, htmlLength: html.length });
     return res.status(404).json({ error: 'NOT_FOUND' });
   }
 
