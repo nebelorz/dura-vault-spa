@@ -1,6 +1,9 @@
 {
   "name": "dura-vault-spa",
   "version": "2.2.1",
+  "engines": {
+    "node": ">=20.x"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
