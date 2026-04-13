@@ -149,6 +149,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   };
 
   if (!data.name) {
+    console.error('[character-api] name not found in upstream HTML', {
+      upstreamUrl: url,
+      htmlLength: html.length,
+      htmlPreview: html.slice(0, 300),
+    });
     return res.status(404).json({ error: 'NOT_FOUND' });
   }
 
