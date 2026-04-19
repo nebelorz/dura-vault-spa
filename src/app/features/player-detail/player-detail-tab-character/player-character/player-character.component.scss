@@ -1,0 +1,40 @@
+@use 'colors' as colors;
+
+.character-info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.character-houses-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.houses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.house-card {
+  padding: 0.4rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.house-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: baseline;
+}
+
+.meta-pair {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}

@@ -1,6 +1,6 @@
 <div class="player-detail-container animation-fade">
   <div class="player-container">
-    <!-- TOP: name + section + period -->
+    <!-- TOP: name + period selector -->
     <div class="player-container-top">
       <app-player-detail-header [playerName]="playerName()" [vocation]="vocation()" />
       <div class="period-selector-wrapper">
@@ -13,15 +13,16 @@
             (periodChange)="onPeriodChange($event)"
           />
           <app-minimalist-icon
-            size="x-small"
-            tooltipText="Averages are spread over the full period window, not just active days — inactive days lower the daily average."
+            [tooltipText]="
+              'Averages are spread over the full period window, not just active days.\n\n Inactive days lower the daily average.'
+            "
             tooltipPosition="left"
           />
         </div>
         @if (dateRange().length === 1) {
-          <span class="additional-info">{{ dateRange()[0] | date: 'dd MMM yyyy' }}</span>
+          <span class="text-additional-info">{{ dateRange()[0] | date: 'dd MMM yyyy' }}</span>
         } @else if (dateRange().length > 1) {
-          <span class="additional-info"
+          <span class="text-additional-info"
             >{{ dateRange()[0] | date: 'dd MMM yyyy' }} —
             {{ dateRange()[1] | date: 'dd MMM yyyy' }}</span
           >
@@ -29,29 +30,69 @@
       </div>
     </div>
 
-    <!-- BODY -->
+    <!-- BODY: column with player stats + online summary & tabbed right panel -->
     <div class="player-container-body">
-      <!-- Left: general stats + online stats -->
       <div class="player-left-column">
-        <app-player-stats
-          [stats]="playerStats()"
-          [loading]="loading()"
-          [activeSection]="section()"
-          [onlineSummary]="playerOnlineData()?.summary ?? null"
-          [summary]="summary()"
-          (sectionSelect)="onSectionChange($event)"
-        />
+        <div class="left-stats-section">
+          <app-player-stats
+            [stats]="playerStats()"
+            [loading]="loading()"
+            [activeSection]="section()"
+            (sectionSelect)="onSectionChange($event)"
+          />
+        </div>
+        <div class="left-online-section">
+          <app-player-online-stats
+            [loading]="loading()"
+            [onlineSummary]="playerOnlineData()?.summary ?? null"
+            [lastLogin]="lastLogin()"
+          />
+        </div>
+        <div class="left-records-section">
+          <div class="section-header">RECORDS</div>
+          <app-player-records [summary]="summary()" [section]="section()" [loading]="loading()" />
+        </div>
       </div>
 
-      <!-- Right: gains + personal score + projected + chart -->
       <div class="player-right-column">
-        <app-player-performance
-          class="animation-fade"
-          [summary]="summary()"
-          [section]="section()"
-          [playerDetailsData]="playerDetailsData()"
-          [loading]="loading()"
-        />
+        <p-tabs [value]="activeTab()" (valueChange)="onTabChange($event)">
+          <p-tablist>
+            <p-tab [value]="characterTab">
+              Character
+              <app-minimalist-icon
+                class="tab-info-icon"
+                [tooltipText]="'Contains live data from the Dura website.'"
+                tooltipPosition="bottom"
+              />
+            </p-tab>
+            <p-tab [value]="performanceTab">
+              Performance
+              <app-minimalist-icon
+                class="tab-info-icon"
+                [tooltipText]="'Contains data from the vault.'"
+                tooltipPosition="bottom"
+              />
+            </p-tab>
+          </p-tablist>
+          <p-tabpanels>
+            <p-tabpanel [value]="characterTab">
+              <app-player-detail-tab-character
+                class="animation-fade"
+                [profile]="characterProfile()"
+                [profileLoading]="profileLoading()"
+              />
+            </p-tabpanel>
+            <p-tabpanel [value]="performanceTab">
+              <app-player-detail-tab-performance
+                class="animation-fade"
+                [playerDetailsData]="playerDetailsData()"
+                [summary]="summary()"
+                [section]="section()"
+                [loading]="loading()"
+              />
+            </p-tabpanel>
+          </p-tabpanels>
+        </p-tabs>
       </div>
     </div>
   </div>

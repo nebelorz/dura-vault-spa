@@ -9,9 +9,9 @@
         (periodChange)="onPeriodChange($event)"
       />
       @if (dateRange().length === 1) {
-        <span class="additional-info">{{ dateRange()[0] | date: 'dd MMM yyyy' }}</span>
+        <span class="text-additional-info">{{ dateRange()[0] | date: 'dd MMM yyyy' }}</span>
       } @else if (dateRange().length > 1) {
-        <span class="additional-info"
+        <span class="text-additional-info"
           >{{ dateRange()[0] | date: 'dd MMM yyyy' }} —
           {{ dateRange()[1] | date: 'dd MMM yyyy' }}</span
         >

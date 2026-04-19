@@ -1,0 +1,49 @@
+@use 'colors' as colors;
+
+.online-stats-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.online-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: 6px;
+}
+
+.online-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+
+  i {
+    color: colors.$gray-light;
+    opacity: 0.85;
+  }
+}
+
+.online-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.online-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.online-value {
+  line-height: 1.2;
+}

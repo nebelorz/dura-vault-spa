@@ -13,7 +13,7 @@ Built with Angular 21, this single-page application provides comprehensive data 
 **Core Functionality**
 
 - Highscore tables filtered by skill and time period (daily, weekly, monthly, yearly, all-time)
-- Detailed player profiles with progression charts and summarized stats
+- Detailed player profiles with Character and Performance tabs, live Dura data, progression charts, and summarized stats
 - Smart caching system for optimized data loading
 - Theme support with dark/light mode toggle
 - Interactive Chart.js visualizations for trend analysis
@@ -139,24 +139,28 @@ src/
 │   │   ├── landing-page/        # side-menu, carousel, daily-top-gainers, dev-info-panel
 │   │   ├── highscore-table/     # header, data-table
 │   │   ├── online-table/        # header, data-table, online-stats (charts)
-│   │   └── player-detail/       # header (name + actions menu)
-│   │       ├── player-detail-chart/
-│   │       ├── player-stats/            # left column orchestrator
-│   │       │   ├── player-general-stats/  # level/rank per section (clickable)
-│   │       │   └── player-online-stats/   # online time, window, consistency
-│   │       └── player-performance/      # right column orchestrator
-│   │           ├── player-gains-panel/        # level/xp/rank gain + avg/day
-│   │           ├── player-personal-score-panel/ # best day + worst day
-│   │           └── player-projected-panel/    # next advance estimate
+│   │   └── player-detail/       # player page shell: header + sidebar + tabs
+│   │       ├── player-detail-header/
+│   │       ├── player-detail-sidemenu/
+│   │       │   ├── player-stats/              # level/rank per section (clickable)
+│   │       │   ├── player-online-stats/       # avg online, span, last login
+│   │       │   └── player-records/            # best/worst day, streak, consistency
+│   │       ├── player-detail-tab-character/   # Character tab
+│   │       │   ├── player-character/          # character info + houses (merged)
+│   │       │   ├── player-account-information/
+│   │       │   └── player-deaths/
+│   │       └── player-detail-tab-performance/ # Performance tab
+│   │           ├── player-gains-summary/
+│   │           └── player-detail-chart/
 │   │
 │   ├── shared/
-│   │   ├── components/  # actions-menu, go-back-button, loading-status,
-│   │   │                #   minimalist-icon, no-data-status, period-selector,
-│   │   │                #   podium-list, toast
+│   │   ├── components/  # actions-menu, go-back-button, inline-loading,
+│   │   │                #   loading-status, minimalist-icon, no-data-status,
+│   │   │                #   period-selector, podium-list, toast
 │   │   ├── functions/   # formatNumber, formatDate, getDuraPlayerUrl,
 │   │   │                #   calculateAvailableDataDateRange, formatMinutesToHours
 │   │   ├── pipes/       # abbreviateNumber, minutesToHours, removeMinus, titlecaseSpaces
-│   │   └── styles/      # _colors.scss, _animation-fade.scss
+│   │   └── styles/      # _colors.scss, _animation-fade.scss, _text.scss
 │   │
 │   └── environments/
 │

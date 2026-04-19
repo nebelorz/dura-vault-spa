@@ -14,8 +14,8 @@
         <div class="player-row player-row--loss" (click)="navigateToPlayer(lp.name, 'experience')">
           <div class="player-main">
             <div class="text-value">{{ lp.name }}</div>
-            <span class="text-sub-value">{{ lp.vocation }}</span>
-            <span class="text-sub-value">Lvl {{ lp.level }}</span>
+            <span class="text-sub">{{ lp.vocation }}</span>
+            <span class="text-sub">Lvl {{ lp.level }}</span>
           </div>
           <div class="player-gains">
             <span class="gain-item metric--danger" pTooltip="Experience" tooltipPosition="bottom">
@@ -49,8 +49,8 @@
           >
             <div class="player-main">
               <div class="text-value">{{ player.name }}</div>
-              <span class="text-sub-value">{{ player.vocation }}</span>
-              <span class="text-sub-value">Lvl {{ player.level }}</span>
+              <span class="text-sub">{{ player.vocation }}</span>
+              <span class="text-sub">Lvl {{ player.level }}</span>
             </div>
             <div class="player-gains">
               <span class="gain-item metric--xp" pTooltip="Experience" tooltipPosition="bottom">
@@ -108,8 +108,8 @@
                 <div class="player-row" (click)="navigateToPlayer(player.name, section.name)">
                   <div class="player-main">
                     <div class="text-value">{{ player.name }}</div>
-                    <span class="text-sub-value">{{ player.vocation }}</span>
-                    <span class="text-sub-value">{{ section.label }} {{ player.level }}</span>
+                    <span class="text-sub">{{ player.vocation }}</span>
+                    <span class="text-sub">{{ section.label }} {{ player.level }}</span>
                   </div>
 
                   <div class="player-gains">

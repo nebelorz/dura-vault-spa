@@ -1,0 +1,67 @@
+@if (profileLoading()) {
+  <app-inline-loading />
+} @else if (isAvailable()) {
+  <div class="account-section">
+    <span class="text-normal">INFORMATION</span>
+    @if (accountInfo(); as info) {
+      @if (hasAccountInfo()) {
+        <div class="records-list animation-fade">
+          @if (info.created) {
+            <div class="record-row">
+              <span class="record-label text-label">CREATED ON</span>
+              <span class="text-value">{{ info.created | date: 'dd MMM yyyy' }}</span>
+            </div>
+          }
+          @if (info.banishedUntil) {
+            <div class="record-row record-row--danger">
+              <span class="record-label text-label">BANNED UNTIL</span>
+              <span class="text-value metric--danger">{{
+                info.banishedUntil | date: 'dd MMM yyyy, HH:mm'
+              }}</span>
+            </div>
+          }
+          @if (info.status) {
+            <div class="record-row record-row--info">
+              <span class="record-label text-label">STATUS</span>
+              <span class="text-value metric--info">{{ info.status }}</span>
+            </div>
+          }
+        </div>
+      } @else {
+        <span class="text-sub text-muted">No public account information available</span>
+      }
+    } @else {
+      <span class="text-sub text-muted">No public account information available</span>
+    }
+  </div>
+  <div class="account-section">
+    <span class="text-normal">CHARACTERS</span>
+    @if (characters().length > 0) {
+      <div class="characters-list animation-fade">
+        @for (char of characters(); track char.name) {
+          <a
+            class="account-character-row"
+            [routerLink]="['/player', char.name]"
+            [queryParams]="{ section: 'experience' }"
+          >
+            <div class="account-character-info">
+              <span class="account-character-level text-label">Lvl {{ char.level ?? '?' }}</span>
+              <span class="account-character-name text-value">{{ char.name }}</span>
+              <span class="account-character-vocation text-sub">{{ char.vocation }}</span>
+            </div>
+            @if (char.isOnline) {
+              <span class="online-status-badge">
+                <span class="online-status-dot"></span>
+                ONLINE
+              </span>
+            }
+          </a>
+        }
+      </div>
+    } @else {
+      <span class="text-sub text-muted">No characters found</span>
+    }
+  </div>
+} @else {
+  <app-no-data-status title="Unavailable" message="Could not fetch live data from Dura Online." />
+}

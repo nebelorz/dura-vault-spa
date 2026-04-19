@@ -1,0 +1,9 @@
+<div class="chart-wrapper">
+  @if (loading()) {
+    <app-loading-status />
+  } @else if (chartData(); as data) {
+    <p-chart class="animation-fade" type="line" [data]="data" [options]="chartOptions()" />
+  } @else {
+    <app-no-data-status />
+  }
+</div>

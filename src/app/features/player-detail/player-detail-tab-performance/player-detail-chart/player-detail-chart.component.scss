@@ -1,0 +1,24 @@
+@use 'colors' as colors;
+@use 'text' as text;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.chart-wrapper {
+  position: relative;
+  flex: 1;
+  min-height: 21.875rem;
+  display: flex;
+  flex-direction: column;
+
+  app-loading-status,
+  app-no-data-status,
+  p-chart {
+    flex: 1;
+    min-height: 0;
+  }
+}

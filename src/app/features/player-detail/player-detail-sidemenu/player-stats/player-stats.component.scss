@@ -1,0 +1,116 @@
+@use 'colors' as colors;
+
+.stats-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.stat-row {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.4rem 0.5rem;
+  padding-left: 0.5rem;
+  border-left: 2px solid transparent;
+  border-radius: 6px;
+  transition:
+    background 0.15s ease,
+    border-color 0.2s ease;
+  cursor: pointer;
+
+  &.active-section {
+    border-left-color: colors.$primary-opacity-2;
+    background-color: colors.$primary-opacity-1;
+  }
+
+  &.negative {
+    background: colors.$danger-opacity-1;
+  }
+
+  &.active-section.negative {
+    border-left-color: colors.$danger-opacity-2;
+    background-color: colors.$danger-opacity-1;
+  }
+
+  &:hover .stat-overlay {
+    opacity: 1;
+  }
+}
+
+.stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+
+  i {
+    color: colors.$gray-light;
+    opacity: 0.85;
+    transition: color 0.2s ease;
+
+    &.stat-active {
+      color: colors.$primary;
+      opacity: 0.85;
+    }
+
+    &.stat-loss {
+      color: colors.$danger;
+      opacity: 0.85;
+    }
+  }
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.stat-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.stat-value {
+  line-height: 1.2;
+}
+
+.stat-rank {
+  font-size: xx-small;
+}
+
+// Mouseover overlay
+.stat-overlay {
+  position: absolute;
+  inset: 0;
+  background: colors.$secondary;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.4rem 0.75rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.stat-overlay-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  flex: 1;
+}
+
+.stat-overlay-value {
+  line-height: 1.2;
+}

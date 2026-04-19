@@ -1,4 +1,5 @@
 @use 'colors' as colors;
+@use 'text' as text;
 @use 'animation-fade' as animationFade;
 @use 'animation-blur-fade-in' as blurFadeIn;
 @use 'primeicons/primeicons.css';
@@ -24,7 +25,7 @@ body {
 
 // BADGES
 .p-badge.badge-new {
-  font-size: 0.6rem;
+  font-size: text.$text-xs;
   font-weight: bold;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -50,23 +51,21 @@ body {
   border-radius: 8px;
   padding: 1rem;
   display: grid;
-  gap: 1.5rem;
+  gap: 0.75rem;
 }
 
-// SECTION HEADERS
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  font-size: x-small;
-  letter-spacing: 1.5px;
-  opacity: 0.6;
+.borderless-container {
+  padding: 1rem;
+  display: grid;
+  gap: 0.75rem;
 }
 
 // METRIC COLOR CLASSES (used in podium-list, performance-summary, etc.)
 .metric--xp {
   color: var(--color-metric-xp);
 }
-.metric--skill {
+.metric--skill,
+.metric--level {
   color: var(--color-metric-level);
 }
 .metric--rank {
@@ -83,45 +82,149 @@ body {
 }
 
 // TYPOGRAPHY UTILITIES (shared across player-detail, podium-list, etc.)
-.additional-info {
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: text.$text-sm;
+  letter-spacing: 1.5px;
+  opacity: text.$opacity-secondary;
+}
+
+// Field labels: "STREAK", "ACTIVE", "Name", "Rank"
+.text-label {
+  font-size: text.$text-xs;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  opacity: text.$opacity-secondary;
+}
+
+// Secondary / supporting value: vocation, level, meta info
+.text-sub {
+  font-size: text.$text-sm;
+  font-weight: 400;
+  opacity: text.$opacity-secondary;
+}
+
+// Body text: row descriptions, character info fields
+.text-normal {
+  font-size: text.$text-sm;
+  font-weight: 400;
+  line-height: 1.4;
+  opacity: text.$opacity-primary;
+}
+
+// Primary value: names, stats, key data points
+.text-value {
+  font-size: text.$text-base;
+  font-weight: 500;
+  opacity: text.$opacity-primary;
+}
+
+// Hero / highlighted value: podium main, future use
+.text-highlight {
+  font-size: text.$text-md;
+  font-weight: 500;
+  opacity: text.$opacity-primary;
+}
+
+.text-additional-info {
   color: colors.$gray-light;
-  font-size: smaller;
+  font-size: text.$text-base;
   margin-left: 0.25em;
 }
 
-.text-value {
-  font-size: small;
-  font-weight: bold;
-  opacity: 0.85;
+// Modifier — mutes opacity on any text class
+.text-muted {
+  opacity: text.$opacity-muted;
 }
 
-.text-sub-value {
-  font-size: 0.65rem;
-  font-weight: 500;
-  opacity: 0.6;
-}
-
-.text-label {
-  font-size: xx-small;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  opacity: 0.6;
-}
-
+// Overlay labels and values (podium card hover, stat card hover)
 .text-overlay-label {
-  font-size: 0.6rem;
-  font-weight: 600;
+  font-size: text.$text-xs;
+  font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  opacity: 0.45;
+  letter-spacing: 1px;
+  opacity: text.$opacity-muted;
 }
 
 .text-overlay-value {
-  font-size: 0.8rem;
-  font-weight: bold;
+  font-size: text.$text-base;
+  font-weight: 500;
   line-height: 1.2;
-  opacity: 0.85;
+  opacity: text.$opacity-primary;
+}
+
+// Stat gain rows (player-performance)
+.text-stat {
+  font-size: text.$text-sm;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  opacity: text.$opacity-primary;
+  line-height: 1.3;
+}
+
+.text-stat-meta {
+  font-size: text.$text-xs;
+  font-weight: 400;
+  opacity: text.$opacity-secondary;
+  line-height: 1.2;
+}
+
+// RECORD ROWS (player-details-tab, player-online-stats, player-deaths)
+.records-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.record-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: 6px;
+
+  &--xp {
+    background: colors.$experience-opacity-1;
+  }
+  &--skill {
+    background: colors.$level-opacity-1;
+  }
+  &--rank {
+    background: colors.$rank-opacity-1;
+  }
+  &--secondary {
+    background: colors.$secondary-opacity-1;
+  }
+  &--warn {
+    background: colors.$warn-opacity-1;
+  }
+  &--danger {
+    background: colors.$danger-opacity-1;
+  }
+  &--info {
+    background: colors.$info-opacity-1;
+  }
+}
+
+.record-label {
+  flex-shrink: 0;
+  min-width: 82px;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.record-desc {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.record-sub {
+  font-size: text.$text-xs;
+  opacity: text.$opacity-secondary;
 }
 
 // ANIMATIONS

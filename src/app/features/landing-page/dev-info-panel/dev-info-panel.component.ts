@@ -38,6 +38,63 @@ interface DevInfoEntry {
 export class DevInfoPanelComponent {
   entries = signal<DevInfoEntry[]>([
     {
+      date: new Date('2026-04-19'),
+      title: 'v2.3.0 released',
+      content: [
+        {
+          contentType: 'heading',
+          text: 'Player Details',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Player details now include a Character tab with real-time data fetched from the official Dura page on each visit: character, account, deaths, etc.',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-info-circle',
+          text: "The Character tab is designed to provide a complete overview of the player's current status using live data from the official Dura page.",
+        },
+        { contentType: 'divider' },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Player details now include a Performance tab with the existing chart showing the player’s historical gains over the selected period.',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-info-circle',
+          text: 'The Performance tab keeps the historical chart from the vault, allowing to analyze progress over time.',
+        },
+        { contentType: 'divider' },
+        {
+          contentType: 'heading',
+          text: 'UI/UX',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Player details have been restructured into tabbed sections: Character & Performance.',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'The player details chart now shows rank in a more subtle way.',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Updated font styles for a more consistent and polished look.',
+        },
+      ],
+      entryType: 'versionMajor',
+      tags: [
+        { label: 'minor version', color: 'experience' },
+        { label: 'UI/UX', color: 'info' },
+        { label: 'new feature' },
+      ],
+    },
+    {
       date: new Date('2026-04-13'),
       title: 'v 2.2.1 released',
       content: [

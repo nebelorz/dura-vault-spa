@@ -4,14 +4,15 @@ import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
   selector: 'app-minimalist-icon',
   imports: [TooltipModule],
   templateUrl: './minimalist-icon.component.html',
-  styleUrls: ['./minimalist-icon.component.scss'],
+  styleUrl: './minimalist-icon.component.scss',
 })
 export class MinimalistIconComponent {
   icon = input<string>('pi-info-circle');
-  size = input<string>('x-small');
+  size = input<string>('xx-small');
   tooltipText = input<string>();
   tooltipPosition = input<string>('top');
 }

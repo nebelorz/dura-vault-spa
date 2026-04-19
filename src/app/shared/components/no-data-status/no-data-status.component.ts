@@ -8,5 +8,5 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 })
 export class NoDataStatusComponent {
   title = input<string>('No data available');
-  message = input<string>('There is currently no data to display.');
+  message = input<string>('There is currently no data on the vault to display');
 }

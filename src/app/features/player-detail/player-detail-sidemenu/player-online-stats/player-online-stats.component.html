@@ -1,0 +1,71 @@
+<div class="online-stats-section">
+  <div class="section-header">ONLINE ACTIVITY</div>
+
+  @if (loading() && !hasContent()) {
+    <app-inline-loading />
+  } @else if (hasContent()) {
+    @if (onlineSummary(); as summary) {
+      @if (summary.average_online_time > 0) {
+        <div class="online-row">
+          <div class="online-icon">
+            <i class="pi pi-wave-pulse"></i>
+          </div>
+          <div class="online-info">
+            <div class="text-label">Avg Online</div>
+            <div class="online-value-row">
+              <span class="online-value text-value">{{
+                summary.average_online_time | minutesToHours
+              }}</span>
+              <span class="text-sub">/day</span>
+            </div>
+          </div>
+        </div>
+
+        @if (summary.avg_first_seen && summary.avg_last_seen) {
+          <div class="online-row">
+            <div class="online-icon">
+              <i class="pi pi-clock"></i>
+            </div>
+            <div class="online-info">
+              <div class="text-label">
+                Online Span
+                <app-minimalist-icon
+                  [tooltipText]="'Time is shown in your local timezone.'"
+                  tooltipPosition="right"
+                />
+              </div>
+              <div class="online-value-row">
+                <span class="online-value text-value">
+                  {{ summary.avg_first_seen | date: 'HH:mm' }} →
+                  {{ summary.avg_last_seen | date: 'HH:mm' }}
+                </span>
+              </div>
+            </div>
+          </div>
+        }
+      }
+    }
+
+    @if (lastLogin()) {
+      <div class="online-row">
+        <div class="online-icon">
+          <i class="pi pi-eye"></i>
+        </div>
+        <div class="online-info">
+          <div class="text-label">Last Login</div>
+          <div class="online-value-row">
+            <span class="online-value text-value">{{
+              lastLogin() | date: 'dd MMM yyyy, HH:mm'
+            }}</span>
+          </div>
+        </div>
+      </div>
+    }
+  } @else {
+    <div class="online-row">
+      <div class="online-info">
+        <span class="text-additional-info">No data available on the vault</span>
+      </div>
+    </div>
+  }
+</div>

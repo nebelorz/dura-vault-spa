@@ -1,0 +1,30 @@
+.performance-tab {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.gains-section {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.chart-section {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 21.875rem;
+}
+
+@media (max-width: 960px) {
+  .performance-tab {
+    padding: 1rem;
+  }
+
+  .chart-section {
+    min-height: 18rem;
+  }
+}

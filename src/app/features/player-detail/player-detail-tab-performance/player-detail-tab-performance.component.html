@@ -1,0 +1,19 @@
+<div class="performance-tab">
+  @if (loading()) {
+    <app-loading-status />
+  } @else if (summary(); as playerSummary) {
+    <div class="gains-section animation-fade">
+      <app-player-gains-summary [summary]="playerSummary" [section]="section()" />
+    </div>
+
+    <div class="chart-section animation-fade">
+      <app-player-detail-chart
+        [playerDetailsData]="playerDetailsData()"
+        [loading]="loading()"
+        [section]="section()"
+      />
+    </div>
+  } @else {
+    <app-no-data-status />
+  }
+</div>

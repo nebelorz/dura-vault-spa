@@ -1,0 +1,87 @@
+@use 'colors' as colors;
+@use 'text' as text;
+
+.account-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  & + .account-section {
+    margin-top: 1.5rem;
+  }
+}
+
+.characters-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-height: 20rem;
+  overflow-y: auto;
+}
+
+.account-character-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+
+  &:hover {
+    background: colors.$secondary;
+  }
+}
+
+.account-character-info {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.account-character-level {
+  flex-shrink: 0;
+  min-width: 2.5rem;
+}
+
+.account-character-vocation {
+  flex-shrink: 0;
+}
+
+.online-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.5rem;
+  font-weight: bold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.4rem;
+  border-radius: 999px;
+  color: colors.$primary;
+  background: colors.$primary-opacity-1;
+  border: 1px solid colors.$primary-opacity-2;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.online-status-dot {
+  width: 0.3125rem;
+  height: 0.3125rem;
+  border-radius: 50%;
+  background: colors.$primary;
+  flex-shrink: 0;
+  animation: online-pulse 2s ease-in-out infinite;
+}
+
+@keyframes online-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}

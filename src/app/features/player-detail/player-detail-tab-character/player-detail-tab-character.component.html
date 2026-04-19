@@ -1,0 +1,18 @@
+﻿<div class="details-tab">
+  <div class="details-grid">
+    <div class="borderless-container">
+      <span class="section-header">CHARACTER</span>
+      <app-player-character [profile]="profile()" [profileLoading]="profileLoading()" />
+    </div>
+
+    <div class="borderless-container">
+      <span class="section-header">ACCOUNT</span>
+      <app-player-account-information [profile]="profile()" [profileLoading]="profileLoading()" />
+    </div>
+
+    <div class="borderless-container">
+      <span class="section-header">DEATHS</span>
+      <app-player-deaths [profile]="profile()" [profileLoading]="profileLoading()" />
+    </div>
+  </div>
+</div>

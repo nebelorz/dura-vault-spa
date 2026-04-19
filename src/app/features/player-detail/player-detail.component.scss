@@ -1,5 +1,9 @@
 @use 'colors' as colors;
 
+:host {
+  display: block;
+}
+
 .player-detail-container {
   padding: 1rem;
   max-width: 100%;
@@ -22,7 +26,12 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 1.5rem;
-  border-bottom: 1px solid var(--surface-border);
+
+  @media (max-width: 960px) {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem;
+  }
 }
 
 .period-selector-wrapper {
@@ -32,6 +41,10 @@
   gap: 0.25rem;
   flex-shrink: 0;
 
+  @media (max-width: 960px) {
+    align-items: flex-start;
+  }
+
   .selector-row {
     display: flex;
     align-items: center;
@@ -39,11 +52,11 @@
   }
 }
 
-// Body: fixed left column + flexible right column
+// Body: fixed left column + flex right column
 .player-container-body {
   display: grid;
-  grid-template-columns: 260px 1fr;
-  min-height: 600px;
+  grid-template-columns: 280px 1fr;
+  min-height: 31.25rem;
 
   @media (max-width: 960px) {
     grid-template-columns: 1fr;
@@ -51,11 +64,10 @@
   }
 }
 
-// Left: player stats + online stats
+// Left: player stats + online
 .player-left-column {
   display: flex;
   flex-direction: column;
-  padding: 1.5rem;
   border-right: 3px solid colors.$secondary;
   overflow-y: auto;
 
@@ -65,9 +77,42 @@
   }
 }
 
-// Right: performance column
+.left-stats-section {
+  padding: 1.5rem;
+
+  @media (max-width: 960px) {
+    padding: 1rem;
+  }
+}
+
+.left-online-section,
+.left-records-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+
+  @media (max-width: 960px) {
+    padding: 1rem;
+  }
+}
+
+// Right: tabbed panel
 .player-right-column {
   display: flex;
   flex-direction: column;
-  min-height: 0;
+  min-width: 0;
+
+  .tab-info-icon {
+    margin-left: 0.1875rem;
+  }
+}
+
+:host ::ng-deep .player-right-column .p-tablist {
+  background: transparent;
+}
+
+:host ::ng-deep .player-right-column .p-tabpanels {
+  background: transparent;
+  padding: 0;
 }

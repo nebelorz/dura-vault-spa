@@ -1,0 +1,32 @@
+@if (profileLoading()) {
+  <app-inline-loading />
+} @else if (isAvailable()) {
+  @if (deathRows().length > 0) {
+    <div class="deaths-list animation-fade">
+      @for (death of deathRows(); track death.date) {
+        <div
+          class="record-row"
+          [ngClass]="{
+            'record-row--warn': death.hasKiller && !death.isUnjustified,
+            'record-row--unjustified': death.isUnjustified,
+          }"
+        >
+          <span class="death-date text-label">{{ death.date | date: 'dd MMM yyyy, HH:mm' }}</span>
+          <span
+            class="death-desc text-value"
+            [ngClass]="{
+              'metric--warn': death.hasKiller && !death.isUnjustified,
+              'metric--danger': death.isUnjustified,
+            }"
+          >
+            {{ death.description }}
+          </span>
+        </div>
+      }
+    </div>
+  } @else {
+    <span class="text-sub text-muted">No deaths for this character</span>
+  }
+} @else {
+  <app-no-data-status title="Unavailable" message="Could not fetch live data from Dura Online." />
+}

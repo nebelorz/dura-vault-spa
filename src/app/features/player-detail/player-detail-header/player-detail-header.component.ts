@@ -8,7 +8,7 @@ import { getDuraPlayerUrl } from '@shared/functions';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-player-detail-header',
   templateUrl: './player-detail-header.component.html',
-  styleUrls: ['./player-detail-header.component.scss'],
+  styleUrl: './player-detail-header.component.scss',
   imports: [GoBackButtonComponent, ActionsMenuComponent],
 })
 export class PlayerDetailHeaderComponent {

@@ -1,9 +1,10 @@
 import { Component, OnInit, signal, computed, inject, DestroyRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, tap } from 'rxjs/operators';
+import { combineLatest } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
+import { CharacterProfileService, PlayerDetailsService, OnlineService } from '@core/services';
 import {
   CharacterProfileResult,
   HighscoreSection,
@@ -14,42 +15,61 @@ import {
   TimePeriod,
   PeriodOption,
 } from '@core/models';
-import { CharacterProfileService, PlayerDetailsService, OnlineService } from '@core/services';
-import { PlayerDetailHeaderComponent } from './player-detail-header/player-detail-header.component';
+
 import { PeriodSelectorComponent, MinimalistIconComponent } from '@shared/components';
-import { PlayerStatsComponent } from './player-stats/player-stats.component';
-import { PlayerPerformanceComponent } from './player-performance/player-performance.component';
+import { PlayerDetailHeaderComponent } from './player-detail-header/player-detail-header.component';
+import { PlayerDetailTabCharacterComponent } from './player-detail-tab-character/player-detail-tab-character.component';
+import { PlayerStatsComponent } from './player-detail-sidemenu/player-stats/player-stats.component';
+import { PlayerOnlineStatsComponent } from './player-detail-sidemenu/player-online-stats/player-online-stats.component';
+import { PlayerDetailTabPerformanceComponent } from './player-detail-tab-performance/player-detail-tab-performance.component';
+import { PlayerRecordsComponent } from './player-detail-sidemenu/player-records/player-records.component';
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from 'primeng/tabs';
 
 @Component({
+  standalone: true,
   selector: 'app-player-detail',
   templateUrl: './player-detail.component.html',
-  styleUrls: ['./player-detail.component.scss'],
+  styleUrl: './player-detail.component.scss',
   imports: [
     PlayerDetailHeaderComponent,
     PeriodSelectorComponent,
     MinimalistIconComponent,
     PlayerStatsComponent,
-    PlayerPerformanceComponent,
+    PlayerOnlineStatsComponent,
+    PlayerDetailTabPerformanceComponent,
+    PlayerDetailTabCharacterComponent,
+    PlayerRecordsComponent,
+    Tabs,
+    TabList,
+    Tab,
+    TabPanels,
+    TabPanel,
     DatePipe,
   ],
 })
 export class PlayerDetailComponent implements OnInit {
+  private detailsRequestId = 0;
+  private profileRequestId = 0;
+  private readonly characterProfileService = inject(CharacterProfileService);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly onlineService = inject(OnlineService);
+  private readonly playerDetailsService = inject(PlayerDetailsService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly playerDetailsService = inject(PlayerDetailsService);
-  private readonly onlineService = inject(OnlineService);
-  protected readonly characterProfileService = inject(CharacterProfileService);
-  private readonly destroyRef = inject(DestroyRef);
 
   // State
-  playerName = signal<string>('');
-  section = signal<HighscoreSection>('experience');
-  selectedPeriod = signal<TimePeriod>('all');
-  loading = signal<boolean>(false);
+  readonly characterTab = '0';
+  readonly performanceTab = '1';
+  activeTab = signal<string>(this.characterTab);
+  characterProfile = signal<CharacterProfileResult | null>(null);
+  loading = signal<boolean>(true);
   playerDetailsData = signal<PlayerHistoricResponse | null>(null);
+  playerName = signal<string>('');
   playerOnlineData = signal<PlayerOnlineResponse | null>(null);
   playerStats = signal<PlayerStatsRecord[]>([]);
-  characterProfile = signal<CharacterProfileResult | null>(null);
+  profileLoading = signal<boolean>(true);
+  section = signal<HighscoreSection>('experience');
+  selectedPeriod = signal<TimePeriod>('all');
 
   // "All" -> "Active Period"
   readonly periodOptions: PeriodOption[] = [
@@ -62,106 +82,143 @@ export class PlayerDetailComponent implements OnInit {
 
   // Computed
   summary = computed(() => this.playerDetailsData()?.summary ?? null);
-  dailyRecords = computed(() => this.playerDetailsData()?.daily ?? []);
+  lastLogin = computed(() => {
+    const profile = this.characterProfile();
+    return profile?.status === 'found' ? profile.data.characterInformation.lastLogin : null;
+  });
   vocation = computed(() => {
     const stats = this.playerStats();
     return (
-      stats.find((s) => s.section === 'experience')?.vocation ??
-      stats.find((s) => s.vocation)?.vocation ??
+      stats.find((stat) => stat.section === 'experience')?.vocation ??
+      stats.find((stat) => stat.vocation)?.vocation ??
       ''
     );
   });
   dateRange = computed(() => {
     const summaryData = this.summary();
-    if (!summaryData) return [];
-    return [summaryData.day_first, summaryData.day_last];
+    const fromDate = summaryData?.day_first ?? null;
+    const toDate = summaryData?.day_last ?? null;
+    if (!fromDate && !toDate) return [];
+    if (!fromDate) return [toDate!];
+    if (!toDate || fromDate === toDate) return [fromDate];
+    return [fromDate, toDate];
   });
 
   ngOnInit(): void {
-    // Subscribe to route changes to load player data
-    this.route.paramMap
-      .pipe(
-        tap((params) => {
-          const name = params.get('name');
-          if (!name) {
-            this.router.navigate(['/']);
-            throw new Error('No player name provided');
-          }
+    combineLatest([this.route.paramMap, this.route.queryParamMap])
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(([params, queryParams]) => {
+        const name = params.get('name');
+        if (!name) {
+          void this.router.navigate(['/']);
+          return;
+        }
+
+        const nextSection = (queryParams.get('section') as HighscoreSection) ?? 'experience';
+        const nameChanged = name !== this.playerName();
+
+        if (nameChanged) {
           this.playerName.set(name);
-          this.loadCharacterProfile(name);
-        }),
-        switchMap(() => this.route.queryParamMap),
-        takeUntilDestroyed(this.destroyRef),
-      )
-      .subscribe((queryParams) => {
-        const section = (queryParams.get('section') as HighscoreSection) ?? 'experience';
-        this.section.set(section);
-        this.loadPlayerDetails();
+          this.activeTab.set(this.characterTab);
+          this.playerStats.set([]);
+          this.resetDetailsState();
+          void this.loadCharacterProfile(name);
+        }
+
+        if (nextSection !== this.section()) {
+          this.section.set(nextSection);
+        }
+
+        void this.loadPlayerDetails();
       });
   }
 
   onPeriodChange(period: TimePeriod): void {
+    if (period === this.selectedPeriod()) return;
     this.selectedPeriod.set(period);
-    this.loadPlayerDetails();
+    void this.loadPlayerDetails();
+  }
+
+  onTabChange(value: string | number | undefined): void {
+    if (value != null) this.activeTab.set(String(value));
   }
 
   onSectionChange(section: HighscoreSection): void {
-    this.section.set(section);
-    // Navigation will trigger ngOnInit which reloads data
-    this.router.navigate(['/player', this.playerName()], {
+    this.activeTab.set(this.performanceTab);
+    if (section === this.section()) return;
+
+    void this.router.navigate(['/player', this.playerName()], {
       queryParams: { section },
     });
   }
 
   private async loadPlayerDetails(): Promise<void> {
+    const requestId = ++this.detailsRequestId;
+    const playerName = this.playerName();
+    const section = this.section();
+    const period = this.selectedPeriod();
+
     this.loading.set(true);
-    let redirecting = false;
+    this.resetDetailsState();
 
     try {
       const request: PlayerHistoricRequest = {
-        p_name: this.playerName(),
-        p_section: this.section(),
-        p_period: this.selectedPeriod(),
+        p_name: playerName,
+        p_section: section,
+        p_period: period,
       };
 
       const [data, stats, onlineData] = await Promise.all([
         this.playerDetailsService.getPlayerHistoric(request),
-        this.playerDetailsService.getPlayerStats(this.playerName()),
-        this.onlineService.getPlayerOnlineHistory(this.playerName(), this.selectedPeriod(), false),
+        this.playerDetailsService.getPlayerStats(playerName),
+        this.onlineService.getPlayerOnlineHistory(playerName, period, false),
       ]);
 
+      if (requestId !== this.detailsRequestId) return;
+
       const resolvedStats = stats ?? [];
-      const availableSections = resolvedStats.map((s) => s.section as HighscoreSection);
-      const currentSection = this.section();
+      const availableSections = resolvedStats.map((stat) => stat.section as HighscoreSection);
+
+      this.playerStats.set(resolvedStats);
 
       // If the requested section has no data for this player, redirect to the first available
-      if (resolvedStats.length > 0 && !availableSections.includes(currentSection)) {
-        redirecting = true;
-        this.playerStats.set(resolvedStats);
-        this.router.navigate(['/player', this.playerName()], {
+      if (resolvedStats.length > 0 && !availableSections.includes(section)) {
+        await this.router.navigate(['/player', playerName], {
           queryParams: { section: availableSections[0] },
           replaceUrl: true,
         });
         return;
       }
 
-      this.playerStats.set(resolvedStats);
-
-      if (data) {
-        this.playerDetailsData.set(data);
-      } else {
-        this.playerDetailsData.set(null);
-      }
-
+      this.playerDetailsData.set(data);
       this.playerOnlineData.set(onlineData);
     } finally {
-      if (!redirecting) this.loading.set(false);
+      if (requestId === this.detailsRequestId) {
+        this.loading.set(false);
+      }
     }
   }
 
   private async loadCharacterProfile(name: string): Promise<void> {
+    const requestId = ++this.profileRequestId;
+
     this.characterProfile.set(null);
-    const profile = await this.characterProfileService.getCharacterProfile(name);
-    this.characterProfile.set(profile);
+    this.profileLoading.set(true);
+
+    try {
+      const profile = await this.characterProfileService.getCharacterProfile(name);
+      if (requestId !== this.profileRequestId) return;
+
+      this.characterProfile.set(profile);
+    } finally {
+      if (requestId === this.profileRequestId) {
+        this.profileLoading.set(false);
+      }
+    }
+  }
+
+  private resetDetailsState(): void {
+    this.playerDetailsData.set(null);
+    this.playerOnlineData.set(null);
   }
 }

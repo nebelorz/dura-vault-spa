@@ -1,0 +1,21 @@
+﻿@use 'colors' as colors;
+
+.deaths-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+// Unjustified deaths
+.record-row--unjustified {
+  background: colors.$danger-opacity-2;
+}
+
+.death-date {
+  flex-shrink: 0;
+  min-width: 8.125rem;
+}
+
+.death-desc {
+  flex: 1;
+}

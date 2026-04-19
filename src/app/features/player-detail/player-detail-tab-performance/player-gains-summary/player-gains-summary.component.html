@@ -1,0 +1,36 @@
+<div class="gains-summary">
+  <div class="gains-item">
+    <span class="gains-dot gains-dot--level"></span>
+    <span class="text-label">{{ section() === 'experience' ? 'LEVEL' : 'SKILL' }}</span>
+    <span class="text-value" [ngClass]="levelMetricClass()">
+      {{ summary().total_gain_level > 0 ? '+' : '' }}{{ summary().total_gain_level }}
+    </span>
+    <span class="text-sub text-muted"
+      >{{ summary().average_gain_level > 0 ? '+' : '' }}{{ summary().average_gain_level }}/day</span
+    >
+  </div>
+  @if (section() === 'experience') {
+    <div class="gains-item">
+      <span class="gains-dot gains-dot--xp"></span>
+      <span class="text-label">EXPERIENCE</span>
+      <span class="text-value" [ngClass]="xpMetricClass()">
+        {{ (summary().total_gain_points ?? 0) > 0 ? '+' : ''
+        }}{{ summary().total_gain_points | abbreviateNumber }} XP
+      </span>
+      <span class="text-sub text-muted"
+        >{{ (summary().average_gain_points ?? 0) > 0 ? '+' : ''
+        }}{{ summary().average_gain_points | abbreviateNumber }}/day</span
+      >
+    </div>
+  }
+  <div class="gains-item">
+    <span class="gains-dot gains-dot--rank"></span>
+    <span class="text-label">RANK</span>
+    <span class="text-value" [ngClass]="rankMetricClass()">
+      {{ summary().total_gain_rank > 0 ? '+' : '' }}{{ summary().total_gain_rank }}
+    </span>
+    <span class="text-sub text-muted"
+      >{{ summary().average_gain_rank > 0 ? '+' : '' }}{{ summary().average_gain_rank }}/day</span
+    >
+  </div>
+</div>

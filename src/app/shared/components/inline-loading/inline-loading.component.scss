@@ -1,0 +1,14 @@
+@use 'colors' as colors;
+
+.inline-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+
+  i {
+    color: colors.$primary;
+    font-size: xx-small;
+    opacity: 0.6;
+  }
+}

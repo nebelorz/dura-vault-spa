@@ -73,7 +73,7 @@ export class OnlineStatsComponent {
   private warnColor = signal<string>('#fb923c');
 
   constructor() {
-    effect(() => this.updateColors(), { allowSignalWrites: true });
+    effect(() => this.updateColors());
   }
 
   private updateColors(): void {

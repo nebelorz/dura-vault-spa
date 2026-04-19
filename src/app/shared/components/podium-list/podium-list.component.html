@@ -35,11 +35,17 @@
                   <div class="podium-overlay-row">
                     <span class="text-overlay-label">{{ col.label }}</span>
                     <div class="podium-overlay-values">
-                      <span class="podium-overlay-value text-overlay-value" [ngClass]="col.valueClass ?? ''">
+                      <span
+                        class="podium-overlay-value text-overlay-value"
+                        [ngClass]="col.valueClass ?? ''"
+                      >
                         {{ col.podiumValue ?? col.value }}
                       </span>
                       @if (col.subValue) {
-                        <span class="podium-overlay-sub text-sub-value" [ngClass]="col.subValueClass ?? ''">
+                        <span
+                          class="podium-overlay-sub text-sub"
+                          [ngClass]="col.subValueClass ?? ''"
+                        >
                           {{ col.subValue }}
                         </span>
                       }
@@ -84,11 +90,14 @@
                 <div class="podium-overlay-row">
                   <span class="text-overlay-label">{{ col.label }}</span>
                   <div class="podium-overlay-values">
-                    <span class="podium-overlay-value text-overlay-value" [ngClass]="col.valueClass ?? ''">
+                    <span
+                      class="podium-overlay-value text-overlay-value"
+                      [ngClass]="col.valueClass ?? ''"
+                    >
                       {{ col.podiumValue ?? col.value }}
                     </span>
                     @if (col.subValue) {
-                      <span class="podium-overlay-sub text-sub-value" [ngClass]="col.subValueClass ?? ''">
+                      <span class="podium-overlay-sub text-sub" [ngClass]="col.subValueClass ?? ''">
                         {{ col.subValue }}
                       </span>
                     }
@@ -132,11 +141,17 @@
                   <div class="podium-overlay-row">
                     <span class="text-overlay-label">{{ col.label }}</span>
                     <div class="podium-overlay-values">
-                      <span class="podium-overlay-value text-overlay-value" [ngClass]="col.valueClass ?? ''">
+                      <span
+                        class="podium-overlay-value text-overlay-value"
+                        [ngClass]="col.valueClass ?? ''"
+                      >
                         {{ col.podiumValue ?? col.value }}
                       </span>
                       @if (col.subValue) {
-                        <span class="podium-overlay-sub text-sub-value" [ngClass]="col.subValueClass ?? ''">
+                        <span
+                          class="podium-overlay-sub text-sub"
+                          [ngClass]="col.subValueClass ?? ''"
+                        >
                           {{ col.subValue }}
                         </span>
                       }
@@ -193,10 +208,7 @@
                   {{ col.value }}
                 </span>
                 @if (col.subValue) {
-                  <span
-                    class="list-column-sub-value text-sub-value"
-                    [ngClass]="col.subValueClass ?? ''"
-                  >
+                  <span class="list-column-sub-value text-sub" [ngClass]="col.subValueClass ?? ''">
                     {{ col.subValue }}
                   </span>
                 }
@@ -212,5 +224,3 @@
     </div>
   }
 }
-
-

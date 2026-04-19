@@ -1,6 +1,6 @@
 {
   "name": "dura-vault-spa",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "engines": {
     "node": ">=20.x"
   },
@@ -38,6 +38,8 @@
     "@primeuix/themes": "^2.0.2",
     "@supabase/supabase-js": "^2.87.1",
     "chart.js": "^4.5.1",
+    "chartjs-plugin-zoom": "^2.2.0",
+    "hammerjs": "^2.0.8",
     "primeicons": "^7.0.0",
     "primeng": "^21.0.2",
     "rxjs": "~7.8.0",

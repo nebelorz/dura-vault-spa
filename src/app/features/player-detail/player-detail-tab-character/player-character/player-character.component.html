@@ -1,0 +1,96 @@
+@if (profileLoading()) {
+  <app-inline-loading />
+} @else if (profileData(); as d) {
+  <div class="character-info-section animation-fade">
+    <span class="text-normal">INFORMATION</span>
+    <div class="records-list">
+      @if (d.characterInformation.name) {
+        <div class="record-row">
+          <span class="record-label text-label">Name</span>
+          <span class="text-value">{{ d.characterInformation.name }}</span>
+        </div>
+      }
+      @if (d.characterInformation.formerNames.length > 0) {
+        <div class="record-row">
+          <span class="record-label text-label">Former</span>
+          <span class="text-sub text-muted">{{
+            d.characterInformation.formerNames.join(', ')
+          }}</span>
+        </div>
+      }
+      @if (d.characterInformation.sex) {
+        <div class="record-row">
+          <span class="record-label text-label">Sex</span>
+          <span class="text-value">{{ d.characterInformation.sex }}</span>
+        </div>
+      }
+      @if (d.characterInformation.profession) {
+        <div class="record-row">
+          <span class="record-label text-label">Profession</span>
+          <span class="text-value">{{ d.characterInformation.profession }}</span>
+        </div>
+      }
+      @if (d.characterInformation.level !== null) {
+        <div class="record-row">
+          <span class="record-label text-label">Level</span>
+          <span class="text-value metric--level">{{ d.characterInformation.level }}</span>
+        </div>
+      }
+      @if (d.characterInformation.residence) {
+        <div class="record-row">
+          <span class="record-label text-label">Residence</span>
+          <span class="text-value">{{ d.characterInformation.residence }}</span>
+        </div>
+      }
+      @if (d.characterInformation.guild) {
+        <div class="record-row">
+          <span class="record-label text-label">Guild</span>
+          <span class="text-value">{{ d.characterInformation.guild.name }}</span>
+        </div>
+        <div class="record-row">
+          <span class="record-label text-label">Guild Rank</span>
+          <span class="text-value">{{ d.characterInformation.guild.rank }}</span>
+        </div>
+      }
+      @if (d.characterInformation.created) {
+        <div class="record-row">
+          <span class="record-label text-label">Created</span>
+          <span class="text-value">{{ d.characterInformation.created | date: 'dd MMM yyyy' }}</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="character-houses-section animation-fade">
+    <span class="text-normal">HOUSES</span>
+    @if (houses().length > 0) {
+      <div class="houses-list">
+        @for (house of houses(); track house.name) {
+          <div class="house-card">
+            <span class="text-value">{{ house.name }}</span>
+            <div class="house-meta">
+              <span class="meta-pair">
+                <span class="text-label">Rent</span>
+                <span class="text-sub">{{ house.rent }}</span>
+              </span>
+              @if (house.beds !== null) {
+                <span class="meta-pair">
+                  <span class="text-label">Beds</span>
+                  <span class="text-sub">{{ house.beds }}</span>
+                </span>
+              }
+              <span class="meta-pair">
+                <span class="text-label">Due</span>
+                <span class="text-sub">{{ house.dueDate | date: 'dd MMM yyyy' }}</span>
+              </span>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <span class="text-sub text-muted">No rented houses</span>
+    }
+  </div>
+} @else {
+  <app-no-data-status title="Unavailable" message="Could not fetch live data from Dura Online." />
+}

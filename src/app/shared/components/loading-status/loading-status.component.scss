@@ -1,4 +1,5 @@
 @use 'colors' as colors;
+@use 'text' as text;
 
 .loading-message-container {
   display: flex;
@@ -25,6 +26,7 @@
 
   p {
     margin: 0;
-    font-size: smaller;
+    font-size: text.$text-sm;
+    opacity: text.$opacity-secondary;
   }
 }
