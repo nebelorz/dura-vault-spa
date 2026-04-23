@@ -19,7 +19,24 @@
               'metric--danger': death.isUnjustified,
             }"
           >
-            {{ death.description }}
+            @for (seg of death.segments; track $index) {
+              @if (seg.isKiller) {
+                <a
+                  [routerLink]="['/player', seg.text]"
+                  [queryParams]="{ section: 'experience' }"
+                  class="killer-link"
+                  ><img
+                    [src]="
+                      death.isUnjustified ? 'skulls/skull_white.webp' : 'skulls/skull_yellow.webp'
+                    "
+                    class="skull-icon"
+                    alt=""
+                  />{{ seg.text }}</a
+                >
+              } @else {
+                {{ seg.text }}
+              }
+            }
           </span>
         </div>
       }

@@ -19,3 +19,19 @@
 .death-desc {
   flex: 1;
 }
+
+.killer-link {
+  text-decoration: none;
+  color: inherit;
+  font: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  vertical-align: middle;
+}
+
+.skull-icon {
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
+}
