@@ -92,7 +92,7 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
     { separator: true },
     {
       label: 'Search on Dura',
-      icon: 'pi pi-search',
+      icon: 'pi pi-external-link',
       command: () => this.searchOnDura(),
     },
   ];
