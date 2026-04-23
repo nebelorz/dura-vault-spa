@@ -24,6 +24,7 @@
   text-decoration: none;
   color: inherit;
   font: inherit;
+  font-weight: bold;
   display: inline-flex;
   align-items: center;
   gap: 2px;
@@ -31,7 +32,7 @@
 }
 
 .skull-icon {
-  width: 11px;
-  height: 11px;
+  width: 10px;
+  height: 10px;
   flex-shrink: 0;
 }
