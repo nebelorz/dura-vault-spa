@@ -1,5 +1,13 @@
 @use 'colors' as colors;
 
+.guild-link {
+  text-decoration: none;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .character-info-section {
   display: flex;
   flex-direction: column;

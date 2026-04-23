@@ -45,7 +45,13 @@
       @if (d.characterInformation.guild) {
         <div class="record-row">
           <span class="record-label text-label">Guild</span>
-          <span class="text-value">{{ d.characterInformation.guild.name }}</span>
+          <a
+            [href]="getDuraGuildUrl(d.characterInformation.guild.name)"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-value guild-link"
+            >{{ d.characterInformation.guild.name }}<app-minimalist-icon icon="pi-external-link"
+          /></a>
         </div>
         <div class="record-row">
           <span class="record-label text-label">Guild Rank</span>

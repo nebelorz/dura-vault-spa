@@ -10,12 +10,10 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from '@env';
-
 import { OnlineTopRecord, TimePeriod } from '@core/models';
 import { ToastService } from '@core/services';
 import { DAILY_WARN_MIN, DAILY_DANGER_MIN } from '@core/constants';
-import { formatMinutesToHours } from '@shared/functions';
+import { formatMinutesToHours, getDuraPlayerUrl } from '@shared/functions';
 import { PodiumListComponent, PodiumListItem, ListColumn } from '@shared/components';
 
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
@@ -150,7 +148,6 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
   private searchOnDura(): void {
     const record = this.selectedRecord;
     if (!record) return;
-    const url = `${environment.dura.baseURL}/?characters/${record.name}`;
-    window.open(url, '_blank');
+    window.open(getDuraPlayerUrl(record.name), '_blank');
   }
 }

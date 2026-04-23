@@ -2,18 +2,25 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 import { DatePipe } from '@angular/common';
 
 import { CharacterHouse, CharacterProfileData, CharacterProfileResult } from '@core/models';
-import { InlineLoadingComponent, NoDataStatusComponent } from '@shared/components';
+import {
+  InlineLoadingComponent,
+  MinimalistIconComponent,
+  NoDataStatusComponent,
+} from '@shared/components';
+import { getDuraGuildUrl } from '@shared/functions';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-player-character',
   templateUrl: './player-character.component.html',
   styleUrl: './player-character.component.scss',
-  imports: [DatePipe, InlineLoadingComponent, NoDataStatusComponent],
+  imports: [DatePipe, InlineLoadingComponent, MinimalistIconComponent, NoDataStatusComponent],
 })
 export class PlayerCharacterComponent {
   profile = input<CharacterProfileResult | null>(null);
   profileLoading = input.required<boolean>();
+
+  readonly getDuraGuildUrl = getDuraGuildUrl;
 
   readonly profileData = computed((): CharacterProfileData | null => {
     const player = this.profile();
