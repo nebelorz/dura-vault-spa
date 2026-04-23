@@ -38,6 +38,41 @@ interface DevInfoEntry {
 export class DevInfoPanelComponent {
   entries = signal<DevInfoEntry[]>([
     {
+      date: new Date('2026-04-23'),
+      title: 'Player Achievements',
+      content: [
+        {
+          contentType: 'heading',
+          text: 'New: Player Achievements Panel',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-star',
+          text: 'Player details now include an Achievements column on the right side, showing every level, magic level, and skill milestone the player has reached — along with the first date it was recorded.',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-info-circle',
+          text: 'Milestones are grouped by category (Level, Magic Level & Skills) and sorted by value. The achieved date reflects the earliest scrape where the milestone was met, so it may predate the actual achievement if the player existed before tracking began.',
+        },
+        { contentType: 'divider' },
+        {
+          contentType: 'heading',
+          text: 'Cleanup',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Removed the old "Records" sidebar section (best/worst day, streaks) and replaced it with the new Achievements panel.',
+        },
+      ],
+      entryType: 'versionMinor',
+      tags: [
+        { label: 'new feature', color: 'experience' },
+        { label: 'player details', color: 'info' },
+      ],
+    },
+    {
       date: new Date('2026-04-19'),
       title: 'v2.3.0 released',
       content: [
@@ -65,6 +100,20 @@ export class DevInfoPanelComponent {
           contentType: 'icon-text',
           icon: 'pi pi-info-circle',
           text: 'The Performance tab keeps the historical chart from the vault, allowing to analyze progress over time.',
+        },
+        {
+          contentType: 'heading',
+          text: 'New: Player Achievements Panel',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'Player details now include an Achievements column on the right side, showing every level, magic level, and skill milestone the player has reached — along with the first date it was recorded for the player.',
+        },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-info-circle',
+          text: 'Achievements are grouped by category (Level, Magic Level & Skills) and sorted by value. The achieved date reflects the earliest scrape where the milestone was met, so it may predate the actual achievement if the player existed before tracking began (Dura Vault started tracking on DEC 2025).',
         },
         { contentType: 'divider' },
         {

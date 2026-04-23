@@ -52,11 +52,15 @@
   }
 }
 
-// Body: fixed left column + flex right column
+// Body: fixed left column + center tabs + right achievements column
 .player-container-body {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 280px 1fr 280px;
   min-height: 31.25rem;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: 280px 1fr;
+  }
 
   @media (max-width: 960px) {
     grid-template-columns: 1fr;
@@ -94,6 +98,25 @@
   @media (max-width: 960px) {
     padding: 1rem;
   }
+}
+
+// Right achievements column
+.player-achievements-column {
+  display: flex;
+  flex-direction: column;
+  border-left: 3px solid colors.$secondary;
+  overflow-y: auto;
+
+  @media (max-width: 1200px) {
+    display: none;
+  }
+}
+
+.achievements-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
 }
 
 // Right: tabbed panel

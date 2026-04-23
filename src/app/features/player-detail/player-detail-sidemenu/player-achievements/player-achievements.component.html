@@ -1,0 +1,52 @@
+﻿@if (loading() && achievements().length === 0) {
+  <app-inline-loading />
+} @else if (isEmpty()) {
+  <app-no-data-status title="No Achievements" message="No milestones reached yet." />
+} @else {
+  <div class="achievements-list animation-fade">
+    @for (group of groups(); track group.category) {
+      <div class="achievement-group">
+        <div class="category-heading text-label">{{ group.categoryLabel }}</div>
+
+        <p-accordion [multiple]="true">
+          @for (sec of group.sections; track sec.section) {
+            <p-accordion-panel [value]="sec.section">
+              <p-accordion-header>
+                <div class="accordion-header-row">
+                  <div class="achievement-icon-container">
+                    <app-achievement-badge
+                      [path]="sec.path"
+                      [gradStart]="sec.badgeStyle.gradStart"
+                      [gradEnd]="sec.badgeStyle.gradEnd"
+                      [text]="sec.highestMilestone.toString()"
+                    />
+                  </div>
+                  <div class="accordion-header-text">
+                    <span class="section-name text-normal">{{ sec.sectionLabel }}</span>
+                    <span class="milestone-count text-sub"
+                      >{{ sec.milestones.length }} milestone{{
+                        sec.milestones.length !== 1 ? 's' : ''
+                      }}</span
+                    >
+                  </div>
+                </div>
+              </p-accordion-header>
+              <p-accordion-content>
+                <div class="milestone-list">
+                  @for (a of sec.milestones; track a.milestone) {
+                    <div class="milestone-row">
+                      <span class="milestone-value text-value">{{ a.milestone }}</span>
+                      <span class="milestone-date text-sub">{{
+                        a.achieved_date | date: 'dd MMM yyyy'
+                      }}</span>
+                    </div>
+                  }
+                </div>
+              </p-accordion-content>
+            </p-accordion-panel>
+          }
+        </p-accordion>
+      </div>
+    }
+  </div>
+}

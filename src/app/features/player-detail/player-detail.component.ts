@@ -8,6 +8,7 @@ import { CharacterProfileService, PlayerDetailsService, OnlineService } from '@c
 import {
   CharacterProfileResult,
   HighscoreSection,
+  PlayerAchievement,
   PlayerHistoricRequest,
   PlayerHistoricResponse,
   PlayerOnlineResponse,
@@ -21,6 +22,7 @@ import { PlayerDetailHeaderComponent } from './player-detail-header/player-detai
 import { PlayerDetailTabCharacterComponent } from './player-detail-tab-character/player-detail-tab-character.component';
 import { PlayerStatsComponent } from './player-detail-sidemenu/player-stats/player-stats.component';
 import { PlayerOnlineStatsComponent } from './player-detail-sidemenu/player-online-stats/player-online-stats.component';
+import { PlayerAchievementsComponent } from './player-detail-sidemenu/player-achievements/player-achievements.component';
 import { PlayerDetailTabPerformanceComponent } from './player-detail-tab-performance/player-detail-tab-performance.component';
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from 'primeng/tabs';
 
@@ -35,6 +37,7 @@ import { Tabs, TabList, Tab, TabPanels, TabPanel } from 'primeng/tabs';
     MinimalistIconComponent,
     PlayerStatsComponent,
     PlayerOnlineStatsComponent,
+    PlayerAchievementsComponent,
     PlayerDetailTabPerformanceComponent,
     PlayerDetailTabCharacterComponent,
     Tabs,
@@ -59,8 +62,10 @@ export class PlayerDetailComponent implements OnInit {
   readonly characterTab = '0';
   readonly performanceTab = '1';
   activeTab = signal<string>(this.characterTab);
+  achievementsLoading = signal<boolean>(true);
   characterProfile = signal<CharacterProfileResult | null>(null);
   loading = signal<boolean>(true);
+  playerAchievements = signal<PlayerAchievement[]>([]);
   playerDetailsData = signal<PlayerHistoricResponse | null>(null);
   playerName = signal<string>('');
   playerOnlineData = signal<PlayerOnlineResponse | null>(null);
@@ -77,7 +82,6 @@ export class PlayerDetailComponent implements OnInit {
     { label: 'Year', value: 'year' },
     { label: 'Active Period', value: 'all' },
   ];
-
   // Computed
   summary = computed(() => this.playerDetailsData()?.summary ?? null);
   lastLogin = computed(() => {
@@ -119,8 +123,10 @@ export class PlayerDetailComponent implements OnInit {
           this.playerName.set(name);
           this.activeTab.set(this.characterTab);
           this.playerStats.set([]);
+          this.playerAchievements.set([]);
           this.resetDetailsState();
           void this.loadCharacterProfile(name);
+          void this.loadPlayerAchievements(name);
         }
 
         if (nextSection !== this.section()) {
@@ -194,6 +200,16 @@ export class PlayerDetailComponent implements OnInit {
       if (requestId === this.detailsRequestId) {
         this.loading.set(false);
       }
+    }
+  }
+
+  private async loadPlayerAchievements(name: string): Promise<void> {
+    this.achievementsLoading.set(true);
+    try {
+      const achievements = await this.playerDetailsService.getPlayerAchievements(name);
+      this.playerAchievements.set(achievements);
+    } finally {
+      this.achievementsLoading.set(false);
     }
   }
 

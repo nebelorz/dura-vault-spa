@@ -90,6 +90,15 @@
           </p-tabpanels>
         </p-tabs>
       </div>
+
+      <div class="player-achievements-column">
+        <div class="achievements-section">
+          <app-player-achievements
+            [achievements]="playerAchievements()"
+            [loading]="achievementsLoading()"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -1,0 +1,21 @@
+﻿<svg width="44" height="44" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient [id]="gradId" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" [attr.stop-color]="gradStart()" stop-opacity="1" />
+      <stop offset="100%" [attr.stop-color]="gradEnd()" stop-opacity="1" />
+    </linearGradient>
+  </defs>
+  <path [attr.d]="path()" fill="none" [attr.stroke]="'url(#' + gradId + ')'" stroke-width="4" />
+  <text
+    x="50"
+    y="50"
+    font-family="Montserrat, Arial, sans-serif"
+    [attr.font-size]="text().length >= 3 ? 18 : 22"
+    font-weight="900"
+    fill="currentColor"
+    text-anchor="middle"
+    dominant-baseline="middle"
+  >
+    {{ text() }}
+  </text>
+</svg>
