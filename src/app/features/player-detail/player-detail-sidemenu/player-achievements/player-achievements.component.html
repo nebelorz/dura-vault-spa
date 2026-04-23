@@ -1,7 +1,7 @@
 ﻿@if (loading() && achievements().length === 0) {
-  <app-inline-loading />
+  <app-loading-status />
 } @else if (isEmpty()) {
-  <app-no-data-status title="No Achievements" message="No milestones reached yet." />
+  <app-no-data-status title="No Achievements" message="No milestones stored in the vault yet" />
 } @else {
   <div class="achievements-list animation-fade">
     @for (group of groups(); track group.category) {
@@ -36,9 +36,13 @@
                   @for (a of sec.milestones; track a.milestone) {
                     <div class="milestone-row">
                       <span class="milestone-value text-value">{{ a.milestone }}</span>
-                      <span class="milestone-date text-sub">{{
-                        a.achieved_date | date: 'dd MMM yyyy'
-                      }}</span>
+                      <span class="milestone-date text-sub">
+                        @if (a.displayDate) {
+                          {{ a.displayDate | date: 'dd MMM yyyy' }}
+                        } @else {
+                          N/A
+                        }
+                      </span>
                     </div>
                   }
                 </div>

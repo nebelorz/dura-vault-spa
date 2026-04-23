@@ -30,15 +30,11 @@
   cursor: pointer;
 
   &:hover {
-    background: colors.$primary-opacity-1;
+    background: colors.$secondary;
   }
 
   &--current {
-    background: colors.$primary-opacity-1;
-
-    &:hover {
-      background: colors.$primary-opacity-2;
-    }
+    background: colors.$secondary;
   }
 }
 

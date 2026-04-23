@@ -69,11 +69,9 @@
   justify-content: space-between;
   gap: 0.5rem;
   padding: 0.3rem 0.5rem;
-  border-radius: 6px;
-  border-left: 2px solid colors.$secondary;
 
   &:hover {
-    background: colors.$secondary-opacity-1;
+    background: colors.$secondary;
   }
 }
 
@@ -85,4 +83,18 @@
 .milestone-date {
   text-align: right;
   font-size: text.$text-xs;
+}
+
+:host ::ng-deep {
+  .p-accordionpanel {
+    border-color: transparent;
+  }
+
+  .p-accordionheader {
+    background: transparent;
+
+    &:hover {
+      background: colors.$secondary-opacity-1;
+    }
+  }
 }

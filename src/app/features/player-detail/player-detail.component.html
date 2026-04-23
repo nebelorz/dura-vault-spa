@@ -32,8 +32,8 @@
 
     <!-- BODY: column with player stats + online summary & tabbed right panel -->
     <div class="player-container-body">
-      <div class="player-left-column">
-        <div class="left-stats-section">
+      <div class="player-stats-column">
+        <div class="left-stats-section default-container">
           <app-player-stats
             [stats]="playerStats()"
             [loading]="loading()"
@@ -41,7 +41,7 @@
             (sectionSelect)="onSectionChange($event)"
           />
         </div>
-        <div class="left-online-section">
+        <div class="left-online-section default-container">
           <app-player-online-stats
             [loading]="loading()"
             [onlineSummary]="playerOnlineData()?.summary ?? null"
@@ -50,7 +50,7 @@
         </div>
       </div>
 
-      <div class="player-right-column">
+      <div class="player-details-central-column">
         <p-tabs [value]="activeTab()" (valueChange)="onTabChange($event)">
           <p-tablist>
             <p-tab [value]="characterTab">
@@ -92,7 +92,7 @@
       </div>
 
       <div class="player-achievements-column">
-        <div class="achievements-section">
+        <div class="achievements-section default-container">
           <app-player-achievements
             [achievements]="playerAchievements()"
             [loading]="achievementsLoading()"

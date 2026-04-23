@@ -8,7 +8,7 @@ import {
   AchievementBadgeStyle,
   getCategoryBadgeStyle,
 } from '@core/constants';
-import { InlineLoadingComponent, NoDataStatusComponent } from '@shared/components';
+import { NoDataStatusComponent, LoadingStatusComponent } from '@shared/components';
 import { Accordion, AccordionContent, AccordionHeader, AccordionPanel } from 'primeng/accordion';
 import { AchievementBadgeComponent } from './achievement-badge/achievement-badge.component';
 
@@ -29,10 +29,14 @@ interface AchievementGroup {
   sections: AchievementSectionGroup[];
 }
 
+interface DisplayMilestone extends PlayerAchievement {
+  displayDate: string | null;
+}
+
 interface AchievementSectionGroup {
   section: string;
   sectionLabel: string;
-  milestones: PlayerAchievement[];
+  milestones: DisplayMilestone[];
   highestMilestone: number;
   badgeStyle: AchievementBadgeStyle;
   path: string;
@@ -46,13 +50,14 @@ interface AchievementSectionGroup {
   styleUrl: './player-achievements.component.scss',
   imports: [
     DatePipe,
-    InlineLoadingComponent,
+    LoadingStatusComponent,
     NoDataStatusComponent,
     Accordion,
     AccordionPanel,
     AccordionHeader,
     AccordionContent,
     AchievementBadgeComponent,
+    LoadingStatusComponent,
   ],
 })
 export class PlayerAchievementsComponent {
@@ -79,12 +84,18 @@ export class PlayerAchievementsComponent {
         categoryLabel: ACHIEVEMENT_CATEGORY_LABEL[cat] ?? cat,
         sections: Array.from(grouped.get(cat)!.entries())
           .map(([sec, milestones]) => {
-            const sorted = [...milestones].sort((a, b) => a.milestone - b.milestone);
-            const highestMilestone = sorted[sorted.length - 1].milestone;
+            const sorted = [...milestones].sort((a, b) => b.milestone - a.milestone);
+            const highestMilestone = sorted[0].milestone;
+            const seenDates = new Set<string>();
+            const displayMilestones: DisplayMilestone[] = sorted.map((a) => {
+              const displayDate = seenDates.has(a.achieved_date) ? null : a.achieved_date;
+              seenDates.add(a.achieved_date);
+              return { ...a, displayDate };
+            });
             return {
               section: sec,
               sectionLabel: ACHIEVEMENT_SECTION_LABEL[sec] ?? sec,
-              milestones: sorted,
+              milestones: displayMilestones,
               highestMilestone,
               badgeStyle: getCategoryBadgeStyle(cat),
               path: CATEGORY_PATHS[cat] ?? DEFAULT_PATH,
