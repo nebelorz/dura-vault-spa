@@ -1,7 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 
 import { BaseApiService, CacheService, SupabaseService, ToastService } from '@core/services';
-import { PlayerHistoricRequest, PlayerHistoricResponse, PlayerStatsRecord } from '@core/models';
+import {
+  PlayerAchievement,
+  PlayerHistoricRequest,
+  PlayerHistoricResponse,
+  PlayerStatsRecord,
+} from '@core/models';
 
 @Injectable({
   providedIn: 'root',
@@ -41,8 +46,25 @@ export class PlayerDetailsService extends BaseApiService {
     );
   }
 
+  async getPlayerAchievements(name: string): Promise<PlayerAchievement[]> {
+    const cacheKey = `player_achievements_${name}`;
+    return (
+      (await this.fetchWithCache<PlayerAchievement[]>(
+        cacheKey,
+        'get_player_achievements',
+        { p_name: name },
+        {
+          errorContext: 'player achievements',
+          errorTitle: 'Player Achievements Error',
+          showErrorToast: false,
+        },
+      )) ?? []
+    );
+  }
+
   clearAllData(): void {
     this.cacheService.clearByPattern('player_historic');
     this.cacheService.clearByPattern('player_stats');
+    this.cacheService.clearByPattern('player_achievements');
   }
 }

@@ -21,12 +21,6 @@ export interface PlayerDetailsDailyRecord {
   gain_rank: number | null;
 }
 
-export interface PlayerDetailsDayStats {
-  date: string | null;
-  gain_level: number | null;
-  gain_points: number | null;
-}
-
 export interface PlayerDetailsSummary {
   total_gain_points: number | null;
   total_gain_level: number;
@@ -34,15 +28,8 @@ export interface PlayerDetailsSummary {
   average_gain_points: number | null;
   average_gain_level: number;
   average_gain_rank: number;
-  days_count: number;
-  days_with_data: number;
   day_first: string;
   day_last: string;
-  best_day: PlayerDetailsDayStats;
-  worst_day: PlayerDetailsDayStats;
-  current_streak: number;
-  best_streak: number;
-  estimated_level_advance_date: string | null;
 }
 
 export interface PlayerHistoricResponse {
@@ -54,4 +41,11 @@ export interface PlayerHistoricRequest {
   p_name: string;
   p_section: HighscoreSection;
   p_period: TimePeriod;
+}
+
+export interface PlayerAchievement {
+  category: string; // 'level' | 'magic' | 'skill'
+  section: string; // 'experience' | 'magic' | 'sword' etc...
+  milestone: number;
+  achieved_date: string;
 }
