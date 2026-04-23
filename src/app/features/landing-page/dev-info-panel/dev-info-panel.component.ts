@@ -38,102 +38,82 @@ interface DevInfoEntry {
 export class DevInfoPanelComponent {
   entries = signal<DevInfoEntry[]>([
     {
-      date: new Date('2026-04-23'),
-      title: 'Player Achievements',
+      date: new Date('2026-04-24'),
+      title: 'v 2.3.0 released',
       content: [
-        {
-          contentType: 'heading',
-          text: 'New: Player Achievements Panel',
-        },
+        { contentType: 'heading', text: 'Player Details — Two New Tabs' },
         {
           contentType: 'icon-text',
-          icon: 'pi pi-star',
-          text: 'Player details now include an Achievements column on the right side, showing every level, magic level, and skill milestone the player has reached — along with the first date it was recorded.',
-        },
-        {
-          contentType: 'icon-text',
-          icon: 'pi pi-info-circle',
-          text: 'Milestones are grouped by category (Level, Magic Level & Skills) and sorted by value. The achieved date reflects the earliest scrape where the milestone was met, so it may predate the actual achievement if the player existed before tracking began.',
+          icon: 'pi pi-code',
+          text: 'Player Details has been restructured into two separate tabs: Character and Performance, providing a clear separation between live current data and historical vault records.',
         },
         { contentType: 'divider' },
+        { contentType: 'heading', text: 'Character Tab — Live Data' },
         {
-          contentType: 'heading',
-          text: 'Cleanup',
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: "The Character tab fetches data directly from the official Dura page on every visit. It shows the player's current information: name, former names, sex, level, residence, guild etc.",
         },
         {
           contentType: 'icon-text',
           icon: 'pi pi-code',
-          text: 'Removed the old "Records" sidebar section (best/worst day, streaks) and replaced it with the new Achievements panel.',
-        },
-      ],
-      entryType: 'versionMinor',
-      tags: [
-        { label: 'new feature', color: 'experience' },
-        { label: 'player details', color: 'info' },
-      ],
-    },
-    {
-      date: new Date('2026-04-19'),
-      title: 'v2.3.0 released',
-      content: [
-        {
-          contentType: 'heading',
-          text: 'Player Details',
+          text: 'Houses are now displayed within the Character tab: name, rent, size, number of beds, and due date for each one owned.',
         },
         {
           contentType: 'icon-text',
           icon: 'pi pi-code',
-          text: 'Player details now include a Character tab with real-time data fetched from the official Dura page on each visit: character, account, deaths, etc.',
+          text: 'Account information is also live: account creation date, ban status, and the full list of characters in the account.',
         },
         {
           contentType: 'icon-text',
-          icon: 'pi pi-info-circle',
-          text: "The Character tab is designed to provide a complete overview of the player's current status using live data from the official Dura page.",
+          icon: 'pi pi-code',
+          text: 'Deaths are pulled from the official page as well. Each death row shows the date, level and killed by.',
         },
         { contentType: 'divider' },
+        { contentType: 'heading', text: 'Performance Tab' },
         {
           contentType: 'icon-text',
           icon: 'pi pi-code',
-          text: 'Player details now include a Performance tab with the existing chart showing the player’s historical gains over the selected period.',
-        },
-        {
-          contentType: 'icon-text',
-          icon: 'pi pi-info-circle',
-          text: 'The Performance tab keeps the historical chart from the vault, allowing to analyze progress over time.',
-        },
-        {
-          contentType: 'heading',
-          text: 'New: Player Achievements Panel',
-        },
-        {
-          contentType: 'icon-text',
-          icon: 'pi pi-code',
-          text: 'Player details now include an Achievements column on the right side, showing every level, magic level, and skill milestone the player has reached — along with the first date it was recorded for the player.',
-        },
-        {
-          contentType: 'icon-text',
-          icon: 'pi pi-info-circle',
-          text: 'Achievements are grouped by category (Level, Magic Level & Skills) and sorted by value. The achieved date reflects the earliest scrape where the milestone was met, so it may predate the actual achievement if the player existed before tracking began (Dura Vault started tracking on DEC 2025).',
+          text: 'The Performance tab preserves the classic Dura Vault data: a gains summary and the historical chart. Nothing changed here — it just has its own dedicated tab now.',
         },
         { contentType: 'divider' },
+        { contentType: 'heading', text: 'New: Achievements Panel' },
         {
-          contentType: 'heading',
-          text: 'UI/UX',
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: 'New Achievements section has been added to the right side of the Player Details page. It shows every milestone the player has reached, with the first date it was stored in the vault.',
         },
         {
           contentType: 'icon-text',
           icon: 'pi pi-code',
-          text: 'Player details have been restructured into tabbed sections: Character & Performance.',
+          text: 'Milestones are grouped by category and within a category (e.g. Sword, Axe, Magic) a badge with the highest milestone. The full list of milestones with their achieved dates is also available.',
+        },
+        {
+          contentType: 'callout',
+          color: 'warn',
+          text: '❗Dura Vault started tracking data in early December 2025, so the achieved date for early milestones reflects the earliest recorded value — it may predate the actual achievement if the player existed before tracking began.',
+        },
+        {
+          contentType: 'callout',
+          color: 'warn',
+          text: '❗Also, player renames break milestone history continuity.',
+        },
+        { contentType: 'divider' },
+        { contentType: 'heading', text: 'UI/UX' },
+        {
+          contentType: 'icon-text',
+          icon: 'pi pi-code',
+          text: "Last Login in the Online Activity section is now sourced from live data, so it always reflects the player's actual last login rather than the last vault scrape.",
         },
         {
           contentType: 'icon-text',
           icon: 'pi pi-code',
-          text: 'The player details chart now shows rank in a more subtle way.',
+          text: 'The player details chart now shows rank in a more subtle way, keeping it as context without visually competing with the main metric.',
         },
         {
           contentType: 'icon-text',
           icon: 'pi pi-code',
-          text: 'Updated font styles for a more consistent and polished look.',
+          text: 'Updated font styles for a more consistent and polished look across sections.',
         },
       ],
       entryType: 'versionMajor',
