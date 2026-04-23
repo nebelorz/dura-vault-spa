@@ -3,13 +3,30 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 const NAME_REGEX = /^[a-zA-Z\s']{1,50}$/;
 const DURA_URL = process.env['DURA_BASE_URL'] ?? 'https://classic.dura-online.com';
 
+const HTML_ENTITIES: Record<string, string> = {
+  amp: '&',
+  lt: '<',
+  gt: '>',
+  quot: '"',
+  apos: "'",
+  nbsp: '\u00a0',
+};
+
+function decodeHtmlEntities(str: string): string {
+  return str.replace(/&(#(\d+)|#x([\da-fA-F]+)|([a-zA-Z]+));/g, (_, __, dec, hex, name) => {
+    if (dec) return String.fromCodePoint(parseInt(dec, 10));
+    if (hex) return String.fromCodePoint(parseInt(hex, 16));
+    return HTML_ENTITIES[name] ?? _;
+  });
+}
+
 function extractField(html: string, field: string): string | null {
   const re = new RegExp(
     `<td[^>]*>${field}:</td>\\s*<td[^>]*>(?:<span[^>]*>)?(?:<b>)?([^<\\[\\n]+?)(?:</b>)?(?:</span>)?(?:\\s*\\[|</td>)`,
     'i',
   );
   const m = html.match(re);
-  return m ? m[1].trim() : null;
+  return m ? decodeHtmlEntities(m[1].trim()) : null;
 }
 
 function toISO(dateStr: string | null): string | null {
@@ -37,7 +54,7 @@ function parseDeaths(html: string): {
   }[] = [];
   let m: RegExpExecArray | null;
   while ((m = re.exec(slice)) !== null) {
-    const desc = m[2].replace(/<[^>]+>/g, '').trim();
+    const desc = decodeHtmlEntities(m[2].replace(/<[^>]+>/g, '').trim());
     if (desc && !desc.includes('Character Deaths')) {
       const killerRe = /href="[^"]*\?characters\/([^"]+)"/g;
       const killers: string[] = [];
@@ -74,7 +91,9 @@ function parseHouses(
   const rowRe = /<tr[^>]*bgcolor[^>]*>([\s\S]+?)<\/tr>/g;
   let m: RegExpExecArray | null;
   while ((m = rowRe.exec(slice)) !== null) {
-    const cells = [...m[1].matchAll(/<td[^>]*>([^<]+)<\/td>/g)].map((c) => c[1].trim());
+    const cells = [...m[1].matchAll(/<td[^>]*>([^<]+)<\/td>/g)].map((c) =>
+      decodeHtmlEntities(c[1].trim()),
+    );
     if (cells.length === 5 && cells[0] !== 'Name') {
       const size = parseInt(cells[2]);
       const beds = parseInt(cells[3]);
@@ -108,9 +127,9 @@ function parseCharacters(
   let m: RegExpExecArray | null;
   while ((m = re.exec(slice)) !== null) {
     chars.push({
-      name: m[1].trim(),
+      name: decodeHtmlEntities(m[1].trim()),
       level: parseInt(m[2]),
-      vocation: m[3].trim(),
+      vocation: decodeHtmlEntities(m[3].trim()),
       isOnline: /\bOnline\b/i.test(m[4]),
     });
   }
@@ -123,7 +142,7 @@ function parseAccountCreated(html: string): string | null {
   if (start === -1 || end === -1) return null;
   const slice = html.slice(start, end);
   const m = slice.match(/<td[^>]*>Created:<\/td>\s*<td[^>]*>\s*([^\n<[]+)/i);
-  return m ? m[1].trim() : null;
+  return m ? decodeHtmlEntities(m[1].trim()) : null;
 }
 
 function parseBanishedUntil(html: string): string | null {
@@ -132,7 +151,7 @@ function parseBanishedUntil(html: string): string | null {
   if (start === -1 || end === -1) return null;
   const slice = html.slice(start, end);
   const m = slice.match(/\[Banished until ([^\]]+)\]/i);
-  return m ? m[1].trim() : null;
+  return m ? decodeHtmlEntities(m[1].trim()) : null;
 }
 
 function parseFormerNames(html: string): string[] {
@@ -140,7 +159,7 @@ function parseFormerNames(html: string): string[] {
   if (!m) return [];
   return m[1]
     .split(',')
-    .map((s) => s.trim())
+    .map((s) => decodeHtmlEntities(s.trim()))
     .filter(Boolean);
 }
 
@@ -149,8 +168,8 @@ function parseGuild(html: string): { rank: string; name: string } | null {
     /Guild membership:<\/td>\s*<td[^>]*>\s*([^<]+?)\s*of the\s*<a[^>]*?>([^<]+)<\/a>/i,
   );
   if (!m) return null;
-  const rank = m[1].trim();
-  const name = m[2].trim();
+  const rank = decodeHtmlEntities(m[1].trim());
+  const name = decodeHtmlEntities(m[2].trim());
   return { rank, name };
 }
 
