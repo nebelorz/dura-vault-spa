@@ -41,6 +41,7 @@
         @for (char of characters(); track char.name) {
           <a
             class="account-character-row"
+            [class.account-character-row--current]="char.name.toLowerCase() === currentName()"
             [routerLink]="['/player', char.name]"
             [queryParams]="{ section: 'experience' }"
           >

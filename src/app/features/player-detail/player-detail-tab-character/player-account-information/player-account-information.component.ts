@@ -27,6 +27,13 @@ export class PlayerAccountInformationComponent {
     return player?.status === 'found' ? player.data.accountInformation : null;
   });
 
+  readonly currentName = computed<string>(() => {
+    const player = this.profile();
+    return player?.status === 'found'
+      ? (player.data.characterInformation.name?.toLowerCase() ?? '')
+      : '';
+  });
+
   readonly isAvailable = computed(() => this.profile()?.status === 'found');
 
   readonly hasAccountInfo = computed(() => {
