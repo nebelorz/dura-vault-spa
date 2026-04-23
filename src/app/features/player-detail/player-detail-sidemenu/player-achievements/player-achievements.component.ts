@@ -8,7 +8,11 @@ import {
   AchievementBadgeStyle,
   getCategoryBadgeStyle,
 } from '@core/constants';
-import { NoDataStatusComponent, LoadingStatusComponent } from '@shared/components';
+import {
+  NoDataStatusComponent,
+  LoadingStatusComponent,
+  MinimalistIconComponent,
+} from '@shared/components';
 import { Accordion, AccordionContent, AccordionHeader, AccordionPanel } from 'primeng/accordion';
 import { AchievementBadgeComponent } from './achievement-badge/achievement-badge.component';
 
@@ -57,7 +61,7 @@ interface AchievementSectionGroup {
     AccordionHeader,
     AccordionContent,
     AchievementBadgeComponent,
-    LoadingStatusComponent,
+    MinimalistIconComponent,
   ],
 })
 export class PlayerAchievementsComponent {
