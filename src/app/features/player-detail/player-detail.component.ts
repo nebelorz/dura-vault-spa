@@ -22,7 +22,6 @@ import { PlayerDetailTabCharacterComponent } from './player-detail-tab-character
 import { PlayerStatsComponent } from './player-detail-sidemenu/player-stats/player-stats.component';
 import { PlayerOnlineStatsComponent } from './player-detail-sidemenu/player-online-stats/player-online-stats.component';
 import { PlayerDetailTabPerformanceComponent } from './player-detail-tab-performance/player-detail-tab-performance.component';
-import { PlayerRecordsComponent } from './player-detail-sidemenu/player-records/player-records.component';
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from 'primeng/tabs';
 
 @Component({
@@ -38,7 +37,6 @@ import { Tabs, TabList, Tab, TabPanels, TabPanel } from 'primeng/tabs';
     PlayerOnlineStatsComponent,
     PlayerDetailTabPerformanceComponent,
     PlayerDetailTabCharacterComponent,
-    PlayerRecordsComponent,
     Tabs,
     TabList,
     Tab,
