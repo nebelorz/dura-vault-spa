@@ -65,8 +65,6 @@ export function toOnlineMenuItems(): MenuItem[] {
   return [
     {
       label: 'Online Activity',
-      badge: 'NEW',
-      badgeStyleClass: 'badge-new',
       icon: 'pi pi-wave-pulse',
       routerLink: ['/online'],
     },

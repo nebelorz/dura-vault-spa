@@ -28,8 +28,6 @@ export class NavBarComponent {
     {
       label: 'Online Activity',
       icon: 'pi pi-wave-pulse',
-      badge: 'NEW',
-      badgeStyleClass: 'badge-new',
       routerLink: ['/online'],
     },
   ];
