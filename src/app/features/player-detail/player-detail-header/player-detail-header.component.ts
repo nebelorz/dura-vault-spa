@@ -1,26 +1,15 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
-import { ActionsMenuComponent, GoBackButtonComponent } from '@shared/components';
-import { getDuraPlayerUrl } from '@shared/functions';
+import { GoBackButtonComponent } from '@shared/components';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-player-detail-header',
   templateUrl: './player-detail-header.component.html',
   styleUrl: './player-detail-header.component.scss',
-  imports: [GoBackButtonComponent, ActionsMenuComponent],
+  imports: [GoBackButtonComponent],
 })
 export class PlayerDetailHeaderComponent {
   playerName = input.required<string>();
   vocation = input<string>('');
-
-  readonly playerActions = computed<MenuItem[]>(() => [
-    {
-      label: 'Search on Dura',
-      icon: 'pi pi-search',
-      url: getDuraPlayerUrl(this.playerName()),
-      target: '_blank',
-    },
-  ]);
 }

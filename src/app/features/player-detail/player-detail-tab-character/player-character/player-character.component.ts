@@ -7,7 +7,7 @@ import {
   MinimalistIconComponent,
   NoDataStatusComponent,
 } from '@shared/components';
-import { getDuraGuildUrl } from '@shared/functions';
+import { getDuraGuildUrl, getDuraPlayerUrl } from '@shared/functions';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,6 +21,8 @@ export class PlayerCharacterComponent {
   profileLoading = input.required<boolean>();
 
   readonly getDuraGuildUrl = getDuraGuildUrl;
+  readonly getDuraPlayerUrl = getDuraPlayerUrl;
+  readonly iconSizeExternalLink = '8px';
 
   readonly profileData = computed((): CharacterProfileData | null => {
     const player = this.profile();
