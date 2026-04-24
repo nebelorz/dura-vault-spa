@@ -104,10 +104,8 @@
   }
 
   .p-accordionheader {
-    background: transparent;
-
     &:hover {
-      background: colors.$secondary-opacity-1;
+      background: colors.$secondary !important;
     }
   }
 }

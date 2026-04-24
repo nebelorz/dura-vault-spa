@@ -1,102 +1,125 @@
-@use 'colors' as colors;
-
-// ─── PrimeNG overrides ───────────────────────────────────────────────────────
-
-// Spinning stop icon used for versionMajor marker
-.pi-stop {
-  font-size: small;
-}
-
-// Hide the left-side opposite column (unused in left-align mode)
-::ng-deep .p-timeline-event-opposite {
-  display: none;
-}
-
-// Card-style background for each timeline entry
-::ng-deep .p-timeline-event-content {
-  background: colors.$secondary;
-  color: colors.$secondary-contrast;
-  border-radius: 8px;
-  margin: 0.5rem 0;
-}
+﻿@use 'colors' as colors;
+@use 'text' as text;
 
 // ─── Layout ──────────────────────────────────────────────────────────────────
-.dev-info-container {
+.changelog {
   width: 100%;
-}
-
-// ─── Marker ──────────────────────────────────────────────────────────────────
-.timeline-marker {
-  flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  color: colors.$secondary-contrast;
-  opacity: 0.85;
-  z-index: 1;
+  flex-direction: column;
+  gap: 0.65rem;
 }
 
-// ─── Entry content ───────────────────────────────────────────────────────────
-.timeline-content {
+// ─── Entry row ───────────────────────────────────────────────────────────────
+.changelog-entry {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+// ─── Card ────────────────────────────────────────────────────────────────────
+.changelog-card {
   flex: 1;
   min-width: 0;
-  text-align: left;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 0.25rem;
+  background: colors.$secondary;
 }
 
-.timeline-header {
+// ─── Header ──────────────────────────────────────────────────────────────────
+.changelog-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 0.5rem;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  user-select: none;
+  background: colors.$secondary;
+
+  &:hover {
+    background: colors.$secondary-opacity-1;
+  }
 }
 
-.timeline-title-group {
+.changelog-entry.expanded .changelog-header {
+  border-bottom: 1px solid colors.$secondary;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+// ─── Entry type icon ─────────────────────────────────────────────────────────
+.entry-type-icon {
+  font-size: text.$text-sm;
+  opacity: 0.45;
+  flex-shrink: 0;
+}
+
+// ─── Title ───────────────────────────────────────────────────────────────────
+.entry-title {
+  font-size: text.$text-md;
+  font-family: ui-monospace, monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-right {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.timeline-title {
-  margin: 0;
-  font-weight: bold;
-  line-height: 1;
-}
-
-.timeline-date {
-  font-size: small;
-  color: colors.$gray-light;
   flex-shrink: 0;
 }
 
-// ─── Tags ────────────────────────────────────────────────────────────────────
-.timeline-tags {
-  display: flex;
-  gap: 0.35rem;
-  flex-wrap: wrap;
-  align-items: center;
-  // Alignment with title baseline
-  transform: translateY(1px);
+.entry-date {
+  font-size: text.$text-base;
+  opacity: 0.55;
+  white-space: nowrap;
+  font-family: ui-monospace, monospace;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-.timeline-tag {
+.chevron {
+  font-size: text.$text-xs;
+  opacity: 0.3;
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+
+.changelog-entry.expanded .chevron {
+  transform: rotate(180deg);
+}
+
+// ─── Tags ────────────────────────────────────────────────────────────────────
+.entry-tags {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.entry-tag {
   font-size: 0.6rem;
   font-weight: bold;
-  letter-spacing: 0.1em;
+  letter-spacing: 1px;
   text-transform: uppercase;
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
-  line-height: 1.2;
+  line-height: 1.4;
   white-space: nowrap;
+  font-family: ui-monospace, monospace;
 
-  // Default color (no color specified)
+  // Default / primary (new feature, generic)
   background: colors.$primary-opacity-1;
   color: colors.$primary;
   border: 1px solid colors.$primary-opacity-2;
@@ -106,137 +129,144 @@
     color: colors.$danger;
     border-color: colors.$danger-opacity-2;
   }
+
   &.tag-warn {
     background: colors.$warn-opacity-1;
     color: colors.$warn;
     border-color: colors.$warn-opacity-2;
   }
+
   &.tag-info {
     background: colors.$info-opacity-1;
     color: colors.$info;
     border-color: colors.$info-opacity-2;
   }
+
   &.tag-experience {
     background: colors.$experience-opacity-1;
     color: colors.$experience;
     border-color: colors.$experience-opacity-2;
   }
-  &.tag-rank {
-    background: colors.$rank-opacity-1;
-    color: colors.$rank;
-    border-color: colors.$rank-opacity-2;
+
+  &.tag-level {
+    background: colors.$level-opacity-1;
+    color: colors.$level;
+    border-color: colors.$level-opacity-2;
   }
 }
 
-// ─── Content blocks ──────────────────────────────────────────────────────────
-.content-text {
-  margin: 0;
-  font-size: small;
-  line-height: 1.6;
+// ─── Body (collapsible) ──────────────────────────────────────────────────────
+.changelog-body {
+  max-height: 0;
+  overflow: hidden;
+  transition:
+    max-height 0.3s ease,
+    padding 0.3s ease;
+  padding: 0 1rem;
 }
 
-.content-heading {
-  margin: 0.25rem 0 0.1rem;
-  font-size: small;
-  font-weight: 600;
+.changelog-entry.expanded .changelog-body {
+  max-height: 2000px;
+  padding: 0.9rem 1rem 1rem;
 }
 
-// Icon + text row
-.content-icon-text {
-  display: flex;
-  align-items: baseline;
-  gap: 0.4rem;
-  font-size: small;
-  line-height: 1.6;
+// ─── Markdown content ────────────────────────────────────────────────────────
+.changelog-body {
+  h2 {
+    font-size: text.$text-md;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    opacity: 0.85;
+    margin: 1.1rem 0 0.4rem;
 
-  i {
-    font-size: xx-small;
-    flex-shrink: 0;
-    color: colors.$gray-light;
-    position: relative;
-    top: -0.05em;
+    &:first-child {
+      margin-top: 0;
+    }
   }
 
-  span {
-    flex: 1;
+  h3 {
+    font-size: text.$text-base;
+    font-weight: 600;
+    opacity: 0.6;
+    margin: 0.75rem 0 0.3rem;
   }
-}
 
-.content-image {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  margin: 0.25rem 0;
+  p {
+    font-size: text.$text-base;
+    opacity: 0.7;
+    line-height: 1.7;
+    margin: 0 0 0.5rem;
+  }
+
+  ul {
+    margin: 0.25rem 0 0.75rem;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  li {
+    display: flex;
+    gap: 0.65rem;
+    align-items: flex-start;
+    font-size: text.$text-base;
+    opacity: 0.7;
+    line-height: 1.7;
+    margin-bottom: 0.4rem;
+
+    &::before {
+      content: '';
+      display: block;
+      flex-shrink: 0;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.4;
+      margin-top: 0.55em;
+    }
+  }
+
+  strong {
+    font-weight: 600;
+    opacity: 1;
+  }
+
+  code {
+    font-size: text.$text-base;
+    font-family: ui-monospace, monospace;
+    opacity: 0.8;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  blockquote {
+    margin: 0.75rem 0;
+    padding: 0.6rem 0.85rem;
+    background: colors.$info-opacity-2;
+    border-left: colors.$info 4px solid;
+    border-radius: 0 5px 5px 0;
+
+    p {
+      margin: 0;
+      font-size: text.$text-base;
+    }
+  }
+
+  a {
+    color: colors.$primary;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 
   img {
     width: 100%;
     border-radius: 6px;
+    margin: 0.5rem 0;
     display: block;
+    opacity: 0.9;
   }
-
-  .content-image-caption {
-    font-size: 0.7rem;
-    color: colors.$gray-light;
-    text-align: center;
-  }
-}
-
-.content-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  font-size: small;
-  color: colors.$primary;
-  text-decoration: none;
-  opacity: 0.85;
-
-  &:hover {
-    opacity: 1;
-    text-decoration: underline;
-  }
-
-  i {
-    font-size: xx-small;
-  }
-}
-
-// Highlighted note with colored left border (like GitHub/Notion callouts)
-.content-callout {
-  font-size: small;
-  line-height: 1.5;
-  padding: 0.4rem 0.65rem;
-  border-radius: 5px;
-  border-left: 3px solid;
-  margin: 0.15rem 0;
-
-  &.callout-info {
-    background: colors.$info-opacity-1;
-    color: colors.$info;
-    border-color: colors.$info-opacity-2;
-  }
-  &.callout-warn {
-    background: colors.$warn-opacity-1;
-    color: colors.$warn;
-    border-color: colors.$warn-opacity-2;
-  }
-  &.callout-error {
-    background: colors.$danger-opacity-1;
-    color: colors.$danger;
-    border-color: colors.$danger-opacity-2;
-  }
-  &.callout-rank {
-    background: colors.$rank-opacity-1;
-    color: colors.$rank;
-    border-color: colors.$rank-opacity-2;
-  }
-  &.callout-experience {
-    background: colors.$experience-opacity-1;
-    color: colors.$experience;
-    border-color: colors.$experience-opacity-2;
-  }
-}
-
-// Vertical spacer between block groups
-.content-divider {
-  height: 0.4rem;
 }
