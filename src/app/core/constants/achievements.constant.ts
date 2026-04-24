@@ -17,6 +17,9 @@ export const SKILL_MILESTONES: number[] = Array.from(
 // Weapon/shield skills - excludes fishing (separate category)
 export const COMBAT_SECTIONS: string[] = ['axe', 'club', 'distance', 'fist', 'shield', 'sword'];
 
+// Display order for combat_skills achievements (mirrors HIGHSCORE_SECTIONS order)
+export const COMBAT_SKILL_ORDER: string[] = ['fist', 'club', 'sword', 'axe', 'distance', 'shield'];
+
 export const ACHIEVEMENT_CATEGORY_LABEL: Record<string, string> = {
   level: 'Level',
   magic_level: 'Magic Level',

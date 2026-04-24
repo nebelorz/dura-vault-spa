@@ -5,6 +5,7 @@ import { PlayerAchievement } from '@core/models';
 import {
   ACHIEVEMENT_CATEGORY_LABEL,
   ACHIEVEMENT_SECTION_LABEL,
+  COMBAT_SKILL_ORDER,
   AchievementBadgeStyle,
   getCategoryBadgeStyle,
 } from '@core/constants';
@@ -105,7 +106,11 @@ export class PlayerAchievementsComponent {
               path: CATEGORY_PATHS[cat] ?? DEFAULT_PATH,
             };
           })
-          .sort((a, b) => a.sectionLabel.localeCompare(b.sectionLabel)),
+          .sort((a, b) =>
+            cat === 'combat_skills'
+              ? COMBAT_SKILL_ORDER.indexOf(a.section) - COMBAT_SKILL_ORDER.indexOf(b.section)
+              : a.sectionLabel.localeCompare(b.sectionLabel),
+          ),
       }));
   });
 
