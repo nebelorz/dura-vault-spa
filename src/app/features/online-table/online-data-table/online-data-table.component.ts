@@ -7,7 +7,6 @@ import {
   signal,
   viewChild,
   OnInit,
-  OnDestroy,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { OnlineTopRecord, TimePeriod } from '@core/models';
@@ -23,10 +22,10 @@ import { MenuItem } from 'primeng/api';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-online-data-table',
   templateUrl: './online-data-table.component.html',
-  styleUrls: ['./online-data-table.component.scss'],
+  styleUrl: './online-data-table.component.scss',
   imports: [ContextMenuModule, PodiumListComponent],
 })
-export class OnlineDataTableComponent implements OnInit, OnDestroy {
+export class OnlineDataTableComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly toastService = inject(ToastService);
 
@@ -36,7 +35,7 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
   period = input.required<TimePeriod>();
 
   // State
-  private selectedRecord: OnlineTopRecord | null = null;
+  private readonly selectedRecord = signal<OnlineTopRecord | null>(null);
 
   // Child
   private readonly cm = viewChild<ContextMenu>('cm');
@@ -121,7 +120,7 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
   }
 
   protected onItemRightClick({ event, item }: { event: MouseEvent; item: PodiumListItem }): void {
-    this.selectedRecord = this.data().find((r) => r.name === item.id) ?? null;
+    this.selectedRecord.set(this.data().find((r) => r.name === item.id) ?? null);
     this.cm()?.show(event);
   }
 
@@ -154,12 +153,13 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
   }
 
   private viewPlayerDetails(): void {
-    if (this.selectedRecord) this.navigateToPlayer(this.selectedRecord);
+    const record = this.selectedRecord();
+    if (record) this.navigateToPlayer(record);
   }
 
   private searchOnDura(): void {
-    const record = this.selectedRecord;
+    const record = this.selectedRecord();
     if (!record) return;
-    window.open(getDuraPlayerUrl(record.name), '_blank');
+    window.open(getDuraPlayerUrl(record.name), '_blank', 'noopener,noreferrer');
   }
 }

@@ -12,7 +12,7 @@ import { OnlineStatsComponent } from './online-stats/online-stats.component';
 @Component({
   selector: 'app-online-table',
   templateUrl: './online-table.component.html',
-  styleUrls: ['./online-table.component.scss'],
+  styleUrl: './online-table.component.scss',
   imports: [
     OnlineHeaderComponent,
     PeriodSelectorComponent,
@@ -43,14 +43,13 @@ export class OnlineTableComponent implements OnInit {
     );
   });
 
-  async ngOnInit(): Promise<void> {
-    await this.loadScrapeDateRange();
-    await this.loadData();
+  ngOnInit(): void {
+    void this.loadScrapeDateRange().then(() => this.loadData());
   }
 
   onPeriodChange(period: TimePeriod): void {
     this.selectedPeriod.set(period);
-    this.loadData();
+    void this.loadData();
   }
 
   private async loadScrapeDateRange(): Promise<void> {

@@ -1,0 +1,32 @@
+@if (link(); as href) {
+  <a
+    class="stat-card"
+    [class.stat-card--muted]="muted()"
+    [routerLink]="href"
+    [queryParams]="queryParams()"
+    [pTooltip]="tooltip()"
+    tooltipPosition="bottom"
+  >
+    <ng-container [ngTemplateOutlet]="content" />
+  </a>
+} @else {
+  <div
+    class="stat-card"
+    [class.stat-card--muted]="muted()"
+    [pTooltip]="tooltip()"
+    tooltipPosition="bottom"
+  >
+    <ng-container [ngTemplateOutlet]="content" />
+  </div>
+}
+
+<ng-template #content>
+  @if (icon()) {
+    <i [class]="icon()" class="stat-icon" [style.color]="accentColor()"></i>
+  }
+  <span class="text-label">{{ label() }}</span>
+  <span class="text-value">{{ value() }}</span>
+  @if (sublabel()) {
+    <span class="text-sub" [style.color]="sublabelColor()">{{ sublabel() }}</span>
+  }
+</ng-template>

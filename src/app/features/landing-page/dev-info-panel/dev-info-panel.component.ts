@@ -71,8 +71,8 @@ export class DevInfoPanelComponent {
 
   entries = signal<DevInfoEntry[]>([
     {
-      date: new Date('2026-05-26'),
-      title: '2.3.1 released',
+      date: new Date('2026-05-27'),
+      title: '2.4.0 released',
       entryType: 'versionMinor',
       tags: [
         { label: 'UI/UX', color: 'info' },
@@ -81,8 +81,11 @@ export class DevInfoPanelComponent {
       body: `
 ## UI/UX Improvements
 
-Updated color system implementation with improved its management.  
-Highscores sections updated styling.
+Updated color system implementation with improved management.  
+
+**Highscores Section**  
+Added a right-hand panel to the highscore table showing top gainers per vocation and a vocation gains chart.  
+Updated styling  
 
 ## Fixes & Optimizations
 

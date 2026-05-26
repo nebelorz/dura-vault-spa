@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, input, signal, effect } f
 
 import { OnlineTopRecord, OnlineTimelineRecord, TimePeriod } from '@core/models';
 import { formatDate } from '@shared/functions';
-import { LoadingStatusComponent } from '@shared/components';
+import { LoadingStatusComponent, StatCardComponent } from '@shared/components';
 
 import { ChartModule } from 'primeng/chart';
 import { TooltipModule } from 'primeng/tooltip';
@@ -56,7 +56,7 @@ interface LevelStat {
   selector: 'app-online-stats',
   templateUrl: './online-stats.component.html',
   styleUrls: ['./online-stats.component.scss'],
-  imports: [ChartModule, TooltipModule, LoadingStatusComponent],
+  imports: [ChartModule, TooltipModule, LoadingStatusComponent, StatCardComponent],
 })
 export class OnlineStatsComponent {
   // Inputs

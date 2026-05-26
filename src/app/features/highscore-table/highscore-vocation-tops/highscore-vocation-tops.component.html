@@ -1,0 +1,17 @@
+﻿@if (loading()) {
+  <app-inline-loading />
+} @else if (items().length) {
+  <h3 class="voc-title text-label">Top By Vocation</h3>
+  <div class="voc-grid">
+    @for (item of items(); track item.group) {
+      <app-stat-card
+        [value]="item.name"
+        [label]="item.group"
+        [sublabel]="item.gainDisplay"
+        [sublabelColor]="metricColor()"
+        [link]="item.link"
+        [queryParams]="queryParams()"
+      />
+    }
+  </div>
+}

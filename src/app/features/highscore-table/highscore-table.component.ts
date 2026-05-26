@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { HighscoreDataTableComponent } from './highscore-data-table/highscore-data-table.component';
 import { HighscoreHeaderComponent } from './highscore-header/highscore-header.component';
 import { HighscoreStatsComponent } from './highscore-stats/highscore-stats.component';
+import { HighscoreVocationTopsComponent } from './highscore-vocation-tops/highscore-vocation-tops.component';
 import { PeriodSelectorComponent } from '@shared/components';
 
 @Component({
@@ -20,6 +21,7 @@ import { PeriodSelectorComponent } from '@shared/components';
     PeriodSelectorComponent,
     HighscoreDataTableComponent,
     HighscoreStatsComponent,
+    HighscoreVocationTopsComponent,
     DatePipe,
   ],
 })
