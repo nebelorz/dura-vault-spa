@@ -67,10 +67,10 @@ export class OnlineStatsComponent {
   activeComparisonDate = input<string | null>(null);
 
   // State
-  private primaryColor = signal<string>('#22c55e');
-  private helpColor = signal<string>('#a855f7');
-  private infoColor = signal<string>('#38bdf8');
-  private warnColor = signal<string>('#fb923c');
+  private readonly primaryColor = signal<string>('#22c55e');
+  private readonly helpColor = signal<string>('#a855f7');
+  private readonly infoColor = signal<string>('#38bdf8');
+  private readonly warnColor = signal<string>('#fb923c');
 
   constructor() {
     effect(() => this.updateColors());
@@ -78,10 +78,10 @@ export class OnlineStatsComponent {
 
   private updateColors(): void {
     const s = getComputedStyle(document.documentElement);
-    this.primaryColor.set(s.getPropertyValue('--p-primary-color').trim() || '#22c55e');
-    this.helpColor.set(s.getPropertyValue('--p-button-text-help-color').trim() || '#a855f7');
-    this.infoColor.set(s.getPropertyValue('--p-button-info-background').trim() || '#38bdf8');
-    this.warnColor.set(s.getPropertyValue('--p-button-warn-background').trim() || '#fb923c');
+    this.primaryColor.set(s.getPropertyValue('--color-primary').trim() || '#22c55e');
+    this.helpColor.set(s.getPropertyValue('--color-xp').trim() || '#ad58f7');
+    this.infoColor.set(s.getPropertyValue('--color-info').trim() || '#38bdf8');
+    this.warnColor.set(s.getPropertyValue('--color-warn').trim() || '#ffc107');
   }
 
   // Computed
@@ -106,7 +106,7 @@ export class OnlineStatsComponent {
       : this.timeline().slice(0, -1);
     const peak =
       entries.length >= 1
-        ? entries.reduce((best, e) => (e.total_minutes > best.total_minutes ? e : best))
+        ? entries.reduce((best, e) => (e.total_minutes > best.total_minutes ? e : best), entries[0])
         : null;
     const peakDay = peak
       ? {
