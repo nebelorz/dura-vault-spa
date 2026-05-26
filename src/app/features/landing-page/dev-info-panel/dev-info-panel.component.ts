@@ -71,6 +71,31 @@ export class DevInfoPanelComponent {
 
   entries = signal<DevInfoEntry[]>([
     {
+      date: new Date('2026-05-26'),
+      title: '2.3.1 released',
+      entryType: 'versionMinor',
+      tags: [
+        { label: 'UI/UX', color: 'info' },
+        { label: 'fix', color: 'warn' },
+      ],
+      body: `
+## UI/UX Improvements
+
+- Updated color system implementation with improved its management.
+
+## Fixes & Optimizations
+
+- Fixed minor alignment issues in player statistics display.
+- Enhanced theme switching for better dark mode UX.
+
+## Coming soon...
+
+- Revamp of the highscores section with new charts and filter capabilities.
+- ❗Curiosities section: extra data and insights about the player base and the server.
+- ❗Deaths section: already storing data, soon to be displayed :)
+ `,
+    },
+    {
       date: new Date('2026-04-24'),
       title: '2.3.0 released',
       entryType: 'versionMajor',
