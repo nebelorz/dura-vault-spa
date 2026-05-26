@@ -18,7 +18,7 @@ export class PlayerGainsSummaryComponent {
 
   readonly levelMetricClass = computed(() => {
     const v = this.summary().total_gain_level ?? 0;
-    if (v > 0) return 'metric--skill';
+    if (v > 0) return this.section() === 'experience' ? 'metric--level' : 'metric--skill';
     if (v < 0) return 'metric--danger';
     return '';
   });
