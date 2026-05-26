@@ -77,11 +77,11 @@ export class OnlineStatsComponent {
   }
 
   private updateColors(): void {
-    const s = getComputedStyle(document.documentElement);
-    this.primaryColor.set(s.getPropertyValue('--color-primary').trim() || '#22c55e');
-    this.helpColor.set(s.getPropertyValue('--color-xp').trim() || '#ad58f7');
-    this.infoColor.set(s.getPropertyValue('--color-info').trim() || '#38bdf8');
-    this.warnColor.set(s.getPropertyValue('--color-warn').trim() || '#ffc107');
+    const styles = getComputedStyle(document.documentElement);
+    this.primaryColor.set(styles.getPropertyValue('--color-primary').trim() || '#22c55e');
+    this.helpColor.set(styles.getPropertyValue('--color-xp').trim() || '#ad58f7');
+    this.infoColor.set(styles.getPropertyValue('--color-info').trim() || '#38bdf8');
+    this.warnColor.set(styles.getPropertyValue('--color-warn').trim() || '#ffc107');
   }
 
   // Computed

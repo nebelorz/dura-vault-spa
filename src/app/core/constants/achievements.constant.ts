@@ -51,10 +51,10 @@ interface AchievementCategoryPalette {
 }
 
 const CATEGORY_PALETTE: Record<string, AchievementCategoryPalette> = {
-  level: { dark: '#14532d', main: 'var(--color-metric-level)' },
-  magic_level: { dark: '#3b0764', main: 'var(--color-metric-xp)' },
-  combat_skills: { dark: '#851403', main: 'var(--color-metric-danger)' },
-  fishing: { dark: '#0c3240', main: 'var(--color-metric-info)' },
+  level: { dark: 'var(--color-secondary)', main: 'var(--color-level)' },
+  magic_level: { dark: 'var(--color-secondary)', main: 'var(--color-skill)' },
+  combat_skills: { dark: 'var(--color-secondary)', main: 'var(--color-skill)' },
+  fishing: { dark: 'var(--color-secondary)', main: 'var(--color-skill)' },
 };
 
 export function getCategoryBadgeStyle(category: string): AchievementBadgeStyle {
