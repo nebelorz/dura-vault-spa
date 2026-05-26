@@ -16,19 +16,19 @@
           "
         >
           <div class="podium-card">
+            <div class="podium-name">{{ second.name }}</div>
+            <div class="podium-meta">{{ second.meta }}</div>
             <div
               class="podium-metric podium-metric--second"
               [ngClass]="second.columns[0].valueClass ?? ''"
             >
               {{ second.columns[0].podiumValue ?? second.columns[0].value }}
             </div>
-            @if (second.columns.length > 1) {
-              <div class="podium-metric-visible" [ngClass]="second.columns[1].valueClass ?? ''">
-                {{ second.columns[1].podiumValue ?? second.columns[1].value }}
+            @for (col of second.columns.slice(1); track col.label) {
+              <div class="podium-metric-visible" [ngClass]="col.valueClass ?? ''">
+                {{ col.podiumValue ?? col.value }}
               </div>
             }
-            <div class="podium-name">{{ second.name }}</div>
-            <div class="podium-meta">{{ second.meta }}</div>
             @if (!hideOverlay()) {
               <div class="podium-overlay">
                 @for (col of second.columns; track col.label) {
@@ -71,19 +71,19 @@
         (contextmenu)="itemRightClick.emit({ event: $event, item: first }); $event.preventDefault()"
       >
         <div class="podium-card">
+          <div class="podium-name">{{ first.name }}</div>
+          <div class="podium-meta">{{ first.meta }}</div>
           <div
             class="podium-metric podium-metric--first"
             [ngClass]="first.columns[0].valueClass ?? ''"
           >
             {{ first.columns[0].podiumValue ?? first.columns[0].value }}
           </div>
-          @if (first.columns.length > 1) {
-            <div class="podium-metric-visible" [ngClass]="first.columns[1].valueClass ?? ''">
-              {{ first.columns[1].podiumValue ?? first.columns[1].value }}
+          @for (col of first.columns.slice(1); track col.label) {
+            <div class="podium-metric-visible" [ngClass]="col.valueClass ?? ''">
+              {{ col.podiumValue ?? col.value }}
             </div>
           }
-          <div class="podium-name">{{ first.name }}</div>
-          <div class="podium-meta">{{ first.meta }}</div>
           @if (!hideOverlay()) {
             <div class="podium-overlay">
               @for (col of first.columns; track col.label) {
@@ -122,19 +122,19 @@
           "
         >
           <div class="podium-card">
+            <div class="podium-name">{{ third.name }}</div>
+            <div class="podium-meta">{{ third.meta }}</div>
             <div
               class="podium-metric podium-metric--third"
               [ngClass]="third.columns[0].valueClass ?? ''"
             >
               {{ third.columns[0].podiumValue ?? third.columns[0].value }}
             </div>
-            @if (third.columns.length > 1) {
-              <div class="podium-metric-visible" [ngClass]="third.columns[1].valueClass ?? ''">
-                {{ third.columns[1].podiumValue ?? third.columns[1].value }}
+            @for (col of third.columns.slice(1); track col.label) {
+              <div class="podium-metric-visible" [ngClass]="col.valueClass ?? ''">
+                {{ col.podiumValue ?? col.value }}
               </div>
             }
-            <div class="podium-name">{{ third.name }}</div>
-            <div class="podium-meta">{{ third.meta }}</div>
             @if (!hideOverlay()) {
               <div class="podium-overlay">
                 @for (col of third.columns; track col.label) {

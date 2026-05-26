@@ -124,7 +124,7 @@ export class HighscoreDataTableComponent implements OnInit, OnDestroy {
         record.points && record.points > 0
           ? `${((gainPoints / record.points) * 100).toFixed(2)}%`
           : undefined;
-      const xpClass = this.gainClass(gainPoints, isLoss ? '' : 'metric--xp');
+      const xpClass = this.gainClass(gainPoints, 'metric--xp');
 
       columns = [
         {
@@ -174,7 +174,7 @@ export class HighscoreDataTableComponent implements OnInit, OnDestroy {
       id: record.name,
       rank: record.rank,
       name: record.name,
-      meta: record.vocation,
+      meta: `${record.vocation} · Lvl ${record.level}`,
       columns,
     };
   }

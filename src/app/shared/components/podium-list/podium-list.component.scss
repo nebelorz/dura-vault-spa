@@ -56,16 +56,7 @@
   font-weight: bold;
 
   &--first {
-    color: var(--podium-first-color, #{colors.$rank});
     font-size: 1.6rem;
-  }
-
-  &--second {
-    color: var(--podium-second-color, #c0c0c0);
-  }
-
-  &--third {
-    color: var(--podium-third-color, #cd7f32);
   }
 }
 

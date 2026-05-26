@@ -81,18 +81,19 @@ export class DevInfoPanelComponent {
       body: `
 ## UI/UX Improvements
 
-- Updated color system implementation with improved its management.
+Updated color system implementation with improved its management.  
+Highscores sections updated styling.
 
 ## Fixes & Optimizations
 
-- Fixed minor alignment issues in player statistics display.
-- Enhanced theme switching for better dark mode UX.
+Fixed minor alignment issues in player statistics display.  
+Enhanced theme switching for better dark mode UX.
 
 ## Coming soon...
 
-- Revamp of the highscores section with new charts and filter capabilities.
-- ❗Curiosities section: extra data and insights about the player base and the server.
-- ❗Deaths section: already storing data, soon to be displayed :)
+Revamp of the highscores section with new charts and filter capabilities.  
+❗Curiosities section: extra data and insights about the player base and the server.  
+❗Deaths section: already storing data, soon to be displayed :)
  `,
     },
     {
