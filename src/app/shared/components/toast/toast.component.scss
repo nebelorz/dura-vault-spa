@@ -122,22 +122,22 @@
 
 // Default severity styles
 .toast-success {
-  background: colors.$primary-opacity-2;
+  background: colors.$primary-a20;
   border-left-color: colors.$primary;
 }
 
 .toast-info {
-  background: colors.$info-opacity-2;
+  background: colors.$info-a20;
   border-left-color: colors.$info;
 }
 
 .toast-warn {
-  background: colors.$warn-opacity-2;
+  background: colors.$warn-a20;
   border-left-color: colors.$warn;
 }
 
 .toast-error {
-  background: colors.$danger-opacity-2;
+  background: colors.$danger-a20;
   border-left-color: colors.$danger;
 }
 

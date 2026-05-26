@@ -69,20 +69,20 @@ section {
   }
 
   &.top-one {
-    border-left-color: colors.$rank-opacity-2;
-    background: colors.$rank-opacity-1;
+    border-left-color: colors.$rank-a20;
+    background: colors.$rank-a10;
 
     &:hover {
-      background: colors.$rank-opacity-2;
+      background: colors.$rank-a20;
     }
   }
 
   &.player-row--loss {
-    border-left-color: colors.$danger-opacity-2;
-    background: colors.$danger-opacity-1;
+    border-left-color: colors.$danger-a20;
+    background: colors.$danger-a10;
 
     &:hover {
-      background: colors.$danger-opacity-2;
+      background: colors.$danger-a20;
     }
   }
 }

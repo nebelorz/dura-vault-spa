@@ -22,17 +22,17 @@
   cursor: pointer;
 
   &.active-section {
-    border-left-color: colors.$primary-opacity-2;
-    background-color: colors.$primary-opacity-1;
+    border-left-color: colors.$primary-a20;
+    background-color: colors.$primary-a10;
   }
 
   &.negative {
-    background: colors.$danger-opacity-1;
+    background: colors.$danger-a10;
   }
 
   &.active-section.negative {
-    border-left-color: colors.$danger-opacity-2;
-    background-color: colors.$danger-opacity-1;
+    border-left-color: colors.$danger-a20;
+    background-color: colors.$danger-a10;
   }
 
   &:hover .stat-overlay {
@@ -50,7 +50,7 @@
   margin-top: 0.125rem;
 
   i {
-    color: colors.$gray-light;
+    color: colors.$secondary-light;
     opacity: 0.85;
     transition: color 0.2s ease;
 

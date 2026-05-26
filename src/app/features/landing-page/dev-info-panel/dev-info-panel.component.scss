@@ -38,7 +38,7 @@
   background: colors.$secondary;
 
   &:hover {
-    background: colors.$secondary-opacity-1;
+    background: colors.$secondary-a10;
   }
 }
 
@@ -120,38 +120,38 @@
   font-family: ui-monospace, monospace;
 
   // Default / primary (new feature, generic)
-  background: colors.$primary-opacity-1;
+  background: colors.$primary-a10;
   color: colors.$primary;
-  border: 1px solid colors.$primary-opacity-2;
+  border: 1px solid colors.$primary-a20;
 
   &.tag-error {
-    background: colors.$danger-opacity-1;
+    background: colors.$danger-a10;
     color: colors.$danger;
-    border-color: colors.$danger-opacity-2;
+    border-color: colors.$danger-a20;
   }
 
   &.tag-warn {
-    background: colors.$warn-opacity-1;
+    background: colors.$warn-a10;
     color: colors.$warn;
-    border-color: colors.$warn-opacity-2;
+    border-color: colors.$warn-a20;
   }
 
   &.tag-info {
-    background: colors.$info-opacity-1;
+    background: colors.$info-a10;
     color: colors.$info;
-    border-color: colors.$info-opacity-2;
+    border-color: colors.$info-a20;
   }
 
   &.tag-experience {
-    background: colors.$experience-opacity-1;
-    color: colors.$experience;
-    border-color: colors.$experience-opacity-2;
+    background: colors.$xp-a10;
+    color: colors.$xp;
+    border-color: colors.$xp-a20;
   }
 
   &.tag-level {
-    background: colors.$level-opacity-1;
+    background: colors.$level-a10;
     color: colors.$level;
-    border-color: colors.$level-opacity-2;
+    border-color: colors.$level-a20;
   }
 }
 
@@ -163,15 +163,8 @@
     max-height 0.3s ease,
     padding 0.3s ease;
   padding: 0 1rem;
-}
 
-.changelog-entry.expanded .changelog-body {
-  max-height: 2000px;
-  padding: 0.9rem 1rem 1rem;
-}
-
-// ─── Markdown content ────────────────────────────────────────────────────────
-.changelog-body {
+  // ─── Markdown content ────────────────────────────────────────────────────────
   h2 {
     font-size: text.$text-md;
     font-weight: 600;
@@ -244,7 +237,7 @@
   blockquote {
     margin: 0.75rem 0;
     padding: 0.6rem 0.85rem;
-    background: colors.$info-opacity-2;
+    background: colors.$info-a20;
     border-left: colors.$info 4px solid;
     border-radius: 0 5px 5px 0;
 
@@ -269,4 +262,9 @@
     display: block;
     opacity: 0.9;
   }
+}
+
+.changelog-entry.expanded .changelog-body {
+  max-height: 2000px;
+  padding: 0.9rem 1rem 1rem;
 }
