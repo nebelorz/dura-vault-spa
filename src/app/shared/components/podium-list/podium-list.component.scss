@@ -147,6 +147,16 @@
     border: 1px solid var(--podium-third-border, rgba(205, 127, 50, 0.25));
     border-bottom: none;
   }
+
+  &--warn {
+    background: colors.$warn-a10;
+    border-color: color-mix(in srgb, var(--color-warn), transparent 65%);
+  }
+
+  &--danger {
+    background: colors.$danger-a10;
+    border-color: color-mix(in srgb, var(--color-danger), transparent 65%);
+  }
 }
 
 .podium-rank {
@@ -166,6 +176,16 @@
   .podium-base--third & {
     color: var(--podium-third-color, #cd7f32);
   }
+}
+
+.podium-base--warn .podium-rank {
+  color: var(--color-warn);
+  opacity: 0.6;
+}
+
+.podium-base--danger .podium-rank {
+  color: var(--color-danger);
+  opacity: 0.6;
 }
 
 // ===========================

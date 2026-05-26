@@ -82,6 +82,7 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
         meta: `${record.vocation} · Lvl ${record.level}`,
         columns,
         rowClass: this.rowTimeClass(record),
+        podiumClass: this.podiumTimeClass(record),
       };
     });
   });
@@ -138,6 +139,13 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
   private metricTimeClass(minutes: number): string {
     if (minutes >= DAILY_DANGER_MIN) return 'metric--danger';
     if (minutes >= DAILY_WARN_MIN) return 'metric--warn';
+    return '';
+  }
+
+  private podiumTimeClass(record: OnlineTopRecord): string {
+    const avg = record.online_time / Math.max(1, record.days_active);
+    if (avg >= DAILY_DANGER_MIN) return 'podium-base--danger';
+    if (avg >= DAILY_WARN_MIN) return 'podium-base--warn';
     return '';
   }
 

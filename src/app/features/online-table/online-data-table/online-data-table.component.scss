@@ -4,18 +4,6 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-
-  // Red colored podium
-  // Rank 1 = brightest, Rank 3 = lightest
-  --podium-first-color: #{colors.$danger};
-  --podium-first-bg: color-mix(in srgb, var(--color-danger), transparent 60%);
-  --podium-first-border: color-mix(in srgb, var(--color-danger), transparent 45%);
-  --podium-second-color: #{colors.$danger};
-  --podium-second-bg: color-mix(in srgb, var(--color-danger), transparent 78%);
-  --podium-second-border: color-mix(in srgb, var(--color-danger), transparent 65%);
-  --podium-third-color: #{colors.$danger};
-  --podium-third-bg: color-mix(in srgb, var(--color-danger), transparent 90%);
-  --podium-third-border: color-mix(in srgb, var(--color-danger), transparent 80%);
 }
 
 app-podium-list {

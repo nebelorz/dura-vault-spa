@@ -20,6 +20,7 @@ export interface PodiumListItem {
   meta: string;
   columns: ListColumn[]; // Metrics to display. All columns are iterated in both the podium and the list
   rowClass?: string;
+  podiumClass?: string; // Applied to .podium-base
 }
 
 @Component({

@@ -55,7 +55,7 @@
               </div>
             }
           </div>
-          <div class="podium-base podium-base--second">
+          <div class="podium-base podium-base--second" [ngClass]="second.podiumClass ?? ''">
             <span class="podium-rank">2</span>
           </div>
         </div>
@@ -107,7 +107,7 @@
             </div>
           }
         </div>
-        <div class="podium-base podium-base--first">
+        <div class="podium-base podium-base--first" [ngClass]="first.podiumClass ?? ''">
           <span class="podium-rank">1</span>
         </div>
       </div>
@@ -161,7 +161,7 @@
               </div>
             }
           </div>
-          <div class="podium-base podium-base--third">
+          <div class="podium-base podium-base--third" [ngClass]="third.podiumClass ?? ''">
             <span class="podium-rank">3</span>
           </div>
         </div>
