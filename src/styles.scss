@@ -34,9 +34,9 @@ body {
   line-height: 1.2;
   min-width: unset;
   height: auto;
-  background: colors.$primary-opacity-1;
+  background: colors.$primary-a10;
   color: colors.$primary;
-  border: 1px solid colors.$primary-opacity-2;
+  border: 1px solid colors.$primary-a20;
 }
 
 // TOOLTIPS
@@ -61,24 +61,35 @@ body {
 }
 
 // METRIC COLOR CLASSES (used in podium-list, performance-summary, etc.)
-.metric--xp {
-  color: var(--color-metric-xp);
-}
-.metric--skill,
 .metric--level {
-  color: var(--color-metric-level);
+  color: var(--color-level);
+}
+.metric--skill {
+  color: var(--color-skill);
+}
+.metric--xp {
+  color: var(--color-xp);
 }
 .metric--rank {
-  color: var(--color-metric-rank);
+  color: var(--color-rank);
 }
+
+// COLOR CLASSES
+.color--warn,
 .metric--warn {
-  color: var(--color-metric-warn);
+  color: var(--color-warn);
 }
+.color--danger,
 .metric--danger {
-  color: var(--color-metric-danger);
+  color: var(--color-danger);
 }
+.color--info,
 .metric--info {
-  color: var(--color-metric-info);
+  color: var(--color-info);
+}
+.color--secondary,
+.metric--secondary {
+  color: var(--color-secondary);
 }
 
 // TYPOGRAPHY UTILITIES (shared across player-detail, podium-list, etc.)
@@ -129,7 +140,7 @@ body {
 }
 
 .text-additional-info {
-  color: colors.$gray-light;
+  color: colors.$secondary-light;
   font-size: text.$text-base;
   margin-left: 0.25em;
 }
@@ -186,25 +197,25 @@ body {
   border-radius: 6px;
 
   &--xp {
-    background: colors.$experience-opacity-1;
+    background: colors.$xp-a10;
   }
   &--skill {
-    background: colors.$level-opacity-1;
+    background: colors.$level-a10;
   }
   &--rank {
-    background: colors.$rank-opacity-1;
+    background: colors.$rank-a10;
   }
   &--secondary {
-    background: colors.$secondary-opacity-1;
+    background: colors.$secondary-a10;
   }
   &--warn {
-    background: colors.$warn-opacity-1;
+    background: colors.$warn-a10;
   }
   &--danger {
-    background: colors.$danger-opacity-1;
+    background: colors.$danger-a10;
   }
   &--info {
-    background: colors.$info-opacity-1;
+    background: colors.$info-a10;
   }
 }
 

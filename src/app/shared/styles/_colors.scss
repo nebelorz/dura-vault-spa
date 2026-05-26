@@ -1,115 +1,95 @@
 // ===============================
-// Base Colors
+// CSS Custom Properties — Single Source of Truth
 // ===============================
-$primary: var(--p-primary-color); // Main brand color
-$secondary: var(--p-button-secondary-background); // Secondary color
-$rank: #ffbc40; // Rank color
-$level: var(--p-primary-color); // Level color (same as primary)
-$experience: var(--p-button-help-background); // Experience color
-$gray-light: #777777; // Light gray
-$chart-grid: rgba(128, 128, 128, 0.2); // Subtle chart grid line
+// These are the authoritative color definitions for the entire app.
+// All SCSS $variables below are wrappers that compile to these CSS vars.
+//
+// Consumption patterns:
+//   SCSS styling:       colors.$primary, colors.$danger-a10, etc.
+//   TS chart colors:    getComputedStyle(doc).getPropertyValue('--color-primary')
+//   TS SVG attributes:  'var(--color-level)' as string literal (browser resolves)
+// ===============================
+
+:root {
+  // ─── Domain base colors ─────────────────────────────────────────
+  --color-rank: #ffbc40;
+  --color-skill: #43d4d4;
+  --color-warn: #ffc107;
+  --color-secondary-light: #777777;
+
+  // ─── PrimeNG-mapped colors ──────────────────────────────────────
+  --color-primary: var(--p-primary-color);
+  --color-level: var(--p-primary-color);
+  --color-secondary: var(--p-button-secondary-background);
+  --color-xp: var(--p-button-help-background);
+  --color-info: var(--p-button-info-background);
+  --color-danger: var(--p-button-danger-background);
+  --color-success: var(--p-button-success-background);
+
+  // ─── Opacity variants — derived, never hardcoded ─────────────────
+  --color-primary-a10: color-mix(in srgb, var(--color-primary), transparent 90%);
+  --color-primary-a20: color-mix(in srgb, var(--color-primary), transparent 80%);
+  --color-level-a10: color-mix(in srgb, var(--color-level), transparent 90%);
+  --color-level-a20: color-mix(in srgb, var(--color-level), transparent 80%);
+  --color-rank-a10: color-mix(in srgb, var(--color-rank), transparent 90%);
+  --color-rank-a20: color-mix(in srgb, var(--color-rank), transparent 80%);
+  --color-skill-a10: color-mix(in srgb, var(--color-skill), transparent 90%);
+  --color-skill-a20: color-mix(in srgb, var(--color-skill), transparent 80%);
+  --color-xp-a10: color-mix(in srgb, var(--color-xp), transparent 90%);
+  --color-xp-a20: color-mix(in srgb, var(--color-xp), transparent 80%);
+  --color-secondary-a10: color-mix(in srgb, var(--color-secondary), transparent 90%);
+  --color-secondary-a20: color-mix(in srgb, var(--color-secondary), transparent 80%);
+  --color-warn-a10: color-mix(in srgb, var(--color-warn), transparent 90%);
+  --color-warn-a20: color-mix(in srgb, var(--color-warn), transparent 80%);
+  --color-danger-a10: color-mix(in srgb, var(--color-danger), transparent 90%);
+  --color-danger-a20: color-mix(in srgb, var(--color-danger), transparent 80%);
+  --color-info-a10: color-mix(in srgb, var(--color-info), transparent 90%);
+  --color-info-a20: color-mix(in srgb, var(--color-info), transparent 80%);
+
+  // ─── Chart-internal ─────────────────────────────────────────────
+  --color-chart-grid: rgba(128, 128, 128, 0.2);
+
+  // ─── Interaction states ──────────────────────────────────────────
+  --color-secondary-hover: var(--p-button-secondary-hover-background);
+}
 
 // ===============================
-// Opacity Variants (0.1)
+// SCSS Variables — wrappers for @use 'colors' consumers
 // ===============================
-// Backgrounds, shadows, overlays, etc.
-$primary-opacity-1: rgba(34, 197, 94, 0.1);
-$secondary-opacity-1: var(--p-button-secondary-hover-background);
-$info-opacity-1: rgba(#38bdf8, 0.1);
-$warn-opacity-1: rgba(#ffc107, 0.1);
-$rank-opacity-1: rgba(255, 188, 64, 0.1);
-$level-opacity-1: rgba(34, 197, 94, 0.1);
-$experience-opacity-1: rgba(173, 88, 247, 0.1);
-$danger-opacity-1: rgba(239, 68, 68, 0.1);
 
-// ===============================
-// Opacity Variants (0.2)
-// ===============================
-// Backgrounds, shadows, overlays, etc.
-$primary-opacity-2: rgba(34, 197, 94, 0.2);
-$secondary-opacity-2: var(----p-button-secondary-active-background);
-$info-opacity-2: rgba(#38bdf8, 0.2);
-$warn-opacity-2: rgba(#ffc107, 0.2);
-$rank-opacity-2: rgba(255, 188, 64, 0.2);
-$level-opacity-2: rgba(34, 197, 94, 0.2);
-$experience-opacity-2: rgba(173, 88, 247, 0.2);
-$danger-opacity-2: rgba(239, 68, 68, 0.2);
-
-// ===============================
-// Primary Color Variants
-// ===============================
-$primary-contrast: var(--p-primary-contrast-color);
-$primary-hover: var(--p-primary-hover-color);
-$primary-active: var(--p-primary-active-color);
-
-// ===============================
-// Secondary Color Variants
-// ===============================
-$secondary-hover: var(--p-button-secondary-hover-background);
-$secondary-active: var(--p-button-secondary-active-background);
-$secondary-contrast: var(--p-button-secondary-color);
-
-// ===============================
-// Info Colors
-// ===============================
-$info: var(--p-button-info-background);
-$info-contrast: var(--p-button-info-color);
-$info-hover: var(--p-button-info-hover-background);
-$info-active: var(--p-button-info-active-background);
-
-// ===============================
-// Success Colors
-// ===============================
-$success: var(--p-button-success-background);
-$success-contrast: var(--p-button-success-color);
-$success-hover: var(--p-button-success-hover-background);
-$success-active: var(--p-button-success-active-background);
-
-// ===============================
-// Warn Colors
-// ===============================
-$warn: #ffc107;
-$warn-contrast: var(--p-button-warn-color);
-$warn-hover: var(--p-button-warn-hover-background);
-$warn-active: var(--p-button-warn-active-background);
-
-// ===============================
-// Danger Colors
-// ===============================
-$danger: var(--p-button-danger-background);
-$danger-contrast: var(--p-button-danger-color);
-$danger-hover: var(--p-button-danger-hover-background);
-$danger-active: var(--p-button-danger-active-background);
-
-// ===============================
-// Help Colors
-// ===============================
-$help: var(--p-button-help-background);
-$help-contrast: var(--p-button-help-color);
-$help-hover: var(--p-button-help-hover-background);
-$help-active: var(--p-button-help-active-background);
-
-// ===============================
-// Surface Colors
-// ===============================
+// Base
+$primary: var(--color-primary);
+$secondary: var(--color-secondary);
+$rank: var(--color-rank);
+$level: var(--color-level);
+$skill: var(--color-skill);
+$xp: var(--color-xp);
+$secondary-light: var(--color-secondary-light);
+$warn: var(--color-warn);
+$danger: var(--color-danger);
+$info: var(--color-info);
+$success: var(--color-success);
 $surface: var(--p-surface-0);
 $surface-dark: var(--p-surface-950);
+$chart-grid: var(--color-chart-grid);
+$secondary-hover: var(--color-secondary-hover);
 
-// ===============================
-// CSS Custom Properties
-// Single source of truth for colors
-// CSS: use var(--color-*) directly — browser resolves var() chains.
-// Chart: use readCssColor('--color-*') to resolve one level of var() indirection.
-// ===============================
-:root {
-  // Metric colors (match .metric--* classes in styles.scss)
-  --color-metric-level: #{$level};
-  --color-metric-xp: #{$experience};
-  --color-metric-rank: #{$rank};
-  --color-metric-warn: #{$warn};
-  --color-metric-danger: #{$danger};
-  --color-metric-info: #{$info};
-
-  // Chart-specific
-  --color-chart-grid: #{$chart-grid};
-}
+// Opacity — canonical names
+$primary-a10: var(--color-primary-a10);
+$primary-a20: var(--color-primary-a20);
+$level-a10: var(--color-level-a10);
+$level-a20: var(--color-level-a20);
+$rank-a10: var(--color-rank-a10);
+$rank-a20: var(--color-rank-a20);
+$skill-a10: var(--color-skill-a10);
+$skill-a20: var(--color-skill-a20);
+$xp-a10: var(--color-xp-a10);
+$xp-a20: var(--color-xp-a20);
+$secondary-a10: var(--color-secondary-a10);
+$secondary-a20: var(--color-secondary-a20);
+$warn-a10: var(--color-warn-a10);
+$warn-a20: var(--color-warn-a20);
+$danger-a10: var(--color-danger-a10);
+$danger-a20: var(--color-danger-a20);
+$info-a10: var(--color-info-a10);
+$info-a20: var(--color-info-a20);
