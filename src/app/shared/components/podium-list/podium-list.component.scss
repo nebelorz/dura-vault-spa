@@ -55,17 +55,17 @@
   font-size: 1.3rem;
   font-weight: bold;
 
-  &--gold {
-    color: var(--podium-gold-color, #{colors.$rank});
+  &--first {
+    color: var(--podium-first-color, #{colors.$rank});
     font-size: 1.6rem;
   }
 
-  &--silver {
-    color: var(--podium-silver-color, #c0c0c0);
+  &--second {
+    color: var(--podium-second-color, #c0c0c0);
   }
 
-  &--bronze {
-    color: var(--podium-bronze-color, #cd7f32);
+  &--third {
+    color: var(--podium-third-color, #cd7f32);
   }
 }
 
@@ -135,24 +135,25 @@
   border-radius: 6px 6px 0 0;
   margin-top: 0.5rem;
 
-  &--gold {
+  &--first {
     height: 90px;
-    background: var(--podium-gold-bg, #{colors.$rank-opacity-2});
-    border: 1px solid var(--podium-gold-border, rgba(255, 188, 64, 0.35));
+    background: var(--podium-first-bg, #{colors.$rank-a20});
+    border: 1px solid
+      var(--podium-first-border, color-mix(in srgb, var(--color-rank), transparent 65%));
     border-bottom: none;
   }
 
-  &--silver {
+  &--second {
     height: 80px;
-    background: var(--podium-silver-bg, rgba(192, 192, 192, 0.12));
-    border: 1px solid var(--podium-silver-border, rgba(192, 192, 192, 0.25));
+    background: var(--podium-second-bg, rgba(192, 192, 192, 0.12));
+    border: 1px solid var(--podium-second-border, rgba(192, 192, 192, 0.25));
     border-bottom: none;
   }
 
-  &--bronze {
+  &--third {
     height: 65px;
-    background: var(--podium-bronze-bg, rgba(205, 127, 50, 0.12));
-    border: 1px solid var(--podium-bronze-border, rgba(205, 127, 50, 0.25));
+    background: var(--podium-third-bg, rgba(205, 127, 50, 0.12));
+    border: 1px solid var(--podium-third-border, rgba(205, 127, 50, 0.25));
     border-bottom: none;
   }
 }
@@ -162,17 +163,17 @@
   font-weight: bold;
   opacity: 0.45;
 
-  .podium-base--silver & {
-    color: var(--podium-silver-color, #c0c0c0);
+  .podium-base--second & {
+    color: var(--podium-second-color, #c0c0c0);
   }
 
-  .podium-base--gold & {
-    color: var(--podium-gold-color, #{colors.$rank});
+  .podium-base--first & {
+    color: var(--podium-first-color, #{colors.$rank});
     opacity: 0.7;
   }
 
-  .podium-base--bronze & {
-    color: var(--podium-bronze-color, #cd7f32);
+  .podium-base--third & {
+    color: var(--podium-third-color, #cd7f32);
   }
 }
 
@@ -235,18 +236,18 @@
   }
 
   &--warn {
-    background: colors.$warn-opacity-1;
+    background: colors.$warn-a10;
 
     &:hover {
-      background: colors.$warn-opacity-2;
+      background: colors.$warn-a20;
     }
   }
 
   &--danger {
-    background: colors.$danger-opacity-1;
+    background: colors.$danger-a10;
 
     &:hover {
-      background: colors.$danger-opacity-2;
+      background: colors.$danger-a20;
     }
   }
 }

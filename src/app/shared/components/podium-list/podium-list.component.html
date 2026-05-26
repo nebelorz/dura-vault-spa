@@ -17,7 +17,7 @@
         >
           <div class="podium-card">
             <div
-              class="podium-metric podium-metric--silver"
+              class="podium-metric podium-metric--second"
               [ngClass]="second.columns[0].valueClass ?? ''"
             >
               {{ second.columns[0].podiumValue ?? second.columns[0].value }}
@@ -55,7 +55,7 @@
               </div>
             }
           </div>
-          <div class="podium-base podium-base--silver">
+          <div class="podium-base podium-base--second">
             <span class="podium-rank">2</span>
           </div>
         </div>
@@ -72,7 +72,7 @@
       >
         <div class="podium-card">
           <div
-            class="podium-metric podium-metric--gold"
+            class="podium-metric podium-metric--first"
             [ngClass]="first.columns[0].valueClass ?? ''"
           >
             {{ first.columns[0].podiumValue ?? first.columns[0].value }}
@@ -107,7 +107,7 @@
             </div>
           }
         </div>
-        <div class="podium-base podium-base--gold">
+        <div class="podium-base podium-base--first">
           <span class="podium-rank">1</span>
         </div>
       </div>
@@ -123,7 +123,7 @@
         >
           <div class="podium-card">
             <div
-              class="podium-metric podium-metric--bronze"
+              class="podium-metric podium-metric--third"
               [ngClass]="third.columns[0].valueClass ?? ''"
             >
               {{ third.columns[0].podiumValue ?? third.columns[0].value }}
@@ -161,7 +161,7 @@
               </div>
             }
           </div>
-          <div class="podium-base podium-base--bronze">
+          <div class="podium-base podium-base--third">
             <span class="podium-rank">3</span>
           </div>
         </div>
