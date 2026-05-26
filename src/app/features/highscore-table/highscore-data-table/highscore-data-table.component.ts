@@ -138,7 +138,7 @@ export class HighscoreDataTableComponent implements OnInit, OnDestroy {
           label: isLoss ? 'Levels Lost' : 'Levels Gain',
           value: `${record.gain_level}`,
           podiumValue: `${record.gain_level} ${gainWord(record.gain_level, 'LEVEL', 'LEVELS')}`,
-          valueClass: this.gainClass(record.gain_level, 'metric--skill'),
+          valueClass: this.gainClass(record.gain_level, 'metric--level'),
           subValue: `Lvl ${record.level}`,
         },
         {
