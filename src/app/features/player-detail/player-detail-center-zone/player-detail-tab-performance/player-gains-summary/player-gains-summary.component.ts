@@ -10,6 +10,7 @@ import { AbbreviateNumberPipe } from '@shared/pipes';
   templateUrl: './player-gains-summary.component.html',
   styleUrl: './player-gains-summary.component.scss',
   imports: [NgClass, AbbreviateNumberPipe],
+  host: { '[class.skill-section]': "section() !== 'experience'" },
 })
 export class PlayerGainsSummaryComponent {
   summary = input.required<PlayerDetailsSummary>();
@@ -17,16 +18,22 @@ export class PlayerGainsSummaryComponent {
 
   readonly levelMetricClass = computed(() => {
     const v = this.summary().total_gain_level ?? 0;
-    return v > 0 ? 'metric--skill' : v < 0 ? 'metric--danger' : '';
+    if (v > 0) return 'metric--skill';
+    if (v < 0) return 'metric--danger';
+    return '';
   });
 
   readonly xpMetricClass = computed(() => {
     const v = this.summary().total_gain_points ?? 0;
-    return v > 0 ? 'metric--xp' : v < 0 ? 'metric--danger' : '';
+    if (v > 0) return 'metric--xp';
+    if (v < 0) return 'metric--danger';
+    return '';
   });
 
   readonly rankMetricClass = computed(() => {
     const v = this.summary().total_gain_rank ?? 0;
-    return v > 0 ? 'metric--rank' : v < 0 ? 'metric--danger' : '';
+    if (v > 0) return 'metric--rank';
+    if (v < 0) return 'metric--danger';
+    return '';
   });
 }

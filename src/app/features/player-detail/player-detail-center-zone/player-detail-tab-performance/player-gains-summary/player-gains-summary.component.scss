@@ -22,13 +22,19 @@
   margin-bottom: 0.2rem;
 
   &--level {
-    background: var(--color-metric-level);
+    background: var(--color-level);
   }
   &--xp {
-    background: var(--color-metric-xp);
+    background: var(--color-xp);
   }
   &--rank {
-    background: var(--color-metric-rank);
+    background: var(--color-rank);
     opacity: 0.45;
+  }
+}
+
+:host.skill-section {
+  .gains-dot--level {
+    background: var(--color-skill);
   }
 }

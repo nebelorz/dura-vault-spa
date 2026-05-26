@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  effect,
-  inject,
-  input,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 
 import { PlayerDetailsDailyRecord, PlayerHistoricResponse, HighscoreSection } from '@core/models';
 import { ThemeService } from '@core/services';
@@ -68,21 +60,25 @@ export class PlayerDetailChartComponent {
     this.section() === 'experience' ? 'Level' : getSectionLabel(this.section()),
   );
 
-  private levelMetricColor = signal<string>('');
-  private experienceMetricColor = signal<string>('');
-  private rankMetricColor = signal<string>('');
-  private gridColor = signal<string>('');
-  private readonly syncChartColors = effect(() => {
-    this.themeService.darkMode();
-    this.updateColors();
+  private readonly colors = computed(() => {
+    this.themeService.darkMode(); // reactive: recompute on theme change
+    const currentStyle = getComputedStyle(document.documentElement);
+    const level = this.readCssColor(currentStyle, '--color-level');
+    const skill = this.readCssColor(currentStyle, '--color-skill');
+    return {
+      levelOrSkill: this.section() === 'experience' ? level : skill,
+      xp: this.readCssColor(currentStyle, '--color-xp'),
+      rank: this.readCssColor(currentStyle, '--color-rank'),
+      grid: this.readCssColor(currentStyle, '--color-chart-grid'),
+    };
   });
 
-  private readCssColor(styles: CSSStyleDeclaration, varName: string, fallback: string): string {
+  private readCssColor(styles: CSSStyleDeclaration, varName: string): string {
     const value = styles.getPropertyValue(varName).trim();
-    if (!value) return fallback;
+    if (!value) return '';
     if (value.startsWith('var(')) {
       const inner = value.slice(4, -1).split(',')[0].trim();
-      return styles.getPropertyValue(inner).trim() || fallback;
+      return styles.getPropertyValue(inner).trim();
     }
     return value;
   }
@@ -103,19 +99,12 @@ export class PlayerDetailChartComponent {
     return color;
   }
 
-  private updateColors(): void {
-    const styles = getComputedStyle(document.documentElement);
-    this.levelMetricColor.set(this.readCssColor(styles, '--color-metric-level', '#22c55e'));
-    this.experienceMetricColor.set(this.readCssColor(styles, '--color-metric-xp', '#ad58f7'));
-    this.rankMetricColor.set(this.readCssColor(styles, '--color-metric-rank', '#ffbc40'));
-    this.gridColor.set(this.readCssColor(styles, '--color-chart-grid', 'rgba(128,128,128,0.2)'));
-  }
-
   // Prepare chart data
   chartData = computed(() => {
     const data = this.playerDetailsData();
     if (!data?.daily?.length || data.daily.length <= 1) return null;
 
+    const { levelOrSkill, xp, rank } = this.colors();
     const labels = data.daily.map((record) => formatDate(record.scrape_date));
     const hasPoints = data.daily.some((record) => record.points !== null);
 
@@ -123,7 +112,7 @@ export class PlayerDetailChartComponent {
       this.createDataset(
         this.levelLabel(),
         data.daily.map((r) => r.level),
-        this.levelMetricColor(),
+        levelOrSkill,
         'y',
         true,
         1,
@@ -135,7 +124,7 @@ export class PlayerDetailChartComponent {
         this.createDataset(
           'Experience',
           data.daily.map((r) => r.points),
-          this.experienceMetricColor(),
+          xp,
           'y1',
           false,
           2,
@@ -147,7 +136,7 @@ export class PlayerDetailChartComponent {
       this.createSteppedDataset(
         'Rank',
         data.daily.map((r) => r.rank),
-        this.rankMetricColor(),
+        rank,
         'y2',
       ),
     );
@@ -183,7 +172,7 @@ export class PlayerDetailChartComponent {
             label: (context: TooltipContext) => {
               const label = context.dataset.label || '';
               const value = context.parsed.y;
-              if (value === null || value === undefined || isNaN(value)) return null;
+              if (value === null || value === undefined || Number.isNaN(value)) return null;
               let formattedValue: string;
               if (label === 'Experience') formattedValue = formatNumber(value);
               else if (label === 'Rank') formattedValue = `#${Math.floor(value)}`;
@@ -193,7 +182,7 @@ export class PlayerDetailChartComponent {
           },
         },
       },
-      scales: this.createScales(hasPoints, data?.daily ?? [], this.levelLabel()),
+      scales: this.createScales(hasPoints, data?.daily ?? [], this.levelLabel(), this.colors()),
     };
   });
 
@@ -203,8 +192,8 @@ export class PlayerDetailChartComponent {
   ): { suggestedMin: number; suggestedMax: number } {
     const valid = values.filter((v): v is number => v !== null);
     if (!valid.length) return { suggestedMin: 0, suggestedMax: 100 };
-    const dataMin = valid.reduce((a, b) => (b < a ? b : a), valid[0]);
-    const dataMax = valid.reduce((a, b) => (b > a ? b : a), valid[0]);
+    const dataMin = Math.min(...valid);
+    const dataMax = Math.max(...valid);
     const pad = Math.max(1, Math.ceil((dataMax - dataMin) * paddingFactor));
     return { suggestedMin: dataMin - pad, suggestedMax: dataMax + pad };
   }
@@ -240,7 +229,7 @@ export class PlayerDetailChartComponent {
     fill: boolean,
     order: number,
   ): ChartDataset {
-    const hasNulls = data.some((v) => v === null);
+    const hasNulls = data.includes(null);
     const dataset: ChartDataset = {
       label,
       data,
@@ -271,6 +260,7 @@ export class PlayerDetailChartComponent {
     hasPoints: boolean,
     daily: PlayerDetailsDailyRecord[],
     levelLabel: string,
+    colors: { levelOrSkill: string; xp: string; rank: string; grid: string },
   ): Record<string, unknown> {
     const levelBounds = this.computeBounds(
       daily.map((r) => r.level),
@@ -297,10 +287,11 @@ export class PlayerDetailChartComponent {
       },
       y: this.createYAxis(
         levelLabel.toUpperCase(),
-        this.levelMetricColor(),
+        colors.levelOrSkill,
         'right',
         true,
         (value: number) => Math.floor(value).toString(),
+        colors.grid,
         {
           suggestedMin: levelBounds.suggestedMin,
           suggestedMax: levelBounds.suggestedMax,
@@ -309,10 +300,11 @@ export class PlayerDetailChartComponent {
       ),
       y1: this.createYAxis(
         'EXPERIENCE',
-        this.experienceMetricColor(),
+        colors.xp,
         'right',
         false,
         (value: number) => formatNumber(value),
+        colors.grid,
         {
           hidden: !hasPoints,
           suggestedMin: pointsBounds.suggestedMin,
@@ -321,10 +313,11 @@ export class PlayerDetailChartComponent {
       ),
       y2: this.createYAxis(
         'RANK',
-        this.rankMetricColor(),
+        colors.rank,
         'left',
         false,
         (value: number) => `#${Math.floor(value)}`,
+        colors.grid,
         {
           reverse: true,
           suggestedMin: rankBounds.suggestedMin,
@@ -343,6 +336,7 @@ export class PlayerDetailChartComponent {
     position: 'left' | 'right',
     drawGridOnChart: boolean,
     tickCallback: (value: number) => string,
+    gridColor: string,
     options: YAxisOptions = {},
   ): YAxisConfig {
     const config: YAxisConfig = {
@@ -359,7 +353,7 @@ export class PlayerDetailChartComponent {
       },
       grid: {
         drawOnChartArea: drawGridOnChart,
-        color: this.gridColor(),
+        color: gridColor,
       },
       title: {
         display: true,
