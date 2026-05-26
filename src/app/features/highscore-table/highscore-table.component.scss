@@ -1,12 +1,8 @@
 .highscore-container {
   padding: 1rem;
   max-width: 100%;
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 70px);
 
   .highscore-header {
-    flex-shrink: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,8 +16,23 @@
     }
   }
 
-  app-highscore-data-table {
-    flex: 1;
-    min-height: 0;
+  .highscore-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+
+    .highscore-left {
+      position: sticky;
+      top: calc(50px + 1rem);
+      height: calc(90vh - 100px - 2rem);
+      display: flex;
+      flex-direction: column;
+
+      app-highscore-data-table {
+        flex: 1;
+        min-height: 0;
+      }
+    }
   }
 }

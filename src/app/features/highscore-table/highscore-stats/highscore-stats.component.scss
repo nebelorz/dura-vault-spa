@@ -1,0 +1,22 @@
+﻿.stats-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-top: 0.25rem;
+
+  .stats-title {
+    margin: 0;
+  }
+
+  .chart-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 150px;
+  }
+
+  .chart-wrapper {
+    position: relative;
+    width: 100%;
+  }
+}

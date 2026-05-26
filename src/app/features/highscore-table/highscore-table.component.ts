@@ -8,16 +8,18 @@ import { calculateAvailableDataDateRange } from '@shared/functions';
 import { DatePipe } from '@angular/common';
 import { HighscoreDataTableComponent } from './highscore-data-table/highscore-data-table.component';
 import { HighscoreHeaderComponent } from './highscore-header/highscore-header.component';
+import { HighscoreStatsComponent } from './highscore-stats/highscore-stats.component';
 import { PeriodSelectorComponent } from '@shared/components';
 
 @Component({
   selector: 'app-highscore-table',
   templateUrl: './highscore-table.component.html',
-  styleUrls: ['./highscore-table.component.scss'],
+  styleUrl: './highscore-table.component.scss',
   imports: [
     HighscoreHeaderComponent,
     PeriodSelectorComponent,
     HighscoreDataTableComponent,
+    HighscoreStatsComponent,
     DatePipe,
   ],
 })

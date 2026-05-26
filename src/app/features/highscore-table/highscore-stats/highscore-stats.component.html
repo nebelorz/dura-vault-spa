@@ -1,0 +1,15 @@
+﻿<div class="stats-panel">
+  <h3 class="stats-title text-label">Gains by Vocation</h3>
+
+  @if (loading()) {
+    <div class="chart-placeholder">
+      <app-inline-loading />
+    </div>
+  } @else if (vocationChartData(); as chartData) {
+    <div class="chart-wrapper" [style.height]="chartHeight()">
+      <p-chart type="bar" [data]="chartData" [options]="vocationChartOptions()" />
+    </div>
+  } @else {
+    <app-no-data-status title="No data" message="No gains recorded for this period." />
+  }
+</div>

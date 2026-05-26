@@ -19,6 +19,13 @@
     </div>
   </div>
 
-  <!-- Data Table -->
-  <app-highscore-data-table [data]="data()" [loading]="loading()" [section]="section()" />
+  <!-- Body: left (ranking) | right (stats + charts) -->
+  <div class="highscore-body">
+    <div class="highscore-left">
+      <app-highscore-data-table [data]="data()" [loading]="loading()" [section]="section()" />
+    </div>
+    <div class="highscore-right">
+      <app-highscore-stats [data]="data()" [loading]="loading()" [section]="section()" />
+    </div>
+  </div>
 </div>
