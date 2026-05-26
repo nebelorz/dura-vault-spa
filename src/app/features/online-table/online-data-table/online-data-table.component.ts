@@ -66,7 +66,11 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
           valueClass: this.metricTimeClass(avgMinutes),
         });
       }
-      columns.push({ label: 'Online Time', value: formatMinutesToHours(record.online_time) });
+      columns.push({
+        label: 'Online Time',
+        value: formatMinutesToHours(record.online_time),
+        ...(showAvg ? {} : { valueClass: this.metricTimeClass(record.online_time) }),
+      });
       if (showAvg) {
         const dayWord = record.days_active === 1 ? 'day' : 'days';
         columns.push({ label: 'Days Active', value: `${record.days_active} ${dayWord}` });

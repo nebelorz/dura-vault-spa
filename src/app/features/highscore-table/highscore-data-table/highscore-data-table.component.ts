@@ -174,7 +174,7 @@ export class HighscoreDataTableComponent implements OnInit, OnDestroy {
       id: record.name,
       rank: record.rank,
       name: record.name,
-      meta: `${record.vocation} · Lvl ${record.level}`,
+      meta: record.vocation,
       columns,
     };
   }
