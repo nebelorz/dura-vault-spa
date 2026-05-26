@@ -1,4 +1,6 @@
-﻿@if (loading() && achievements().length === 0) {
+﻿<div class="section-header">ACHIEVEMENTS</div>
+
+@if (loading() && achievements().length === 0) {
   <app-loading-status />
 } @else if (isEmpty()) {
   <app-no-data-status title="No Achievements" message="No milestones stored in the vault yet" />
@@ -6,8 +8,6 @@
   <div class="achievements-list animation-fade">
     @for (group of groups(); track group.category) {
       <div class="achievement-group">
-        <div class="category-heading text-label">{{ group.categoryLabel }}</div>
-
         <p-accordion [multiple]="true">
           @for (sec of group.sections; track sec.section) {
             <p-accordion-panel [value]="sec.section">
