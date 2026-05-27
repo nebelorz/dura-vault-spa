@@ -15,7 +15,7 @@ import { getDuraHomeUrl } from '@shared/functions';
 export class SideMenuComponent {
   readonly serverStatsItems: MenuItem[] = toOnlineMenuItems();
 
-  readonly topsItems: MenuItem[] = [...toMenuItems(), ...toCustomMenuItems()];
+  readonly highscoresItems: MenuItem[] = [...toMenuItems(), ...toCustomMenuItems()];
 
   readonly otherSitesItems: MenuItem[] = [
     {

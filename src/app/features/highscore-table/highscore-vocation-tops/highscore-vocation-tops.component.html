@@ -1,7 +1,7 @@
-﻿@if (loading()) {
-  <app-inline-loading />
+﻿<h3 class="voc-title text-label">Top By Vocation</h3>
+@if (loading()) {
+  <app-loading-status />
 } @else if (items().length) {
-  <h3 class="voc-title text-label">Top By Vocation</h3>
   <div class="voc-grid">
     @for (item of items(); track item.group) {
       <app-stat-card

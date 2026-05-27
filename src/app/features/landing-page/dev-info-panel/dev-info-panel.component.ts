@@ -258,7 +258,7 @@ This release lays the foundation for advanced analytics and community tracking f
 
 ## New Features
 
-- Added **Experience Loss section** shows the top daily losers with XP lost, level lost, and rank change. Now included in Tops and the daily summary.
+- Added **Experience Loss section** shows the top daily losers with XP lost, level lost, and rank change. Now included in Highscores and the daily summary.
 - Updated data processing logic to begin collecting online times.
 - *Online activity feature coming soon.*
       `,

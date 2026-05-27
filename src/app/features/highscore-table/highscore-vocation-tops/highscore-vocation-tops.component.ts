@@ -3,7 +3,7 @@
 import { getSectionLabel } from '@core/constants';
 import { HighscoreRecord, Section } from '@core/models';
 import { formatNumber } from '@shared/functions';
-import { InlineLoadingComponent, StatCardComponent } from '@shared/components';
+import { LoadingStatusComponent, StatCardComponent } from '@shared/components';
 
 const VOCATION_GROUPS: Record<string, string> = {
   'Elite Knight': 'Knight',
@@ -30,7 +30,7 @@ interface VocationTopItem {
   selector: 'app-highscore-vocation-tops',
   templateUrl: './highscore-vocation-tops.component.html',
   styleUrl: './highscore-vocation-tops.component.scss',
-  imports: [InlineLoadingComponent, StatCardComponent],
+  imports: [LoadingStatusComponent, StatCardComponent],
 })
 export class HighscoreVocationTopsComponent {
   data = input.required<HighscoreRecord[]>();

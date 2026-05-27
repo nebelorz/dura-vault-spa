@@ -21,7 +21,7 @@ export class NavBarComponent {
       routerLink: ['/'],
     },
     {
-      label: 'Tops',
+      label: 'Highscores',
       icon: 'pi pi-database',
       items: [...toMenuItems(), ...toCustomMenuItems()],
     },

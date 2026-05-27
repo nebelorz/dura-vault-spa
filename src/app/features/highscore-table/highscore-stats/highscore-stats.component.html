@@ -3,7 +3,7 @@
 
   @if (loading()) {
     <div class="chart-placeholder">
-      <app-inline-loading />
+      <app-loading-status />
     </div>
   } @else if (vocationChartData(); as chartData) {
     <div class="chart-wrapper" [style.height]="chartHeight()">

@@ -3,7 +3,7 @@
 import { HighscoreRecord, Section } from '@core/models';
 import { getSectionLabel } from '@core/constants';
 import { formatNumber } from '@shared/functions';
-import { InlineLoadingComponent, NoDataStatusComponent } from '@shared/components';
+import { NoDataStatusComponent, LoadingStatusComponent } from '@shared/components';
 import { ChartModule } from 'primeng/chart';
 
 const VOCATION_GROUPS: Record<string, string> = {
@@ -33,7 +33,7 @@ interface VocationStat {
   selector: 'app-highscore-stats',
   templateUrl: './highscore-stats.component.html',
   styleUrl: './highscore-stats.component.scss',
-  imports: [ChartModule, InlineLoadingComponent, NoDataStatusComponent],
+  imports: [ChartModule, NoDataStatusComponent, LoadingStatusComponent],
 })
 export class HighscoreStatsComponent {
   data = input.required<HighscoreRecord[]>();
