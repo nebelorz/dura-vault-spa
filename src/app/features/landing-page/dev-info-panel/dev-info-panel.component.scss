@@ -1,6 +1,9 @@
 ﻿@use 'colors' as colors;
 @use 'text' as text;
 
+// ─── Local tag colors ─────────────────────────────────────────────────────────
+$tag-section: #c4621a; // Dark orange — changelog section badges only
+
 // ─── Layout ──────────────────────────────────────────────────────────────────
 .changelog {
   width: 100%;
@@ -142,16 +145,22 @@
     border-color: colors.$info-a20;
   }
 
-  &.tag-experience {
+  &.tag-versionMajor {
     background: colors.$xp-a10;
     color: colors.$xp;
     border-color: colors.$xp-a20;
   }
 
-  &.tag-level {
-    background: colors.$level-a10;
-    color: colors.$level;
-    border-color: colors.$level-a20;
+  &.tag-versionMinor {
+    background: colors.$secondary-light-a10;
+    color: colors.$secondary-light;
+    border-color: colors.$secondary-light-a20;
+  }
+
+  &.tag-section {
+    background: color-mix(in srgb, $tag-section, transparent 90%);
+    color: $tag-section;
+    border-color: color-mix(in srgb, $tag-section, transparent 80%);
   }
 }
 

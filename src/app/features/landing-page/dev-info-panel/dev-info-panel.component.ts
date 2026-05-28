@@ -9,7 +9,7 @@ import { DatePipe, NgClass } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { marked } from 'marked';
 
-type TagColor = 'error' | 'warn' | 'info' | 'rank' | 'experience';
+type TagColor = 'error' | 'warn' | 'info' | 'section' | 'versionMajor' | 'versionMinor';
 
 interface DevInfoTag {
   label: string;
@@ -75,7 +75,9 @@ export class DevInfoPanelComponent {
       title: '2.4.0 released',
       entryType: 'versionMinor',
       tags: [
+        { label: 'minor version', color: 'versionMinor' },
         { label: 'new feature' },
+        { label: 'highscores', color: 'section' },
         { label: 'UI/UX', color: 'info' },
         { label: 'fix', color: 'warn' },
       ],
@@ -97,9 +99,9 @@ Enhanced theme switching for better dark mode UX.
 ## Coming soon...
 🟡 New charts for the **highscores section**.  
 ⚫ **Misc. section** - extra data and insights about the player base and the server.  
-💀 **Deaths section** - already collecting data, soon to be displayed.
+⚫ **Deaths section** - already collecting data, soon to be displayed.
 
-Also I am setting up the foundation for tracking and analytics on the new server from day one.
+Also I'm setting up the foundation for tracking and analytics on the new server from day one.
  `,
     },
     {
@@ -107,8 +109,9 @@ Also I am setting up the foundation for tracking and analytics on the new server
       title: '2.3.0 released',
       entryType: 'versionMajor',
       tags: [
-        { label: 'minor version', color: 'experience' },
+        { label: 'minor version', color: 'versionMinor' },
         { label: 'new feature' },
+        { label: 'achievements', color: 'section' },
         { label: 'UI/UX', color: 'info' },
       ],
       body: `
@@ -150,9 +153,8 @@ Each section displays a badge with the highest milestone reached, plus the full 
       title: '2.2.1 released',
       entryType: 'versionMinor',
       tags: [
-        { label: 'fix', color: 'warn' },
         { label: 'UI/UX', color: 'info' },
-        { label: 'new feature' },
+        { label: 'fix', color: 'warn' },
       ],
       body: `
 ## Features
@@ -184,8 +186,10 @@ This way Dura Vault will keep growing with more features, bigger datasets, and b
       title: '2.2.0 released',
       entryType: 'versionMinor',
       tags: [
-        { label: 'fix', color: 'warn' },
+        { label: 'minor version', color: 'versionMinor' },
+        { label: 'new feature' },
         { label: 'UI/UX', color: 'info' },
+        { label: 'fix', color: 'warn' },
       ],
       body: `
 ## UI/UX
@@ -206,7 +210,11 @@ This way Dura Vault will keep growing with more features, bigger datasets, and b
       date: new Date('2026-03-29'),
       title: '2.1.0 released',
       entryType: 'versionMinor',
-      tags: [{ label: 'UI/UX', color: 'info' }, { label: 'new feature' }],
+      tags: [
+        { label: 'minor version', color: 'versionMinor' },
+        { label: 'new feature' },
+        { label: 'UI/UX', color: 'info' },
+      ],
       body: `
 ## UI/UX
 
@@ -225,7 +233,11 @@ This way Dura Vault will keep growing with more features, bigger datasets, and b
       date: new Date('2026-03-16'),
       title: '2.0.0 released',
       entryType: 'versionMajor',
-      tags: [{ label: 'major version', color: 'experience' }, { label: 'new feature' }],
+      tags: [
+        { label: 'major version', color: 'versionMajor' },
+        { label: 'new feature' },
+        { label: 'online activity', color: 'section' },
+      ],
       body: `
 ## Online Activity
 
@@ -253,7 +265,11 @@ This release lays the foundation for advanced analytics and community tracking f
       date: new Date('2026-03-12'),
       title: '1.1.0b released',
       entryType: 'versionMinor',
-      tags: [{ label: 'fix', color: 'warn' }, { label: 'new feature' }],
+      tags: [
+        { label: 'minor version', color: 'versionMinor' },
+        { label: 'new feature' },
+        { label: 'fix', color: 'warn' },
+      ],
       body: `
 ## Fixes
 
@@ -285,11 +301,11 @@ Skills are back to normal and should display correct values for all dates, exclu
       title: '1.0.1b released',
       entryType: 'fix',
       tags: [
-        { label: 'fix', color: 'warn' },
         { label: 'data loss', color: 'error' },
+        { label: 'fix', color: 'warn' },
       ],
       body: `
-> **Data loss notice:** Due to a recent change on the Dura highscore pages, skills data between **February 4th and March 8th** has been permanently removed. Skill values for this period will be compromised.
+> Data loss notice: Due to a recent change on the Dura highscore pages, skills data between **February 4th and March 8th** has been permanently removed. Skill values for this period will be compromised.
 
 ## Fixes
 
@@ -302,6 +318,7 @@ Skill highscores will be fully back to normal within two days.
       date: new Date('2026-01-05'),
       title: '1.0.0b released',
       entryType: 'versionMajor',
+      tags: [{ label: 'major version', color: 'versionMajor' }],
       body: `
 With the current feature set, Dura Vault now provides a solid experience for a first major release.
 
@@ -317,6 +334,7 @@ With the current feature set, Dura Vault now provides a solid experience for a f
       date: new Date('2025-12-26'),
       title: '0.3b released',
       entryType: 'versionMinor',
+      tags: [{ label: 'minor version', color: 'versionMinor' }],
       body: `
 - New side menu added to improve navigation across the app.
 - Top highscore tables now include toast messages to give clear possible user actions.
@@ -327,6 +345,7 @@ With the current feature set, Dura Vault now provides a solid experience for a f
       date: new Date('2025-12-22'),
       title: '0.2b released',
       entryType: 'versionMinor',
+      tags: [{ label: 'minor version', color: 'versionMinor' }],
       body: `
 - Added a highscore summary for the day on the landing page for quick overviews.
 - Added **Daily Top Gainers** gadget on the landing page.
@@ -336,6 +355,7 @@ With the current feature set, Dura Vault now provides a solid experience for a f
       date: new Date('2025-12-20'),
       title: '0.1b released',
       entryType: 'versionMinor',
+      tags: [{ label: 'initial release', color: 'versionMajor' }],
       body: `
 This is just the foundation. More features and improvements are coming.
 

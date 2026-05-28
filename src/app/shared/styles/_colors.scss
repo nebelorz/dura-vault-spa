@@ -39,6 +39,8 @@
   --color-xp-a20: color-mix(in srgb, var(--color-xp), transparent 80%);
   --color-secondary-a10: color-mix(in srgb, var(--color-secondary), transparent 90%);
   --color-secondary-a20: color-mix(in srgb, var(--color-secondary), transparent 80%);
+  --color-secondary-light-a10: color-mix(in srgb, var(--color-secondary-light), transparent 90%);
+  --color-secondary-light-a20: color-mix(in srgb, var(--color-secondary-light), transparent 80%);
   --color-warn-a10: color-mix(in srgb, var(--color-warn), transparent 90%);
   --color-warn-a20: color-mix(in srgb, var(--color-warn), transparent 80%);
   --color-danger-a10: color-mix(in srgb, var(--color-danger), transparent 90%);
@@ -87,6 +89,8 @@ $xp-a10: var(--color-xp-a10);
 $xp-a20: var(--color-xp-a20);
 $secondary-a10: var(--color-secondary-a10);
 $secondary-a20: var(--color-secondary-a20);
+$secondary-light-a10: var(--color-secondary-light-a10);
+$secondary-light-a20: var(--color-secondary-light-a20);
 $warn-a10: var(--color-warn-a10);
 $warn-a20: var(--color-warn-a20);
 $danger-a10: var(--color-danger-a10);
