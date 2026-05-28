@@ -6,7 +6,7 @@
       <app-loading-status />
     </div>
   } @else if (vocationChartData(); as chartData) {
-    <div class="chart-wrapper" [style.height]="chartHeight()">
+    <div class="chart-wrapper animation-fade" [style.height]="chartHeight()">
       <p-chart type="bar" [data]="chartData" [options]="vocationChartOptions()" />
     </div>
   } @else {

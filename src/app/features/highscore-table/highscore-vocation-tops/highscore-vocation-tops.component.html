@@ -2,7 +2,7 @@
 @if (loading()) {
   <app-loading-status />
 } @else if (items().length) {
-  <div class="voc-grid">
+  <div class="voc-grid animation-fade">
     @for (item of items(); track item.group) {
       <app-stat-card
         [value]="item.name"
