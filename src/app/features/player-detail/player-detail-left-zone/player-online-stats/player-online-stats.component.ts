@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 import { DatePipe } from '@angular/common';
 
 import { PlayerOnlineSummary } from '@core/models';
-import { InlineLoadingComponent, MinimalistIconComponent } from '@shared/components';
+import { MinimalistIconComponent, LoadingStatusComponent } from '@shared/components';
 import { MinutesToHoursPipe } from '@shared/pipes';
 
 @Component({
@@ -11,7 +11,7 @@ import { MinutesToHoursPipe } from '@shared/pipes';
   selector: 'app-player-online-stats',
   templateUrl: './player-online-stats.component.html',
   styleUrl: './player-online-stats.component.scss',
-  imports: [DatePipe, InlineLoadingComponent, MinimalistIconComponent, MinutesToHoursPipe],
+  imports: [DatePipe, MinimalistIconComponent, MinutesToHoursPipe, LoadingStatusComponent],
 })
 export class PlayerOnlineStatsComponent {
   loading = input.required<boolean>();

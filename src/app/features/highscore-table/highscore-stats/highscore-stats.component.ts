@@ -67,12 +67,6 @@ export class HighscoreStatsComponent {
     this.section() === 'experience_loss' ? 'Losses by Vocation' : 'Gains by Vocation',
   );
 
-  readonly noDataMessage = computed(() =>
-    this.section() === 'experience_loss'
-      ? 'No losses recorded for this period.'
-      : 'No gains recorded for this period.',
-  );
-
   private readonly vocationStats = computed<VocationStat[]>(() => {
     const isXp = this.isXpSection();
     const totals: Record<string, number> = {};

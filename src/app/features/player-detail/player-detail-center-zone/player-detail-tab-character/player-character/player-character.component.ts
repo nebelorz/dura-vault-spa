@@ -3,9 +3,9 @@ import { DatePipe } from '@angular/common';
 
 import { CharacterHouse, CharacterProfileData, CharacterProfileResult } from '@core/models';
 import {
-  InlineLoadingComponent,
   MinimalistIconComponent,
   NoDataStatusComponent,
+  LoadingStatusComponent,
 } from '@shared/components';
 import { getDuraGuildUrl, getDuraPlayerUrl } from '@shared/functions';
 
@@ -14,7 +14,7 @@ import { getDuraGuildUrl, getDuraPlayerUrl } from '@shared/functions';
   selector: 'app-player-character',
   templateUrl: './player-character.component.html',
   styleUrl: './player-character.component.scss',
-  imports: [DatePipe, InlineLoadingComponent, MinimalistIconComponent, NoDataStatusComponent],
+  imports: [DatePipe, MinimalistIconComponent, NoDataStatusComponent, LoadingStatusComponent],
 })
 export class PlayerCharacterComponent {
   profile = input<CharacterProfileResult | null>(null);

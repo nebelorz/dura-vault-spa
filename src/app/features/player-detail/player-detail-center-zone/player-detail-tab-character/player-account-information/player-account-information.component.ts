@@ -3,14 +3,14 @@ import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 import { AccountInformation, CharacterEntry, CharacterProfileResult } from '@core/models';
-import { InlineLoadingComponent, NoDataStatusComponent } from '@shared/components';
+import { NoDataStatusComponent, LoadingStatusComponent } from '@shared/components';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-player-account-information',
   templateUrl: './player-account-information.component.html',
   styleUrl: './player-account-information.component.scss',
-  imports: [DatePipe, RouterLink, InlineLoadingComponent, NoDataStatusComponent],
+  imports: [DatePipe, RouterLink, NoDataStatusComponent, LoadingStatusComponent],
 })
 export class PlayerAccountInformationComponent {
   profile = input<CharacterProfileResult | null>(null);

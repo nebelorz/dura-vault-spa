@@ -3,7 +3,7 @@ import { DatePipe, NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 import { CharacterDeath, CharacterProfileResult } from '@core/models';
-import { InlineLoadingComponent, NoDataStatusComponent } from '@shared/components';
+import { NoDataStatusComponent, LoadingStatusComponent } from '@shared/components';
 
 interface DescriptionSegment {
   text: string;
@@ -21,7 +21,7 @@ interface DeathRow extends CharacterDeath {
   selector: 'app-player-deaths',
   templateUrl: './player-deaths.component.html',
   styleUrl: './player-deaths.component.scss',
-  imports: [DatePipe, NgClass, RouterLink, InlineLoadingComponent, NoDataStatusComponent],
+  imports: [DatePipe, NgClass, RouterLink, NoDataStatusComponent, LoadingStatusComponent],
 })
 export class PlayerDeathsComponent {
   profile = input<CharacterProfileResult | null>(null);

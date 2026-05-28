@@ -2,7 +2,7 @@
   <div class="section-header">ONLINE ACTIVITY</div>
 
   @if (loading() && !hasContent()) {
-    <app-inline-loading />
+    <app-loading-status />
   } @else if (hasContent()) {
     @if (onlineSummary(); as summary) {
       @if (summary.average_online_time > 0) {

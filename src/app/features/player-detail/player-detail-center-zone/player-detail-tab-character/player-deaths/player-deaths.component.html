@@ -1,5 +1,5 @@
 @if (profileLoading()) {
-  <app-inline-loading />
+  <app-loading-status />
 } @else if (isAvailable()) {
   @if (deathRows().length > 0) {
     <div class="deaths-list animation-fade">
