@@ -71,32 +71,35 @@ export class DevInfoPanelComponent {
 
   entries = signal<DevInfoEntry[]>([
     {
-      date: new Date('2026-05-27'),
+      date: new Date('2026-05-28'),
       title: '2.4.0 released',
       entryType: 'versionMinor',
       tags: [
+        { label: 'new feature' },
         { label: 'UI/UX', color: 'info' },
         { label: 'fix', color: 'warn' },
       ],
       body: `
+## Highscores Section
+Added a right-hand panel to the highscores section displaying top player per vocation.  
+Added a right-hand panel to the highscores section displaying gains/losses by vocation.  
+
 ## UI/UX Improvements
-
 Updated color system implementation with improved management.  
-
-**Highscores Section**  
-Added a right-hand panel to the highscore table showing top gainers per vocation and a vocation gains chart.  
-Updated styling  
+Updated styling on highscores section.  
+Unified loading spinners across the app for a consistent experience.  
+Added animations to stat panels and charts for a smoother visual experience.
 
 ## Fixes & Optimizations
-
-Fixed minor alignment issues in player statistics display.  
+Fixed minor alignment issues in player stats display.  
 Enhanced theme switching for better dark mode UX.
 
 ## Coming soon...
+🟡 New charts for the **highscores section**.  
+⚫ **Misc. section** - extra data and insights about the player base and the server.  
+💀 **Deaths section** - already collecting data, soon to be displayed.
 
-Revamp of the highscores section with new charts and filter capabilities.  
-❗Curiosities section: extra data and insights about the player base and the server.  
-❗Deaths section: already storing data, soon to be displayed :)
+Also I am setting up the foundation for tracking and analytics on the new server from day one.
  `,
     },
     {
