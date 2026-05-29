@@ -1,23 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, input, signal, effect } from '@angular/core';
 
 import { OnlineTopRecord, OnlineTimelineRecord, TimePeriod } from '@core/models';
+import { VOCATION_GROUPS } from '@core/constants';
 import { formatDate } from '@shared/functions';
 import { LoadingStatusComponent, StatCardComponent } from '@shared/components';
 
 import { ChartModule } from 'primeng/chart';
 import { TooltipModule } from 'primeng/tooltip';
-
-const VOCATION_GROUPS: Record<string, string> = {
-  Knight: 'Knight',
-  'Elite Knight': 'Knight',
-  Sorcerer: 'Sorcerer',
-  'Master Sorcerer': 'Sorcerer',
-  Druid: 'Druid',
-  'Elder Druid': 'Druid',
-  Paladin: 'Paladin',
-  'Royal Paladin': 'Paladin',
-  None: 'None',
-};
 
 const LEVEL_BRACKETS = [
   { label: '1–8', min: 1, max: 8 },

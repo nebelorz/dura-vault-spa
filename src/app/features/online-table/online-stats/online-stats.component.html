@@ -1,54 +1,54 @@
 @if (loading()) {
   <app-loading-status />
 } @else {
-  @if (stats(); as s) {
+  @if (stats(); as statsSummary) {
     <div class="stats-row animation-fade">
       <app-stat-card
         icon="pi pi-star-fill"
-        [value]="s.topVocation ? s.topVocation.name : '—'"
+        [value]="statsSummary.topVocation ? statsSummary.topVocation.name : '—'"
         label="Most Active Vocation"
-        [tooltip]="s.topVocation ? s.topVocation.hoursDisplay + ' total hours' : 'No data'"
-        [muted]="!s.topVocation"
+        [tooltip]="statsSummary.topVocation ? statsSummary.topVocation.hoursDisplay + ' total hours' : 'No data'"
+        [muted]="!statsSummary.topVocation"
       />
       <app-stat-card
         icon="pi pi-chart-bar"
-        [value]="s.topLevelBracket ? s.topLevelBracket.label : '—'"
+        [value]="statsSummary.topLevelBracket ? statsSummary.topLevelBracket.label : '—'"
         label="Most Active Level Range"
-        [muted]="!s.topLevelBracket"
+        [muted]="!statsSummary.topLevelBracket"
       />
       <app-stat-card
         icon="pi pi-calendar"
-        [value]="s.peakDay ? s.peakDay.date : '—'"
+        [value]="statsSummary.peakDay ? statsSummary.peakDay.date : '—'"
         label="Most Active Day"
-        [tooltip]="s.peakDay ? s.peakDay.hoursDisplay + ' total hours' : 'No data'"
-        [muted]="!s.peakDay"
+        [tooltip]="statsSummary.peakDay ? statsSummary.peakDay.hoursDisplay + ' total hours' : 'No data'"
+        [muted]="!statsSummary.peakDay"
       />
     </div>
   }
 
-  @if (vocationChartData(); as vData) {
+  @if (vocationChartData(); as vocationData) {
     <section class="chart-section animation-fade">
       <div class="chart-title text-label">Activity by Vocation</div>
       <div class="chart-container chart-container--hbar">
-        <p-chart type="bar" [data]="vData" [options]="vocationChartOptions()" />
+        <p-chart type="bar" [data]="vocationData" [options]="vocationChartOptions()" />
       </div>
     </section>
   }
 
-  @if (levelChartData(); as lData) {
+  @if (levelChartData(); as levelData) {
     <section class="chart-section animation-fade">
       <div class="chart-title text-label">Activity by Level Range</div>
       <div class="chart-container" [style.height]="levelChartHeight()">
-        <p-chart type="bar" [data]="lData" [options]="levelChartOptions()" />
+        <p-chart type="bar" [data]="levelData" [options]="levelChartOptions()" />
       </div>
     </section>
   }
 
-  @if (timelineChartData(); as tData) {
+  @if (timelineChartData(); as timelineData) {
     <section class="chart-section animation-fade">
       <div class="chart-title text-label">Activity by Period</div>
       <div class="chart-container">
-        <p-chart type="line" [data]="tData" [options]="timelineChartOptions()" />
+        <p-chart type="line" [data]="timelineData" [options]="timelineChartOptions()" />
       </div>
     </section>
   }

@@ -1,0 +1,44 @@
+<h3 class="voc-title text-label">Top By Vocation</h3>
+@if (loading()) {
+  <app-loading-status />
+} @else if (knight() || paladin() || sorcerer() || druid() || none()) {
+  <div class="voc-grid animation-fade">
+    @if (knight(); as item) {
+      <ng-container *ngTemplateOutlet="vocationCard; context: { $implicit: item }" />
+    }
+    @if (paladin(); as item) {
+      <ng-container *ngTemplateOutlet="vocationCard; context: { $implicit: item }" />
+    }
+    @if (sorcerer(); as item) {
+      <ng-container *ngTemplateOutlet="vocationCard; context: { $implicit: item }" />
+    }
+    @if (druid(); as item) {
+      <ng-container *ngTemplateOutlet="vocationCard; context: { $implicit: item }" />
+    }
+    @if (none(); as item) {
+      <ng-container *ngTemplateOutlet="vocationCard; context: { $implicit: item }" />
+    }
+  </div>
+} @else {
+  <app-no-data-status />
+}
+
+<ng-template #vocationCard let-item>
+  <a class="voc-card" [routerLink]="item.link" [queryParams]="queryParams()">
+    <span class="text-label">{{ item.group }}</span>
+    <span class="text-value">{{ item.name }}</span>
+    <span class="text-value" [ngClass]="gainClass()">{{ item.gainDisplay }}</span>
+    <div class="voc-card-details-container">
+      @if (item.levelGain !== undefined) {
+        <div class="voc-card-detail">
+          <span class="text-sub detail--level">{{ item.levelGain }}</span>
+          <span class="text-sub">{{ item.levelCurrent }}</span>
+        </div>
+      }
+      <div class="voc-card-detail">
+        <span class="text-sub detail--rank">{{ item.rankGain }}</span>
+        <span class="text-sub">{{ item.rankCurrent }}</span>
+      </div>
+    </div>
+  </a>
+</ng-template>

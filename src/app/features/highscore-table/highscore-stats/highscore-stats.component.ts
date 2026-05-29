@@ -1,22 +1,10 @@
 ﻿import { ChangeDetectionStrategy, Component, computed, effect, input, signal } from '@angular/core';
 
 import { HighscoreRecord, Section } from '@core/models';
-import { getSectionLabel } from '@core/constants';
+import { getSectionLabel, VOCATION_GROUPS } from '@core/constants';
 import { formatNumber } from '@shared/functions';
 import { NoDataStatusComponent, LoadingStatusComponent } from '@shared/components';
 import { ChartModule } from 'primeng/chart';
-
-const VOCATION_GROUPS: Record<string, string> = {
-  'Elite Knight': 'Knight',
-  Knight: 'Knight',
-  'Master Sorcerer': 'Sorcerer',
-  Sorcerer: 'Sorcerer',
-  'Elder Druid': 'Druid',
-  Druid: 'Druid',
-  'Royal Paladin': 'Paladin',
-  Paladin: 'Paladin',
-  None: 'None',
-};
 
 const CHART_FONT = 'Montserrat, Arial, sans-serif';
 const CHART_GRID = 'rgba(128, 128, 128, 0.2)';

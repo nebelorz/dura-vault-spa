@@ -1,0 +1,66 @@
+@use 'colors' as colors;
+@use 'text' as text;
+
+.voc-title {
+  margin: 0 0 0.5rem;
+}
+
+.voc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.5rem;
+}
+
+.voc-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.75rem 0.5rem;
+  border: 1px solid colors.$secondary;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--p-surface-hover);
+    border-color: colors.$primary-a20;
+    box-shadow: 0 2px 6px color-mix(in srgb, var(--color-primary), transparent 80%);
+  }
+
+  &-details-container {
+    display: flex;
+    flex-direction: row;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+
+  &-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+  }
+}
+
+.detail--xp {
+  color: var(--color-xp);
+}
+
+.detail--xp-loss {
+  color: var(--color-danger);
+}
+
+.detail--skill {
+  color: var(--color-skill);
+}
+
+.detail--level {
+  color: var(--color-level);
+}
+
+.detail--rank {
+  color: var(--color-rank);
+}
