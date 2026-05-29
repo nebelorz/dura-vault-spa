@@ -6,7 +6,7 @@ import { ToastMessage, ToastService } from '@core/services';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-toast',
   templateUrl: './toast.component.html',
-  styleUrls: ['./toast.component.scss'],
+  styleUrl: './toast.component.scss',
   imports: [],
 })
 export class ToastComponent {

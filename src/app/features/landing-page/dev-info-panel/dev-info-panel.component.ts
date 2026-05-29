@@ -89,6 +89,7 @@ Added a right-hand panel to the highscores section displaying gains/losses by vo
 ## UI/UX Improvements
 Updated color system implementation with improved management.  
 Updated styling on highscores section.  
+Updated toast messages system.
 Unified loading spinners across the app for a consistent experience.  
 Added animations to stat panels and charts for a smoother visual experience.
 

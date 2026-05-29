@@ -120,7 +120,7 @@ export class ToastService {
     return {
       id: this.generateId(),
       severity: options.severity,
-      summary: options.summary || this.getDefaultSummary(options.severity),
+      summary: options.summary,
       detail: options.detail,
       life: options.life ?? ToastService.DEFAULT_LIFE,
       sticky: options.sticky ?? false,
@@ -167,16 +167,6 @@ export class ToastService {
 
   private generateId(): string {
     return `toast-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
-  }
-
-  private getDefaultSummary(severity: ToastSeverity): string {
-    const summaries: Record<ToastSeverity, string> = {
-      success: 'Success',
-      info: 'Info',
-      warn: 'Warning',
-      error: 'Error',
-    };
-    return summaries[severity];
   }
 
   private getDefaultIcon(severity: ToastSeverity): string {

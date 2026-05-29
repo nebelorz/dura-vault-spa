@@ -56,12 +56,12 @@
 
 .toast-message {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 1rem;
   padding: 1rem 1.25rem;
-  border-radius: 8px;
+  border-radius: 0 8px 8px 0;
   box-shadow: 0 4px 12px colors.$secondary;
-  border-left: 4px solid;
+  border-left: 8px solid;
   min-width: 300px;
   pointer-events: auto;
   backdrop-filter: blur(10px);
@@ -72,10 +72,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.6;
+  opacity: 0.85;
 
   i {
-    font-size: large;
+    font-size: small;
     animation: iconPulse 0.5s ease-in;
   }
 }
