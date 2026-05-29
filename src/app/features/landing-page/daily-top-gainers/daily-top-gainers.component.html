@@ -2,44 +2,14 @@
   @if (loading()) {
     <app-loading-status />
   } @else {
-    <!-- Experience Loss Section -->
-    @if (experienceLossPlayer(); as lp) {
-      <section class="animation-fade">
-        <div class="section-header">
-          <span>EXPERIENCE LOSS</span>
-          @if (maxDate()) {
-            <span class="header-date">{{ maxDate()! | date: 'dd MMM yyyy' }}</span>
-          }
-        </div>
-        <div class="player-row player-row--loss" (click)="navigateToPlayer(lp.name, 'experience')">
-          <div class="player-main">
-            <div class="text-value">{{ lp.name }}</div>
-            <span class="text-sub">{{ lp.vocation }}</span>
-            <span class="text-sub">Lvl {{ lp.level }}</span>
-          </div>
-          <div class="player-gains">
-            <span class="gain-item metric--danger" pTooltip="Experience" tooltipPosition="bottom">
-              <i [class]="METRIC_ICONS.experience.loss"></i>
-              {{ lp.gain_points | abbreviateNumber }}
-            </span>
-            <span class="gain-item metric--danger" pTooltip="Level" tooltipPosition="bottom">
-              <i [class]="METRIC_ICONS.level.loss"></i>
-              {{ lp.gain_level }}
-            </span>
-            <span class="gain-item metric--danger" pTooltip="Rank" tooltipPosition="bottom">
-              <i [class]="METRIC_ICONS.rank.loss"></i>
-              {{ lp.gain_rank }}
-            </span>
-          </div>
-        </div>
-      </section>
-    }
-
     <!-- Experience Section -->
     @if (experiencePlayers().length > 0) {
       <section class="animation-fade">
         <div class="section-header">
           <span>EXPERIENCE GAIN</span>
+          @if (maxDate()) {
+            <span class="header-date">{{ maxDate()! | date: 'dd MMM yyyy' }}</span>
+          }
         </div>
         @for (player of experiencePlayers(); track player.name; let i = $index) {
           <div
@@ -84,6 +54,39 @@
             </div>
           </div>
         }
+      </section>
+    }
+
+    <!-- Experience Loss Section -->
+    @if (experienceLossPlayer(); as mostExpLossPlayer) {
+      <section class="animation-fade">
+        <div class="section-header">
+          <span>EXPERIENCE LOSS</span>
+          @if (maxDate()) {
+            <span class="header-date">{{ maxDate()! | date: 'dd MMM yyyy' }}</span>
+          }
+        </div>
+        <div class="player-row player-row--loss" (click)="navigateToPlayer(mostExpLossPlayer.name, 'experience')">
+          <div class="player-main">
+            <div class="text-value">{{ mostExpLossPlayer.name }}</div>
+            <span class="text-sub">{{ mostExpLossPlayer.vocation }}</span>
+            <span class="text-sub">Lvl {{ mostExpLossPlayer.level }}</span>
+          </div>
+          <div class="player-gains">
+            <span class="gain-item metric--danger" pTooltip="Experience" tooltipPosition="bottom">
+              <i [class]="METRIC_ICONS.experience.loss"></i>
+              {{ mostExpLossPlayer.gain_points | abbreviateNumber }}
+            </span>
+            <span class="gain-item metric--danger" pTooltip="Level" tooltipPosition="bottom">
+              <i [class]="METRIC_ICONS.level.loss"></i>
+              {{ mostExpLossPlayer.gain_level }}
+            </span>
+            <span class="gain-item metric--danger" pTooltip="Rank" tooltipPosition="bottom">
+              <i [class]="METRIC_ICONS.rank.loss"></i>
+              {{ mostExpLossPlayer.gain_rank }}
+            </span>
+          </div>
+        </div>
       </section>
     }
 
