@@ -87,9 +87,9 @@ Added a right-hand panel to the highscores section displaying top player per voc
 Added a right-hand panel to the highscores section displaying gains/losses by vocation.  
 
 ## UI/UX Improvements
-Updated styling on highscores section. 
-Updated styling on toast messages system.
-Updated styling on landing page daily summary section. 
+Updated styling on highscores section.  
+Updated styling on toast messages.  
+Updated styling on landing page daily summary section.  
 Updated color system implementation with improved management.  
 Unified loading spinners across the app for a consistent experience.  
 
