@@ -3,31 +3,32 @@ import { DatePipe, UpperCasePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { DailyTopPlayer, SectionData } from '@core/models';
-import { METRIC_ICONS } from '@core/constants';
-import { AbbreviateNumberPipe } from '@shared/pipes';
-import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
+import { METRIC_DEFINITIONS } from '@core/constants';
+import {
+  LoadingStatusComponent,
+  MetricDisplayComponent,
+  NoDataStatusComponent,
+} from '@shared/components';
 
 import { CarouselModule } from 'primeng/carousel';
-import { Tooltip } from 'primeng/tooltip';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-daily-top-gainers',
   templateUrl: './daily-top-gainers.component.html',
-  styleUrls: ['./daily-top-gainers.component.scss'],
+  styleUrl: './daily-top-gainers.component.scss',
   imports: [
     DatePipe,
     UpperCasePipe,
     CarouselModule,
-    AbbreviateNumberPipe,
-    Tooltip,
     LoadingStatusComponent,
+    MetricDisplayComponent,
     NoDataStatusComponent,
   ],
 })
 export class DailyTopGainersComponent {
   private readonly router = inject(Router);
-  protected readonly METRIC_ICONS = METRIC_ICONS;
+  public readonly METRIC_DEFINITIONS = METRIC_DEFINITIONS;
 
   // Inputs
   loading = input.required<boolean>();

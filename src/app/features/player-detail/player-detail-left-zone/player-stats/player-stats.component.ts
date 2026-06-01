@@ -2,15 +2,15 @@
 import { DatePipe } from '@angular/common';
 
 import { PlayerStatsRecord, HighscoreSection, Section } from '@core/models';
-import { getSectionLabel, METRIC_ICONS, HIGHSCORE_SECTIONS } from '@core/constants';
-import { LoadingStatusComponent } from '@shared/components';
+import { getSectionLabel, HIGHSCORE_SECTIONS } from '@core/constants';
+import { LoadingStatusComponent, MetricDisplayComponent } from '@shared/components';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-player-stats',
   templateUrl: './player-stats.component.html',
   styleUrl: './player-stats.component.scss',
-  imports: [LoadingStatusComponent, DatePipe],
+  imports: [LoadingStatusComponent, MetricDisplayComponent, DatePipe],
 })
 export class PlayerStatsComponent {
   stats = input.required<PlayerStatsRecord[]>();
@@ -18,7 +18,6 @@ export class PlayerStatsComponent {
   activeSection = input.required<HighscoreSection>();
   sectionSelect = output<HighscoreSection>();
 
-  protected readonly METRIC_ICONS = METRIC_ICONS;
   protected readonly getSectionLabel = (section: string) => getSectionLabel(section as Section);
 
   selectSection(section: string): void {

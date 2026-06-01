@@ -1,26 +1,28 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
-import { getSectionLabel, VOCATION_GROUPS } from '@core/constants';
+import { MetricType, VOCATION_GROUPS } from '@core/constants';
 import { HighscoreRecord, Section } from '@core/models';
-import { formatNumber } from '@shared/functions';
-import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
+import {
+  LoadingStatusComponent,
+  MetricDisplayComponent,
+  NoDataStatusComponent,
+} from '@shared/components';
 
-function formatSignedNumber(n: number): string {
-  if (n > 0) return `+${n}`;
-  if (n < 0) return `${n}`;
-  return '0';
+interface VocDetailColumn {
+  metric: MetricType;
+  gainValue: number;
+  abbreviate: boolean;
+  percentagePointsTotal?: number;
+  subValue?: string;
+  subValueTooltip?: string;
 }
 
 interface VocationTopItem {
   group: string;
   name: string;
-  gainDisplay: string;
-  levelGain?: string;
-  levelCurrent?: string;
-  rankGain: string;
-  rankCurrent: string;
+  columns: VocDetailColumn[];
   link: string[];
 }
 
@@ -29,12 +31,26 @@ interface VocationTopItem {
   selector: 'app-top-per-vocation-cards',
   templateUrl: './highscore-top-per-vocation-cards.component.html',
   styleUrl: './highscore-top-per-vocation-cards.component.scss',
-  imports: [NgClass, NgTemplateOutlet, RouterLink, LoadingStatusComponent, NoDataStatusComponent],
+  imports: [
+    NgTemplateOutlet,
+    RouterLink,
+    LoadingStatusComponent,
+    MetricDisplayComponent,
+    NoDataStatusComponent,
+  ],
 })
 export class HighscoreTopPerVocationCardsComponent {
   data = input.required<HighscoreRecord[]>();
   loading = input.required<boolean>();
   section = input.required<Section>();
+
+  readonly knight = computed(() => this.topItem('Knight'));
+  readonly paladin = computed(() => this.topItem('Paladin'));
+  readonly sorcerer = computed(() => this.topItem('Sorcerer'));
+  readonly druid = computed(() => this.topItem('Druid'));
+  readonly none = computed(() => this.topItem('None'));
+
+  readonly queryParams = computed(() => ({ section: this.section() }));
 
   private readonly isXpSection = computed(
     () => this.section() === 'experience' || this.section() === 'experience_loss',
@@ -61,36 +77,48 @@ export class HighscoreTopPerVocationCardsComponent {
     if (!record) return null;
 
     const isXp = this.isXpSection();
-    const isLoss = this.section() === 'experience_loss';
-    const gain = isXp ? Math.abs(record.gain_points) : record.gain_level;
-    const gainPrefix = isLoss ? '-' : '+';
-    const xpDetails = isXp
-      ? { levelGain: formatSignedNumber(record.gain_level), levelCurrent: `${record.level}` }
-      : {};
 
-    return {
-      group,
-      name: record.name,
-      gainDisplay: isXp
-        ? `${gainPrefix}${formatNumber(gain)} XP`
-        : `${gain} ${getSectionLabel(this.section())}`,
-      ...xpDetails,
-      rankGain: formatSignedNumber(record.gain_rank),
-      rankCurrent: `#${record.rank}`,
-      link: ['/player', record.name],
-    };
+    const columns: VocDetailColumn[] = isXp
+      ? [
+          {
+            metric: 'experience',
+            gainValue: record.gain_points,
+            abbreviate: true,
+            percentagePointsTotal: record.points ?? undefined,
+            subValueTooltip: 'Percentage of total EXP',
+          },
+          {
+            metric: 'level',
+            gainValue: record.gain_level,
+            abbreviate: false,
+            subValue: `${record.level}`,
+            subValueTooltip: 'Actual LVL',
+          },
+          {
+            metric: 'rank',
+            gainValue: record.gain_rank,
+            abbreviate: false,
+            subValue: `#${record.rank}`,
+            subValueTooltip: 'Actual RNK',
+          },
+        ]
+      : [
+          {
+            metric: 'skill',
+            gainValue: record.gain_level,
+            abbreviate: false,
+            subValue: `${record.level}`,
+            subValueTooltip: 'Actual SKL',
+          },
+          {
+            metric: 'rank',
+            gainValue: record.gain_rank,
+            abbreviate: false,
+            subValue: `#${record.rank}`,
+            subValueTooltip: 'Actual RNK',
+          },
+        ];
+
+    return { group, name: record.name, columns, link: ['/player', record.name] };
   }
-
-  readonly knight = computed(() => this.topItem('Knight'));
-  readonly paladin = computed(() => this.topItem('Paladin'));
-  readonly sorcerer = computed(() => this.topItem('Sorcerer'));
-  readonly druid = computed(() => this.topItem('Druid'));
-  readonly none = computed(() => this.topItem('None'));
-
-  readonly gainClass = computed(() => {
-    if (this.section() === 'experience_loss') return 'detail--xp-loss';
-    return this.isXpSection() ? 'detail--xp' : 'detail--skill';
-  });
-
-  readonly queryParams = computed(() => ({ section: this.section() }));
 }

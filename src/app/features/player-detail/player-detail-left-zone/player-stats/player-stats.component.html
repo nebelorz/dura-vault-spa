@@ -18,13 +18,11 @@
         [class.negative]="hasNegativeGain(exp)"
         (click)="selectSection('experience')"
       >
-        <div class="stat-icon">
-          <i
-            [class]="hasNegativeGain(exp) ? METRIC_ICONS.level.loss : METRIC_ICONS.level.gain"
-            [class.stat-active]="activeSection() === 'experience' && !hasNegativeGain(exp)"
-            [class.stat-loss]="hasNegativeGain(exp)"
-          ></i>
-        </div>
+        <app-metric-display
+          metric="level"
+          layout="row"
+          [value]="exp.last_gain_level ?? undefined"
+        />
         <div class="stat-info">
           <div class="text-label">Level</div>
           <div class="stat-value-row">
@@ -59,13 +57,11 @@
         [class.negative]="hasNegativeGain(stat)"
         (click)="selectSection(stat.section)"
       >
-        <div class="stat-icon">
-          <i
-            class="pi pi-box"
-            [class.stat-active]="stat.section === activeSection() && !hasNegativeGain(stat)"
-            [class.stat-loss]="hasNegativeGain(stat)"
-          ></i>
-        </div>
+        <app-metric-display
+          metric="skill"
+          layout="row"
+          [value]="stat.last_gain_level ?? undefined"
+        />
         <div class="stat-info">
           <div class="text-label">{{ getSectionLabel(stat.section) }}</div>
           <div class="stat-value-row">

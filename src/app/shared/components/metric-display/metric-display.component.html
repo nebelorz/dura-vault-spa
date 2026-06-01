@@ -1,0 +1,46 @@
+<span class="metric-display" [ngClass]="[colorClass(), 'metric-display--' + layout()]">
+  <!-- ICON -->
+  @if (showIcon()) {
+    <i [class]="iconClass()" [pTooltip]="iconTooltip()" [tooltipPosition]="tooltipPosition()"></i>
+  }
+  <!-- VALUE -->
+  @if (value() !== undefined) {
+    <span
+      class="metric-display--value"
+      [pTooltip]="valueTooltip()"
+      [tooltipPosition]="tooltipPosition()"
+    >
+      {{ formattedValue() }}
+    </span>
+  }
+  <!-- SHORT LABEL -->
+  @if (showShortLabel()) {
+    <span
+      class="metric-display--short-label"
+      [pTooltip]="labelTooltip()"
+      [tooltipPosition]="tooltipPosition()"
+    >
+      {{ metricDef().shortLabel }}
+    </span>
+  }
+  <!-- LABEL -->
+  @if (showLabel()) {
+    <span
+      class="metric-display--label"
+      [pTooltip]="labelTooltip()"
+      [tooltipPosition]="tooltipPosition()"
+    >
+      {{ metricDef().label }}
+    </span>
+  }
+  <!-- SUB VALUE -->
+  @if (resolvedSubValue(); as sub) {
+    <span
+      class="metric-display--sub-value"
+      [pTooltip]="subValueTooltip()"
+      [tooltipPosition]="tooltipPosition()"
+    >
+      {{ sub }}
+    </span>
+  }
+</span>

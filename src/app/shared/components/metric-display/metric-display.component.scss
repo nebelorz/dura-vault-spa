@@ -1,0 +1,34 @@
+@use 'text' as text;
+
+.metric-display {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  &--column {
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  i {
+    font-size: text.$text-xs;
+  }
+
+  &--value {
+    font-size: text.$text-sm;
+    line-height: 1.3;
+  }
+
+  &--short-label,
+  &--label {
+    font-size: text.$text-xs;
+    line-height: 1.2;
+    opacity: text.$opacity-secondary;
+  }
+
+  &--sub-value {
+    font-size: text.$text-sm;
+    line-height: 1.2;
+    opacity: text.$opacity-secondary;
+  }
+}

@@ -23,34 +23,26 @@
               <span class="text-sub">Lvl {{ player.level }}</span>
             </div>
             <div class="player-gains">
-              <span class="gain-item metric--xp" pTooltip="Experience" tooltipPosition="bottom">
-                <i [class]="METRIC_ICONS.experience.gain"></i>
-                {{ player.gain_points | abbreviateNumber }}
-              </span>
-              <span
-                class="gain-item metric--level"
-                [class.metric--danger]="player.gain_level < 0"
-                pTooltip="Level"
-                tooltipPosition="bottom"
-              >
-                <i
-                  [class]="
-                    player.gain_level < 0 ? METRIC_ICONS.level.loss : METRIC_ICONS.level.gain
-                  "
-                ></i>
-                {{ player.gain_level }}
-              </span>
-              <span
-                class="gain-item metric--rank"
-                [class.metric--danger]="player.gain_rank < 0"
-                pTooltip="Rank"
-                tooltipPosition="bottom"
-              >
-                <i
-                  [class]="player.gain_rank < 0 ? METRIC_ICONS.rank.loss : METRIC_ICONS.rank.gain"
-                ></i>
-                {{ player.gain_rank }}
-              </span>
+              <app-metric-display
+                metric="experience"
+                layout="row"
+                [value]="player.gain_points ?? undefined"
+                [valueTooltip]="METRIC_DEFINITIONS.experience.label"
+              />
+              <app-metric-display
+                metric="level"
+                layout="row"
+                [value]="player.gain_level"
+                [abbreviate]="false"
+                [valueTooltip]="METRIC_DEFINITIONS.level.label"
+              />
+              <app-metric-display
+                metric="rank"
+                layout="row"
+                [value]="player.gain_rank"
+                [abbreviate]="false"
+                [valueTooltip]="METRIC_DEFINITIONS.rank.label"
+              />
             </div>
           </div>
         }
@@ -62,29 +54,37 @@
       <section class="animation-fade">
         <div class="section-header">
           <span>EXPERIENCE LOSS</span>
-          @if (maxDate()) {
-            <span class="header-date">{{ maxDate()! | date: 'dd MMM yyyy' }}</span>
-          }
         </div>
-        <div class="player-row player-row--loss" (click)="navigateToPlayer(mostExpLossPlayer.name, 'experience')">
+        <div
+          class="player-row player-row--loss"
+          (click)="navigateToPlayer(mostExpLossPlayer.name, 'experience')"
+        >
           <div class="player-main">
             <div class="text-value">{{ mostExpLossPlayer.name }}</div>
             <span class="text-sub">{{ mostExpLossPlayer.vocation }}</span>
             <span class="text-sub">Lvl {{ mostExpLossPlayer.level }}</span>
           </div>
           <div class="player-gains">
-            <span class="gain-item metric--danger" pTooltip="Experience" tooltipPosition="bottom">
-              <i [class]="METRIC_ICONS.experience.loss"></i>
-              {{ mostExpLossPlayer.gain_points | abbreviateNumber }}
-            </span>
-            <span class="gain-item metric--danger" pTooltip="Level" tooltipPosition="bottom">
-              <i [class]="METRIC_ICONS.level.loss"></i>
-              {{ mostExpLossPlayer.gain_level }}
-            </span>
-            <span class="gain-item metric--danger" pTooltip="Rank" tooltipPosition="bottom">
-              <i [class]="METRIC_ICONS.rank.loss"></i>
-              {{ mostExpLossPlayer.gain_rank }}
-            </span>
+            <app-metric-display
+              metric="experience"
+              layout="row"
+              [value]="mostExpLossPlayer.gain_points ?? undefined"
+              [valueTooltip]="METRIC_DEFINITIONS.experience.label"
+            />
+            <app-metric-display
+              metric="level"
+              layout="row"
+              [value]="mostExpLossPlayer.gain_level"
+              [abbreviate]="false"
+              [valueTooltip]="METRIC_DEFINITIONS.level.label"
+            />
+            <app-metric-display
+              metric="rank"
+              layout="row"
+              [value]="mostExpLossPlayer.gain_rank"
+              [abbreviate]="false"
+              [valueTooltip]="METRIC_DEFINITIONS.rank.label"
+            />
           </div>
         </div>
       </section>
@@ -116,23 +116,20 @@
                   </div>
 
                   <div class="player-gains">
-                    <span class="gain-item metric--skill" pTooltip="Skill" tooltipPosition="bottom">
-                      <i [class]="METRIC_ICONS.level.gain"></i>
-                      {{ player.gain_level }}
-                    </span>
-                    <span
-                      class="gain-item metric--rank"
-                      [class.metric--danger]="player.gain_rank < 0"
-                      pTooltip="Rank"
-                      tooltipPosition="bottom"
-                    >
-                      <i
-                        [class]="
-                          player.gain_rank < 0 ? METRIC_ICONS.rank.loss : METRIC_ICONS.rank.gain
-                        "
-                      ></i>
-                      {{ player.gain_rank }}
-                    </span>
+                    <app-metric-display
+                      metric="skill"
+                      layout="row"
+                      [value]="player.gain_level"
+                      [abbreviate]="false"
+                      [valueTooltip]="METRIC_DEFINITIONS.skill.label"
+                    />
+                    <app-metric-display
+                      metric="rank"
+                      layout="row"
+                      [value]="player.gain_rank"
+                      [abbreviate]="false"
+                      [valueTooltip]="METRIC_DEFINITIONS.rank.label"
+                    />
                   </div>
                 </div>
               }

@@ -1,4 +1,5 @@
 @use 'colors' as colors;
+@use 'text' as text;
 
 .stats-section {
   display: flex;
@@ -14,16 +15,19 @@
   gap: 0.5rem;
   padding: 0.4rem 0.5rem;
   padding-left: 0.5rem;
-  border-left: 2px solid transparent;
   border-radius: 6px;
   transition:
     background 0.15s ease,
     border-color 0.2s ease;
   cursor: pointer;
 
+  app-metric-display {
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+  }
+
   &.active-section {
-    border-left-color: colors.$primary-a20;
-    background-color: colors.$primary-a10;
+    background-color: colors.$secondary;
   }
 
   &.negative {
@@ -31,38 +35,11 @@
   }
 
   &.active-section.negative {
-    border-left-color: colors.$danger-a20;
     background-color: colors.$danger-a10;
   }
 
   &:hover .stat-overlay {
     opacity: 1;
-  }
-}
-
-.stat-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 1rem;
-  height: 1rem;
-  flex-shrink: 0;
-  margin-top: 0.125rem;
-
-  i {
-    color: colors.$secondary-light;
-    opacity: 0.85;
-    transition: color 0.2s ease;
-
-    &.stat-active {
-      color: colors.$primary;
-      opacity: 0.85;
-    }
-
-    &.stat-loss {
-      color: colors.$danger;
-      opacity: 0.85;
-    }
   }
 }
 
@@ -85,7 +62,7 @@
 }
 
 .stat-rank {
-  font-size: xx-small;
+  font-size: text.$text-xs;
 }
 
 // Mouseover overlay
