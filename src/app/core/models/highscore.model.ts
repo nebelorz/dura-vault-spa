@@ -39,6 +39,7 @@ export interface DailyTopPlayer {
   rank: number;
   level: number;
   vocation: string;
+  points: number | null;
   gain_rank: number;
   gain_level: number;
   gain_points: number | null;

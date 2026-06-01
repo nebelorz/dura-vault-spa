@@ -1,4 +1,5 @@
 export * from './calculate-available-data-date-range';
+export * from './calculate-gain-percentage';
 export * from './format-date';
 export * from './format-large-numbers';
 export * from './format-minutes-to-hours';

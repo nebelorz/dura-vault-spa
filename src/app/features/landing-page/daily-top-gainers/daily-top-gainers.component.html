@@ -11,38 +11,30 @@
             <span class="header-date">{{ maxDate()! | date: 'dd MMM yyyy' }}</span>
           }
         </div>
-        @for (player of experiencePlayers(); track player.name; let i = $index) {
+        @for (row of experiencePlayerRows(); track row.name; let i = $index) {
           <div
             class="player-row"
             [class.top-one]="i === 0"
-            (click)="navigateToPlayer(player.name, 'experience')"
+            (click)="navigateToPlayer(row.name, 'experience')"
+            tabindex="0"
           >
             <div class="player-main">
-              <div class="text-value">{{ player.name }}</div>
-              <span class="text-sub">{{ player.vocation }}</span>
-              <span class="text-sub">Lvl {{ player.level }}</span>
+              <div class="text-value">{{ row.name }}</div>
+              <span class="text-sub">{{ row.vocation }}</span>
             </div>
             <div class="player-gains">
-              <app-metric-display
-                metric="experience"
-                layout="row"
-                [value]="player.gain_points ?? undefined"
-                [valueTooltip]="METRIC_DEFINITIONS.experience.label"
-              />
-              <app-metric-display
-                metric="level"
-                layout="row"
-                [value]="player.gain_level"
-                [abbreviate]="false"
-                [valueTooltip]="METRIC_DEFINITIONS.level.label"
-              />
-              <app-metric-display
-                metric="rank"
-                layout="row"
-                [value]="player.gain_rank"
-                [abbreviate]="false"
-                [valueTooltip]="METRIC_DEFINITIONS.rank.label"
-              />
+              @for (col of row.columns; track col.metric) {
+                <app-metric-display
+                  [metric]="col.metric"
+                  layout="column"
+                  [value]="col.gainValue ?? undefined"
+                  [relativePercentagePointsFromTotal]="col.percentagePointsTotal"
+                  [subValue]="col.currentValue"
+                  [subValueTooltip]="col.currentValueTooltip"
+                  [abbreviate]="col.abbreviate"
+                  [valueTooltip]="col.valueTooltip"
+                />
+              }
             </div>
           </div>
         }
@@ -50,41 +42,33 @@
     }
 
     <!-- Experience Loss Section -->
-    @if (experienceLossPlayer(); as mostExpLossPlayer) {
+    @if (experienceLossPlayerRow(); as row) {
       <section class="animation-fade">
         <div class="section-header">
           <span>EXPERIENCE LOSS</span>
         </div>
         <div
           class="player-row player-row--loss"
-          (click)="navigateToPlayer(mostExpLossPlayer.name, 'experience')"
+          (click)="navigateToPlayer(row.name, 'experience')"
+          tabindex="0"
         >
           <div class="player-main">
-            <div class="text-value">{{ mostExpLossPlayer.name }}</div>
-            <span class="text-sub">{{ mostExpLossPlayer.vocation }}</span>
-            <span class="text-sub">Lvl {{ mostExpLossPlayer.level }}</span>
+            <div class="text-value">{{ row.name }}</div>
+            <span class="text-sub">{{ row.vocation }}</span>
           </div>
           <div class="player-gains">
-            <app-metric-display
-              metric="experience"
-              layout="row"
-              [value]="mostExpLossPlayer.gain_points ?? undefined"
-              [valueTooltip]="METRIC_DEFINITIONS.experience.label"
-            />
-            <app-metric-display
-              metric="level"
-              layout="row"
-              [value]="mostExpLossPlayer.gain_level"
-              [abbreviate]="false"
-              [valueTooltip]="METRIC_DEFINITIONS.level.label"
-            />
-            <app-metric-display
-              metric="rank"
-              layout="row"
-              [value]="mostExpLossPlayer.gain_rank"
-              [abbreviate]="false"
-              [valueTooltip]="METRIC_DEFINITIONS.rank.label"
-            />
+            @for (col of row.columns; track col.metric) {
+              <app-metric-display
+                [metric]="col.metric"
+                layout="column"
+                [value]="col.gainValue ?? undefined"
+                [relativePercentagePointsFromTotal]="col.percentagePointsTotal"
+                [subValue]="col.currentValue"
+                [subValueTooltip]="col.currentValueTooltip"
+                [abbreviate]="col.abbreviate"
+                [valueTooltip]="col.valueTooltip"
+              />
+            }
           </div>
         </div>
       </section>
@@ -107,29 +91,29 @@
               <div class="section-header">
                 <span>{{ section.label | uppercase }}</span>
               </div>
-              @for (player of section.players; track player.name) {
-                <div class="player-row" (click)="navigateToPlayer(player.name, section.name)">
+              @for (row of skillPlayerRows()[section.name]; track row.name) {
+                <div
+                  class="player-row"
+                  (click)="navigateToPlayer(row.name, section.name)"
+                  tabindex="0"
+                >
                   <div class="player-main">
-                    <div class="text-value">{{ player.name }}</div>
-                    <span class="text-sub">{{ player.vocation }}</span>
-                    <span class="text-sub">{{ section.label }} {{ player.level }}</span>
+                    <div class="text-value">{{ row.name }}</div>
+                    <span class="text-sub">{{ row.vocation }}</span>
                   </div>
 
                   <div class="player-gains">
-                    <app-metric-display
-                      metric="skill"
-                      layout="row"
-                      [value]="player.gain_level"
-                      [abbreviate]="false"
-                      [valueTooltip]="METRIC_DEFINITIONS.skill.label"
-                    />
-                    <app-metric-display
-                      metric="rank"
-                      layout="row"
-                      [value]="player.gain_rank"
-                      [abbreviate]="false"
-                      [valueTooltip]="METRIC_DEFINITIONS.rank.label"
-                    />
+                    @for (col of row.columns; track col.metric) {
+                      <app-metric-display
+                        [metric]="col.metric"
+                        layout="column"
+                        [value]="col.gainValue ?? undefined"
+                        [subValue]="col.currentValue"
+                        [subValueTooltip]="col.currentValueTooltip"
+                        [abbreviate]="col.abbreviate"
+                        [valueTooltip]="col.valueTooltip"
+                      />
+                    }
                   </div>
                 </div>
               }
