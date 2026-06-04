@@ -18,39 +18,51 @@
           <div class="podium-card">
             <div class="podium-name">{{ second.name }}</div>
             <div class="podium-meta">{{ second.meta }}</div>
-            <div
-              class="podium-metric podium-metric--second"
-              [ngClass]="second.columns[0].valueClass ?? ''"
-            >
-              {{ second.columns[0].podiumValue ?? second.columns[0].value }}
-            </div>
-            @for (col of second.columns.slice(1); track col.label) {
-              <div class="podium-metric-visible" [ngClass]="col.valueClass ?? ''">
-                {{ col.podiumValue ?? col.value }}
-              </div>
+            @for (col of second.columns; track $index) {
+              @if (col.type === 'metric') {
+                <app-metric-display
+                  layout="column"
+                  [metric]="col.metric"
+                  [value]="col.value"
+                  [subValue]="col.subValue"
+                  [valueTooltip]="col.valueTooltip"
+                  [subValueTooltip]="col.subValueTooltip"
+                  [relativePercentagePointsFromTotal]="col.relativePercentagePointsFromTotal"
+                  [abbreviate]="col.abbreviate ?? true"
+                  [showIcon]="false"
+                />
+              } @else {
+                <div class="podium-text-col" [ngClass]="col.valueClass ?? ''">
+                  {{ col.value }}
+                </div>
+              }
             }
             @if (!hideOverlay()) {
               <div class="podium-overlay">
-                @for (col of second.columns; track col.label) {
-                  <div class="podium-overlay-row">
-                    <span class="text-overlay-label">{{ col.label }}</span>
-                    <div class="podium-overlay-values">
-                      <span
-                        class="podium-overlay-value text-overlay-value"
-                        [ngClass]="col.valueClass ?? ''"
-                      >
-                        {{ col.podiumValue ?? col.value }}
+                @for (col of second.columns; track $index) {
+                  @if (col.type === 'metric') {
+                    <app-metric-display
+                      layout="column"
+                      [metric]="col.metric"
+                      [value]="col.value"
+                      [subValue]="col.subValue"
+                      [valueTooltip]="col.valueTooltip"
+                      [subValueTooltip]="col.subValueTooltip"
+                      [relativePercentagePointsFromTotal]="col.relativePercentagePointsFromTotal"
+                      [abbreviate]="col.abbreviate ?? true"
+                      [showLabel]="true"
+                    />
+                  } @else {
+                    <div class="podium-overlay-text-col">
+                      <span class="text-overlay-label">{{ col.label }}</span>
+                      <span class="text-overlay-value" [ngClass]="col.valueClass ?? ''">
+                        {{ col.value }}
                       </span>
                       @if (col.subValue) {
-                        <span
-                          class="podium-overlay-sub text-sub"
-                          [ngClass]="col.subValueClass ?? ''"
-                        >
-                          {{ col.subValue }}
-                        </span>
+                        <span class="text-sub">{{ col.subValue }}</span>
                       }
                     </div>
-                  </div>
+                  }
                 }
               </div>
             }
@@ -73,36 +85,51 @@
         <div class="podium-card">
           <div class="podium-name">{{ first.name }}</div>
           <div class="podium-meta">{{ first.meta }}</div>
-          <div
-            class="podium-metric podium-metric--first"
-            [ngClass]="first.columns[0].valueClass ?? ''"
-          >
-            {{ first.columns[0].podiumValue ?? first.columns[0].value }}
-          </div>
-          @for (col of first.columns.slice(1); track col.label) {
-            <div class="podium-metric-visible" [ngClass]="col.valueClass ?? ''">
-              {{ col.podiumValue ?? col.value }}
-            </div>
+          @for (col of first.columns; track $index) {
+            @if (col.type === 'metric') {
+              <app-metric-display
+                layout="column"
+                [metric]="col.metric"
+                [value]="col.value"
+                [subValue]="col.subValue"
+                [valueTooltip]="col.valueTooltip"
+                [subValueTooltip]="col.subValueTooltip"
+                [relativePercentagePointsFromTotal]="col.relativePercentagePointsFromTotal"
+                [abbreviate]="col.abbreviate ?? true"
+                [showIcon]="false"
+              />
+            } @else {
+              <div class="podium-text-col" [ngClass]="col.valueClass ?? ''">
+                {{ col.value }}
+              </div>
+            }
           }
           @if (!hideOverlay()) {
             <div class="podium-overlay">
-              @for (col of first.columns; track col.label) {
-                <div class="podium-overlay-row">
-                  <span class="text-overlay-label">{{ col.label }}</span>
-                  <div class="podium-overlay-values">
-                    <span
-                      class="podium-overlay-value text-overlay-value"
-                      [ngClass]="col.valueClass ?? ''"
-                    >
-                      {{ col.podiumValue ?? col.value }}
+              @for (col of first.columns; track $index) {
+                @if (col.type === 'metric') {
+                  <app-metric-display
+                    layout="column"
+                    [metric]="col.metric"
+                    [value]="col.value"
+                    [subValue]="col.subValue"
+                    [valueTooltip]="col.valueTooltip"
+                    [subValueTooltip]="col.subValueTooltip"
+                    [relativePercentagePointsFromTotal]="col.relativePercentagePointsFromTotal"
+                    [abbreviate]="col.abbreviate ?? true"
+                    [showLabel]="true"
+                  />
+                } @else {
+                  <div class="podium-overlay-text-col">
+                    <span class="text-overlay-label">{{ col.label }}</span>
+                    <span class="text-overlay-value" [ngClass]="col.valueClass ?? ''">
+                      {{ col.value }}
                     </span>
                     @if (col.subValue) {
-                      <span class="podium-overlay-sub text-sub" [ngClass]="col.subValueClass ?? ''">
-                        {{ col.subValue }}
-                      </span>
+                      <span class="text-sub">{{ col.subValue }}</span>
                     }
                   </div>
-                </div>
+                }
               }
             </div>
           }
@@ -124,39 +151,52 @@
           <div class="podium-card">
             <div class="podium-name">{{ third.name }}</div>
             <div class="podium-meta">{{ third.meta }}</div>
-            <div
-              class="podium-metric podium-metric--third"
-              [ngClass]="third.columns[0].valueClass ?? ''"
-            >
-              {{ third.columns[0].podiumValue ?? third.columns[0].value }}
-            </div>
-            @for (col of third.columns.slice(1); track col.label) {
-              <div class="podium-metric-visible" [ngClass]="col.valueClass ?? ''">
-                {{ col.podiumValue ?? col.value }}
-              </div>
+            @for (col of third.columns; track $index) {
+              @if (col.type === 'metric') {
+                <app-metric-display
+                  layout="column"
+                  [value]="col.value"
+                  [subValue]="col.subValue"
+                  [valueTooltip]="col.valueTooltip"
+                  [subValueTooltip]="col.subValueTooltip"
+                  [relativePercentagePointsFromTotal]="col.relativePercentagePointsFromTotal"
+                  [metric]="col.metric"
+                  [abbreviate]="col.abbreviate ?? true"
+                  [showIcon]="false"
+                />
+              } @else {
+                <div class="podium-text-col" [ngClass]="col.valueClass ?? ''">
+                  {{ col.value }}
+                </div>
+              }
             }
+            <!-- 3rd Podium overlay -->
             @if (!hideOverlay()) {
               <div class="podium-overlay">
-                @for (col of third.columns; track col.label) {
-                  <div class="podium-overlay-row">
-                    <span class="text-overlay-label">{{ col.label }}</span>
-                    <div class="podium-overlay-values">
-                      <span
-                        class="podium-overlay-value text-overlay-value"
-                        [ngClass]="col.valueClass ?? ''"
-                      >
-                        {{ col.podiumValue ?? col.value }}
+                @for (col of third.columns; track $index) {
+                  @if (col.type === 'metric') {
+                    <app-metric-display
+                      layout="column"
+                      [metric]="col.metric"
+                      [value]="col.value"
+                      [subValue]="col.subValue"
+                      [relativePercentagePointsFromTotal]="col.relativePercentagePointsFromTotal"
+                      [abbreviate]="col.abbreviate ?? true"
+                      [showLabel]="true"
+                      [valueTooltip]="col.valueTooltip"
+                      [subValueTooltip]="col.subValueTooltip"
+                    />
+                  } @else {
+                    <div class="podium-overlay-text-col">
+                      <span class="text-overlay-label">{{ col.label }}</span>
+                      <span class="text-overlay-value" [ngClass]="col.valueClass ?? ''">
+                        {{ col.value }}
                       </span>
                       @if (col.subValue) {
-                        <span
-                          class="podium-overlay-sub text-sub"
-                          [ngClass]="col.subValueClass ?? ''"
-                        >
-                          {{ col.subValue }}
-                        </span>
+                        <span class="text-sub">{{ col.subValue }}</span>
                       }
                     </div>
-                  </div>
+                  }
                 }
               </div>
             }
@@ -200,19 +240,34 @@
             <span class="list-name">{{ item.name }}</span>
             <span class="list-meta">{{ item.meta }}</span>
           </div>
-          <div class="list-columns">
-            @for (col of item.columns; track col.label) {
-              <div class="list-column">
-                <span class="list-column-label">{{ col.label }}</span>
-                <span class="list-column-value text-value" [ngClass]="col.valueClass ?? ''">
-                  {{ col.value }}
-                </span>
-                @if (col.subValue) {
-                  <span class="list-column-sub-value text-sub" [ngClass]="col.subValueClass ?? ''">
-                    {{ col.subValue }}
+          <div class="list-metrics">
+            @for (col of item.columns; track $index) {
+              @if (col.type === 'metric') {
+                <app-metric-display
+                  layout="column"
+                  [metric]="col.metric"
+                  [value]="col.value"
+                  [subValue]="col.subValue"
+                  [relativePercentagePointsFromTotal]="col.relativePercentagePointsFromTotal"
+                  [abbreviate]="col.abbreviate ?? true"
+                  [showIcon]="false"
+                  [valueTooltip]="col.valueTooltip"
+                  [subValueTooltip]="col.subValueTooltip"
+                  [iconTooltip]="col.iconTooltip"
+                  [labelTooltip]="col.labelTooltip"
+                  [tooltipPosition]="col.tooltipPosition ?? 'top'"
+                />
+              } @else {
+                <div class="list-text-col">
+                  <span class="list-text-col--label">{{ col.label }}</span>
+                  <span class="list-text-col--value text-value" [ngClass]="col.valueClass ?? ''">
+                    {{ col.value }}
                   </span>
-                }
-              </div>
+                  @if (col.subValue) {
+                    <span class="list-text-col--sub text-sub">{{ col.subValue }}</span>
+                  }
+                </div>
+              }
             }
           </div>
         </div>

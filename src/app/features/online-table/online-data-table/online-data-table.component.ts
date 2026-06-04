@@ -7,13 +7,14 @@ import {
   signal,
   viewChild,
   OnInit,
+  OnDestroy,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { OnlineTopRecord, TimePeriod } from '@core/models';
 import { ToastService } from '@core/services';
 import { DAILY_WARN_MIN, DAILY_DANGER_MIN } from '@core/constants';
 import { formatMinutesToHours, getDuraPlayerUrl } from '@shared/functions';
-import { PodiumListComponent, PodiumListItem, ListColumn } from '@shared/components';
+import { PodiumListComponent, PodiumListItem, TextColumn } from '@shared/components';
 
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 import { MenuItem } from 'primeng/api';
@@ -25,7 +26,7 @@ import { MenuItem } from 'primeng/api';
   styleUrl: './online-data-table.component.scss',
   imports: [ContextMenuModule, PodiumListComponent],
 })
-export class OnlineDataTableComponent implements OnInit {
+export class OnlineDataTableComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
   private readonly toastService = inject(ToastService);
 
@@ -35,7 +36,7 @@ export class OnlineDataTableComponent implements OnInit {
   period = input.required<TimePeriod>();
 
   // State
-  private readonly selectedRecord = signal<OnlineTopRecord | null>(null);
+  private selectedRecord: OnlineTopRecord | null = null;
 
   // Child
   private readonly cm = viewChild<ContextMenu>('cm');
@@ -50,41 +51,9 @@ export class OnlineDataTableComponent implements OnInit {
     return this.data().filter((r) => r.name.toLowerCase().includes(filter));
   });
 
-  private readonly showAvg = computed(() => this.period() !== 'day');
-
-  readonly displayItems = computed<PodiumListItem[]>(() => {
-    const showAvg = this.showAvg();
-    return this.filteredData().map((record) => {
-      const columns: ListColumn[] = [];
-      if (showAvg) {
-        const avgMinutes = Math.round(record.online_time / Math.max(1, record.days_active));
-        const avgValue = formatMinutesToHours(avgMinutes);
-        columns.push({
-          label: 'Avg / Day',
-          value: avgValue,
-          valueClass: this.metricTimeClass(avgMinutes),
-        });
-      }
-      columns.push({
-        label: 'Online Time',
-        value: formatMinutesToHours(record.online_time),
-        ...(showAvg ? {} : { valueClass: this.metricTimeClass(record.online_time) }),
-      });
-      if (showAvg) {
-        const dayWord = record.days_active === 1 ? 'day' : 'days';
-        columns.push({ label: 'Days Active', value: `${record.days_active} ${dayWord}` });
-      }
-      return {
-        id: record.name,
-        rank: record.rank,
-        name: record.name,
-        meta: `${record.vocation} · Lvl ${record.level}`,
-        columns,
-        rowClass: this.rowTimeClass(record),
-        podiumClass: this.podiumTimeClass(record),
-      };
-    });
-  });
+  readonly displayItems = computed<PodiumListItem[]>(() =>
+    this.filteredData().map((record) => this.toDisplayItem(record)),
+  );
 
   // Context menu
   readonly contextMenuItems: MenuItem[] = [
@@ -120,12 +89,52 @@ export class OnlineDataTableComponent implements OnInit {
   }
 
   protected onItemRightClick({ event, item }: { event: MouseEvent; item: PodiumListItem }): void {
-    this.selectedRecord.set(this.data().find((r) => r.name === item.id) ?? null);
+    this.selectedRecord = this.data().find((r) => r.name === item.id) ?? null;
     this.cm()?.show(event);
   }
 
   protected onFilterChange(value: string): void {
     this.filterValue.set(value);
+  }
+
+  private toDisplayItem(record: OnlineTopRecord): PodiumListItem {
+    const isDay = this.period() === 'day';
+    const avgMinutes = isDay ? 0 : Math.round(record.online_time / Math.max(1, record.days_active));
+    const dayWord = record.days_active === 1 ? 'day' : 'days';
+
+    const columns: TextColumn[] = isDay
+      ? [
+          {
+            type: 'text',
+            label: 'Online Time',
+            value: formatMinutesToHours(record.online_time),
+            valueClass: this.metricTimeClass(record.online_time),
+          },
+        ]
+      : [
+          {
+            type: 'text',
+            label: 'Avg / Day',
+            value: formatMinutesToHours(avgMinutes),
+            valueClass: this.metricTimeClass(avgMinutes),
+            subValue: formatMinutesToHours(record.online_time),
+          },
+          {
+            type: 'text',
+            label: 'Days Active',
+            value: `${record.days_active} ${dayWord}`,
+          },
+        ];
+
+    return {
+      id: record.name,
+      rank: record.rank,
+      name: record.name,
+      meta: `${record.vocation} · Lvl ${record.level}`,
+      columns,
+      rowClass: this.rowTimeClass(record),
+      podiumClass: this.podiumTimeClass(record),
+    };
   }
 
   private rowTimeClass(record: OnlineTopRecord): string {
@@ -153,13 +162,11 @@ export class OnlineDataTableComponent implements OnInit {
   }
 
   private viewPlayerDetails(): void {
-    const record = this.selectedRecord();
-    if (record) this.navigateToPlayer(record);
+    if (this.selectedRecord) this.navigateToPlayer(this.selectedRecord);
   }
 
   private searchOnDura(): void {
-    const record = this.selectedRecord();
-    if (!record) return;
-    window.open(getDuraPlayerUrl(record.name), '_blank', 'noopener,noreferrer');
+    if (!this.selectedRecord) return;
+    window.open(getDuraPlayerUrl(this.selectedRecord.name), '_blank', 'noopener,noreferrer');
   }
 }

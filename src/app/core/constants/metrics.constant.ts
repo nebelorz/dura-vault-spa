@@ -39,14 +39,3 @@ export const METRIC_DEFINITIONS = {
     shortLabel: 'SKL',
   },
 } as const;
-
-export const getMetricLabel = (metric: MetricType, short?: boolean): string =>
-  short ? METRIC_DEFINITIONS[metric].shortLabel : METRIC_DEFINITIONS[metric].label;
-
-export const getMetricIcon = (metric: MetricType, isLoss?: boolean): string =>
-  isLoss ? METRIC_DEFINITIONS[metric].loss : METRIC_DEFINITIONS[metric].gain;
-
-export const getMetricCssClass = (metric: MetricType, isLoss?: boolean): string =>
-  isLoss ? METRIC_DEFINITIONS[metric].cssClassLoss : METRIC_DEFINITIONS[metric].cssClassGain;
-
-export type MetricType = keyof typeof METRIC_DEFINITIONS;

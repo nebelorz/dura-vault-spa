@@ -1,16 +1,31 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { NgClass } from '@angular/common';
 
+import { MetricType } from '@core/models';
+import { MetricDisplayComponent } from '../metric-display/metric-display.component';
 import { LoadingStatusComponent } from '../loading-status/loading-status.component';
 import { NoDataStatusComponent } from '../no-data-status/no-data-status.component';
 
-export interface ListColumn {
+export interface MetricColumn {
+  type: 'metric';
+  metric: MetricType;
+  value?: number;
+  subValue?: string;
+  abbreviate?: boolean;
+  relativePercentagePointsFromTotal?: number;
+  valueTooltip?: string;
+  subValueTooltip?: string;
+  iconTooltip?: string;
+  labelTooltip?: string;
+  tooltipPosition?: string;
+}
+
+export interface TextColumn {
+  type: 'text';
   label: string;
   value: string;
   valueClass?: string;
-  podiumValue?: string; // Override value displayed in the podium (does not affect the list)
-  subValue?: string; // Sub-text shown below the value in the list view (does not affect the podium)
-  subValueClass?: string;
+  subValue?: string;
 }
 
 export interface PodiumListItem {
@@ -18,17 +33,17 @@ export interface PodiumListItem {
   rank: number;
   name: string;
   meta: string;
-  columns: ListColumn[]; // Metrics to display. All columns are iterated in both the podium and the list
+  columns: (MetricColumn | TextColumn)[];
   rowClass?: string;
-  podiumClass?: string; // Applied to .podium-base
+  podiumClass?: string;
 }
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-podium-list',
   templateUrl: './podium-list.component.html',
-  styleUrls: ['./podium-list.component.scss'],
-  imports: [NgClass, LoadingStatusComponent, NoDataStatusComponent],
+  styleUrl: './podium-list.component.scss',
+  imports: [NgClass, MetricDisplayComponent, LoadingStatusComponent, NoDataStatusComponent],
 })
 export class PodiumListComponent {
   items = input.required<PodiumListItem[]>();

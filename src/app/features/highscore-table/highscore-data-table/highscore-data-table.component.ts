@@ -13,16 +13,16 @@ import { Router } from '@angular/router';
 
 import { HighscoreRecord, Section } from '@core/models';
 import { ToastService } from '@core/services';
-import { getSectionLabel } from '@core/constants';
-import { formatNumber, getDuraPlayerUrl } from '@shared/functions';
-import { PodiumListComponent, PodiumListItem, ListColumn } from '@shared/components';
+import {
+  getDuraPlayerUrl,
+  getMetricGainOrLossTooltip,
+  getMetricPercentageOfTotalEXP,
+  getMetricTooltip,
+} from '@shared/functions';
+import { MetricColumn, PodiumListComponent, PodiumListItem } from '@shared/components';
 
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 import { MenuItem } from 'primeng/api';
-
-function gainWord(n: number, singular: string, plural: string): string {
-  return Math.abs(n) === 1 ? singular : plural;
-}
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -105,67 +105,60 @@ export class HighscoreDataTableComponent implements OnInit, OnDestroy {
     this.cm()?.show(event);
   }
 
-  private gainClass(value: number, positiveClass: string): string {
-    if (value > 0) return positiveClass;
-    if (value < 0) return 'metric--danger';
-    return '';
-  }
-
   private toDisplayItem(record: HighscoreRecord, section: Section): PodiumListItem {
     const isExperience = section === 'experience' || section === 'experience_loss';
-    const isLoss = section === 'experience_loss';
 
-    let columns: ListColumn[];
+    let columns: MetricColumn[];
 
     if (isExperience) {
-      const gainPoints = record.gain_points ?? 0;
-      const xpFormatted = `${formatNumber(gainPoints)} XP`;
-      const xpPercent =
-        record.points && record.points > 0
-          ? `${((gainPoints / record.points) * 100).toFixed(2)}%`
-          : undefined;
-      const xpClass = this.gainClass(gainPoints, 'metric--xp');
-
       columns = [
         {
-          label: isLoss ? 'Exp Lost' : 'Exp Gain',
-          value: xpFormatted,
-          valueClass: xpClass,
-          subValue: xpPercent,
-          subValueClass: xpClass,
+          type: 'metric',
+          metric: 'experience',
+          value: record.gain_points ?? 0,
+          abbreviate: true,
+          valueTooltip: getMetricGainOrLossTooltip('experience', record.gain_points < 0),
+          relativePercentagePointsFromTotal: record.points ?? undefined,
+          subValueTooltip: getMetricPercentageOfTotalEXP(),
         },
         {
-          label: isLoss ? 'Levels Lost' : 'Levels Gain',
-          value: `${record.gain_level}`,
-          podiumValue: `${record.gain_level} ${gainWord(record.gain_level, 'LEVEL', 'LEVELS')}`,
-          valueClass: this.gainClass(record.gain_level, 'metric--level'),
-          subValue: `Lvl ${record.level}`,
+          type: 'metric',
+          metric: 'level',
+          value: record.gain_level,
+          abbreviate: false,
+          valueTooltip: getMetricGainOrLossTooltip('level', record.gain_level < 0),
+          subValue: `${record.level}`,
+          subValueTooltip: getMetricTooltip('level'),
         },
         {
-          label: isLoss ? 'Rank Lost' : 'Rank Gain',
-          value: `${record.gain_rank}`,
-          podiumValue: `${record.gain_rank} ${gainWord(record.gain_rank, 'RANK', 'RANKS')}`,
-          valueClass: this.gainClass(record.gain_rank, 'metric--rank'),
+          type: 'metric',
+          metric: 'rank',
+          value: record.gain_rank,
+          abbreviate: false,
+          valueTooltip: getMetricGainOrLossTooltip('rank', record.gain_rank < 0),
           subValue: `#${record.rank}`,
-          subValueClass: 'metric--rank',
+          subValueTooltip: getMetricTooltip('rank'),
         },
       ];
     } else {
       columns = [
         {
-          label: 'Skill Gain',
-          value: `${record.gain_level}`,
-          podiumValue: `${record.gain_level} ${getSectionLabel(section)}`,
-          valueClass: this.gainClass(record.gain_level, 'metric--skill'),
-          subValue: `${getSectionLabel(section)} ${record.level}`,
+          type: 'metric',
+          metric: 'skill',
+          value: record.gain_level,
+          abbreviate: false,
+          valueTooltip: getMetricGainOrLossTooltip('skill', record.gain_level < 0),
+          subValue: `${record.level}`,
+          subValueTooltip: getMetricTooltip('skill'),
         },
         {
-          label: 'Rank Gain',
-          value: `${record.gain_rank}`,
-          podiumValue: `${record.gain_rank} ${gainWord(record.gain_rank, 'RANK', 'RANKS')}`,
-          valueClass: this.gainClass(record.gain_rank, 'metric--rank'),
+          type: 'metric',
+          metric: 'rank',
+          value: record.gain_rank,
+          abbreviate: false,
+          valueTooltip: getMetricGainOrLossTooltip('rank', record.gain_rank < 0),
           subValue: `#${record.rank}`,
-          subValueClass: 'metric--rank',
+          subValueTooltip: getMetricTooltip('rank'),
         },
       ];
     }

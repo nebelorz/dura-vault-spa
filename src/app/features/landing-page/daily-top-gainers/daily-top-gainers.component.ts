@@ -2,14 +2,19 @@ import { ChangeDetectionStrategy, Component, computed, inject, input } from '@an
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
-import { DailyTopPlayer, SectionData } from '@core/models';
-import { MetricType, getMetricLabel } from '@core/constants';
+import { DailyTopPlayer, MetricType, SectionData } from '@core/models';
 import {
   LoadingStatusComponent,
   MetricDisplayComponent,
   NoDataStatusComponent,
 } from '@shared/components';
-import { calculateGainPercentage } from '@shared/functions';
+import {
+  calculateGainPercentage,
+  getMetricGainOrLossTooltip,
+  getMetricLabel,
+  getMetricPercentageOfTotalEXP,
+  getMetricTooltip,
+} from '@shared/functions';
 
 import { CarouselModule } from 'primeng/carousel';
 
@@ -85,24 +90,24 @@ export class DailyTopGainersComponent {
         abbreviate: true,
         currentValue: `${percentageSuffix}`,
         percentagePointsTotal: player.points ?? undefined,
-        currentValueTooltip: `Percentage of total ${getMetricLabel('experience', true)}`,
-        valueTooltip: `${getMetricLabel('experience')} gain`,
+        currentValueTooltip: getMetricPercentageOfTotalEXP(),
+        valueTooltip: getMetricGainOrLossTooltip('experience', player.gain_points! < 0),
       },
       {
         metric: 'level',
         gainValue: player.gain_level,
         abbreviate: false,
         currentValue: `${player.level}`,
-        currentValueTooltip: `${getMetricLabel('level')}`,
-        valueTooltip: `${getMetricLabel('level')} gain`,
+        currentValueTooltip: getMetricTooltip('level'),
+        valueTooltip: getMetricGainOrLossTooltip('level', player.gain_level < 0),
       },
       {
         metric: 'rank',
         gainValue: player.gain_rank,
         abbreviate: false,
         currentValue: `#${player.rank}`,
-        currentValueTooltip: `${getMetricLabel('rank')} gain`,
-        valueTooltip: `${getMetricLabel('rank')} gain`,
+        currentValueTooltip: getMetricTooltip('rank'),
+        valueTooltip: getMetricGainOrLossTooltip('rank', player.gain_rank < 0),
       },
     ];
     return { name: player.name, vocation: player.vocation, columns };
@@ -115,16 +120,16 @@ export class DailyTopGainersComponent {
         gainValue: player.gain_level,
         abbreviate: false,
         currentValue: `${player.level}`,
-        currentValueTooltip: `${getMetricLabel('skill')}`,
-        valueTooltip: `${getMetricLabel('skill')} gain`,
+        currentValueTooltip: getMetricTooltip('skill'),
+        valueTooltip: getMetricGainOrLossTooltip('skill', player.gain_level < 0),
       },
       {
         metric: 'rank',
         gainValue: player.gain_rank,
         abbreviate: false,
         currentValue: `#${player.rank}`,
-        currentValueTooltip: `${getMetricLabel('rank')}`,
-        valueTooltip: `${getMetricLabel('rank')} gain`,
+        currentValueTooltip: getMetricTooltip('rank'),
+        valueTooltip: getMetricGainOrLossTooltip('rank', player.gain_rank < 0),
       },
     ];
     return { name: player.name, vocation: player.vocation, columns };

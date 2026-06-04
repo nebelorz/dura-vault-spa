@@ -5,6 +5,7 @@
   [loading]="loading()"
   emptyMessage="No online activity data for this period."
   [disablePodium]="hasFilter()"
+  [hideOverlay]="true"
   [showFilter]="true"
   (filterChange)="onFilterChange($event)"
   (itemClick)="onItemClick($event)"

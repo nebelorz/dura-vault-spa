@@ -71,7 +71,7 @@ export class DevInfoPanelComponent {
 
   entries = signal<DevInfoEntry[]>([
     {
-      date: new Date('2026-05-28'),
+      date: new Date('2026-06-04'),
       title: '2.4.0 released',
       entryType: 'versionMinor',
       tags: [

@@ -4,6 +4,7 @@
   [items]="displayItems()"
   [loading]="loading()"
   [disablePodium]="hasFilter()"
+  [hideOverlay]="true"
   [emptyMessage]="'No highscores for ' + section() + ' during this period.'"
   [showFilter]="true"
   (filterChange)="onFilterChange($event)"

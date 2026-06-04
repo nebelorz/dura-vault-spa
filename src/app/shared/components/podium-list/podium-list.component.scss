@@ -46,18 +46,16 @@
   text-align: center;
   width: 100%;
   transition: transform 0.2s ease;
+
+  ::ng-deep .metric-display--value {
+    font-size: large;
+    font-weight: bold;
+  }
 }
 
-// ===========================
-// PODIUM METRIC
-// ===========================
-.podium-metric {
-  font-size: 1.3rem;
+.podium-text-col {
+  font-size: large;
   font-weight: bold;
-
-  &--first {
-    font-size: 1.6rem;
-  }
 }
 
 .podium-name {
@@ -75,13 +73,6 @@
   opacity: 0.6;
 }
 
-.podium-metric-visible {
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.2px;
-  opacity: 0.85;
-}
-
 // ===========================
 // PODIUM OVERLAY (mouseover)
 // ===========================
@@ -92,9 +83,10 @@
   border-radius: 8px;
   backdrop-filter: blur(3px);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
   justify-content: center;
-  gap: 0.4rem;
+  gap: 0.75rem;
   padding: 0.75rem;
   opacity: 0;
   transition: opacity 0.2s ease;
@@ -105,17 +97,11 @@
   opacity: 1;
 }
 
-.podium-overlay-row {
+.podium-overlay-text-col {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 0.05rem;
-}
-
-.podium-overlay-values {
-  display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.1rem;
 }
 
 .podium-base {
@@ -293,24 +279,24 @@
 }
 
 // ====================================
-// LIST COLUMNS (metrics at right side)
+// LIST METRICS (right side columns)
 // ====================================
-.list-columns {
+.list-metrics {
   flex-shrink: 0;
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 1rem;
 }
 
-.list-column {
+.list-text-col {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 0.125rem;
 }
 
-.list-column-label {
+.list-text-col--label {
   font-size: 0.6rem;
   font-weight: 600;
   letter-spacing: 0.5px;
@@ -318,11 +304,11 @@
   opacity: 0.4;
 }
 
-.list-column-value {
+.list-text-col--value {
   opacity: 0.85;
 }
 
-.list-column-sub-value {
+.list-text-col--sub {
   opacity: 0.6;
 }
 

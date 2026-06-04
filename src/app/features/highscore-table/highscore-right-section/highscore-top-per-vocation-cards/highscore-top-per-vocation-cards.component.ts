@@ -2,8 +2,13 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 import { NgTemplateOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
-import { MetricType, VOCATION_GROUPS } from '@core/constants';
-import { HighscoreRecord, Section } from '@core/models';
+import { VOCATION_GROUPS } from '@core/constants';
+import { HighscoreRecord, MetricType, Section } from '@core/models';
+import {
+  getMetricGainOrLossTooltip,
+  getMetricPercentageOfTotalEXP,
+  getMetricTooltip,
+} from '@shared/functions';
 import {
   LoadingStatusComponent,
   MetricDisplayComponent,
@@ -13,6 +18,7 @@ import {
 interface VocDetailColumn {
   metric: MetricType;
   gainValue: number;
+  valueTooltip?: string;
   abbreviate: boolean;
   percentagePointsTotal?: number;
   subValue?: string;
@@ -83,39 +89,44 @@ export class HighscoreTopPerVocationCardsComponent {
           {
             metric: 'experience',
             gainValue: record.gain_points,
+            valueTooltip: getMetricGainOrLossTooltip('experience', record.gain_points < 0),
             abbreviate: true,
             percentagePointsTotal: record.points ?? undefined,
-            subValueTooltip: 'Percentage of total EXP',
+            subValueTooltip: getMetricPercentageOfTotalEXP(),
           },
           {
             metric: 'level',
             gainValue: record.gain_level,
+            valueTooltip: getMetricGainOrLossTooltip('level', record.gain_level < 0),
             abbreviate: false,
             subValue: `${record.level}`,
-            subValueTooltip: 'Actual LVL',
+            subValueTooltip: getMetricTooltip('level'),
           },
           {
             metric: 'rank',
             gainValue: record.gain_rank,
+            valueTooltip: getMetricGainOrLossTooltip('rank', record.gain_rank < 0),
             abbreviate: false,
             subValue: `#${record.rank}`,
-            subValueTooltip: 'Actual RNK',
+            subValueTooltip: getMetricTooltip('rank'),
           },
         ]
       : [
           {
             metric: 'skill',
             gainValue: record.gain_level,
+            valueTooltip: getMetricGainOrLossTooltip('skill', record.gain_level < 0),
             abbreviate: false,
             subValue: `${record.level}`,
-            subValueTooltip: 'Actual SKL',
+            subValueTooltip: getMetricTooltip('skill'),
           },
           {
             metric: 'rank',
             gainValue: record.gain_rank,
+            valueTooltip: getMetricGainOrLossTooltip('rank', record.gain_rank < 0),
             abbreviate: false,
             subValue: `#${record.rank}`,
-            subValueTooltip: 'Actual RNK',
+            subValueTooltip: getMetricTooltip('rank'),
           },
         ];
 

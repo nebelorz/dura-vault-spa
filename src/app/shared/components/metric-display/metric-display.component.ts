@@ -2,7 +2,8 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 import { NgClass } from '@angular/common';
 import { TooltipModule } from 'primeng/tooltip';
 
-import { METRIC_DEFINITIONS, MetricType } from '@core/constants';
+import { METRIC_DEFINITIONS } from '@core/constants';
+import { MetricType } from '@core/models';
 import { formatNumber } from '@shared/functions';
 
 @Component({
