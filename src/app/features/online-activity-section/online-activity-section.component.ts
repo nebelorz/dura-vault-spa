@@ -6,22 +6,22 @@ import { MetadataService, OnlineService } from '@core/services';
 import { calculateAvailableDataDateRange } from '@shared/functions';
 import { PeriodSelectorComponent } from '@shared/components/period-selector/period-selector.component';
 import { OnlineHeaderComponent } from './online-header/online-header.component';
-import { OnlineDataTableComponent } from './online-data-table/online-data-table.component';
-import { OnlineStatsComponent } from './online-stats/online-stats.component';
+import { OnlineDataTableComponent } from './online-activity-left-section/online-activity-data-table/online-activity-data-table.component';
+import { OnlineActivityChartsComponent } from './online-activity-right-section/online-activity-charts/online-activity-charts.component';
 
 @Component({
-  selector: 'app-online-table',
-  templateUrl: './online-table.component.html',
-  styleUrl: './online-table.component.scss',
+  selector: 'app-online-activity-section',
+  templateUrl: './online-activity-section.component.html',
+  styleUrl: './online-activity-section.component.scss',
   imports: [
     OnlineHeaderComponent,
     PeriodSelectorComponent,
     OnlineDataTableComponent,
-    OnlineStatsComponent,
+    OnlineActivityChartsComponent,
     DatePipe,
   ],
 })
-export class OnlineTableComponent implements OnInit {
+export class OnlineActivitySectionComponent implements OnInit {
   private readonly onlineService = inject(OnlineService);
   private readonly metadataService = inject(MetadataService);
 

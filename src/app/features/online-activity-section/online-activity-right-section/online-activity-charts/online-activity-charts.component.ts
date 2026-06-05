@@ -42,12 +42,12 @@ interface LevelStat {
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-online-stats',
-  templateUrl: './online-stats.component.html',
-  styleUrls: ['./online-stats.component.scss'],
+  selector: 'app-online-activity-charts',
+  templateUrl: './online-activity-charts.component.html',
+  styleUrls: ['./online-activity-charts.component.scss'],
   imports: [ChartModule, TooltipModule, LoadingStatusComponent, StatCardComponent],
 })
-export class OnlineStatsComponent {
+export class OnlineActivityChartsComponent {
   // Inputs
   data = input.required<OnlineTopRecord[]>();
   timeline = input.required<OnlineTimelineRecord[]>();

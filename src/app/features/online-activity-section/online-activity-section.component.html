@@ -22,10 +22,14 @@
   <!-- Body: left (podium + list) | right (stats + charts) -->
   <div class="online-body">
     <div class="online-left">
-      <app-online-data-table [data]="data()" [loading]="loading()" [period]="selectedPeriod()" />
+      <app-online-activity-data-table
+        [data]="data()"
+        [loading]="loading()"
+        [period]="selectedPeriod()"
+      />
     </div>
     <div class="online-right">
-      <app-online-stats
+      <app-online-activity-charts
         [data]="data()"
         [timeline]="timeline()"
         [loading]="loading()"

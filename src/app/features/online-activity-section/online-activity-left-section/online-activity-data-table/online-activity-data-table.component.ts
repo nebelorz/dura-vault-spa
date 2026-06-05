@@ -21,9 +21,9 @@ import { MenuItem } from 'primeng/api';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-online-data-table',
-  templateUrl: './online-data-table.component.html',
-  styleUrl: './online-data-table.component.scss',
+  selector: 'app-online-activity-data-table',
+  templateUrl: './online-activity-data-table.component.html',
+  styleUrl: './online-activity-data-table.component.scss',
   imports: [ContextMenuModule, PodiumListComponent],
 })
 export class OnlineDataTableComponent implements OnInit, OnDestroy {

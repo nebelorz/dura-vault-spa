@@ -7,7 +7,11 @@
         icon="pi pi-star-fill"
         [value]="statsSummary.topVocation ? statsSummary.topVocation.name : '—'"
         label="Most Active Vocation"
-        [tooltip]="statsSummary.topVocation ? statsSummary.topVocation.hoursDisplay + ' total hours' : 'No data'"
+        [tooltip]="
+          statsSummary.topVocation
+            ? statsSummary.topVocation.hoursDisplay + ' total hours'
+            : 'No data'
+        "
         [muted]="!statsSummary.topVocation"
       />
       <app-stat-card
@@ -20,7 +24,9 @@
         icon="pi pi-calendar"
         [value]="statsSummary.peakDay ? statsSummary.peakDay.date : '—'"
         label="Most Active Day"
-        [tooltip]="statsSummary.peakDay ? statsSummary.peakDay.hoursDisplay + ' total hours' : 'No data'"
+        [tooltip]="
+          statsSummary.peakDay ? statsSummary.peakDay.hoursDisplay + ' total hours' : 'No data'
+        "
         [muted]="!statsSummary.peakDay"
       />
     </div>
