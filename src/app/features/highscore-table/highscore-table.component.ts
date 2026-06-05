@@ -6,10 +6,10 @@ import { HighscoreRecord, Section, ScrapeDateRange, TimePeriod } from '@core/mod
 import { HighscoreService, MetadataService } from '@core/services';
 import { calculateAvailableDataDateRange } from '@shared/functions';
 import { DatePipe } from '@angular/common';
-import { HighscoreDataTableComponent } from './highscore-data-table/highscore-data-table.component';
+import { HighscoreDataTableComponent } from './highscore-left-section/highscore-data-table/highscore-data-table.component';
 import { HighscoreHeaderComponent } from './highscore-header/highscore-header.component';
-import { HighscoreStatsComponent } from './highscore-stats/highscore-stats.component';
-import { HighscoreTopPerVocationCardsComponent } from './highscore-right-section/highscore-top-per-vocation-cards/highscore-top-per-vocation-cards.component';
+import { HighscoreChartGainsByVocationComponent } from './highscore-right-section/highscore-chart-gains-by-vocation/highscore-chart-gains-by-vocation.component';
+import { HighscoreTopPerVocationCardsComponent } from './highscore-right-section/highscore-top-by-vocation-cards/highscore-top-by-vocation-cards.component';
 import { PeriodSelectorComponent } from '@shared/components';
 
 @Component({
@@ -20,7 +20,7 @@ import { PeriodSelectorComponent } from '@shared/components';
     HighscoreHeaderComponent,
     PeriodSelectorComponent,
     HighscoreDataTableComponent,
-    HighscoreStatsComponent,
+    HighscoreChartGainsByVocationComponent,
     HighscoreTopPerVocationCardsComponent,
     DatePipe,
   ],

@@ -34,9 +34,9 @@ interface VocationTopItem {
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-top-per-vocation-cards',
-  templateUrl: './highscore-top-per-vocation-cards.component.html',
-  styleUrl: './highscore-top-per-vocation-cards.component.scss',
+  selector: 'app-top-by-vocation-cards',
+  templateUrl: './highscore-top-by-vocation-cards.component.html',
+  styleUrl: './highscore-top-by-vocation-cards.component.scss',
   imports: [
     NgTemplateOutlet,
     RouterLink,

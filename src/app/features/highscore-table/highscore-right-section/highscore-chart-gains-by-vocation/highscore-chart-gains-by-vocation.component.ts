@@ -18,12 +18,12 @@ interface VocationStat {
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-highscore-stats',
-  templateUrl: './highscore-stats.component.html',
-  styleUrl: './highscore-stats.component.scss',
+  selector: 'app-highscore-chart-gains-by-vocation',
+  templateUrl: './highscore-chart-gains-by-vocation.component.html',
+  styleUrl: './highscore-chart-gains-by-vocation.component.scss',
   imports: [ChartModule, NoDataStatusComponent, LoadingStatusComponent],
 })
-export class HighscoreStatsComponent {
+export class HighscoreChartGainsByVocationComponent {
   data = input.required<HighscoreRecord[]>();
   loading = input.required<boolean>();
   section = input.required<Section>();
