@@ -71,13 +71,12 @@ export class DevInfoPanelComponent {
 
   entries = signal<DevInfoEntry[]>([
     {
-      date: new Date('2026-06-04'),
+      date: new Date('2026-06-05'),
       title: '2.4.0 released',
       entryType: 'versionMinor',
       tags: [
         { label: 'minor version', color: 'versionMinor' },
-        { label: 'new feature' },
-        { label: 'highscores', color: 'section' },
+        { label: 'new feature: highscores' },
         { label: 'UI/UX', color: 'info' },
         { label: 'fix', color: 'warn' },
       ],
@@ -113,8 +112,7 @@ Also I'm setting up the foundation for tracking and analytics on the new server 
       entryType: 'versionMajor',
       tags: [
         { label: 'minor version', color: 'versionMinor' },
-        { label: 'new feature' },
-        { label: 'achievements', color: 'section' },
+        { label: 'new feature: player details' },
         { label: 'UI/UX', color: 'info' },
       ],
       body: `
@@ -160,10 +158,6 @@ Each section displays a badge with the highest milestone reached, plus the full 
         { label: 'fix', color: 'warn' },
       ],
       body: `
-## Features
-
-- Added **current & best historic streak** on player details for each section.
-
 ## UI/UX
 
 - Sections on player details are now ordered as displayed in-game.
@@ -190,20 +184,20 @@ This way Dura Vault will keep growing with more features, bigger datasets, and b
       entryType: 'versionMinor',
       tags: [
         { label: 'minor version', color: 'versionMinor' },
-        { label: 'new feature' },
+        { label: 'new feature: player details' },
         { label: 'UI/UX', color: 'info' },
         { label: 'fix', color: 'warn' },
       ],
       body: `
-## UI/UX
+## Player Details
+- Added a new menu on player details to search the character directly on Dura.
 
+## UI/UX
 - Updated landing page banner and favicon.
 - Revamped player detail section: added empty messages and improved layout for better clarity.
 - Revamped daily summary gadget to match consistency with other sections.
 
 ## Improvements & Fixes
-
-- Added a new menu on player details to search the character directly on Dura.
 - Set default period for a player detail view to **Active Period**.
 - Fixed an issue not displaying the player vocation on player details.
 - Minor improvements to player detail section and backend for better consistency and clarity.
@@ -215,18 +209,16 @@ This way Dura Vault will keep growing with more features, bigger datasets, and b
       entryType: 'versionMinor',
       tags: [
         { label: 'minor version', color: 'versionMinor' },
-        { label: 'new feature' },
+        { label: 'new feature: player details' },
         { label: 'UI/UX', color: 'info' },
       ],
       body: `
 ## UI/UX
-
 - Unified color system across the entire app: XP values, skill gains, rank changes, and warnings now use a consistent color language everywhere.
 - Consistent typography across all stat panels player detail, online stats, and ranking overlays now share the same sizes and weights.
 - Overlays are now visually consistent across all sections: highscores, online rankings, and player pages.
 
 ## Online Stats & Player Details
-
 - Revamped layout for online stats, providing a clearer and more consistent presentation.
 - New **Player Stats section** on player details, with a clear layout for all stats Dura Vault has tracked about the player.
 - New **Consistency** metric more accurately reflects what it measures: days with data out of the player's tracked span.
@@ -238,8 +230,7 @@ This way Dura Vault will keep growing with more features, bigger datasets, and b
       entryType: 'versionMajor',
       tags: [
         { label: 'major version', color: 'versionMajor' },
-        { label: 'new feature' },
-        { label: 'online activity', color: 'section' },
+        { label: 'new feature: online activity' },
       ],
       body: `
 ## Online Activity
@@ -270,7 +261,7 @@ This release lays the foundation for advanced analytics and community tracking f
       entryType: 'versionMinor',
       tags: [
         { label: 'minor version', color: 'versionMinor' },
-        { label: 'new feature' },
+        { label: 'new feature: experience loss' },
         { label: 'fix', color: 'warn' },
       ],
       body: `
