@@ -19,11 +19,11 @@ import {
 
 import { PeriodSelectorComponent, MinimalistIconComponent } from '@shared/components';
 import { PlayerDetailHeaderComponent } from './player-detail-header/player-detail-header.component';
-import { PlayerDetailTabCharacterComponent } from './player-detail-center-zone/player-detail-tab-character/player-detail-tab-character.component';
-import { PlayerStatsComponent } from './player-detail-left-zone/player-stats/player-stats.component';
-import { PlayerOnlineStatsComponent } from './player-detail-left-zone/player-online-stats/player-online-stats.component';
-import { PlayerAchievementsComponent } from './player-detail-right-zone/player-achievements/player-achievements.component';
-import { PlayerDetailTabPerformanceComponent } from './player-detail-center-zone/player-detail-tab-performance/player-detail-tab-performance.component';
+import { PlayerDetailTabCharacterComponent } from './player-detail-middle-section/player-detail-tab-character/player-detail-tab-character.component';
+import { PlayerStatsComponent } from './player-detail-left-section/player-stats/player-stats.component';
+import { PlayerOnlineStatsComponent } from './player-detail-left-section/player-online-stats/player-online-stats.component';
+import { PlayerAchievementsComponent } from './player-detail-right-section/player-achievements/player-achievements.component';
+import { PlayerDetailTabPerformanceComponent } from './player-detail-middle-section/player-detail-tab-performance/player-detail-tab-performance.component';
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from 'primeng/tabs';
 
 @Component({
