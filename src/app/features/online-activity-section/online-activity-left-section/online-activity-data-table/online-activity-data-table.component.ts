@@ -99,7 +99,9 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
 
   private toDisplayItem(record: OnlineTopRecord): PodiumListItem {
     const isDay = this.period() === 'day';
-    const avgMinutes = isDay ? 0 : Math.round(record.online_time / Math.max(1, record.days_active));
+    const avgMinutes = isDay
+      ? record.online_time
+      : Math.round(record.online_time / Math.max(1, record.days_active));
     const dayWord = record.days_active === 1 ? 'day' : 'days';
 
     const columns: TextColumn[] = isDay
@@ -109,20 +111,28 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
             label: 'Online Time',
             value: formatMinutesToHours(record.online_time),
             valueClass: this.metricTimeClass(record.online_time),
+            labelTooltip: 'Online Time',
           },
         ]
       : [
           {
             type: 'text',
-            label: 'Avg / Day',
+            label: 'AVG / Day',
             value: formatMinutesToHours(avgMinutes),
             valueClass: this.metricTimeClass(avgMinutes),
-            subValue: formatMinutesToHours(record.online_time),
+            labelTooltip: 'AVG / Day',
+          },
+          {
+            type: 'text',
+            label: 'Time Online',
+            value: formatMinutesToHours(record.online_time),
+            labelTooltip: 'Time Online',
           },
           {
             type: 'text',
             label: 'Days Active',
             value: `${record.days_active} ${dayWord}`,
+            labelTooltip: 'Days Active',
           },
         ];
 

@@ -6,6 +6,8 @@ import { MetricDisplayComponent } from '../metric-display/metric-display.compone
 import { LoadingStatusComponent } from '../loading-status/loading-status.component';
 import { NoDataStatusComponent } from '../no-data-status/no-data-status.component';
 
+import { TooltipModule } from 'primeng/tooltip';
+
 export interface MetricColumn {
   type: 'metric';
   metric: MetricType;
@@ -26,6 +28,8 @@ export interface TextColumn {
   value: string;
   valueClass?: string;
   subValue?: string;
+  labelTooltip?: string;
+  valueTooltip?: string;
 }
 
 export interface PodiumListItem {
@@ -43,7 +47,13 @@ export interface PodiumListItem {
   selector: 'app-podium-list',
   templateUrl: './podium-list.component.html',
   styleUrl: './podium-list.component.scss',
-  imports: [NgClass, MetricDisplayComponent, LoadingStatusComponent, NoDataStatusComponent],
+  imports: [
+    NgClass,
+    MetricDisplayComponent,
+    LoadingStatusComponent,
+    NoDataStatusComponent,
+    TooltipModule,
+  ],
 })
 export class PodiumListComponent {
   items = input.required<PodiumListItem[]>();

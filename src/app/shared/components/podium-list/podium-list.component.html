@@ -33,7 +33,12 @@
                   [showIcon]="false"
                 />
               } @else {
-                <div class="podium-text-col" [ngClass]="col.valueClass ?? ''">
+                <div
+                  class="podium-text-col"
+                  [ngClass]="col.valueClass ?? ''"
+                  [pTooltip]="col.labelTooltip ?? col.label"
+                  tooltipPosition="top"
+                >
                   {{ col.value }}
                 </div>
               }
@@ -102,7 +107,12 @@
                 [showIcon]="false"
               />
             } @else {
-              <div class="podium-text-col" [ngClass]="col.valueClass ?? ''">
+              <div
+                class="podium-text-col"
+                [ngClass]="col.valueClass ?? ''"
+                [pTooltip]="col.labelTooltip ?? col.label"
+                tooltipPosition="top"
+              >
                 {{ col.value }}
               </div>
             }
@@ -170,7 +180,12 @@
                   [showIcon]="false"
                 />
               } @else {
-                <div class="podium-text-col" [ngClass]="col.valueClass ?? ''">
+                <div
+                  class="podium-text-col"
+                  [ngClass]="col.valueClass ?? ''"
+                  [pTooltip]="col.labelTooltip ?? col.label"
+                  tooltipPosition="top"
+                >
                   {{ col.value }}
                 </div>
               }
