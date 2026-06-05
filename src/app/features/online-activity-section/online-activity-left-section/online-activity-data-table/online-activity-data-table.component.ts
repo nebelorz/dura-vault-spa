@@ -110,7 +110,7 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
             type: 'text',
             label: 'Online Time',
             value: formatMinutesToHours(record.online_time),
-            valueClass: this.metricTimeClass(record.online_time),
+            valueClass: `${this.metricTimeClass(record.online_time)} value-avg-day`,
             labelTooltip: 'Online Time',
           },
         ]
@@ -119,7 +119,7 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
             type: 'text',
             label: 'AVG / Day',
             value: formatMinutesToHours(avgMinutes),
-            valueClass: this.metricTimeClass(avgMinutes),
+            valueClass: `${this.metricTimeClass(avgMinutes)} value-avg-day`,
             labelTooltip: 'AVG / Day',
           },
           {
