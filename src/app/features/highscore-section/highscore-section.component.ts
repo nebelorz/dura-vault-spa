@@ -13,9 +13,9 @@ import { HighscoreTopPerVocationCardsComponent } from './highscore-right-section
 import { PeriodSelectorComponent } from '@shared/components';
 
 @Component({
-  selector: 'app-highscore-table',
-  templateUrl: './highscore-table.component.html',
-  styleUrl: './highscore-table.component.scss',
+  selector: 'app-highscore-section',
+  templateUrl: './highscore-section.component.html',
+  styleUrls: ['./highscore-section.component.scss'],
   imports: [
     HighscoreHeaderComponent,
     PeriodSelectorComponent,
@@ -25,7 +25,7 @@ import { PeriodSelectorComponent } from '@shared/components';
     DatePipe,
   ],
 })
-export class HighscoreTableComponent implements OnInit {
+export class HighscoreSectionComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly highscoreService = inject(HighscoreService);
   private readonly metadataService = inject(MetadataService);

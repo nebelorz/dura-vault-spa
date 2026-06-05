@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { HighscoreTableComponent } from './features/highscore-table/highscore-table.component';
+import { HighscoreSectionComponent } from './features/highscore-section/highscore-section.component';
 import { OnlineTableComponent } from './features/online-table/online-table.component';
 import { PlayerDetailComponent } from './features/player-detail/player-detail.component';
 import { LandingPageComponent } from './features/landing-page/landing-page.component';
@@ -11,7 +11,7 @@ export const routes: Routes = [
   },
   {
     path: 'top/:section',
-    component: HighscoreTableComponent,
+    component: HighscoreSectionComponent,
   },
   {
     path: 'online',
