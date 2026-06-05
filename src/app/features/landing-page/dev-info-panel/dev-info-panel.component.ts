@@ -88,13 +88,15 @@ Added a right-hand panel to the highscores section displaying gains/losses by vo
 
 ## UI/UX Improvements
 Updated styling on highscores section.  
+Updated styling on online activity section.  
+Updated styling on daily summary section.  
 Updated styling on toast messages.  
-Updated styling on landing page daily summary section.  
 Updated color system implementation with improved management.  
 Unified loading spinners across the app for a consistent experience.  
 
 ## Fixes & Optimizations
 Fixed minor alignment issues in player stats display.  
+Code optimizations and refactoring across multiple components for improved maintainability.  
 Enhanced theme switching for better dark mode UX.
 
 ## Coming soon...
