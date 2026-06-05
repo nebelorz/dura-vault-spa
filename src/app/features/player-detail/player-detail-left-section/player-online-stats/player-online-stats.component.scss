@@ -1,4 +1,5 @@
 @use 'colors' as colors;
+@use 'text' as text;
 
 .online-stats-section {
   display: flex;
@@ -25,6 +26,7 @@
 
   i {
     color: colors.$secondary-light;
+    font-size: text.$text-md;
     opacity: 0.85;
   }
 }

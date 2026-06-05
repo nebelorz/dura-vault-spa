@@ -1,7 +1,11 @@
 <span class="metric-display" [ngClass]="[colorClass(), 'metric-display--' + layout()]">
   <!-- ICON -->
   @if (showIcon()) {
-    <i [class]="iconClass()" [pTooltip]="iconTooltip()" [tooltipPosition]="tooltipPosition()"></i>
+    <i
+      [ngClass]="[iconClass(), 'metric-display--icon-' + iconSize()]"
+      [pTooltip]="iconTooltip()"
+      [tooltipPosition]="tooltipPosition()"
+    ></i>
   }
   <!-- VALUE -->
   @if (value() !== undefined) {

@@ -24,6 +24,7 @@ export class MetricDisplayComponent {
   subValue = input<string>();
   relativePercentagePointsFromTotal = input<number>();
   displayValue = input<string>(); // overrides formatted value
+  iconSize = input<'xs' | 'sm' | 'base' | 'md'>('xs');
 
   // VISIBILITY INPUTS
   showIcon = input<boolean>(true);

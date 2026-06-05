@@ -11,7 +11,20 @@
   }
 
   i {
-    font-size: text.$text-xs;
+    font-size: text.$text-xs; // default
+
+    &.metric-display--icon-xs {
+      font-size: text.$text-xs;
+    }
+    &.metric-display--icon-sm {
+      font-size: text.$text-sm;
+    }
+    &.metric-display--icon-base {
+      font-size: text.$text-base;
+    }
+    &.metric-display--icon-md {
+      font-size: text.$text-md;
+    }
   }
 
   &--value {
