@@ -18,11 +18,7 @@
         [class.negative]="hasNegativeGain(exp)"
         (click)="selectSection('experience')"
       >
-        <app-metric-display
-          metric="level"
-          layout="row"
-          [value]="exp.last_gain_level ?? undefined"
-        />
+        <app-metric-display metric="level" layout="row" />
         <div class="stat-info">
           <div class="text-label">Level</div>
           <div class="stat-value-row">
@@ -57,11 +53,7 @@
         [class.negative]="hasNegativeGain(stat)"
         (click)="selectSection(stat.section)"
       >
-        <app-metric-display
-          metric="skill"
-          layout="row"
-          [value]="stat.last_gain_level ?? undefined"
-        />
+        <app-metric-display metric="skill" layout="row" />
         <div class="stat-info">
           <div class="text-label">{{ getSectionLabel(stat.section) }}</div>
           <div class="stat-value-row">
