@@ -45,3 +45,9 @@ TODO.md
 .DS_Store
 Thumbs.db
 .vercel
+
+# IA
+.opencode
+opencode.json
+AGENTS.md
+skills-lock.json
