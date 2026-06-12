@@ -15,7 +15,7 @@ import { PeriodSelectorComponent } from '@shared/components';
 @Component({
   selector: 'app-highscore-section',
   templateUrl: './highscore-section.component.html',
-  styleUrls: ['./highscore-section.component.scss'],
+  styleUrl: './highscore-section.component.scss',
   imports: [
     HighscoreHeaderComponent,
     PeriodSelectorComponent,

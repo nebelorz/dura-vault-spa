@@ -28,7 +28,7 @@ import { MenuItem } from 'primeng/api';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-highscore-data-table',
   templateUrl: './highscore-data-table.component.html',
-  styleUrls: ['./highscore-data-table.component.scss'],
+  styleUrl: './highscore-data-table.component.scss',
   host: { '[class.podium-danger-mode]': 'isLoss()' },
   imports: [ContextMenuModule, PodiumListComponent],
 })

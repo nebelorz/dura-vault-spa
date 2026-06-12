@@ -9,7 +9,7 @@ import { getDuraHomeUrl } from '@shared/functions';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-side-menu',
   templateUrl: './side-menu.component.html',
-  styleUrls: ['./side-menu.component.scss'],
+  styleUrl: './side-menu.component.scss',
   imports: [MenuModule],
 })
 export class SideMenuComponent {

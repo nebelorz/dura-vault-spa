@@ -11,7 +11,7 @@ import { toMenuItems, toCustomMenuItems } from '@core/constants';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
-  styleUrls: ['./nav-bar.component.scss'],
+  styleUrl: './nav-bar.component.scss',
   imports: [MenubarModule, ModeButtonComponent, SearchBoxComponent],
 })
 export class NavBarComponent {

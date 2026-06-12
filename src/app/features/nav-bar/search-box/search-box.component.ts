@@ -8,7 +8,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-search-box',
   templateUrl: './search-box.component.html',
-  styleUrls: ['./search-box.component.scss'],
+  styleUrl: './search-box.component.scss',
   imports: [InputTextModule, FloatLabelModule],
 })
 export class SearchBoxComponent {

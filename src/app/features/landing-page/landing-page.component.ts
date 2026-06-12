@@ -11,7 +11,7 @@ import { SideMenuComponent } from './side-menu/side-menu.component';
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.scss'],
+  styleUrl: './landing-page.component.scss',
   imports: [
     AnnouncementCarouselComponent,
     DevInfoPanelComponent,

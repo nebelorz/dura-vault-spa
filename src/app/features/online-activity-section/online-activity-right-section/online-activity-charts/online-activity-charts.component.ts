@@ -44,7 +44,7 @@ interface LevelStat {
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-online-activity-charts',
   templateUrl: './online-activity-charts.component.html',
-  styleUrls: ['./online-activity-charts.component.scss'],
+  styleUrl: './online-activity-charts.component.scss',
   imports: [ChartModule, TooltipModule, LoadingStatusComponent, StatCardComponent],
 })
 export class OnlineActivityChartsComponent {

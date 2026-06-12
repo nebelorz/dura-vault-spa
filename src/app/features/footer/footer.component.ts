@@ -5,7 +5,7 @@ import { version } from '../../../../package.json';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-footer',
   templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.scss'],
+  styleUrl: './footer.component.scss',
 })
 export class FooterComponent {
   readonly version = `v${version}`;
