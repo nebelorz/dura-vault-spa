@@ -25,6 +25,11 @@
       height: calc(90vh - 100px - 2rem);
       display: flex;
       flex-direction: column;
+
+      app-online-activity-data-table {
+        flex: 1;
+        min-height: 0;
+      }
     }
 
     @media (max-width: 768px) {
