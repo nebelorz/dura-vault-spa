@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, computed, input, signal, effect } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
 import { OnlineTopRecord, OnlineTimelineRecord, TimePeriod } from '@core/models';
-import { VOCATION_GROUPS } from '@core/constants';
-import { formatDate } from '@shared/functions';
+import { CHART_FONT, CHART_GRID_COLOR, VOCATION_GROUPS } from '@core/constants';
+import { createChartColors, formatDate } from '@shared/functions';
 import type { TooltipItem } from 'chart.js';
 import { LoadingStatusComponent, StatCardComponent } from '@shared/components';
 
@@ -10,18 +10,15 @@ import { ChartModule } from 'primeng/chart';
 import { TooltipModule } from 'primeng/tooltip';
 
 const LEVEL_BRACKETS = [
-  { label: '1–8', min: 1, max: 8 },
-  { label: '9–20', min: 9, max: 20 },
-  { label: '21–50', min: 21, max: 50 },
-  { label: '51–100', min: 51, max: 100 },
-  { label: '101–200', min: 101, max: 200 },
-  { label: '201–300', min: 201, max: 300 },
-  { label: '301–400', min: 301, max: 400 },
+  { label: '1-8', min: 1, max: 8 },
+  { label: '9-20', min: 9, max: 20 },
+  { label: '21-50', min: 21, max: 50 },
+  { label: '51-100', min: 51, max: 100 },
+  { label: '101-200', min: 101, max: 200 },
+  { label: '201-300', min: 201, max: 300 },
+  { label: '301-400', min: 301, max: 400 },
   { label: '401+', min: 401, max: Infinity },
 ];
-
-const CHART_FONT = 'Montserrat, Arial, sans-serif';
-const CHART_GRID_COLOR = 'rgba(128, 128, 128, 0.2)';
 
 interface StatsSummary {
   topLevelBracket: { label: string; count: number } | null;
@@ -57,21 +54,15 @@ export class OnlineActivityChartsComponent {
   activeComparisonDate = input<string | null>(null);
 
   // State
-  private readonly primaryColor = signal<string>('#22c55e');
-  private readonly helpColor = signal<string>('#a855f7');
-  private readonly infoColor = signal<string>('#38bdf8');
-  private readonly warnColor = signal<string>('#fb923c');
+  private readonly colors = createChartColors({
+    primaryColor: { cssVar: '--color-primary', fallback: '#22c55e' },
+    helpColor: { cssVar: '--color-xp', fallback: '#ad58f7' },
+    infoColor: { cssVar: '--color-info', fallback: '#38bdf8' },
+    warnColor: { cssVar: '--color-warn', fallback: '#ffc107' },
+  });
 
   constructor() {
-    effect(() => this.updateColors());
-  }
-
-  private updateColors(): void {
-    const styles = getComputedStyle(document.documentElement);
-    this.primaryColor.set(styles.getPropertyValue('--color-primary').trim() || '#22c55e');
-    this.helpColor.set(styles.getPropertyValue('--color-xp').trim() || '#ad58f7');
-    this.infoColor.set(styles.getPropertyValue('--color-info').trim() || '#38bdf8');
-    this.warnColor.set(styles.getPropertyValue('--color-warn').trim() || '#ffc107');
+    this.colors.setup();
   }
 
   // Computed
@@ -138,7 +129,12 @@ export class OnlineActivityChartsComponent {
   readonly vocationChartData = computed(() => {
     const stats = this.vocationStats();
     if (!stats.length) return null;
-    const colors = [this.primaryColor(), this.helpColor(), this.infoColor(), this.warnColor()];
+    const colors = [
+      this.colors.primaryColor(),
+      this.colors.helpColor(),
+      this.colors.infoColor(),
+      this.colors.warnColor(),
+    ];
     return {
       labels: stats.map((v) => v.group),
       datasets: [
@@ -223,8 +219,8 @@ export class OnlineActivityChartsComponent {
         {
           label: 'Hours',
           data: stats.map((b) => +(b.minutes / 60).toFixed(1)),
-          backgroundColor: `${this.primaryColor()}88`,
-          borderColor: this.primaryColor(),
+          backgroundColor: `${this.colors.primaryColor()}88`,
+          borderColor: this.colors.primaryColor(),
           borderWidth: 1,
           borderRadius: 4,
         },
@@ -329,8 +325,8 @@ export class OnlineActivityChartsComponent {
           tension: 0.3,
           pointRadius: 3,
           pointHoverRadius: 5,
-          backgroundColor: `${this.primaryColor()}22`,
-          borderColor: this.primaryColor(),
+          backgroundColor: `${this.colors.primaryColor()}22`,
+          borderColor: this.colors.primaryColor(),
           borderWidth: 1,
         },
       ],
