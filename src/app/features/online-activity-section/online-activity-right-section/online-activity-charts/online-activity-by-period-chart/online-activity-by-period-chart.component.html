@@ -1,0 +1,10 @@
+@if (timelineChartData(); as data) {
+  <section class="chart-section animation-fade">
+    <div class="sub-section-header">
+      <span class="sub-section-label">Activity by Period</span>
+    </div>
+    <div class="chart-container">
+      <p-chart type="line" [data]="data" [options]="timelineChartOptions()" />
+    </div>
+  </section>
+}

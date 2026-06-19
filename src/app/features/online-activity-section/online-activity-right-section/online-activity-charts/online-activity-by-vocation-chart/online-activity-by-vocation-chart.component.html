@@ -1,0 +1,10 @@
+@if (vocationChartData(); as data) {
+  <section class="chart-section animation-fade">
+    <div class="sub-section-header">
+      <span class="sub-section-label">Activity by Vocation</span>
+    </div>
+    <div class="chart-container">
+      <p-chart type="bar" [data]="data" [options]="vocationChartOptions()" />
+    </div>
+  </section>
+}
