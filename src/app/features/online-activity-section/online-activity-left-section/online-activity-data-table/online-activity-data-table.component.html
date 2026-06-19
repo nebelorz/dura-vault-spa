@@ -2,25 +2,12 @@
 
 @if (loading()) {
   <app-loading-status />
-} @else if (!displayItems().length) {
+} @else if (!data().length) {
   <app-no-data-status message="No online activity data for this period." />
 } @else {
-  <div class="table-content">
-    @if (!hasFilter()) {
-      <app-podium
-        [items]="displayItems().slice(0, 3)"
-        (itemClick)="onItemClick($event)"
-        (itemRightClick)="onItemRightClick($event)"
-      />
-    }
-    <app-list
-      [items]="hasFilter() ? displayItems() : displayItems().slice(3)"
-      [showFilter]="true"
-      [rankOffset]="hasFilter() ? 0 : 3"
-      [filterLabel]="'Filter by name'"
-      (itemClick)="onItemClick($event)"
-      (itemRightClick)="onItemRightClick($event)"
-      (filterChange)="onFilterChange($event)"
-    />
-  </div>
+  <app-player-list
+    [items]="displayItems()"
+    (itemClick)="onItemClick($event)"
+    (itemRightClick)="onItemRightClick($event)"
+  />
 }

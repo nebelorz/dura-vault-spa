@@ -5,7 +5,6 @@ import {
   input,
   inject,
   viewChild,
-  signal,
   OnInit,
   OnDestroy,
 } from '@angular/core';
@@ -15,8 +14,7 @@ import { HighscoreRecord, PodiumListItem, Section } from '@core/models';
 import { ToastService } from '@core/services';
 import { getDuraPlayerUrl, buildMetrics } from '@shared/functions';
 import {
-  PodiumComponent,
-  ListComponent,
+  PlayerListComponent,
   LoadingStatusComponent,
   NoDataStatusComponent,
 } from '@shared/components';
@@ -30,13 +28,7 @@ import { MenuItem } from 'primeng/api';
   templateUrl: './highscore-data-table.component.html',
   styleUrl: './highscore-data-table.component.scss',
   host: { '[class.podium-danger-mode]': 'isLoss()' },
-  imports: [
-    ContextMenuModule,
-    PodiumComponent,
-    ListComponent,
-    LoadingStatusComponent,
-    NoDataStatusComponent,
-  ],
+  imports: [ContextMenuModule, PlayerListComponent, LoadingStatusComponent, NoDataStatusComponent],
 })
 export class HighscoreDataTableComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
@@ -48,25 +40,16 @@ export class HighscoreDataTableComponent implements OnInit, OnDestroy {
   section = input.required<Section>();
 
   // State
-  private readonly filterValue = signal<string>('');
   private selectedRecord: HighscoreRecord | null = null;
 
   // Child
   private readonly cm = viewChild<ContextMenu>('cm');
 
   // Computed
-  private readonly trimmedFilter = computed(() => this.filterValue().trim());
-  readonly hasFilter = computed(() => this.trimmedFilter().length > 0);
-  private readonly filteredData = computed(() => {
-    const filter = this.trimmedFilter().toLowerCase();
-    if (!filter) return this.data();
-    return this.data().filter((r) => r.name.toLowerCase().includes(filter));
-  });
-
   protected readonly isLoss = computed(() => this.section() === 'experience_loss');
 
   readonly displayItems = computed<PodiumListItem[]>(() =>
-    this.filteredData().map((record) => this.toDisplayItem(record, this.section())),
+    this.data().map((record) => this.toDisplayItem(record, this.section())),
   );
 
   // Context menu
@@ -95,10 +78,6 @@ export class HighscoreDataTableComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.toastService.clear();
-  }
-
-  protected onFilterChange(value: string): void {
-    this.filterValue.set(value);
   }
 
   protected onItemClick(item: PodiumListItem): void {

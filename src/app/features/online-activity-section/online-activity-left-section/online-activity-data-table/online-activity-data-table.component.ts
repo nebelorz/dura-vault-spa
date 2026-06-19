@@ -4,7 +4,6 @@ import {
   computed,
   input,
   inject,
-  signal,
   viewChild,
   OnInit,
   OnDestroy,
@@ -15,8 +14,7 @@ import { ToastService } from '@core/services';
 import { DAILY_WARN_MIN, DAILY_DANGER_MIN } from '@core/constants';
 import { getDuraPlayerUrl, buildMetrics } from '@shared/functions';
 import {
-  PodiumComponent,
-  ListComponent,
+  PlayerListComponent,
   LoadingStatusComponent,
   NoDataStatusComponent,
 } from '@shared/components';
@@ -29,13 +27,7 @@ import { MenuItem } from 'primeng/api';
   selector: 'app-online-activity-data-table',
   templateUrl: './online-activity-data-table.component.html',
   styleUrl: './online-activity-data-table.component.scss',
-  imports: [
-    ContextMenuModule,
-    PodiumComponent,
-    ListComponent,
-    LoadingStatusComponent,
-    NoDataStatusComponent,
-  ],
+  imports: [ContextMenuModule, PlayerListComponent, LoadingStatusComponent, NoDataStatusComponent],
 })
 export class OnlineDataTableComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
@@ -53,17 +45,8 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
   private readonly cm = viewChild<ContextMenu>('cm');
 
   // Computed
-  private readonly filterValue = signal<string>('');
-  private readonly trimmedFilter = computed(() => this.filterValue().trim());
-  readonly hasFilter = computed(() => this.trimmedFilter().length > 0);
-  private readonly filteredData = computed(() => {
-    const filter = this.trimmedFilter().toLowerCase();
-    if (!filter) return this.data();
-    return this.data().filter((r) => r.name.toLowerCase().includes(filter));
-  });
-
   readonly displayItems = computed<PodiumListItem[]>(() =>
-    this.filteredData().map((record) => this.toDisplayItem(record)),
+    this.data().map((record) => this.toDisplayItem(record)),
   );
 
   // Context menu
@@ -102,10 +85,6 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
   protected onItemRightClick({ event, item }: { event: MouseEvent; item: PodiumListItem }): void {
     this.selectedRecord = this.data().find((r) => r.name === item.id) ?? null;
     this.cm()?.show(event);
-  }
-
-  protected onFilterChange(value: string): void {
-    this.filterValue.set(value);
   }
 
   private toDisplayItem(record: OnlineTopRecord): PodiumListItem {
