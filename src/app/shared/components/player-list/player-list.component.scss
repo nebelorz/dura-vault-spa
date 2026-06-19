@@ -1,0 +1,26 @@
+@use 'colors' as colors;
+
+:host {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.list-section {
+  display: flex;
+  flex-direction: column;
+
+  &.integrated {
+    ::ng-deep app-search-input .search-input-row {
+      border: 1px solid colors.$secondary;
+      border-bottom: none;
+    }
+
+    ::ng-deep app-list .rest-list {
+      border-top: none;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+}
