@@ -91,11 +91,11 @@ function buildOnlineColumns(record: OnlineRecord, period?: TimePeriod): MetricCo
   if (period === 'day') {
     return [
       {
-        metric: 'online_time',
-        displayValue: formatMinutesToHours(record.online_time),
-        showLabel: true,
+        metric: 'online_avg',
+        displayValue: formatMinutesToHours(record.average_online_time),
         valueClass: timeClass,
-        valueTooltip: METRIC_DEFINITIONS.online_time.label,
+        size: 'md',
+        valueTooltip: METRIC_DEFINITIONS.online_avg.label,
       },
     ];
   }
