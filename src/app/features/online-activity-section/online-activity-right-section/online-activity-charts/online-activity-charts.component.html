@@ -32,36 +32,13 @@
     </div>
   }
 
-  @if (vocationChartData(); as vocationData) {
-    <section class="chart-section animation-fade">
-      <div class="sub-section-header">
-        <span class="sub-section-label">Activity by Vocation</span>
-      </div>
-      <div class="chart-container chart-container--hbar">
-        <p-chart type="bar" [data]="vocationData" [options]="vocationChartOptions()" />
-      </div>
-    </section>
-  }
-
-  @if (levelChartData(); as levelData) {
-    <section class="chart-section animation-fade">
-      <div class="sub-section-header">
-        <span class="sub-section-label">Activity by Level Range</span>
-      </div>
-      <div class="chart-container" [style.height]="levelChartHeight()">
-        <p-chart type="bar" [data]="levelData" [options]="levelChartOptions()" />
-      </div>
-    </section>
-  }
-
-  @if (timelineChartData(); as timelineData) {
-    <section class="chart-section animation-fade">
-      <div class="sub-section-header">
-        <span class="sub-section-label">Activity by Period</span>
-      </div>
-      <div class="chart-container">
-        <p-chart type="line" [data]="timelineData" [options]="timelineChartOptions()" />
-      </div>
-    </section>
-  }
+  <div class="charts-grid">
+    <app-online-activity-by-vocation-chart [data]="data()" />
+    <app-online-activity-by-level-chart [data]="data()" />
+    <app-online-activity-by-period-chart
+      [timeline]="timeline()"
+      [period]="period()"
+      [activeComparisonDate]="activeComparisonDate()"
+    />
+  </div>
 }

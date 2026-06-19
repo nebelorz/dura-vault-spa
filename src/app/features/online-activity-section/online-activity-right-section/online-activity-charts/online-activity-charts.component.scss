@@ -1,6 +1,9 @@
-// ===========================
-// STATS CARDS
-// ===========================
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
 .stats-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -8,24 +11,11 @@
   margin-bottom: 1.5rem;
 }
 
-// ===========================
-// CHARTS
-// ===========================
-.chart-section {
-  margin-bottom: 0.75rem;
-}
-
-.chart-container {
-  position: relative;
-  height: 240px;
-  overflow: hidden;
-
-  p-chart {
-    display: block;
-    height: 80%;
-  }
-
-  &--hbar {
-    height: 155px;
-  }
+.charts-grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 0.75rem;
 }

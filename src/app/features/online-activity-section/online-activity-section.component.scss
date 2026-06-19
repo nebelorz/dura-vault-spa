@@ -32,6 +32,18 @@
       }
     }
 
+    .online-right {
+      height: calc(90vh - 100px - 2rem);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+
+      app-online-activity-charts {
+        flex: 1;
+        min-height: 0;
+      }
+    }
+
     @media (max-width: 768px) {
       grid-template-columns: 1fr;
     }
