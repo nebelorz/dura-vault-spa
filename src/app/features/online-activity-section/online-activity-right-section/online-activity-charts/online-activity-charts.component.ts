@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, input, signal, effect } f
 import { OnlineTopRecord, OnlineTimelineRecord, TimePeriod } from '@core/models';
 import { VOCATION_GROUPS } from '@core/constants';
 import { formatDate } from '@shared/functions';
+import type { TooltipItem } from 'chart.js';
 import { LoadingStatusComponent, StatCardComponent } from '@shared/components';
 
 import { ChartModule } from 'primeng/chart';
@@ -167,8 +168,8 @@ export class OnlineActivityChartsComponent {
           titleFont: { family: CHART_FONT },
           bodyFont: { family: CHART_FONT },
           callbacks: {
-            label: (ctx: any) => ` ${ctx.parsed.x}h`,
-            afterLabel: (ctx: any) => {
+            label: (ctx: TooltipItem<'bar'>) => ` ${ctx.parsed.x}h`,
+            afterLabel: (ctx: TooltipItem<'bar'>) => {
               const s = stats[ctx.dataIndex];
               return s ? ` ${s.count} players` : '';
             },
@@ -179,7 +180,7 @@ export class OnlineActivityChartsComponent {
         x: {
           ticks: {
             font: { size: 10, family: CHART_FONT },
-            callback: (v: any) => `${v}h`,
+            callback: (v: string | number) => `${v}h`,
           },
           grid: { color: CHART_GRID_COLOR },
         },
@@ -246,8 +247,8 @@ export class OnlineActivityChartsComponent {
           titleFont: { family: CHART_FONT },
           bodyFont: { family: CHART_FONT },
           callbacks: {
-            label: (ctx: any) => ` ${ctx.parsed.x}h`,
-            afterLabel: (ctx: any) => {
+            label: (ctx: TooltipItem<'bar'>) => ` ${ctx.parsed.x}h`,
+            afterLabel: (ctx: TooltipItem<'bar'>) => {
               const s = stats[ctx.dataIndex];
               return s ? ` ${s.count} players` : '';
             },
@@ -258,7 +259,7 @@ export class OnlineActivityChartsComponent {
         x: {
           ticks: {
             font: { size: 10, family: CHART_FONT },
-            callback: (v: any) => `${v}h`,
+            callback: (v: string | number) => `${v}h`,
           },
           grid: { color: CHART_GRID_COLOR },
         },
@@ -348,7 +349,7 @@ export class OnlineActivityChartsComponent {
         titleFont: { family: CHART_FONT },
         bodyFont: { family: CHART_FONT },
         callbacks: {
-          label: (ctx: any) => ` ${ctx.parsed.y}h`,
+          label: (ctx: TooltipItem<'line'>) => ` ${ctx.parsed.y}h`,
         },
       },
     },
@@ -363,7 +364,7 @@ export class OnlineActivityChartsComponent {
       y: {
         ticks: {
           font: { size: 10, family: CHART_FONT },
-          callback: (v: any) => `${v}h`,
+          callback: (v: string | number) => `${v}h`,
         },
         grid: { color: CHART_GRID_COLOR },
       },
