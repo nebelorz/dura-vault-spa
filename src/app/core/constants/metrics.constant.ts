@@ -38,4 +38,31 @@ export const METRIC_DEFINITIONS = {
     label: 'Skill',
     shortLabel: 'SKL',
   },
+  // Online time
+  online_time: {
+    gain: 'pi pi-clock',
+    loss: 'pi pi-clock',
+    cssClassGain: '',
+    cssClassLoss: 'metric--danger',
+    label: 'Time Online',
+    shortLabel: 'TIME',
+  },
+  // Online average per day
+  online_avg: {
+    gain: 'pi pi-clock',
+    loss: 'pi pi-clock',
+    cssClassGain: '',
+    cssClassLoss: 'metric--warn',
+    label: 'AVG / Day',
+    shortLabel: 'AVG',
+  },
+  // Days active
+  online_days: {
+    gain: 'pi pi-calendar',
+    loss: 'pi pi-calendar',
+    cssClassGain: '',
+    cssClassLoss: 'metric--danger',
+    label: 'Days Active',
+    shortLabel: 'DAYS',
+  },
 } as const;

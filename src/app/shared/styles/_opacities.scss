@@ -1,0 +1,11 @@
+// ─── OPACITY SCALE ────────────
+:root {
+  --opacity-low: 0.45;
+  --opacity-mid: 0.65;
+  --opacity-high: 0.85;
+}
+
+// ─── SCSS variable wrappers ───
+$opacity-low: var(--opacity-low);
+$opacity-mid: var(--opacity-mid);
+$opacity-high: var(--opacity-high);

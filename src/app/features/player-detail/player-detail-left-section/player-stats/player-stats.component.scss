@@ -1,5 +1,4 @@
 @use 'colors' as colors;
-@use 'text' as text;
 
 .stats-section {
   display: flex;
@@ -15,7 +14,7 @@
   gap: 0.5rem;
   padding: 0.4rem 0.5rem;
   padding-left: 0.5rem;
-  border-radius: 6px;
+  border-radius: var(--radius-default);
   transition:
     background 0.15s ease,
     border-color 0.2s ease;
@@ -61,16 +60,12 @@
   line-height: 1.2;
 }
 
-.stat-rank {
-  font-size: text.$text-xs;
-}
-
 // Mouseover overlay
 .stat-overlay {
   position: absolute;
   inset: 0;
   background: colors.$secondary;
-  border-radius: 6px;
+  border-radius: var(--radius-default);
   display: flex;
   flex-direction: row;
   align-items: center;

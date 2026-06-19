@@ -34,7 +34,9 @@
 
   @if (vocationChartData(); as vocationData) {
     <section class="chart-section animation-fade">
-      <div class="chart-title text-label">Activity by Vocation</div>
+      <div class="sub-section-header">
+        <span class="sub-section-label">Activity by Vocation</span>
+      </div>
       <div class="chart-container chart-container--hbar">
         <p-chart type="bar" [data]="vocationData" [options]="vocationChartOptions()" />
       </div>
@@ -43,7 +45,9 @@
 
   @if (levelChartData(); as levelData) {
     <section class="chart-section animation-fade">
-      <div class="chart-title text-label">Activity by Level Range</div>
+      <div class="sub-section-header">
+        <span class="sub-section-label">Activity by Level Range</span>
+      </div>
       <div class="chart-container" [style.height]="levelChartHeight()">
         <p-chart type="bar" [data]="levelData" [options]="levelChartOptions()" />
       </div>
@@ -52,7 +56,9 @@
 
   @if (timelineChartData(); as timelineData) {
     <section class="chart-section animation-fade">
-      <div class="chart-title text-label">Activity by Period</div>
+      <div class="sub-section-header">
+        <span class="sub-section-label">Activity by Period</span>
+      </div>
       <div class="chart-container">
         <p-chart type="line" [data]="timelineData" [options]="timelineChartOptions()" />
       </div>

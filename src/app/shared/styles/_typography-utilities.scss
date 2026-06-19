@@ -1,0 +1,94 @@
+// ─── TEXT UTILITY CLASSES ────────────
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+}
+
+.section-label {
+  font-size: var(--text-lg);
+  font-weight: bold;
+}
+
+.sub-section-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.sub-section-label {
+  font-size: var(--text-sm);
+  letter-spacing: 1.5px;
+  opacity: var(--opacity-mid);
+  text-transform: uppercase;
+}
+
+.text-label {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  opacity: var(--opacity-mid);
+}
+
+.text-title {
+  font-size: var(--text-xxl);
+  font-weight: bold;
+}
+
+.text-heading {
+  font-size: var(--text-lg);
+  font-weight: bold;
+  opacity: var(--opacity-high);
+}
+
+.text-standard {
+  font-size: var(--text-md);
+  opacity: var(--opacity-high);
+}
+
+.text-value {
+  font-size: var(--text-md);
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  opacity: var(--opacity-high);
+}
+
+.text-subvalue {
+  font-size: var(--text-sm);
+  font-weight: normal;
+  opacity: var(--opacity-mid);
+}
+
+.text-body {
+  font-size: var(--text-sm);
+  font-weight: normal;
+  line-height: 1.4;
+  opacity: var(--opacity-high);
+}
+
+.text-caption {
+  font-size: var(--text-sm);
+  opacity: var(--opacity-low);
+  letter-spacing: 0;
+  text-transform: uppercase;
+  margin-left: 0.25em;
+}
+
+.text-overlay-label {
+  font-size: var(--text-xs);
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: var(--opacity-low);
+}
+
+.text-overlay-value {
+  font-size: var(--text-md);
+  font-weight: bold;
+  line-height: 1.2;
+  opacity: var(--opacity-high);
+}
+
+.text-muted {
+  opacity: var(--opacity-low);
+}

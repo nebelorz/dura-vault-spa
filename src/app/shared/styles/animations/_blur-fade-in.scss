@@ -1,4 +1,4 @@
-// Blur fade-in: element appears gradually from blurry/dim to sharp
+// ─── BLUR FADE-IN ────────────
 @keyframes blurFadeIn {
   0% {
     filter: blur(12px) brightness(1.4);

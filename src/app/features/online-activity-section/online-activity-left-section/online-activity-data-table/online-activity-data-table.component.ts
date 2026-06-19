@@ -10,11 +10,16 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { OnlineTopRecord, TimePeriod } from '@core/models';
+import { OnlineTopRecord, PodiumListItem, TimePeriod } from '@core/models';
 import { ToastService } from '@core/services';
 import { DAILY_WARN_MIN, DAILY_DANGER_MIN } from '@core/constants';
-import { formatMinutesToHours, getDuraPlayerUrl } from '@shared/functions';
-import { PodiumListComponent, PodiumListItem, TextColumn } from '@shared/components';
+import { getDuraPlayerUrl, buildMetrics } from '@shared/functions';
+import {
+  PodiumComponent,
+  ListComponent,
+  LoadingStatusComponent,
+  NoDataStatusComponent,
+} from '@shared/components';
 
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 import { MenuItem } from 'primeng/api';
@@ -24,7 +29,13 @@ import { MenuItem } from 'primeng/api';
   selector: 'app-online-activity-data-table',
   templateUrl: './online-activity-data-table.component.html',
   styleUrl: './online-activity-data-table.component.scss',
-  imports: [ContextMenuModule, PodiumListComponent],
+  imports: [
+    ContextMenuModule,
+    PodiumComponent,
+    ListComponent,
+    LoadingStatusComponent,
+    NoDataStatusComponent,
+  ],
 })
 export class OnlineDataTableComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
@@ -98,43 +109,10 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
   }
 
   private toDisplayItem(record: OnlineTopRecord): PodiumListItem {
-    const isDay = this.period() === 'day';
-    const avgMinutes = isDay
-      ? record.online_time
-      : Math.round(record.online_time / Math.max(1, record.days_active));
-    const dayWord = record.days_active === 1 ? 'day' : 'days';
-
-    const columns: TextColumn[] = isDay
-      ? [
-          {
-            type: 'text',
-            label: 'Online Time',
-            value: formatMinutesToHours(record.online_time),
-            valueClass: `${this.metricTimeClass(record.online_time)} value-avg-day`,
-            labelTooltip: 'Online Time',
-          },
-        ]
-      : [
-          {
-            type: 'text',
-            label: 'AVG / Day',
-            value: formatMinutesToHours(avgMinutes),
-            valueClass: `${this.metricTimeClass(avgMinutes)} value-avg-day`,
-            labelTooltip: 'AVG / Day',
-          },
-          {
-            type: 'text',
-            label: 'Time Online',
-            value: formatMinutesToHours(record.online_time),
-            labelTooltip: 'Time Online',
-          },
-          {
-            type: 'text',
-            label: 'Days Active',
-            value: `${record.days_active} ${dayWord}`,
-            labelTooltip: 'Days Active',
-          },
-        ];
+    const columns = buildMetrics('online', record, { period: this.period() }).map((col) => ({
+      ...col,
+      showIcon: false,
+    }));
 
     return {
       id: record.name,
@@ -148,22 +126,14 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
   }
 
   private rowTimeClass(record: OnlineTopRecord): string {
-    const avg = record.online_time / Math.max(1, record.days_active);
-    if (avg >= DAILY_DANGER_MIN) return 'list-row--danger';
-    if (avg >= DAILY_WARN_MIN) return 'list-row--warn';
-    return '';
-  }
-
-  private metricTimeClass(minutes: number): string {
-    if (minutes >= DAILY_DANGER_MIN) return 'metric--danger';
-    if (minutes >= DAILY_WARN_MIN) return 'metric--warn';
+    if (record.average_online_time >= DAILY_DANGER_MIN) return 'list-row--danger';
+    if (record.average_online_time >= DAILY_WARN_MIN) return 'list-row--warn';
     return '';
   }
 
   private podiumTimeClass(record: OnlineTopRecord): string {
-    const avg = record.online_time / Math.max(1, record.days_active);
-    if (avg >= DAILY_DANGER_MIN) return 'podium-base--danger';
-    if (avg >= DAILY_WARN_MIN) return 'podium-base--warn';
+    if (record.average_online_time >= DAILY_DANGER_MIN) return 'podium-base--danger';
+    if (record.average_online_time >= DAILY_WARN_MIN) return 'podium-base--warn';
     return '';
   }
 

@@ -1,5 +1,5 @@
 <div class="online-stats-section">
-  <div class="section-header">ONLINE ACTIVITY</div>
+  <div class="sub-section-header"><span class="sub-section-label">ONLINE ACTIVITY</span></div>
 
   @if (loading() && !hasContent()) {
     <app-loading-status />
@@ -8,7 +8,7 @@
       @if (summary.average_online_time > 0) {
         <div class="online-row">
           <div class="online-icon">
-            <i class="pi pi-wave-pulse"></i>
+            <i class="pi pi-wave-pulse text-value"></i>
           </div>
           <div class="online-info">
             <div class="text-label">Avg Online</div>
@@ -16,7 +16,7 @@
               <span class="online-value text-value">{{
                 summary.average_online_time | minutesToHours
               }}</span>
-              <span class="text-sub">/day</span>
+              <span class="text-subvalue">/day</span>
             </div>
           </div>
         </div>
@@ -24,7 +24,7 @@
         @if (summary.avg_first_seen && summary.avg_last_seen) {
           <div class="online-row">
             <div class="online-icon">
-              <i class="pi pi-clock"></i>
+              <i class="pi pi-clock text-value"></i>
             </div>
             <div class="online-info">
               <div class="text-label">
@@ -49,7 +49,7 @@
     @if (lastLogin()) {
       <div class="online-row">
         <div class="online-icon">
-          <i class="pi pi-eye"></i>
+          <i class="pi pi-eye text-value"></i>
         </div>
         <div class="online-info">
           <div class="text-label">Last Login</div>
@@ -64,7 +64,7 @@
   } @else {
     <div class="online-row">
       <div class="online-info">
-        <span class="text-additional-info">No data available on the vault</span>
+        <span class="text-muted text-subvalue">No data available on the vault</span>
       </div>
     </div>
   }

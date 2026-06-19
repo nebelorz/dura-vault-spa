@@ -6,9 +6,11 @@
   height: 100%;
 }
 
-app-podium-list {
+.table-content {
   flex: 1;
   min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 // Red podium for experience_loss section

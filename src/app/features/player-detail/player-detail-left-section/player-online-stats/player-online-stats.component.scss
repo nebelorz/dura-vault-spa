@@ -1,5 +1,4 @@
 @use 'colors' as colors;
-@use 'text' as text;
 
 .online-stats-section {
   display: flex;
@@ -12,7 +11,7 @@
   align-items: flex-start;
   gap: 0.5rem;
   padding: 0.4rem 0.5rem;
-  border-radius: 6px;
+  border-radius: var(--radius-default);
 }
 
 .online-icon {
@@ -26,8 +25,7 @@
 
   i {
     color: colors.$secondary-light;
-    font-size: text.$text-md;
-    opacity: 0.85;
+    font-size: var(--text-md);
   }
 }
 

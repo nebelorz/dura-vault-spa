@@ -1,4 +1,4 @@
-﻿<div class="section-header">ACHIEVEMENTS</div>
+<div class="sub-section-header"><span class="sub-section-label">ACHIEVEMENTS</span></div>
 
 @if (loading() && achievements().length === 0) {
   <app-loading-status />
@@ -22,8 +22,8 @@
                     />
                   </div>
                   <div class="accordion-header-text">
-                    <span class="section-name text-normal">{{ sec.sectionLabel }}</span>
-                    <span class="milestone-count text-sub"
+                    <span class="section-name text-body">{{ sec.sectionLabel }}</span>
+                    <span class="milestone-count text-subvalue"
                       >{{ sec.milestones.length }} milestone{{
                         sec.milestones.length !== 1 ? 's' : ''
                       }}</span
@@ -36,7 +36,7 @@
                   @for (a of sec.milestones; track a.milestone) {
                     <div class="milestone-row">
                       <span class="milestone-value text-value">{{ a.milestone }}</span>
-                      <span class="milestone-date text-sub">
+                      <span class="milestone-date text-subvalue">
                         @if (a.displayDate) {
                           {{ a.displayDate | date: 'dd MMM yyyy' }}
                         } @else {

@@ -12,11 +12,16 @@
       <div class="carousel-item">
         <div class="carousel-content carousel-content--coffee">
           <div class="carousel-text">
-            <h2 class="carousel-title">{{ item.title }}</h2>
-            <p class="carousel-description">{{ item.description }}</p>
+            <p class="carousel-title text-value">{{ item.title }}</p>
+            <p class="carousel-description text-body">{{ item.description }}</p>
           </div>
           <div class="coffee-button-and-logo-section" (mouseenter)="startJingle()">
-            <a [href]="item.coffeeUrl" target="_blank" rel="noopener noreferrer" class="coffee-btn">
+            <a
+              [href]="item.coffeeUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="coffee-btn text-body"
+            >
               Buy me a coffee
             </a>
             <img

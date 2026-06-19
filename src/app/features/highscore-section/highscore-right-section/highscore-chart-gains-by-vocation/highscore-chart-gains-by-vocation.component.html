@@ -1,5 +1,7 @@
-﻿<div class="stats-panel">
-  <h3 class="stats-title text-label">{{ chartTitle() }}</h3>
+﻿<div class="chart-panel">
+  <div class="sub-section-header">
+    <span class="sub-section-label">{{ chartTitle() }}</span>
+  </div>
 
   @if (loading()) {
     <div class="chart-placeholder">

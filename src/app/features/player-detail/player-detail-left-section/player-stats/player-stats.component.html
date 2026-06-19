@@ -1,5 +1,5 @@
 <div class="stats-section">
-  <div class="section-header">PLAYER STATS</div>
+  <div class="sub-section-header"><span class="sub-section-label">PLAYER STATS</span></div>
 
   @if (loading() && !stats().length) {
     <app-loading-status />
@@ -23,7 +23,7 @@
           <div class="text-label">Level</div>
           <div class="stat-value-row">
             <span class="stat-value text-value">{{ exp.level }}</span>
-            <span class="stat-rank metric--rank">#{{ exp.rank }}</span>
+            <span class="stat-rank metric--rank text-caption">#{{ exp.rank }}</span>
           </div>
         </div>
         <div class="stat-overlay">
@@ -58,7 +58,7 @@
           <div class="text-label">{{ getSectionLabel(stat.section) }}</div>
           <div class="stat-value-row">
             <span class="stat-value text-value">{{ stat.level }}</span>
-            <span class="stat-rank metric--rank">#{{ stat.rank }}</span>
+            <span class="stat-rank metric--rank text-caption">#{{ stat.rank }}</span>
           </div>
         </div>
         <div class="stat-overlay">

@@ -3,32 +3,18 @@ import { NgTemplateOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 import { VOCATION_GROUPS } from '@core/constants';
-import { HighscoreRecord, MetricType, Section } from '@core/models';
-import {
-  getMetricGainOrLossTooltip,
-  getMetricPercentageOfTotalEXP,
-  getMetricTooltip,
-} from '@shared/functions';
+import { HighscoreRecord, MetricColumn, Section } from '@core/models';
+import { buildMetrics } from '@shared/functions';
 import {
   LoadingStatusComponent,
   MetricDisplayComponent,
   NoDataStatusComponent,
 } from '@shared/components';
 
-interface VocDetailColumn {
-  metric: MetricType;
-  gainValue: number;
-  valueTooltip?: string;
-  abbreviate: boolean;
-  percentagePointsTotal?: number;
-  subValue?: string;
-  subValueTooltip?: string;
-}
-
 interface VocationTopItem {
   group: string;
   name: string;
-  columns: VocDetailColumn[];
+  columns: MetricColumn[];
   link: string[];
 }
 
@@ -83,52 +69,10 @@ export class HighscoreTopPerVocationCardsComponent {
     if (!record) return null;
 
     const isXp = this.isXpSection();
-
-    const columns: VocDetailColumn[] = isXp
-      ? [
-          {
-            metric: 'experience',
-            gainValue: record.gain_points,
-            valueTooltip: getMetricGainOrLossTooltip('experience', record.gain_points < 0),
-            abbreviate: true,
-            percentagePointsTotal: record.points ?? undefined,
-            subValueTooltip: getMetricPercentageOfTotalEXP(),
-          },
-          {
-            metric: 'level',
-            gainValue: record.gain_level,
-            valueTooltip: getMetricGainOrLossTooltip('level', record.gain_level < 0),
-            abbreviate: false,
-            subValue: `${record.level}`,
-            subValueTooltip: getMetricTooltip('level'),
-          },
-          {
-            metric: 'rank',
-            gainValue: record.gain_rank,
-            valueTooltip: getMetricGainOrLossTooltip('rank', record.gain_rank < 0),
-            abbreviate: false,
-            subValue: `#${record.rank}`,
-            subValueTooltip: getMetricTooltip('rank'),
-          },
-        ]
-      : [
-          {
-            metric: 'skill',
-            gainValue: record.gain_level,
-            valueTooltip: getMetricGainOrLossTooltip('skill', record.gain_level < 0),
-            abbreviate: false,
-            subValue: `${record.level}`,
-            subValueTooltip: getMetricTooltip('skill'),
-          },
-          {
-            metric: 'rank',
-            gainValue: record.gain_rank,
-            valueTooltip: getMetricGainOrLossTooltip('rank', record.gain_rank < 0),
-            abbreviate: false,
-            subValue: `#${record.rank}`,
-            subValueTooltip: getMetricTooltip('rank'),
-          },
-        ];
+    const columns = buildMetrics(isXp ? 'level' : 'skill', record).map((col) => ({
+      ...col,
+      showIcon: false,
+    }));
 
     return { group, name: record.name, columns, link: ['/player', record.name] };
   }

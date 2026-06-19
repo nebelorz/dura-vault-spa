@@ -2,7 +2,7 @@
   <app-loading-status />
 } @else if (isAvailable()) {
   <div class="account-section">
-    <span class="text-normal">INFORMATION</span>
+    <span class="text-body">INFORMATION</span>
     @if (accountInfo(); as info) {
       @if (hasAccountInfo()) {
         <div class="records-list animation-fade">
@@ -28,14 +28,14 @@
           }
         </div>
       } @else {
-        <span class="text-sub text-muted">No public account information available</span>
+        <span class="text-subvalue text-muted">No public account information available</span>
       }
     } @else {
-      <span class="text-sub text-muted">No public account information available</span>
+      <span class="text-subvalue text-muted">No public account information available</span>
     }
   </div>
   <div class="account-section">
-    <span class="text-normal">CHARACTERS</span>
+    <span class="text-body">CHARACTERS</span>
     @if (characters().length > 0) {
       <div class="characters-list animation-fade">
         @for (char of characters(); track char.name) {
@@ -48,7 +48,7 @@
             <div class="account-character-info">
               <span class="account-character-level text-label">Lvl {{ char.level ?? '?' }}</span>
               <span class="account-character-name text-value">{{ char.name }}</span>
-              <span class="account-character-vocation text-sub">{{ char.vocation }}</span>
+              <span class="account-character-vocation text-subvalue">{{ char.vocation }}</span>
             </div>
             @if (char.isOnline) {
               <span class="online-status-badge">
@@ -60,7 +60,7 @@
         }
       </div>
     } @else {
-      <span class="text-sub text-muted">No characters found</span>
+      <span class="text-subvalue text-muted">No characters found</span>
     }
   </div>
 } @else {

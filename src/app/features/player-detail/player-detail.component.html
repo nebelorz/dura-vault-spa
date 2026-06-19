@@ -1,5 +1,5 @@
 <div class="player-detail-container animation-fade">
-  <div class="player-container">
+  <div class="player-container default-container">
     <!-- TOP: name + period selector -->
     <div class="player-container-top">
       <app-player-detail-header [playerName]="playerName()" [vocation]="vocation()" />
@@ -20,9 +20,9 @@
           />
         </div>
         @if (dateRange().length === 1) {
-          <span class="text-additional-info">{{ dateRange()[0] | date: 'dd MMM yyyy' }}</span>
+          <span class="text-caption">{{ dateRange()[0] | date: 'dd MMM yyyy' }}</span>
         } @else if (dateRange().length > 1) {
-          <span class="text-additional-info"
+          <span class="text-caption"
             >{{ dateRange()[0] | date: 'dd MMM yyyy' }} —
             {{ dateRange()[1] | date: 'dd MMM yyyy' }}</span
           >

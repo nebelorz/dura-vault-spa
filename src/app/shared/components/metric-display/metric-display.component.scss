@@ -1,5 +1,3 @@
-@use 'text' as text;
-
 .metric-display {
   display: inline-flex;
   align-items: center;
@@ -11,37 +9,20 @@
   }
 
   i {
-    font-size: text.$text-xs; // default
+    font-size: var(--text-sm); // default
 
     &.metric-display--icon-xs {
-      font-size: text.$text-xs;
+      font-size: var(--text-xs);
     }
     &.metric-display--icon-sm {
-      font-size: text.$text-sm;
-    }
-    &.metric-display--icon-base {
-      font-size: text.$text-base;
+      font-size: var(--text-sm);
     }
     &.metric-display--icon-md {
-      font-size: text.$text-md;
+      font-size: var(--text-md);
     }
   }
 
   &--value {
-    font-size: text.$text-sm;
-    line-height: 1.3;
-  }
-
-  &--short-label,
-  &--label {
-    font-size: text.$text-xs;
-    line-height: 1.2;
-    opacity: text.$opacity-secondary;
-  }
-
-  &--sub-value {
-    font-size: text.$text-sm;
-    line-height: 1.2;
-    opacity: text.$opacity-secondary;
+    opacity: 100;
   }
 }

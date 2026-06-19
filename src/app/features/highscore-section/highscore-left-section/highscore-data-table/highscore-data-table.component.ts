@@ -11,15 +11,15 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { HighscoreRecord, Section } from '@core/models';
+import { HighscoreRecord, PodiumListItem, Section } from '@core/models';
 import { ToastService } from '@core/services';
+import { getDuraPlayerUrl, buildMetrics } from '@shared/functions';
 import {
-  getDuraPlayerUrl,
-  getMetricGainOrLossTooltip,
-  getMetricPercentageOfTotalEXP,
-  getMetricTooltip,
-} from '@shared/functions';
-import { MetricColumn, PodiumListComponent, PodiumListItem } from '@shared/components';
+  PodiumComponent,
+  ListComponent,
+  LoadingStatusComponent,
+  NoDataStatusComponent,
+} from '@shared/components';
 
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 import { MenuItem } from 'primeng/api';
@@ -30,7 +30,13 @@ import { MenuItem } from 'primeng/api';
   templateUrl: './highscore-data-table.component.html',
   styleUrl: './highscore-data-table.component.scss',
   host: { '[class.podium-danger-mode]': 'isLoss()' },
-  imports: [ContextMenuModule, PodiumListComponent],
+  imports: [
+    ContextMenuModule,
+    PodiumComponent,
+    ListComponent,
+    LoadingStatusComponent,
+    NoDataStatusComponent,
+  ],
 })
 export class HighscoreDataTableComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
@@ -106,63 +112,8 @@ export class HighscoreDataTableComponent implements OnInit, OnDestroy {
   }
 
   private toDisplayItem(record: HighscoreRecord, section: Section): PodiumListItem {
-    const isExperience = section === 'experience' || section === 'experience_loss';
-
-    let columns: MetricColumn[];
-
-    if (isExperience) {
-      columns = [
-        {
-          type: 'metric',
-          metric: 'experience',
-          value: record.gain_points ?? 0,
-          abbreviate: true,
-          valueTooltip: getMetricGainOrLossTooltip('experience', record.gain_points < 0),
-          relativePercentagePointsFromTotal: record.points ?? undefined,
-          subValueTooltip: getMetricPercentageOfTotalEXP(),
-        },
-        {
-          type: 'metric',
-          metric: 'level',
-          value: record.gain_level,
-          abbreviate: false,
-          valueTooltip: getMetricGainOrLossTooltip('level', record.gain_level < 0),
-          subValue: `${record.level}`,
-          subValueTooltip: getMetricTooltip('level'),
-        },
-        {
-          type: 'metric',
-          metric: 'rank',
-          value: record.gain_rank,
-          abbreviate: false,
-          valueTooltip: getMetricGainOrLossTooltip('rank', record.gain_rank < 0),
-          subValue: `#${record.rank}`,
-          subValueTooltip: getMetricTooltip('rank'),
-        },
-      ];
-    } else {
-      columns = [
-        {
-          type: 'metric',
-          metric: 'skill',
-          value: record.gain_level,
-          abbreviate: false,
-          valueTooltip: getMetricGainOrLossTooltip('skill', record.gain_level < 0),
-          subValue: `${record.level}`,
-          subValueTooltip: getMetricTooltip('skill'),
-        },
-        {
-          type: 'metric',
-          metric: 'rank',
-          value: record.gain_rank,
-          abbreviate: false,
-          valueTooltip: getMetricGainOrLossTooltip('rank', record.gain_rank < 0),
-          subValue: `#${record.rank}`,
-          subValueTooltip: getMetricTooltip('rank'),
-        },
-      ];
-    }
-
+    const group = section === 'experience' || section === 'experience_loss' ? 'level' : 'skill';
+    const columns = buildMetrics(group, record);
     return {
       id: record.name,
       rank: record.rank,

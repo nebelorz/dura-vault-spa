@@ -1,13 +1,26 @@
 <p-contextMenu #cm [model]="contextMenuItems" appendTo="body" />
 
-<app-podium-list
-  [items]="displayItems()"
-  [loading]="loading()"
-  [disablePodium]="hasFilter()"
-  [hideOverlay]="true"
-  [emptyMessage]="'No highscores for ' + section() + ' during this period.'"
-  [showFilter]="true"
-  (filterChange)="onFilterChange($event)"
-  (itemClick)="onItemClick($event)"
-  (itemRightClick)="onItemRightClick($event)"
-/>
+@if (loading()) {
+  <app-loading-status />
+} @else if (!displayItems().length) {
+  <app-no-data-status [message]="'No highscores for ' + section() + ' during this period.'" />
+} @else {
+  <div class="table-content">
+    @if (!hasFilter()) {
+      <app-podium
+        [items]="displayItems().slice(0, 3)"
+        (itemClick)="onItemClick($event)"
+        (itemRightClick)="onItemRightClick($event)"
+      />
+    }
+    <app-list
+      [items]="hasFilter() ? displayItems() : displayItems().slice(3)"
+      [showFilter]="true"
+      [rankOffset]="hasFilter() ? 0 : 3"
+      [filterLabel]="'Filter by name'"
+      (itemClick)="onItemClick($event)"
+      (itemRightClick)="onItemRightClick($event)"
+      (filterChange)="onFilterChange($event)"
+    />
+  </div>
+}

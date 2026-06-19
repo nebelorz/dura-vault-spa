@@ -7,6 +7,7 @@ export interface OnlineTopRecord {
   level: number;
   online_time: number; // total minutes in period
   days_active: number; // distinct days the player was seen online
+  average_online_time: number; // rounded average minutes per active day
   first_seen: string; // earliest scrape date in period
   last_seen: string; // latest scrape date in period
 }

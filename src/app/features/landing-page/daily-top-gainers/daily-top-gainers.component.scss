@@ -2,10 +2,6 @@
 
 // Container
 .daily-top {
-  border: 2px solid colors.$secondary;
-  box-shadow: 0 1px 4px colors.$secondary;
-  border-radius: 8px;
-  padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -16,11 +12,6 @@ section {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-}
-
-.header-date {
-  letter-spacing: 0;
-  opacity: 0.6;
 }
 
 // Carousel
@@ -37,7 +28,7 @@ section {
       .p-carousel-indicator button {
         width: 1.5rem;
         height: 0.25rem;
-        border-radius: 2px;
+        border-radius: var(--radius-default);
         background: colors.$secondary;
         transition: all 0.2s ease;
 
@@ -59,7 +50,7 @@ section {
   align-items: center;
   gap: 0.75rem;
   padding: 0.4rem 0.75rem 0.4rem 0.75rem;
-  border-radius: 8px;
+  border-radius: var(--radius-container);
   transition: background 0.15s ease;
   cursor: pointer;
 

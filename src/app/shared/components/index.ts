@@ -5,6 +5,7 @@ export * from './metric-display/metric-display.component';
 export * from './minimalist-icon/minimalist-icon.component';
 export * from './no-data-status/no-data-status.component';
 export * from './period-selector/period-selector.component';
-export * from './podium-list/podium-list.component';
+export * from './podium/podium.component';
+export * from './list/list.component';
 export * from './stat-card/stat-card.component';
 export * from './toast/toast.component';

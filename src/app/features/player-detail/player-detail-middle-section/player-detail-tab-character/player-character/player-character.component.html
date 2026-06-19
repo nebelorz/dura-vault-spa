@@ -2,7 +2,7 @@
   <app-loading-status />
 } @else if (profileData(); as data) {
   <div class="character-info-section animation-fade">
-    <span class="text-normal">INFORMATION</span>
+    <span class="text-body">INFORMATION</span>
     <div class="records-list">
       @if (data.characterInformation.name) {
         <div class="record-row">
@@ -21,7 +21,7 @@
       @if (data.characterInformation.formerNames.length > 0) {
         <div class="record-row">
           <span class="record-label text-label">Former</span>
-          <span class="text-sub text-muted">{{
+          <span class="text-subvalue text-muted">{{
             data.characterInformation.formerNames.join(', ')
           }}</span>
         </div>
@@ -80,7 +80,7 @@
   </div>
 
   <div class="character-houses-section animation-fade">
-    <span class="text-normal">HOUSES</span>
+    <span class="text-body">HOUSES</span>
     @if (houses().length > 0) {
       <div class="houses-list">
         @for (house of houses(); track house.name) {
@@ -89,24 +89,24 @@
             <div class="house-meta">
               <span class="meta-pair">
                 <span class="text-label">Rent</span>
-                <span class="text-sub">{{ house.rent }}</span>
+                <span class="text-subvalue">{{ house.rent }}</span>
               </span>
               @if (house.beds !== null) {
                 <span class="meta-pair">
                   <span class="text-label">Beds</span>
-                  <span class="text-sub">{{ house.beds }}</span>
+                  <span class="text-subvalue">{{ house.beds }}</span>
                 </span>
               }
               <span class="meta-pair">
                 <span class="text-label">Due</span>
-                <span class="text-sub">{{ house.dueDate | date: 'dd MMM yyyy' }}</span>
+                <span class="text-subvalue">{{ house.dueDate | date: 'dd MMM yyyy' }}</span>
               </span>
             </div>
           </div>
         }
       </div>
     } @else {
-      <span class="text-sub text-muted">No rented houses</span>
+      <span class="text-subvalue text-muted">No rented houses</span>
     }
   </div>
 } @else {

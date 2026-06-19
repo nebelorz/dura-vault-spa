@@ -5,8 +5,8 @@
       <div class="changelog-card">
         <div class="changelog-header" (click)="toggleEntry(i)">
           <div class="header-left">
-            <i class="entry-type-icon" [ngClass]="getTypeIcon(entry.entryType)"></i>
-            <span class="entry-title">{{ entry.title }}</span>
+            <i class="entry-type-icon text-muted" [ngClass]="getTypeIcon(entry.entryType)"></i>
+            <span class="entry-title text-label">{{ entry.title }}</span>
             @if (entry.tags?.length) {
               <div class="entry-tags">
                 @for (tag of entry.tags!; track tag.label) {
@@ -18,7 +18,7 @@
             }
           </div>
           <div class="header-right">
-            <span class="entry-date">{{ entry.date | date: 'dd MMM yyyy' }}</span>
+            <span class="entry-date text-label">{{ entry.date | date: 'dd MMM yyyy' }}</span>
             <i class="pi pi-chevron-down chevron"></i>
           </div>
         </div>

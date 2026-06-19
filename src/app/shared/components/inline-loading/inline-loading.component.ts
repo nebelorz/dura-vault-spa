@@ -1,4 +1,4 @@
-﻿import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -7,8 +7,8 @@
   styleUrl: './inline-loading.component.scss',
   template: `
     <div class="inline-loading">
-      <i class="pi pi-spin pi-spinner"></i>
-      <span class="text-sub">Loading...</span>
+      <i class="pi pi-spin pi-spinner text-subvalue"></i>
+      <span class="text-subvalue">Loading...</span>
     </div>
   `,
 })

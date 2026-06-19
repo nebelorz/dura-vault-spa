@@ -72,11 +72,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.85;
 
   i {
-    font-size: small;
-    animation: iconPulse 0.5s ease-in;
+    font-size: var(--text-lg);
+    animation: iconPulse 1s ease-in;
+    opacity: var(--opacity-high);
   }
 }
 
@@ -88,14 +88,11 @@
 }
 
 .toast-summary {
-  font-weight: bold;
   line-height: 1.4;
 }
 
 .toast-detail {
-  font-size: 0.875rem;
   line-height: 1.5;
-  opacity: 0.9;
 }
 
 .toast-close {
@@ -106,17 +103,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: var(--radius-default);
   transition: all 0.2s ease;
   color: inherit;
-  opacity: 0.7;
-
-  &:hover {
-    opacity: 1;
-  }
 
   i {
-    font-size: 1rem;
+    font-size: var(--text-sm);
   }
 }
 

@@ -2,37 +2,15 @@ import { ChangeDetectionStrategy, Component, computed, inject, input } from '@an
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
-import { DailyTopPlayer, MetricType, SectionData } from '@core/models';
+import { DailyTopPlayer, MetricColumn, SectionData } from '@core/models';
 import {
   LoadingStatusComponent,
   MetricDisplayComponent,
   NoDataStatusComponent,
 } from '@shared/components';
-import {
-  calculateGainPercentage,
-  getMetricGainOrLossTooltip,
-  getMetricLabel,
-  getMetricPercentageOfTotalEXP,
-  getMetricTooltip,
-} from '@shared/functions';
+import { buildMetrics } from '@shared/functions';
 
 import { CarouselModule } from 'primeng/carousel';
-
-interface PlayerMetricColumn {
-  metric: MetricType;
-  gainValue: number | null;
-  abbreviate: boolean;
-  currentValue: string;
-  currentValueTooltip?: string;
-  valueTooltip?: string;
-  percentagePointsTotal?: number;
-}
-
-interface PlayerRow {
-  name: string;
-  vocation: string;
-  columns: PlayerMetricColumn[];
-}
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -50,7 +28,6 @@ interface PlayerRow {
 })
 export class DailyTopGainersComponent {
   private readonly router = inject(Router);
-  public readonly getMetricLabel = getMetricLabel;
 
   // Inputs
   loading = input.required<boolean>();
@@ -60,79 +37,55 @@ export class DailyTopGainersComponent {
   skillsSection = input<SectionData[]>([]);
 
   // Computed: Experience gain rows
-  readonly experiencePlayerRows = computed<PlayerRow[]>(() =>
-    this.experiencePlayers().map((player) => this.buildExperiencePlayerRow(player)),
-  );
+  readonly experiencePlayerRows = computed<
+    { name: string; vocation: string; columns: MetricColumn[] }[]
+  >(() => this.experiencePlayers().map((player) => this.buildExperiencePlayerRow(player)));
 
   // Computed: Experience loss row
-  readonly experienceLossPlayerRow = computed<PlayerRow | null>(() => {
+  readonly experienceLossPlayerRow = computed<{
+    name: string;
+    vocation: string;
+    columns: MetricColumn[];
+  } | null>(() => {
     const player = this.experienceLossPlayer();
     return player ? this.buildExperiencePlayerRow(player) : null;
   });
 
   // Computed: Skill section rows
-  readonly skillPlayerRows = computed<Record<string, PlayerRow[]>>(() => {
+  readonly skillPlayerRows = computed<
+    Record<string, { name: string; vocation: string; columns: MetricColumn[] }[]>
+  >(() => {
     const sections = this.skillsSection();
-    const result: Record<string, PlayerRow[]> = {};
+    const result: Record<string, { name: string; vocation: string; columns: MetricColumn[] }[]> =
+      {};
     for (const section of sections) {
       result[section.name] = section.players.map((player) => this.buildSkillPlayerRow(player));
     }
     return result;
   });
 
-  private buildExperiencePlayerRow(player: DailyTopPlayer): PlayerRow {
-    const percentage = calculateGainPercentage(player.gain_points, player.points);
-    const percentageSuffix = percentage ? ` ${percentage}` : '';
-    const columns: PlayerMetricColumn[] = [
-      {
-        metric: 'experience',
-        gainValue: player.gain_points,
-        abbreviate: true,
-        currentValue: `${percentageSuffix}`,
-        percentagePointsTotal: player.points ?? undefined,
-        currentValueTooltip: getMetricPercentageOfTotalEXP(),
-        valueTooltip: getMetricGainOrLossTooltip('experience', player.gain_points! < 0),
-      },
-      {
-        metric: 'level',
-        gainValue: player.gain_level,
-        abbreviate: false,
-        currentValue: `${player.level}`,
-        currentValueTooltip: getMetricTooltip('level'),
-        valueTooltip: getMetricGainOrLossTooltip('level', player.gain_level < 0),
-      },
-      {
-        metric: 'rank',
-        gainValue: player.gain_rank,
-        abbreviate: false,
-        currentValue: `#${player.rank}`,
-        currentValueTooltip: getMetricTooltip('rank'),
-        valueTooltip: getMetricGainOrLossTooltip('rank', player.gain_rank < 0),
-      },
-    ];
-    return { name: player.name, vocation: player.vocation, columns };
+  private buildExperiencePlayerRow(player: DailyTopPlayer): {
+    name: string;
+    vocation: string;
+    columns: MetricColumn[];
+  } {
+    return {
+      name: player.name,
+      vocation: player.vocation,
+      columns: buildMetrics('level', player),
+    };
   }
 
-  private buildSkillPlayerRow(player: DailyTopPlayer): PlayerRow {
-    const columns: PlayerMetricColumn[] = [
-      {
-        metric: 'skill',
-        gainValue: player.gain_level,
-        abbreviate: false,
-        currentValue: `${player.level}`,
-        currentValueTooltip: getMetricTooltip('skill'),
-        valueTooltip: getMetricGainOrLossTooltip('skill', player.gain_level < 0),
-      },
-      {
-        metric: 'rank',
-        gainValue: player.gain_rank,
-        abbreviate: false,
-        currentValue: `#${player.rank}`,
-        currentValueTooltip: getMetricTooltip('rank'),
-        valueTooltip: getMetricGainOrLossTooltip('rank', player.gain_rank < 0),
-      },
-    ];
-    return { name: player.name, vocation: player.vocation, columns };
+  private buildSkillPlayerRow(player: DailyTopPlayer): {
+    name: string;
+    vocation: string;
+    columns: MetricColumn[];
+  } {
+    return {
+      name: player.name,
+      vocation: player.vocation,
+      columns: buildMetrics('skill', player),
+    };
   }
 
   navigateToPlayer(playerName: string, section: string): void {

@@ -22,11 +22,11 @@
 
 <ng-template #content>
   @if (icon()) {
-    <i [class]="icon()" class="stat-icon" [style.color]="accentColor()"></i>
+    <i [class]="icon()" class="stat-icon" [class.text-muted]="muted()" [style.color]="accentColor()"></i>
   }
-  <span class="text-label">{{ label() }}</span>
-  <span class="text-value">{{ value() }}</span>
+  <span class="text-label" [class.text-muted]="muted()">{{ label() }}</span>
+  <span class="text-value" [class.text-muted]="muted()">{{ value() }}</span>
   @if (sublabel()) {
-    <span class="text-sub" [style.color]="sublabelColor()">{{ sublabel() }}</span>
+    <span class="text-subvalue" [class.text-muted]="muted()" [style.color]="sublabelColor()">{{ sublabel() }}</span>
   }
 </ng-template>
