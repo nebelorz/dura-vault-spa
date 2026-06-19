@@ -1,15 +1,12 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   selector: 'app-inline-loading',
+  templateUrl: './inline-loading.component.html',
   styleUrl: './inline-loading.component.scss',
-  template: `
-    <div class="inline-loading">
-      <i class="pi pi-spin pi-spinner text-subvalue"></i>
-      <span class="text-subvalue">Loading...</span>
-    </div>
-  `,
 })
-export class InlineLoadingComponent {}
+export class InlineLoadingComponent {
+  message = input<string>('Loading...');
+}

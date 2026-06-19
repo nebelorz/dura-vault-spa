@@ -6,9 +6,8 @@
   gap: 0.5rem;
   padding: 0.4rem 0;
 
-  i {
+  i.pi {
     color: colors.$primary;
-    font-size: var(--text-xs);
     opacity: var(--opacity-low);
   }
 }
