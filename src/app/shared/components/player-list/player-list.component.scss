@@ -10,6 +10,8 @@
 .list-section {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  min-height: 0;
 
   &.integrated {
     ::ng-deep app-search-input .search-input-row {
