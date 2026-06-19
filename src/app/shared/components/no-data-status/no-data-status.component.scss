@@ -3,3 +3,7 @@
 .empty-message-container {
   @include statusMessage.status-message-container;
 }
+
+i {
+  opacity: var(--opacity-low);
+}
