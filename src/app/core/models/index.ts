@@ -1,4 +1,5 @@
 export * from './character-profile.model';
+export * from './deaths.model';
 export * from './common.model';
 export * from './highscore.model';
 export * from './metadata.model';
