@@ -1,8 +1,8 @@
-/**
- * Metric definitions: icons, CSS classes, and labels.
- */
-export const METRIC_DEFINITIONS = {
-  // Level gains (experience sections)
+import { MetricDefinition } from '../models/metric.model';
+
+// Highscore
+
+const HIGHSCORE_METRICS = {
   level: {
     gain: 'pi pi-angle-double-up',
     loss: 'pi pi-angle-double-down',
@@ -11,7 +11,6 @@ export const METRIC_DEFINITIONS = {
     label: 'Level',
     shortLabel: 'LVL',
   },
-  // Experience points
   experience: {
     gain: 'pi pi-angle-double-up',
     loss: 'pi pi-angle-double-down',
@@ -20,7 +19,6 @@ export const METRIC_DEFINITIONS = {
     label: 'Experience',
     shortLabel: 'EXP',
   },
-  // Rank position
   rank: {
     gain: 'pi pi-crown',
     loss: 'pi pi-crown',
@@ -29,7 +27,6 @@ export const METRIC_DEFINITIONS = {
     label: 'Rank',
     shortLabel: 'RNK',
   },
-  // Skill level
   skill: {
     gain: 'pi pi-angle-double-up',
     loss: 'pi pi-angle-double-down',
@@ -38,7 +35,11 @@ export const METRIC_DEFINITIONS = {
     label: 'Skill',
     shortLabel: 'SKL',
   },
-  // Online time
+} satisfies Record<string, MetricDefinition>;
+
+// Online
+
+const ONLINE_METRICS = {
   online_time: {
     gain: 'pi pi-clock',
     loss: 'pi pi-clock',
@@ -47,7 +48,6 @@ export const METRIC_DEFINITIONS = {
     label: 'Time Online',
     shortLabel: 'TIME',
   },
-  // Online average per day
   online_avg: {
     gain: 'pi pi-clock',
     loss: 'pi pi-clock',
@@ -56,7 +56,6 @@ export const METRIC_DEFINITIONS = {
     label: 'AVG / Day',
     shortLabel: 'AVG',
   },
-  // Days active
   online_days: {
     gain: 'pi pi-calendar',
     loss: 'pi pi-calendar',
@@ -65,4 +64,33 @@ export const METRIC_DEFINITIONS = {
     label: 'Days Active',
     shortLabel: 'DAYS',
   },
+} satisfies Record<string, MetricDefinition>;
+
+// Deaths (text-only info columns)
+
+const DEATH_METRICS = {
+  killer_name: {
+    gain: 'pi pi-shield',
+    loss: 'pi pi-shield',
+    cssClassGain: '',
+    cssClassLoss: 'metric--danger',
+    label: 'Killer',
+    shortLabel: 'KILLER',
+  },
+  death_time: {
+    gain: 'pi pi-calendar-clock',
+    loss: 'pi pi-calendar-clock',
+    cssClassGain: '',
+    cssClassLoss: '',
+    label: 'Died At',
+    shortLabel: 'TIME',
+  },
+} satisfies Record<string, MetricDefinition>;
+
+// Combined Export
+
+export const METRIC_DEFINITIONS = {
+  ...HIGHSCORE_METRICS,
+  ...ONLINE_METRICS,
+  ...DEATH_METRICS,
 } as const;
