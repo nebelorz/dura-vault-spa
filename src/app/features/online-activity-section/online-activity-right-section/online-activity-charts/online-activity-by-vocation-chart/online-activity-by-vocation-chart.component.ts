@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 import { OnlineTopRecord } from '@core/models';
 import { CHART_FONT, CHART_GRID_COLOR, VOCATION_GROUPS } from '@core/constants';
 import { createChartColors } from '@shared/functions';
+import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
 import { ChartModule } from 'primeng/chart';
 import type { TooltipItem } from 'chart.js';
 
@@ -17,10 +18,11 @@ interface VocationStat {
   selector: 'app-online-activity-by-vocation-chart',
   templateUrl: './online-activity-by-vocation-chart.component.html',
   styleUrl: './online-activity-by-vocation-chart.component.scss',
-  imports: [ChartModule],
+  imports: [ChartModule, LoadingStatusComponent, NoDataStatusComponent],
 })
 export class OnlineActivityByVocationChartComponent {
   data = input.required<OnlineTopRecord[]>();
+  loading = input.required<boolean>();
 
   private readonly colors = createChartColors({
     primaryColor: { cssVar: '--color-primary', fallback: '#22c55e' },
@@ -64,6 +66,7 @@ export class OnlineActivityByVocationChartComponent {
           borderColor: colors.slice(0, stats.length),
           borderWidth: 1,
           borderRadius: 4,
+          maxBarThickness: 24,
         },
       ],
     };

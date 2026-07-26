@@ -1,4 +1,4 @@
-export type ScrapeDateTable = 'highscore_top' | 'online_top';
+export type ScrapeDateTable = 'highscore_top' | 'online_top' | 'deaths';
 
 export interface ScrapeDateRange {
   min_scrape_date: string | null;

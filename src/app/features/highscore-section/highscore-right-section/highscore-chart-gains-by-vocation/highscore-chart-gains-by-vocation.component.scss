@@ -1,17 +1,9 @@
-﻿.chart-panel {
+﻿@use 'charts' as charts;
+
+:host {
   display: flex;
   flex-direction: column;
-  padding-top: 0.25rem;
-
-  .chart-placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 150px;
-  }
-
-  .chart-wrapper {
-    position: relative;
-    width: 100%;
-  }
+  height: 100%;
 }
+
+@include charts.chart-layout();

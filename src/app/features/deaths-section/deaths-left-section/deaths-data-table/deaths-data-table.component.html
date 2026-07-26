@@ -1,0 +1,24 @@
+@if (loading()) {
+  <app-loading-status />
+} @else if (data().length === 0) {
+  <app-no-data-status message="No deaths recorded for this period" />
+} @else {
+  <div class="pvp-filter-group">
+    <p-selectbutton
+      [options]="pvpFilterOptions"
+      [ngModel]="pvpFilter()"
+      (onChange)="onPvpFilterChange($event.value)"
+      [allowEmpty]="true"
+    />
+  </div>
+  <app-player-list
+    [items]="displayItems()"
+    [displayPodium]="false"
+    [displayFilter]="true"
+    filterPlaceholder="Filter by player name"
+    emptyMessage="No deaths found"
+    (itemClick)="onItemClick($event)"
+    (itemRightClick)="onItemRightClick($event)"
+  />
+  <p-contextmenu #cm [model]="contextMenuItems" />
+}

@@ -1,10 +1,14 @@
-@if (timelineChartData(); as data) {
-  <section class="chart-section animation-fade">
-    <div class="sub-section-header">
-      <span class="sub-section-label">Activity by Period</span>
-    </div>
-    <div class="chart-container">
+<section class="chart-section animation-fade">
+  <div class="sub-section-header">
+    <span class="sub-section-label">Activity by Period</span>
+  </div>
+  <div class="chart-container">
+    @if (loading()) {
+      <app-loading-status />
+    } @else if (timelineChartData(); as data) {
       <p-chart type="line" [data]="data" [options]="timelineChartOptions()" />
-    </div>
-  </section>
-}
+    } @else {
+      <app-no-data-status />
+    }
+  </div>
+</section>

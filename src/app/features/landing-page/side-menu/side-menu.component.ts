@@ -2,7 +2,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
-import { toMenuItems, toCustomMenuItems, toOnlineMenuItems } from '@core/constants';
+import {
+  toMenuItems,
+  toCustomMenuItems,
+  toOnlineMenuItems,
+  toDeathsMenuItems,
+} from '@core/constants';
 import { getDuraHomeUrl } from '@shared/functions';
 
 @Component({
@@ -13,7 +18,7 @@ import { getDuraHomeUrl } from '@shared/functions';
   imports: [MenuModule],
 })
 export class SideMenuComponent {
-  readonly serverStatsItems: MenuItem[] = toOnlineMenuItems();
+  readonly serverStatsItems: MenuItem[] = [...toOnlineMenuItems(), ...toDeathsMenuItems()];
 
   readonly highscoresItems: MenuItem[] = [...toMenuItems(), ...toCustomMenuItems()];
 

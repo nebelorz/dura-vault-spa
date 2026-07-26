@@ -1,70 +1,73 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
-import { OnlineTimelineRecord, TimePeriod } from '@core/models';
+import { DeathRecord, TimePeriod } from '@core/models';
 import { CHART_FONT, CHART_GRID_COLOR } from '@core/constants';
 import { createChartColors, formatDate } from '@shared/functions';
-import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
+import { NoDataStatusComponent } from '@shared/components';
 import { ChartModule } from 'primeng/chart';
 import type { TooltipItem } from 'chart.js';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-online-activity-by-period-chart',
-  templateUrl: './online-activity-by-period-chart.component.html',
-  styleUrl: './online-activity-by-period-chart.component.scss',
-  imports: [ChartModule, LoadingStatusComponent, NoDataStatusComponent],
+  selector: 'app-deaths-by-period-chart',
+  templateUrl: './deaths-by-period-chart.component.html',
+  styleUrl: './deaths-by-period-chart.component.scss',
+  imports: [ChartModule, NoDataStatusComponent],
 })
-export class OnlineActivityByPeriodChartComponent {
-  timeline = input.required<OnlineTimelineRecord[]>();
+export class DeathsByPeriodChartComponent {
+  data = input.required<DeathRecord[]>();
   period = input.required<TimePeriod>();
-  activeComparisonDate = input<string | null>(null);
-  loading = input.required<boolean>();
 
   private readonly colors = createChartColors({
-    primaryColor: { cssVar: '--color-primary', fallback: '#22c55e' },
+    primaryColor: { cssVar: '--color-error', fallback: '#ef4444' },
   });
 
   constructor() {
     this.colors.setup();
   }
 
-  readonly timelineChartData = computed(() => {
+  readonly deathsByPeriodData = computed(() => {
     const period = this.period();
 
     if (period === 'day') return null;
 
-    const cutoff = this.activeComparisonDate();
-    const entries = cutoff
-      ? this.timeline().filter((e) => e.activity_date <= cutoff)
-      : this.timeline().slice(0, -1);
-    if (!entries.length) return null;
+    const records = this.data();
+    if (!records.length) return null;
 
     let labels: string[];
-    let hours: number[];
+    let counts: number[];
 
     if (period === 'week' || period === 'month') {
-      labels = entries.map((e) => formatDate(e.activity_date));
-      hours = entries.map((e) => +(e.total_minutes / 60).toFixed(1));
+      const map = new Map<string, number>();
+      for (const r of records) {
+        const key = r.died_at.substring(0, 10);
+        map.set(key, (map.get(key) ?? 0) + 1);
+      }
+      const sorted = [...map.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+      labels = sorted.map(([k]) => formatDate(k));
+      counts = sorted.map(([, c]) => c);
     } else {
       const map = new Map<string, number>();
-      for (const e of entries) {
-        const key = e.activity_date.substring(0, 7);
-        map.set(key, (map.get(key) ?? 0) + e.total_minutes);
+      for (const r of records) {
+        const key = r.died_at.substring(0, 7);
+        map.set(key, (map.get(key) ?? 0) + 1);
       }
-      const agg = [...map.entries()].sort((a, b) => a[0].localeCompare(b[0]));
-      labels = agg.map(([k]) => {
+      const sorted = [...map.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+      labels = sorted.map(([k]) => {
         const [y, m] = k.split('-');
         return new Date(+y, +m - 1).toLocaleString('en', { month: 'short', year: '2-digit' });
       });
-      hours = agg.map(([, mins]) => +(mins / 60).toFixed(1));
+      counts = sorted.map(([, c]) => c);
     }
+
+    if (!labels.length) return null;
 
     return {
       labels,
       datasets: [
         {
-          label: 'Player Hours',
-          data: hours,
+          label: 'Deaths',
+          data: counts,
           fill: true,
           tension: 0.3,
           pointRadius: 3,
@@ -77,7 +80,7 @@ export class OnlineActivityByPeriodChartComponent {
     };
   });
 
-  readonly timelineChartOptions = computed(() => ({
+  readonly deathsByPeriodOptions = computed(() => ({
     maintainAspectRatio: false,
     responsive: true,
     plugins: {
@@ -89,7 +92,7 @@ export class OnlineActivityByPeriodChartComponent {
         titleFont: { family: CHART_FONT },
         bodyFont: { family: CHART_FONT },
         callbacks: {
-          label: (ctx: TooltipItem<'line'>) => ` ${ctx.parsed.y}h`,
+          label: (ctx: TooltipItem<'line'>) => ` ${ctx.parsed.y} deaths`,
         },
       },
     },
@@ -104,7 +107,7 @@ export class OnlineActivityByPeriodChartComponent {
       y: {
         ticks: {
           font: { size: 10, family: CHART_FONT },
-          callback: (v: string | number) => `${v}h`,
+          precision: 0,
         },
         grid: { color: CHART_GRID_COLOR },
       },

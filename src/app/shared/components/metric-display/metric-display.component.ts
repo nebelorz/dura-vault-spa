@@ -3,7 +3,7 @@ import { NgClass } from '@angular/common';
 import { TooltipModule } from 'primeng/tooltip';
 
 import { METRIC_DEFINITIONS } from '@core/constants';
-import { MetricType } from '@core/models';
+import { MetricDefinition, MetricType } from '@core/models';
 import { formatNumber } from '@shared/functions';
 
 @Component({
@@ -60,7 +60,7 @@ export class MetricDisplayComponent {
     }
   });
 
-  protected readonly metricDef = computed(() => METRIC_DEFINITIONS[this.metric()]);
+  protected readonly metricDef = computed((): MetricDefinition => METRIC_DEFINITIONS[this.metric()]);
 
   protected readonly iconClass = computed(() =>
     this.isLoss() ? this.metricDef().loss : this.metricDef().gain,
