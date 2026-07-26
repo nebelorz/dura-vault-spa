@@ -5,7 +5,7 @@ import { MenuItem } from 'primeng/api';
 
 import { ModeButtonComponent } from './mode-button/mode-button.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
-import { toMenuItems, toCustomMenuItems } from '@core/constants';
+import { toMenuItems, toCustomMenuItems, toDeathsMenuItems } from '@core/constants';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,5 +30,6 @@ export class NavBarComponent {
       icon: 'pi pi-wave-pulse',
       routerLink: ['/online'],
     },
+    ...toDeathsMenuItems(),
   ];
 }
