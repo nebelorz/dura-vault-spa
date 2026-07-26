@@ -33,11 +33,12 @@
   }
 
   <div class="charts-grid">
-    <app-online-activity-by-vocation-chart [data]="data()" />
-    <app-online-activity-by-level-chart [data]="data()" />
+    <app-online-activity-by-vocation-chart [data]="data()" [loading]="loading()" />
+    <app-online-activity-by-level-chart [data]="data()" [loading]="loading()" />
     <app-online-activity-by-period-chart
       [timeline]="timeline()"
       [period]="period()"
+      [loading]="loading()"
       [activeComparisonDate]="activeComparisonDate()"
     />
   </div>

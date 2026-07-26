@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 import { OnlineTopRecord } from '@core/models';
 import { CHART_FONT, CHART_GRID_COLOR } from '@core/constants';
 import { createChartColors } from '@shared/functions';
+import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
 import { ChartModule } from 'primeng/chart';
 import type { TooltipItem } from 'chart.js';
 
@@ -28,10 +29,11 @@ interface LevelStat {
   selector: 'app-online-activity-by-level-chart',
   templateUrl: './online-activity-by-level-chart.component.html',
   styleUrl: './online-activity-by-level-chart.component.scss',
-  imports: [ChartModule],
+  imports: [ChartModule, LoadingStatusComponent, NoDataStatusComponent],
 })
 export class OnlineActivityByLevelChartComponent {
   data = input.required<OnlineTopRecord[]>();
+  loading = input.required<boolean>();
 
   private readonly colors = createChartColors({
     primaryColor: { cssVar: '--color-primary', fallback: '#22c55e' },
@@ -65,6 +67,7 @@ export class OnlineActivityByLevelChartComponent {
           borderColor: this.colors.primaryColor(),
           borderWidth: 1,
           borderRadius: 4,
+          maxBarThickness: 24,
         },
       ],
     };

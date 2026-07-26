@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, input } from '@an
 
 import { PlayerDetailsDailyRecord, PlayerHistoricResponse, HighscoreSection } from '@core/models';
 import { ThemeService } from '@core/services';
-import { getSectionLabel } from '@core/constants';
+import { getSectionLabel, CHART_FONT } from '@core/constants';
 import { formatDate, formatNumber } from '@shared/functions';
 import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
 
@@ -40,8 +40,6 @@ interface YAxisOptions {
 
 type YAxisConfig = Record<string, unknown>;
 
-const CHART_FONT = 'Montserrat, Arial, sans-serif';
-
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-player-detail-chart',
@@ -55,6 +53,12 @@ export class PlayerDetailChartComponent {
   playerDetailsData = input.required<PlayerHistoricResponse | null>();
   loading = input.required<boolean>();
   section = input<HighscoreSection>('experience');
+
+  readonly sectionLabel = computed(() => {
+    const section = this.section();
+    if (section === 'experience') return 'Level & Experience'; // intentional: combines Level + Experience on one chart
+    return getSectionLabel(section);
+  });
 
   private readonly levelLabel = computed(() =>
     this.section() === 'experience' ? 'Level' : getSectionLabel(this.section()),

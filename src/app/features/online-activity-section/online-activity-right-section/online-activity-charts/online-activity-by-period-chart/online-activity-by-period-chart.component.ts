@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 import { OnlineTimelineRecord, TimePeriod } from '@core/models';
 import { CHART_FONT, CHART_GRID_COLOR } from '@core/constants';
 import { createChartColors, formatDate } from '@shared/functions';
+import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
 import { ChartModule } from 'primeng/chart';
 import type { TooltipItem } from 'chart.js';
 
@@ -11,12 +12,13 @@ import type { TooltipItem } from 'chart.js';
   selector: 'app-online-activity-by-period-chart',
   templateUrl: './online-activity-by-period-chart.component.html',
   styleUrl: './online-activity-by-period-chart.component.scss',
-  imports: [ChartModule],
+  imports: [ChartModule, LoadingStatusComponent, NoDataStatusComponent],
 })
 export class OnlineActivityByPeriodChartComponent {
   timeline = input.required<OnlineTimelineRecord[]>();
   period = input.required<TimePeriod>();
   activeComparisonDate = input<string | null>(null);
+  loading = input.required<boolean>();
 
   private readonly colors = createChartColors({
     primaryColor: { cssVar: '--color-primary', fallback: '#22c55e' },

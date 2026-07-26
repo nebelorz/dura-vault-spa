@@ -1,9 +1,14 @@
-<div class="chart-wrapper">
-  @if (loading()) {
-    <app-loading-status />
-  } @else if (chartData(); as data) {
-    <p-chart class="animation-fade" type="line" [data]="data" [options]="chartOptions()" />
-  } @else {
-    <app-no-data-status />
-  }
-</div>
+<section class="chart-section animation-fade">
+  <div class="sub-section-header">
+    <span class="sub-section-label">{{ sectionLabel() }}</span>
+  </div>
+  <div class="chart-container">
+    @if (loading()) {
+      <app-loading-status />
+    } @else if (chartData(); as data) {
+      <p-chart type="line" [data]="data" [options]="chartOptions()" />
+    } @else {
+      <app-no-data-status />
+    }
+  </div>
+</section>
