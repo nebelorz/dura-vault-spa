@@ -1,6 +1,6 @@
 @use 'primeicons/primeicons.css';
 
-// ─── Tokens ───
+// Tokens
 @use 'colors' as colors;
 @use 'typography';
 @use 'typography-utilities';
@@ -8,23 +8,21 @@
 @use 'colors-utilities';
 @use 'layout-tokens';
 
-// ─── Base ───
+// Base
 @use 'fonts';
 
-// ─── Layout utilities ───
+// Layout utilities
 @use 'containers';
-@use 'charts';
 @use 'records';
-@use 'status-message' as statusMessage;
 
-// ─── Overrides ───
+// Overrides
 @use 'overrides';
 
-// ─── Animations ───
+// Animations
 @use 'animations/fade' as animationFade;
 @use 'animations/blur-fade-in' as blurFadeIn;
 
-// ─── Global animation classes ───
+// Global animation classes
 .animation-fade {
   @include animationFade.fadeAnimation();
 }

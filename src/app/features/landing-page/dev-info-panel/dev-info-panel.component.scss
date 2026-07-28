@@ -1,6 +1,6 @@
-﻿@use 'colors' as colors;
+@use 'colors' as colors;
 
-// ─── Layout ──────────────────────────────────────────────────────────────────
+// Layout
 .changelog {
   width: 100%;
   display: flex;
@@ -8,14 +8,14 @@
   gap: 0.65rem;
 }
 
-// ─── Entry row ───────────────────────────────────────────────────────────────
+// Entry row
 .changelog-entry {
   display: flex;
   gap: 0.75rem;
   align-items: flex-start;
 }
 
-// ─── Card ────────────────────────────────────────────────────────────────────
+// Card
 .changelog-card {
   flex: 1;
   min-width: 0;
@@ -25,7 +25,7 @@
   background: colors.$secondary;
 }
 
-// ─── Header ──────────────────────────────────────────────────────────────────
+// Header
 .changelog-header {
   display: flex;
   justify-content: space-between;
@@ -52,7 +52,7 @@
   min-width: 0;
 }
 
-// ─── Entry type icon ─────────────────────────────────────────────────────────
+// Entry type icon
 .entry-type-icon {
   font-size: var(--text-sm);
   display: inline-flex;
@@ -62,7 +62,7 @@
   line-height: 1;
 }
 
-// ─── Title ───────────────────────────────────────────────────────────────────
+// Title
 .entry-title {
   font-size: var(--text-md);
   font-family: ui-monospace, monospace;
@@ -100,7 +100,7 @@
   transform: rotate(180deg);
 }
 
-// ─── Tags ────────────────────────────────────────────────────────────────────
+// Tags
 .entry-tags {
   display: flex;
   gap: 0.3rem;
@@ -160,7 +160,7 @@
   }
 }
 
-// ─── Body (collapsible) ──────────────────────────────────────────────────────
+// Body (collapsible)
 .changelog-body {
   max-height: 0;
   overflow: hidden;
@@ -169,7 +169,7 @@
     padding 0.3s ease;
   padding: 0 1rem;
 
-  // ─── Markdown content ────────────────────────────────────────────────────────
+  // Markdown content
   h2 {
     font-size: var(--text-lg);
     font-weight: bold;
@@ -219,10 +219,6 @@
     }
   }
 
-  strong {
-    font-weight: bold;
-  }
-
   code {
     font-size: var(--text-standard);
     font-family: ui-monospace, monospace;
@@ -255,7 +251,7 @@
 
   img {
     width: 100%;
-    border-radius: var-(--radius-default);
+    border-radius: var(--radius-default);
     margin: 0.5rem 0;
     display: block;
   }

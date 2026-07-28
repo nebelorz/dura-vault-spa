@@ -1,4 +1,4 @@
-// ─── TEXT UTILITY CLASSES ────────────
+// TEXT UTILITY CLASSES
 .section-header {
   display: flex;
   justify-content: space-between;
@@ -91,4 +91,11 @@
 
 .text-muted {
   opacity: var(--opacity-low);
+}
+
+.text-additional-info {
+  color: var(--color-secondary-light);
+  font-size: var(--text-sm);
+  margin-left: 0.25em;
+  opacity: var(--opacity-high);
 }

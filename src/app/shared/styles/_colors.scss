@@ -1,4 +1,4 @@
-// ─── CSS CUSTOM PROPERTIES ────────────
+// CSS CUSTOM PROPERTIES
 // These are the authoritative color definitions for the entire app.
 // All SCSS $variables below are wrappers that compile to these CSS vars.
 //
@@ -8,17 +8,18 @@
 //   TS SVG attributes:  'var(--color-level)' as string literal (browser resolves)
 
 :root {
-  // ─── Domain base colors ─────────────────────────────────────────
+  // Domain base colors
   --color-rank: #ffbc40;
   --color-skill: #43d4d4;
   --color-online: #17a2b8;
   --color-warn: #ffc107;
+  --color-error: #ef4444;
   --color-silver: #c0c0c0;
   --color-bronze: #cd7f32;
   --color-section: #c4621a;
   --color-secondary-light: #777777;
 
-  // ─── PrimeNG-mapped colors ──────────────────────────────────────
+  // PrimeNG-mapped colors
   --color-primary: var(--p-primary-color);
   --color-level: var(--p-primary-color);
   --color-secondary: var(--p-button-secondary-background);
@@ -27,7 +28,7 @@
   --color-danger: var(--p-button-danger-background);
   --color-success: var(--p-button-success-background);
 
-  // ─── Opacity variants — derived, never hardcoded ─────────────────
+  // Opacity variants — derived, never hardcoded
   --color-primary-a10: color-mix(in srgb, var(--color-primary), transparent 90%);
   --color-primary-a20: color-mix(in srgb, var(--color-primary), transparent 80%);
   --color-level-a10: color-mix(in srgb, var(--color-level), transparent 90%);
@@ -51,7 +52,7 @@
   --color-info-a10: color-mix(in srgb, var(--color-info), transparent 90%);
   --color-info-a20: color-mix(in srgb, var(--color-info), transparent 80%);
 
-  // ─── Metal & section opacity variants ───────────────────────────
+  // Metal & section opacity variants
   --color-silver-a10: color-mix(in srgb, var(--color-silver), transparent 90%);
   --color-silver-a20: color-mix(in srgb, var(--color-silver), transparent 80%);
   --color-bronze-a10: color-mix(in srgb, var(--color-bronze), transparent 90%);
@@ -59,18 +60,18 @@
   --color-section-a10: color-mix(in srgb, var(--color-section), transparent 90%);
   --color-section-a20: color-mix(in srgb, var(--color-section), transparent 80%);
 
-  // ─── Chart-internal ─────────────────────────────────────────────
+  // Chart-internal
   --color-chart-grid: rgba(128, 128, 128, 0.2);
 
-  // ─── Interaction states ──────────────────────────────────────────
+  // Interaction states
   --color-secondary-hover: var(--p-button-secondary-hover-background);
 
-  // ─── Surface overlays ───
+  // Surface overlays
   --color-surface-overlay: rgba(255, 255, 255, 0.06);
   --color-surface-overlay-border: rgba(255, 255, 255, 0.08);
 }
 
-// ─── SCSS VARIABLES ────────────
+// SCSS VARIABLES
 
 // Base
 $primary: var(--color-primary);
@@ -85,6 +86,7 @@ $bronze: var(--color-bronze);
 $section: var(--color-section);
 $secondary-light: var(--color-secondary-light);
 $warn: var(--color-warn);
+$error: var(--color-error);
 $danger: var(--color-danger);
 $info: var(--color-info);
 $success: var(--color-success);

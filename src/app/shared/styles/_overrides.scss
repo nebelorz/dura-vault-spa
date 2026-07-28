@@ -1,17 +1,6 @@
 @use 'colors' as colors;
 
-// ─── INPUTS ────────────
-.clean-input-field {
-  border: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
-
-  &:enabled:focus {
-    border: 1px solid colors.$primary !important;
-  }
-}
-
-// ─── BADGES ────────────
+// BADGES
 .p-badge.badge-new {
   font-size: var(--text-xs);
   font-weight: bold;
@@ -27,7 +16,7 @@
   border: 1px solid colors.$primary-a20;
 }
 
-// ─── TOOLTIPS ────────────
+// TOOLTIPS
 .p-tooltip .p-tooltip-text {
   font-size: var(--text-sm);
 }

@@ -1,6 +1,6 @@
 @use 'colors' as colors;
 
-// ─── CONTAINERS ────────────
+// CONTAINERS
 .default-container {
   border: 2px solid colors.$secondary;
   border-radius: var(--radius-container);

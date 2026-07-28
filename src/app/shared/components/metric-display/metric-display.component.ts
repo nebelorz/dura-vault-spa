@@ -60,7 +60,9 @@ export class MetricDisplayComponent {
     }
   });
 
-  protected readonly metricDef = computed((): MetricDefinition => METRIC_DEFINITIONS[this.metric()]);
+  protected readonly metricDef = computed(
+    (): MetricDefinition => METRIC_DEFINITIONS[this.metric()],
+  );
 
   protected readonly iconClass = computed(() =>
     this.isLoss() ? this.metricDef().loss : this.metricDef().gain,

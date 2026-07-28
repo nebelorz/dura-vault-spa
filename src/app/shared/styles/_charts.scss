@@ -1,4 +1,4 @@
-// ─── Chart Section Mixin ───
+// Chart Section Mixin
 // Shared layout for chart sub-components.
 // Usage: @use 'charts' as charts; @include charts.chart-layout();
 // After inclusion, each component adds its own :host declaration.

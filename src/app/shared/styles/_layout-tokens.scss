@@ -1,4 +1,4 @@
-// ─── LAYOUT & SPACING ────────────
+// LAYOUT & SPACING
 :root {
   --radius-container: 8px;
   --radius-default: 6px;
@@ -6,7 +6,7 @@
   --chart-min-height: 21.875rem;
 }
 
-// ─── SCSS variable wrappers ───
+// SCSS variable wrappers
 $radius-container: var(--radius-container);
 $radius-default: var(--radius-default);
 $nav-height: var(--nav-height);

@@ -1,6 +1,6 @@
 @use 'colors' as colors;
 
-// ─── STATUS MESSAGE MIXIN ────────────
+// STATUS MESSAGE MIXIN
 @mixin status-message-container {
   display: flex;
   flex-direction: column;
