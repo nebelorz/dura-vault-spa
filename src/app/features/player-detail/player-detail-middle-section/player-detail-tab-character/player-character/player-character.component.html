@@ -2,16 +2,16 @@
   <app-loading-status />
 } @else if (profileData(); as data) {
   <div class="character-info-section animation-fade">
-    <span class="text-body">INFORMATION</span>
+    <span class="sub-section-label">INFORMATION</span>
     <div class="records-list">
       @if (data.characterInformation.name) {
         <div class="record-row">
-          <span class="record-label text-label">Name</span>
+          <span class="record-label text-subvalue">NAME</span>
           <a
-            [href]="getDuraPlayerUrl(data.characterInformation.name)"
+            [href]="playerUrl(data.characterInformation.name)"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-value external-link"
+            class="text-standard external-link"
           >
             {{ data.characterInformation.name }}
             <app-minimalist-icon icon="pi-external-link" [size]="iconSizeExternalLink" />
@@ -20,7 +20,7 @@
       }
       @if (data.characterInformation.formerNames.length > 0) {
         <div class="record-row">
-          <span class="record-label text-label">Former</span>
+          <span class="record-label text-subvalue">FORMER</span>
           <span class="text-subvalue text-muted">{{
             data.characterInformation.formerNames.join(', ')
           }}</span>
@@ -28,50 +28,50 @@
       }
       @if (data.characterInformation.sex) {
         <div class="record-row">
-          <span class="record-label text-label">Sex</span>
-          <span class="text-value">{{ data.characterInformation.sex }}</span>
+          <span class="record-label text-subvalue">SEX</span>
+          <span class="text-standard">{{ data.characterInformation.sex }}</span>
         </div>
       }
       @if (data.characterInformation.profession) {
         <div class="record-row">
-          <span class="record-label text-label">Vocation</span>
-          <span class="text-value">{{ data.characterInformation.profession }}</span>
+          <span class="record-label text-subvalue">VOCATION</span>
+          <span class="text-standard">{{ data.characterInformation.profession }}</span>
         </div>
       }
       @if (data.characterInformation.level !== null) {
         <div class="record-row">
-          <span class="record-label text-label">Level</span>
-          <span class="text-value metric--level">{{ data.characterInformation.level }}</span>
+          <span class="record-label text-subvalue">LEVEL</span>
+          <span class="text-standard metric--level">{{ data.characterInformation.level }}</span>
         </div>
       }
       @if (data.characterInformation.residence) {
         <div class="record-row">
-          <span class="record-label text-label">Residence</span>
-          <span class="text-value">{{ data.characterInformation.residence }}</span>
+          <span class="record-label text-subvalue">RESIDENCE</span>
+          <span class="text-standard">{{ data.characterInformation.residence }}</span>
         </div>
       }
       @if (data.characterInformation.guild) {
         <div class="record-row">
-          <span class="record-label text-label">Guild</span>
+          <span class="record-label text-subvalue">GUILD</span>
           <a
-            [href]="getDuraGuildUrl(data.characterInformation.guild.name)"
+            [href]="guildUrl(data.characterInformation.guild.name)"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-value external-link"
+            class="text-standard external-link"
           >
             {{ data.characterInformation.guild.name }}
             <app-minimalist-icon icon="pi-external-link" [size]="iconSizeExternalLink" />
           </a>
         </div>
         <div class="record-row">
-          <span class="record-label text-label">Guild Rank</span>
-          <span class="text-value">{{ data.characterInformation.guild.rank }}</span>
+          <span class="record-label text-subvalue">GUILD RANK</span>
+          <span class="text-standard">{{ data.characterInformation.guild.rank }}</span>
         </div>
       }
       @if (data.characterInformation.created) {
         <div class="record-row">
-          <span class="record-label text-label">Created</span>
-          <span class="text-value">{{
+          <span class="record-label text-subvalue">CREATED</span>
+          <span class="text-standard">{{
             data.characterInformation.created | date: 'dd MMM yyyy'
           }}</span>
         </div>
@@ -80,25 +80,25 @@
   </div>
 
   <div class="character-houses-section animation-fade">
-    <span class="text-body">HOUSES</span>
+    <span class="sub-section-label">HOUSES</span>
     @if (houses().length > 0) {
       <div class="houses-list">
         @for (house of houses(); track house.name) {
           <div class="house-card">
-            <span class="text-value">{{ house.name }}</span>
+            <span class="text-standard">{{ house.name }}</span>
             <div class="house-meta">
               <span class="meta-pair">
-                <span class="text-label">Rent</span>
+                <span class="text-subvalue">RENT</span>
                 <span class="text-subvalue">{{ house.rent }}</span>
               </span>
               @if (house.beds !== null) {
                 <span class="meta-pair">
-                  <span class="text-label">Beds</span>
+                  <span class="text-subvalue">BEDS</span>
                   <span class="text-subvalue">{{ house.beds }}</span>
                 </span>
               }
               <span class="meta-pair">
-                <span class="text-label">Due</span>
+                <span class="text-subvalue">DUE</span>
                 <span class="text-subvalue">{{ house.dueDate | date: 'dd MMM yyyy' }}</span>
               </span>
             </div>

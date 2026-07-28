@@ -6,7 +6,7 @@
   } @else if (!stats().length) {
     <div class="stat-row">
       <div class="stat-info">
-        <span class="text-additional-info">No data available on the vault</span>
+        <span class="text-muted text-subvalue">No data available on the vault</span>
       </div>
     </div>
   } @else {
@@ -20,9 +20,9 @@
       >
         <app-metric-display metric="level" layout="row" iconSize="md" />
         <div class="stat-info">
-          <div class="text-label">Level</div>
+          <div class="record-label text-subvalue">LEVEL</div>
           <div class="stat-value-row">
-            <span class="stat-value text-value">{{ exp.level }}</span>
+            <span class="stat-value text-standard">{{ exp.level }}</span>
             <span class="stat-rank metric--rank text-caption">#{{ exp.rank }}</span>
           </div>
         </div>
@@ -39,7 +39,7 @@
           }
           <div class="stat-overlay-col">
             <span class="text-overlay-label">Rank</span>
-            <span class="stat-overlay-value text-value metric--rank">#{{ exp.rank }}</span>
+            <span class="stat-overlay-value text-standard metric--rank">#{{ exp.rank }}</span>
           </div>
         </div>
       </div>
@@ -55,9 +55,9 @@
       >
         <app-metric-display metric="skill" layout="row" iconSize="md" />
         <div class="stat-info">
-          <div class="text-label">{{ getSectionLabel(stat.section) }}</div>
+          <div class="record-label text-subvalue">{{ getSectionLabel(stat.section) | uppercase }}</div>
           <div class="stat-value-row">
-            <span class="stat-value text-value">{{ stat.level }}</span>
+            <span class="stat-value text-standard">{{ stat.level }}</span>
             <span class="stat-rank metric--rank text-caption">#{{ stat.rank }}</span>
           </div>
         </div>
@@ -74,7 +74,7 @@
           }
           <div class="stat-overlay-col">
             <span class="text-overlay-label">Rank</span>
-            <span class="stat-overlay-value text-value metric--rank">#{{ stat.rank }}</span>
+            <span class="stat-overlay-value text-standard metric--rank">#{{ stat.rank }}</span>
           </div>
         </div>
       </div>

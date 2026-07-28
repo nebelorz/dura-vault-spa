@@ -1,5 +1,5 @@
 ﻿import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { DatePipe, UpperCasePipe } from '@angular/common';
 
 import { PlayerStatsRecord, HighscoreSection, Section } from '@core/models';
 import { getSectionLabel, HIGHSCORE_SECTIONS } from '@core/constants';
@@ -10,7 +10,7 @@ import { LoadingStatusComponent, MetricDisplayComponent } from '@shared/componen
   selector: 'app-player-stats',
   templateUrl: './player-stats.component.html',
   styleUrl: './player-stats.component.scss',
-  imports: [LoadingStatusComponent, MetricDisplayComponent, DatePipe],
+  imports: [LoadingStatusComponent, MetricDisplayComponent, DatePipe, UpperCasePipe],
 })
 export class PlayerStatsComponent {
   stats = input.required<PlayerStatsRecord[]>();

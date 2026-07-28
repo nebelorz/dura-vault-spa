@@ -1,5 +1,5 @@
 ﻿import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { DatePipe, NgClass } from '@angular/common';
+import { DatePipe, NgClass, UpperCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 import { CharacterDeath, CharacterProfileResult } from '@core/models';
@@ -21,7 +21,7 @@ interface DeathRow extends CharacterDeath {
   selector: 'app-player-deaths',
   templateUrl: './player-deaths.component.html',
   styleUrl: './player-deaths.component.scss',
-  imports: [DatePipe, NgClass, RouterLink, NoDataStatusComponent, LoadingStatusComponent],
+  imports: [DatePipe, NgClass, UpperCasePipe, RouterLink, NoDataStatusComponent, LoadingStatusComponent],
 })
 export class PlayerDeathsComponent {
   profile = input<CharacterProfileResult | null>(null);

@@ -8,12 +8,12 @@
       @if (summary.average_online_time > 0) {
         <div class="online-row">
           <div class="online-icon">
-            <i class="pi pi-wave-pulse text-value"></i>
+            <i class="pi pi-wave-pulse text-standard"></i>
           </div>
           <div class="online-info">
-            <div class="text-label">Avg Online</div>
+            <div class="record-label text-subvalue">AVG ONLINE</div>
             <div class="online-value-row">
-              <span class="online-value text-value">{{
+              <span class="online-value text-standard">{{
                 summary.average_online_time | minutesToHours
               }}</span>
               <span class="text-subvalue">/day</span>
@@ -24,18 +24,18 @@
         @if (summary.avg_first_seen && summary.avg_last_seen) {
           <div class="online-row">
             <div class="online-icon">
-              <i class="pi pi-clock text-value"></i>
+              <i class="pi pi-clock text-standard"></i>
             </div>
             <div class="online-info">
-              <div class="text-label">
-                Online Span
+              <div class="record-label text-subvalue">
+                ONLINE SPAN
                 <app-minimalist-icon
                   [tooltipText]="'Time is shown in your local timezone.'"
                   tooltipPosition="right"
                 />
               </div>
               <div class="online-value-row">
-                <span class="online-value text-value">
+                <span class="online-value text-standard">
                   {{ summary.avg_first_seen | date: 'HH:mm' }} →
                   {{ summary.avg_last_seen | date: 'HH:mm' }}
                 </span>
@@ -49,12 +49,12 @@
     @if (lastLogin()) {
       <div class="online-row">
         <div class="online-icon">
-          <i class="pi pi-eye text-value"></i>
+          <i class="pi pi-eye text-standard"></i>
         </div>
         <div class="online-info">
-          <div class="text-label">Last Login</div>
+          <div class="record-label text-subvalue">LAST LOGIN</div>
           <div class="online-value-row">
-            <span class="online-value text-value">{{
+            <span class="online-value text-standard">{{
               lastLogin() | date: 'dd MMM yyyy, HH:mm'
             }}</span>
           </div>

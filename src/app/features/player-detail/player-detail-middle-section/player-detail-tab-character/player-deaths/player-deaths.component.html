@@ -11,9 +11,9 @@
             'record-row--unjustified': death.isUnjustified,
           }"
         >
-          <span class="death-date text-label">{{ death.date | date: 'dd MMM yyyy, HH:mm' }}</span>
+          <span class="death-date text-subvalue">{{ death.date | date: 'dd MMM yyyy, HH:mm' | uppercase }}</span>
           <span
-            class="death-desc text-value"
+            class="death-desc text-body"
             [ngClass]="{
               'metric--warn': death.hasKiller && !death.isUnjustified,
               'metric--danger': death.isUnjustified,
