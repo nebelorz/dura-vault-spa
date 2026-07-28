@@ -32,3 +32,13 @@ a.stat-card {
   font-size: var(--text-md);
   color: colors.$primary;
 }
+
+.stat-image {
+  width: 13px;
+  height: 13px;
+  object-fit: contain;
+
+  &--muted {
+    opacity: 0.4;
+  }
+}

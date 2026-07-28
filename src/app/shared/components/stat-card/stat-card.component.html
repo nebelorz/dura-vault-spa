@@ -21,8 +21,10 @@
 }
 
 <ng-template #content>
-  @if (icon()) {
-    <i [class]="icon()" class="stat-icon" [class.text-muted]="muted()" [style.color]="accentColor()"></i>
+  @if (hasImage()) {
+    <img [src]="imageSrc()!" class="stat-image" [class.stat-image--muted]="muted()" alt="" />
+  } @else if (hasIcon()) {
+    <i [class]="icon()!" class="stat-icon" [class.text-muted]="muted()" [style.color]="accentColor()"></i>
   }
   <span class="text-label" [class.text-muted]="muted()">{{ label() }}</span>
   <span class="text-value" [class.text-muted]="muted()">{{ value() }}</span>

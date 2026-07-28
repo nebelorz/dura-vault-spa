@@ -20,11 +20,17 @@
 
   <div class="deaths-body">
     <div class="deaths-left">
+      <div class="pvp-filter-group">
+        <p-selectbutton
+          [options]="pvpFilterOptions"
+          [ngModel]="pvpFilter()"
+          (onChange)="onPvpFilterChange($event.value)"
+          [allowEmpty]="true"
+        />
+      </div>
       <app-deaths-data-table
         [data]="data()"
         [loading]="loading()"
-        [pvpFilter]="pvpFilter()"
-        (pvpFilterChange)="onPvpFilterChange($event)"
       />
     </div>
     <div class="deaths-right">

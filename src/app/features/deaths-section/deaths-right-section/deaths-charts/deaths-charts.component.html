@@ -8,20 +8,23 @@
         [value]="s.totalDeaths.toString()"
         label="Total Deaths"
         [sublabel]="s.pvpPveSublabel"
+        accentColor="var(--color-danger)"
       />
       <app-stat-card
-        icon="pi pi-skull"
+        icon="pi pi-user"
         [value]="s.topPvpKiller ? s.topPvpKiller.name : '—'"
         label="PvP Top Killer"
         [tooltip]="s.topPvpKiller ? s.topPvpKiller.count + ' kills' : 'No data'"
         [muted]="!s.topPvpKiller"
+        accentColor="var(--color-danger)"
       />
       <app-stat-card
-        icon="pi pi-spider"
+        icon="pi pi-user"
         [value]="s.topPveKiller ? s.topPveKiller.name : '—'"
         label="PvE Top Killer"
         [tooltip]="s.topPveKiller ? s.topPveKiller.count + ' kills' : 'No data'"
         [muted]="!s.topPveKiller"
+        accentColor="var(--color-warn)"
       />
     </div>
   }

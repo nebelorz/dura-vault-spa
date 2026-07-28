@@ -1,4 +1,5 @@
 @use 'colors' as colors;
+@use '../../../styles/badge-variants' as badge;
 
 :host {
   display: block;
@@ -120,3 +121,12 @@
 .podium-base--danger .podium-rank {
   color: var(--color-danger);
 }
+
+.podium-name-container {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+@include badge.badge-base('podium');

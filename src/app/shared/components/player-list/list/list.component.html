@@ -9,7 +9,12 @@
       <span class="list-rank text-subvalue text-muted">{{ rankOffset() + i + 1 }}</span>
       <div class="list-info">
         <span class="list-name text-value">{{ item.name }}</span>
-        <span class="list-meta text-subvalue">{{ item.meta }}</span>
+        <div class="list-meta-row">
+          <span class="list-meta text-subvalue">{{ item.meta }}</span>
+          @if (item.badge; as badge) {
+            <span class="list-badge" [ngClass]="badge.class">{{ badge.text }}</span>
+          }
+        </div>
       </div>
       <div class="list-metrics">
         @for (col of item.columns; track $index) {

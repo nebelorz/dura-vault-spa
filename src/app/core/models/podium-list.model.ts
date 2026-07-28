@@ -1,5 +1,10 @@
 import { MetricType } from './metric.model';
 
+export interface PodiumListItemBadge {
+  text: string;
+  class: string;
+}
+
 export interface MetricColumn {
   metric: MetricType;
   value?: number;
@@ -30,4 +35,5 @@ export interface PodiumListItem {
   podiumColumns?: MetricColumn[];
   rowClass?: string;
   podiumClass?: string;
+  badge?: PodiumListItemBadge;
 }

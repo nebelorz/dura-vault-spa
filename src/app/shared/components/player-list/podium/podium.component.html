@@ -8,7 +8,12 @@
         (contextmenu)="itemRightClick.emit({ event: $event, item: second }); $event.preventDefault()"
       >
         <div class="podium-card">
-          <div class="podium-name text-value">{{ second.name }}</div>
+          <div class="podium-name-container">
+            <div class="podium-name text-value">{{ second.name }}</div>
+            @if (second.badge; as badge) {
+              <span class="podium-badge" [ngClass]="badge.class">{{ badge.text }}</span>
+            }
+          </div>
           <div class="text-subvalue">{{ second.meta }}</div>
           @for (col of second.podiumColumns ?? second.columns; track $index) {
             <app-metric-display
@@ -43,7 +48,12 @@
       (contextmenu)="itemRightClick.emit({ event: $event, item: first }); $event.preventDefault()"
     >
       <div class="podium-card">
-        <div class="podium-name text-value">{{ first.name }}</div>
+        <div class="podium-name-container">
+          <div class="podium-name text-value">{{ first.name }}</div>
+          @if (first.badge; as badge) {
+            <span class="podium-badge" [ngClass]="badge.class">{{ badge.text }}</span>
+          }
+        </div>
         <div class="text-subvalue">{{ first.meta }}</div>
         @for (col of first.podiumColumns ?? first.columns; track $index) {
           <app-metric-display
@@ -75,7 +85,12 @@
         (contextmenu)="itemRightClick.emit({ event: $event, item: third }); $event.preventDefault()"
       >
         <div class="podium-card">
-          <div class="podium-name text-value">{{ third.name }}</div>
+          <div class="podium-name-container">
+            <div class="podium-name text-value">{{ third.name }}</div>
+            @if (third.badge; as badge) {
+              <span class="podium-badge" [ngClass]="badge.class">{{ badge.text }}</span>
+            }
+          </div>
           <div class="text-subvalue">{{ third.meta }}</div>
           @for (col of third.podiumColumns ?? third.columns; track $index) {
             <app-metric-display
