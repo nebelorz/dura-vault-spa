@@ -75,7 +75,8 @@ export function toDeathsMenuItems(): MenuItem[] {
   return [
     {
       label: 'Deaths',
-      icon: 'pi pi-skull',
+      icon: 'pi pi-database',
+
       routerLink: ['/deaths'],
     },
   ];

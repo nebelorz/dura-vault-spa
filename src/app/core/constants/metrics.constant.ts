@@ -4,16 +4,16 @@ import { MetricDefinition } from '../models/metric.model';
 
 const HIGHSCORE_METRICS = {
   level: {
-    gain: 'pi pi-angle-double-up',
-    loss: 'pi pi-angle-double-down',
+    gain: 'pi pi-caret-up',
+    loss: 'pi pi-caret-down',
     cssClassGain: 'metric--level',
     cssClassLoss: 'metric--danger',
     label: 'Level',
     shortLabel: 'LVL',
   },
   experience: {
-    gain: 'pi pi-angle-double-up',
-    loss: 'pi pi-angle-double-down',
+    gain: 'pi pi-caret-up',
+    loss: 'pi pi-caret-down',
     cssClassGain: 'metric--xp',
     cssClassLoss: 'metric--danger',
     label: 'Experience',
@@ -28,8 +28,8 @@ const HIGHSCORE_METRICS = {
     shortLabel: 'RNK',
   },
   skill: {
-    gain: 'pi pi-angle-double-up',
-    loss: 'pi pi-angle-double-down',
+    gain: 'pi pi-caret-up',
+    loss: 'pi pi-caret-down',
     cssClassGain: 'metric--skill',
     cssClassLoss: 'metric--danger',
     label: 'Skill',
