@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { CharacterProfileService, PlayerDetailsService, OnlineService } from '@core/services';
+import { CharacterProfileService, OnlineService, PlayerDetailsService, ServerService } from '@core/services';
+import { onServerSwitch } from '@shared/functions';
 import {
   CharacterProfileResult,
   HighscoreSection,
@@ -57,6 +58,7 @@ export class PlayerDetailComponent implements OnInit {
   private readonly playerDetailsService = inject(PlayerDetailsService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly serverService = inject(ServerService);
 
   // State
   readonly characterTab = '0';
@@ -82,6 +84,18 @@ export class PlayerDetailComponent implements OnInit {
     { label: 'Year', value: 'year' },
     { label: 'Active Period', value: 'all' },
   ];
+  constructor() {
+    onServerSwitch(this.serverService, () => {
+      const name = this.playerName();
+      if (name) {
+        this.playerAchievements.set([]);
+        void this.loadCharacterProfile(name);
+        void this.loadPlayerAchievements(name);
+        void this.loadPlayerDetails();
+      }
+    });
+  }
+
   // Computed
   summary = computed(() => this.playerDetailsData()?.summary ?? null);
   lastLogin = computed(() => {

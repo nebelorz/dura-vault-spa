@@ -3,7 +3,6 @@ import {
   Component,
   computed,
   input,
-  output,
   inject,
   viewChild,
   OnInit,
@@ -12,7 +11,7 @@ import {
 import { Router } from '@angular/router';
 
 import { DeathRecord, PodiumListItem } from '@core/models';
-import { ToastService } from '@core/services';
+import { ServerService, ToastService } from '@core/services';
 import { getDuraPlayerUrl } from '@shared/functions';
 import {
   PlayerListComponent,
@@ -20,8 +19,6 @@ import {
   NoDataStatusComponent,
 } from '@shared/components';
 
-import { SelectButtonModule } from 'primeng/selectbutton';
-import { FormsModule } from '@angular/forms';
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 import { MenuItem } from 'primeng/api';
 
@@ -31,8 +28,6 @@ import { MenuItem } from 'primeng/api';
   templateUrl: './deaths-data-table.component.html',
   styleUrl: './deaths-data-table.component.scss',
   imports: [
-    SelectButtonModule,
-    FormsModule,
     ContextMenuModule,
     PlayerListComponent,
     LoadingStatusComponent,
@@ -41,28 +36,17 @@ import { MenuItem } from 'primeng/api';
 })
 export class DeathsDataTableComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
+  private readonly serverService = inject(ServerService);
   private readonly toastService = inject(ToastService);
 
   // Inputs
   data = input.required<DeathRecord[]>();
   loading = input.required<boolean>();
-  pvpFilter = input.required<boolean | null>();
-
-  // Outputs
-  readonly pvpFilterChange = output<boolean | null>();
-
   // State
   private selectedRecord: DeathRecord | null = null;
 
   // Child
   private readonly cm = viewChild<ContextMenu>('cm');
-
-  // PvP filter options
-  protected readonly pvpFilterOptions = [
-    { label: 'All', value: null },
-    { label: 'PvP', value: true },
-    { label: 'PvE', value: false },
-  ];
 
   // Computed
   readonly displayItems = computed<PodiumListItem[]>(() =>
@@ -97,10 +81,6 @@ export class DeathsDataTableComponent implements OnInit, OnDestroy {
     this.toastService.clear();
   }
 
-  protected onPvpFilterChange(value: boolean | null | undefined): void {
-    this.pvpFilterChange.emit(value ?? null);
-  }
-
   protected onItemClick(item: PodiumListItem): void {
     const record = this.data().find((r) => String(r.id) === item.id);
     if (record) this.navigateToPlayer(record);
@@ -116,25 +96,32 @@ export class DeathsDataTableComponent implements OnInit, OnDestroy {
       id: String(record.id),
       rank: index + 1,
       name: record.player_name,
-      meta: `Lvl ${record.player_level} · ${record.is_pvp ? 'PvP' : 'PvE'}`,
+      meta: `Lvl ${record.player_level}`,
       columns: [
         {
           metric: 'killer_name',
           displayValue: record.killer_name,
           showIcon: false,
+          showLabel: true,
           layout: 'column',
-          size: 'sm',
+          size: 'md',
           valueTooltip: record.is_pvp ? 'Player killer' : 'Monster killer',
         },
         {
           metric: 'death_time',
           displayValue: this.formatDeathTime(record.died_at),
           showIcon: false,
+          showLabel: true,
           layout: 'column',
-          size: 'sm',
+          size: 'md',
+          valueClass: 'text-subvalue',
         },
       ],
       rowClass: record.is_pvp ? 'list-row--pvp' : 'list-row--pve',
+      badge: {
+        text: record.is_pvp ? 'PvP' : 'PvE',
+        class: record.is_pvp ? 'badge--danger' : 'badge--warn',
+      },
     };
   }
 
@@ -160,6 +147,10 @@ export class DeathsDataTableComponent implements OnInit, OnDestroy {
 
   private searchOnDura(): void {
     if (!this.selectedRecord) return;
-    window.open(getDuraPlayerUrl(this.selectedRecord.player_name), '_blank', 'noopener,noreferrer');
+    window.open(
+      getDuraPlayerUrl(this.selectedRecord.player_name, this.serverService.server()),
+      '_blank',
+      'noopener,noreferrer',
+    );
   }
 }

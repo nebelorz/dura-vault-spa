@@ -5,7 +5,7 @@ import type { CacheService } from './cache.service';
 import type { ToastService } from './toast.service';
 
 export abstract class BaseApiService {
-  protected abstract supabase: SupabaseClient;
+  protected abstract get supabase(): SupabaseClient;
   protected abstract cacheService: CacheService;
   protected abstract toastService: ToastService;
 

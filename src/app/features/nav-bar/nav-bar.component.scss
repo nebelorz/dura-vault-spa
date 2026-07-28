@@ -15,3 +15,15 @@ p-menubar {
     background: colors.$danger-a10;
   }
 }
+
+::ng-deep a.p-menubar-item-link[href='/deaths'] {
+  .p-menubar-item-icon {
+    color: colors.$danger !important;
+    opacity: var(--opacity-mid);
+  }
+
+  &:hover {
+    border-radius: var(--radius-default);
+    background: colors.$danger-a10;
+  }
+}

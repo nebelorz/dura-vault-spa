@@ -11,7 +11,7 @@ import {
 import { Router } from '@angular/router';
 
 import { HighscoreRecord, PodiumListItem, Section } from '@core/models';
-import { ToastService } from '@core/services';
+import { ServerService, ToastService } from '@core/services';
 import { getDuraPlayerUrl, buildMetrics } from '@shared/functions';
 import {
   PlayerListComponent,
@@ -32,6 +32,7 @@ import { MenuItem } from 'primeng/api';
 })
 export class HighscoreDataTableComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
+  private readonly serverService = inject(ServerService);
   private readonly toastService = inject(ToastService);
 
   // Inputs
@@ -114,6 +115,6 @@ export class HighscoreDataTableComponent implements OnInit, OnDestroy {
   private searchOnDura(): void {
     const record = this.selectedRecord;
     if (!record) return;
-    window.open(getDuraPlayerUrl(record.name), '_blank');
+    window.open(getDuraPlayerUrl(record.name, this.serverService.server()), '_blank');
   }
 }

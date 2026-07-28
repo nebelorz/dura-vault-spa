@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import { CharacterHouse, CharacterProfileData, CharacterProfileResult } from '@core/models';
+import { ServerService } from '@core/services';
 import {
   MinimalistIconComponent,
   NoDataStatusComponent,
@@ -17,11 +18,13 @@ import { getDuraGuildUrl, getDuraPlayerUrl } from '@shared/functions';
   imports: [DatePipe, MinimalistIconComponent, NoDataStatusComponent, LoadingStatusComponent],
 })
 export class PlayerCharacterComponent {
+  private readonly serverService = inject(ServerService);
+
   profile = input<CharacterProfileResult | null>(null);
   profileLoading = input.required<boolean>();
 
-  readonly getDuraGuildUrl = getDuraGuildUrl;
-  readonly getDuraPlayerUrl = getDuraPlayerUrl;
+  readonly guildUrl = (name: string) => getDuraGuildUrl(name, this.serverService.server());
+  readonly playerUrl = (name: string) => getDuraPlayerUrl(name, this.serverService.server());
   readonly iconSizeExternalLink = '8px';
 
   readonly profileData = computed((): CharacterProfileData | null => {

@@ -7,6 +7,7 @@ export * from './metadata.service';
 export * from './navigation-history.service';
 export * from './online.service';
 export * from './player-details.service';
+export * from './server.service';
 export * from './supabase.service';
 export * from './theme.service';
 export * from './toast.service';

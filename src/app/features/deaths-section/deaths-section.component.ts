@@ -1,9 +1,12 @@
 import { Component, OnInit, signal, inject, computed } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { FormsModule } from '@angular/forms';
 
 import { DeathRecord, ScrapeDateRange, TimePeriod } from '@core/models';
-import { DeathsService, MetadataService } from '@core/services';
+import { DeathsService, MetadataService, ServerService } from '@core/services';
 import { calculateAvailableDataDateRange } from '@shared/functions';
+import { onServerSwitch } from '@shared/functions';
 import { PeriodSelectorComponent } from '@shared/components/period-selector/period-selector.component';
 import { DeathsHeaderComponent } from './deaths-header/deaths-header.component';
 import { DeathsDataTableComponent } from './deaths-left-section/deaths-data-table/deaths-data-table.component';
@@ -19,17 +22,34 @@ import { DeathsChartsComponent } from './deaths-right-section/deaths-charts/deat
     DeathsDataTableComponent,
     DeathsChartsComponent,
     DatePipe,
+    SelectButtonModule,
+    FormsModule,
   ],
 })
 export class DeathsSectionComponent implements OnInit {
   private readonly deathsService = inject(DeathsService);
   private readonly metadataService = inject(MetadataService);
+  private readonly serverService = inject(ServerService);
 
   data = signal<DeathRecord[]>([]);
   loading = signal<boolean>(true);
   selectedPeriod = signal<TimePeriod>('day');
   pvpFilter = signal<boolean | null>(null);
   scrapeDateRange = signal<ScrapeDateRange | null>(null);
+
+  protected readonly pvpFilterOptions = [
+    { label: 'All', value: null },
+    { label: 'PvP', value: true },
+    { label: 'PvE', value: false },
+  ];
+
+  constructor() {
+    onServerSwitch(this.serverService, () => {
+      this.pvpFilter.set(null);
+      void this.loadScrapeDateRange();
+      void this.loadData();
+    });
+  }
 
   dateRange = computed<string[]>(() => {
     const range = this.scrapeDateRange();

@@ -1,8 +1,9 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 
 import { DailyHighscoresSummary, DailyTopPlayer, SectionData } from '@core/models';
-import { HighscoreService, MetadataService, ThemeService } from '@core/services';
+import { HighscoreService, MetadataService, ServerService, ThemeService } from '@core/services';
 import { HIGHSCORE_SECTIONS } from '@core/constants';
+import { onServerSwitch } from '@shared/functions';
 import { DailyTopGainersComponent } from './daily-top-gainers/daily-top-gainers.component';
 import { DevInfoPanelComponent } from './dev-info-panel/dev-info-panel.component';
 import { AnnouncementCarouselComponent } from './announcement-carousel/announcement-carousel.component';
@@ -24,6 +25,7 @@ export class LandingPageComponent implements OnInit {
   private readonly metadataService = inject(MetadataService);
 
   protected readonly darkMode = inject(ThemeService).darkMode;
+  private readonly serverService = inject(ServerService);
 
   // State
   protected readonly loading = signal<boolean>(false);
@@ -31,6 +33,13 @@ export class LandingPageComponent implements OnInit {
   protected readonly experiencePlayers = signal<DailyTopPlayer[]>([]);
   protected readonly experienceLossPlayer = signal<DailyTopPlayer | null>(null);
   protected readonly skillsSection = signal<SectionData[]>([]);
+
+  constructor() {
+    onServerSwitch(this.serverService, () => {
+      void this.loadActiveComparisonDate();
+      void this.loadDailySummary();
+    });
+  }
 
   async ngOnInit(): Promise<void> {
     await Promise.all([this.loadDailySummary(), this.loadActiveComparisonDate()]);

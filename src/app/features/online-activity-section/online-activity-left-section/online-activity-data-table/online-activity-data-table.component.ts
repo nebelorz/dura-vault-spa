@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { OnlineTopRecord, PodiumListItem, TimePeriod } from '@core/models';
-import { ToastService } from '@core/services';
+import { ServerService, ToastService } from '@core/services';
 import { DAILY_WARN_MIN, DAILY_DANGER_MIN } from '@core/constants';
 import { getDuraPlayerUrl, buildMetrics } from '@shared/functions';
 import {
@@ -31,6 +31,7 @@ import { MenuItem } from 'primeng/api';
 })
 export class OnlineDataTableComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
+  private readonly serverService = inject(ServerService);
   private readonly toastService = inject(ToastService);
 
   // Inputs
@@ -126,6 +127,10 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
 
   private searchOnDura(): void {
     if (!this.selectedRecord) return;
-    window.open(getDuraPlayerUrl(this.selectedRecord.name), '_blank', 'noopener,noreferrer');
+    window.open(
+      getDuraPlayerUrl(this.selectedRecord.name, this.serverService.server()),
+      '_blank',
+      'noopener,noreferrer',
+    );
   }
 }

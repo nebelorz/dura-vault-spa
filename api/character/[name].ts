@@ -1,7 +1,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 const NAME_REGEX = /^[a-zA-Z\s']{1,50}$/;
-const DURA_URL = process.env['DURA_BASE_URL'] ?? 'https://classic.dura-online.com';
+const DURA_CLASSIC_URL = process.env['DURA_BASE_URL'] ?? 'https://classic.dura-online.com';
+const DURA_SEASONAL_URL = process.env['DURA_SEASONAL_BASE_URL'] ?? 'https://aetas.playdura.com';
 
 const HTML_ENTITIES: Record<string, string> = {
   amp: '&',
@@ -178,7 +179,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'METHOD_NOT_ALLOWED' });
   }
 
-  const { name } = req.query;
+  const { name, server } = req.query;
   const raw = Array.isArray(name) ? name[0] : name;
   const playerName = raw?.replace(/\+/g, ' ');
 
@@ -186,7 +187,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: 'INVALID_NAME' });
   }
 
-  const url = `${DURA_URL}/?characters/${encodeURIComponent(playerName)}`;
+  const serverParam = Array.isArray(server) ? server[0] : server;
+  if (serverParam !== undefined && serverParam !== 'classic' && serverParam !== 'seasonal') {
+    return res.status(400).json({ error: 'INVALID_SERVER' });
+  }
+  const duraUrl = serverParam === 'seasonal' ? DURA_SEASONAL_URL : DURA_CLASSIC_URL;
+  const url = `${duraUrl}/?characters/${encodeURIComponent(playerName)}`;
 
   let html: string;
   try {
@@ -198,7 +204,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         Accept:
           'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
         'Accept-Language': 'en-US,en;q=0.5',
-        Referer: DURA_URL + '/',
+        Referer: duraUrl + '/',
       },
     });
     html = await upstream.text();

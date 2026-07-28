@@ -10,7 +10,9 @@ export class HighscoreService extends BaseApiService {
   private supabaseService = inject(SupabaseService);
   protected cacheService = inject(CacheService);
   protected toastService = inject(ToastService);
-  protected supabase = this.supabaseService.getClient();
+  protected get supabase() {
+    return this.supabaseService.getClient();
+  }
 
   async getTopGainers(
     params: TopGainersParams = { section: 'experience', period: 'day', limit: 25 },
