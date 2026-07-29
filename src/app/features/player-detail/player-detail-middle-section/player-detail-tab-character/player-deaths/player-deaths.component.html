@@ -13,7 +13,7 @@
         >
           <span class="death-date text-subvalue">{{ death.date | date: 'dd MMM yyyy, HH:mm' | uppercase }}</span>
           <span
-            class="death-desc text-body"
+            class="death-desc text-standard"
             [ngClass]="{
               'metric--warn': death.hasKiller && !death.isUnjustified,
               'metric--danger': death.isUnjustified,
