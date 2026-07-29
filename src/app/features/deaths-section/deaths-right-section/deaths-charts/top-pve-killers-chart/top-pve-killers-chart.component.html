@@ -6,7 +6,7 @@
     @if (chartData(); as data) {
       <p-chart type="bar" [data]="data" [options]="chartOptions()" />
     } @else {
-      <app-no-data-status />
+      <app-no-data-status message="No PvE kills for the period selected"/>
     }
   </div>
 </section>
