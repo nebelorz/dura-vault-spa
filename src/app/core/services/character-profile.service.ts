@@ -16,7 +16,7 @@ export class CharacterProfileService {
 
   async getCharacterProfile(name: string): Promise<CharacterProfileResult> {
     const server = this.serverService.server();
-    const key = `character_profile_${server}_${name}`;
+    const key = `character_profile_${name}`;
     const cached = this.cacheService.get<CharacterProfileResult>(key);
     if (cached) return cached;
 
@@ -46,7 +46,6 @@ export class CharacterProfileService {
   }
 
   clearAllData(): void {
-    this.cacheService.clearByPattern('character_profile_classic');
-    this.cacheService.clearByPattern('character_profile_seasonal');
+    this.cacheService.clearByPattern('character_profile');
   }
 }

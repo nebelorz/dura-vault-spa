@@ -4,6 +4,7 @@ export * from './character-profile.service';
 export * from './deaths.service';
 export * from './highscore.service';
 export * from './metadata.service';
+export * from './server-aware-url-serializer';
 export * from './navigation-history.service';
 export * from './online.service';
 export * from './player-details.service';

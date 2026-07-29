@@ -23,8 +23,9 @@ export class PlayerCharacterComponent {
   profile = input<CharacterProfileResult | null>(null);
   profileLoading = input.required<boolean>();
 
-  readonly guildUrl = (name: string) => getDuraGuildUrl(name, this.serverService.server());
-  readonly playerUrl = (name: string) => getDuraPlayerUrl(name, this.serverService.server());
+  readonly currentServer = this.serverService.server;
+  readonly guildUrl = (name: string) => getDuraGuildUrl(name, this.currentServer());
+  readonly playerUrl = (name: string) => getDuraPlayerUrl(name, this.currentServer());
   readonly iconSizeExternalLink = '8px';
 
   readonly profileData = computed((): CharacterProfileData | null => {

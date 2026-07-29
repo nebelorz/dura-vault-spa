@@ -1,5 +1,6 @@
 import { effect, untracked } from '@angular/core';
 import { ServerService } from '@core/services';
+import { ServerId } from '@core/constants';
 
 /**
  * Registers an effect that invokes `action` whenever the server switches
@@ -14,7 +15,7 @@ import { ServerService } from '@core/services';
  *                 async calls to clarify fire-and-forget intent.
  */
 export function onServerSwitch(serverService: ServerService, action: () => void): void {
-  let previousServer: string | null = null;
+  let previousServer: ServerId | null = null;
 
   effect(() => {
     const currentServer = serverService.server();
