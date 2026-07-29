@@ -4,6 +4,7 @@
     [class.stat-card--muted]="muted()"
     [routerLink]="href"
     [queryParams]="queryParams()"
+    queryParamsHandling="merge"
     [pTooltip]="tooltip()"
     tooltipPosition="bottom"
   >
@@ -21,12 +22,14 @@
 }
 
 <ng-template #content>
-  @if (icon()) {
-    <i [class]="icon()" class="stat-icon" [style.color]="accentColor()"></i>
+  @if (hasImage()) {
+    <img [src]="imageSrc()!" class="stat-image" [class.stat-image--muted]="muted()" alt="" />
+  } @else if (hasIcon()) {
+    <i [class]="icon()!" class="stat-icon" [class.text-muted]="muted()" [style.color]="accentColor()"></i>
   }
-  <span class="text-label">{{ label() }}</span>
-  <span class="text-value">{{ value() }}</span>
+  <span class="text-label" [class.text-muted]="muted()">{{ label() }}</span>
+  <span class="text-value" [class.text-muted]="muted()">{{ value() }}</span>
   @if (sublabel()) {
-    <span class="text-sub" [style.color]="sublabelColor()">{{ sublabel() }}</span>
+    <span class="text-subvalue" [class.text-muted]="muted()" [style.color]="sublabelColor()">{{ sublabel() }}</span>
   }
 </ng-template>

@@ -16,7 +16,7 @@ interface CarouselItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-announcement-carousel',
   templateUrl: './announcement-carousel.component.html',
-  styleUrls: ['./announcement-carousel.component.scss'],
+  styleUrl: './announcement-carousel.component.scss',
   imports: [CarouselModule, ButtonModule],
 })
 export class AnnouncementCarouselComponent {

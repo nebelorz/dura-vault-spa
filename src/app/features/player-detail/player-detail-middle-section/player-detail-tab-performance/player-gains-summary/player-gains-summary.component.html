@@ -10,7 +10,7 @@
       [showSign]="true"
       [abbreviate]="false"
     />
-    <span class="text-sub text-muted"
+    <span class="text-subvalue text-muted"
       >{{ summary().average_gain_level > 0 ? '+' : '' }}{{ summary().average_gain_level }}/day</span
     >
   </div>
@@ -25,7 +25,7 @@
         [showIcon]="false"
         [displayValue]="xpDisplayValue()"
       />
-      <span class="text-sub text-muted"
+      <span class="text-subvalue text-muted"
         >{{ (summary().average_gain_points ?? 0) > 0 ? '+' : ''
         }}{{ summary().average_gain_points | abbreviateNumber }}/day</span
       >
@@ -42,7 +42,7 @@
       [showSign]="true"
       [abbreviate]="false"
     />
-    <span class="text-sub text-muted"
+    <span class="text-subvalue text-muted"
       >{{ summary().average_gain_rank > 0 ? '+' : '' }}{{ summary().average_gain_rank }}/day</span
     >
   </div>

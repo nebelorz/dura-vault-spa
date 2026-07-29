@@ -1,6 +1,6 @@
 <div class="online-container animation-fade">
   <!-- Header -->
-  <div class="online-header">
+  <div class="online-header section-header">
     <app-online-header />
 
     <div class="selector-group">
@@ -9,9 +9,9 @@
         (periodChange)="onPeriodChange($event)"
       />
       @if (dateRange().length === 1) {
-        <span class="text-additional-info">{{ dateRange()[0] | date: 'dd MMM yyyy' }}</span>
+        <span class="text-caption">{{ dateRange()[0] | date: 'dd MMM yyyy' }}</span>
       } @else if (dateRange().length > 1) {
-        <span class="text-additional-info"
+        <span class="text-caption"
           >{{ dateRange()[0] | date: 'dd MMM yyyy' }} —
           {{ dateRange()[1] | date: 'dd MMM yyyy' }}</span
         >

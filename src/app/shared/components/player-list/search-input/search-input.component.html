@@ -1,0 +1,11 @@
+<div class="search-input-row">
+  <input
+    class="search-input text-body"
+    type="text"
+    [value]="value()"
+    [placeholder]="placeholder()"
+    [attr.aria-label]="ariaLabel() || placeholder()"
+    autocomplete="off"
+    (input)="searchChange.emit($any($event.target).value)"
+  />
+</div>

@@ -4,14 +4,26 @@ p-menubar {
   border: 1px solid colors.$secondary;
 }
 
-::ng-deep a.p-menubar-item-link[href='/top/experience_loss'] {
+::ng-deep a.p-menubar-item-link[href^='/top/experience_loss'] {
   .p-menubar-item-icon {
     color: colors.$danger !important;
-    opacity: 0.6;
+    opacity: var(--opacity-mid);
   }
 
   &:hover {
-    border-radius: 4px;
+    border-radius: var(--radius-default);
+    background: colors.$danger-a10;
+  }
+}
+
+::ng-deep a.p-menubar-item-link[href^='/deaths'] {
+  .p-menubar-item-icon {
+    color: colors.$danger !important;
+    opacity: var(--opacity-mid);
+  }
+
+  &:hover {
+    border-radius: var(--radius-default);
     background: colors.$danger-a10;
   }
 }

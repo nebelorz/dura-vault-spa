@@ -1,256 +1,31 @@
-@use 'colors' as colors;
-@use 'text' as text;
-@use 'animation-fade' as animationFade;
-@use 'animation-blur-fade-in' as blurFadeIn;
 @use 'primeicons/primeicons.css';
-// Use Montserrat Medium (500) from Google Fonts
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 
-html,
-body {
-  font-family: 'Montserrat', Arial, sans-serif;
-  font-size: 14px;
-}
+// Tokens
+@use 'colors' as colors;
+@use 'typography';
+@use 'typography-utilities';
+@use 'opacities';
+@use 'colors-utilities';
+@use 'layout-tokens';
 
-// INPUTS
-.clean-input-field {
-  border: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
+// Base
+@use 'fonts';
 
-  &:enabled:focus {
-    border: 1px solid colors.$primary !important;
-  }
-}
+// Layout utilities
+@use 'containers';
+@use 'records';
 
-// BADGES
-.p-badge.badge-new {
-  font-size: text.$text-xs;
-  font-weight: bold;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 0.15rem 0.5rem;
-  border-radius: 999px;
-  line-height: 1.2;
-  min-width: unset;
-  height: auto;
-  background: colors.$primary-a10;
-  color: colors.$primary;
-  border: 1px solid colors.$primary-a20;
-}
+// Overrides
+@use 'overrides';
 
-// TOOLTIPS
-.p-tooltip .p-tooltip-text {
-  font-size: smaller;
-}
+// Animations
+@use 'animations/fade' as animationFade;
+@use 'animations/blur-fade-in' as blurFadeIn;
 
-// CONTAINERS
-.default-container {
-  border: 2px solid colors.$secondary;
-  box-shadow: 0 1px 4px colors.$secondary;
-  border-radius: 8px;
-  padding: 1rem;
-  display: grid;
-  gap: 0.75rem;
-}
-
-.borderless-container {
-  padding: 1rem;
-  display: grid;
-  gap: 0.75rem;
-}
-
-.secondary-container {
-  background: colors.$secondary;
-  border-radius: 8px;
-  padding: 1rem;
-  display: grid;
-  gap: 0.75rem;
-}
-
-// METRIC COLOR CLASSES (used in podium-list, performance-summary, etc.)
-.metric--level {
-  color: var(--color-level);
-}
-.metric--skill {
-  color: var(--color-skill);
-}
-.metric--xp {
-  color: var(--color-xp);
-}
-.metric--rank {
-  color: var(--color-rank);
-}
-
-// COLOR CLASSES
-.color--warn,
-.metric--warn {
-  color: var(--color-warn);
-}
-.color--danger,
-.metric--danger {
-  color: var(--color-danger);
-}
-.color--info,
-.metric--info {
-  color: var(--color-info);
-}
-.color--secondary,
-.metric--secondary {
-  color: var(--color-secondary);
-}
-
-// TYPOGRAPHY UTILITIES (shared across player-detail, podium-list, etc.)
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  font-size: text.$text-sm;
-  letter-spacing: 1.5px;
-  opacity: text.$opacity-secondary;
-}
-
-// Field labels: "STREAK", "ACTIVE", "Name", "Rank"
-.text-label {
-  font-size: text.$text-xs;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  opacity: text.$opacity-secondary;
-}
-
-// Secondary / supporting value: vocation, level, meta info
-.text-sub {
-  font-size: text.$text-sm;
-  font-weight: 400;
-  opacity: text.$opacity-secondary;
-}
-
-// Body text: row descriptions, character info fields
-.text-normal {
-  font-size: text.$text-sm;
-  font-weight: 400;
-  line-height: 1.4;
-  opacity: text.$opacity-primary;
-}
-
-// Primary value: names, stats, key data points
-.text-value {
-  font-size: text.$text-base;
-  font-weight: 500;
-  opacity: text.$opacity-primary;
-}
-
-// Hero / highlighted value: podium main, future use
-.text-highlight {
-  font-size: text.$text-md;
-  font-weight: 500;
-  opacity: text.$opacity-primary;
-}
-
-.text-additional-info {
-  color: colors.$secondary-light;
-  font-size: text.$text-base;
-  margin-left: 0.25em;
-}
-
-// Modifier — mutes opacity on any text class
-.text-muted {
-  opacity: text.$opacity-muted;
-}
-
-// Overlay labels and values (podium card hover, stat card hover)
-.text-overlay-label {
-  font-size: text.$text-xs;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  opacity: text.$opacity-muted;
-}
-
-.text-overlay-value {
-  font-size: text.$text-base;
-  font-weight: 500;
-  line-height: 1.2;
-  opacity: text.$opacity-primary;
-}
-
-// Stat gain rows (player-performance)
-.text-stat {
-  font-size: text.$text-sm;
-  font-weight: 400;
-  letter-spacing: 0.2px;
-  opacity: text.$opacity-primary;
-  line-height: 1.3;
-}
-
-.text-stat-meta {
-  font-size: text.$text-xs;
-  font-weight: 400;
-  opacity: text.$opacity-secondary;
-  line-height: 1.2;
-}
-
-// RECORD ROWS (player-details-tab, player-online-stats, player-deaths)
-.records-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-}
-
-.record-row {
-  display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
-  padding: 0.4rem 0.5rem;
-  border-radius: 6px;
-
-  &--xp {
-    background: colors.$xp-a10;
-  }
-  &--skill {
-    background: colors.$level-a10;
-  }
-  &--rank {
-    background: colors.$rank-a10;
-  }
-  &--secondary {
-    background: colors.$secondary-a10;
-  }
-  &--warn {
-    background: colors.$warn-a10;
-  }
-  &--danger {
-    background: colors.$danger-a10;
-  }
-  &--info {
-    background: colors.$info-a10;
-  }
-}
-
-.record-label {
-  flex-shrink: 0;
-  min-width: 82px;
-  display: flex;
-  align-items: center;
-  gap: 0.2rem;
-}
-
-.record-desc {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.record-sub {
-  font-size: text.$text-xs;
-  opacity: text.$opacity-secondary;
-}
-
-// ANIMATIONS
+// Global animation classes
 .animation-fade {
   @include animationFade.fadeAnimation();
 }
-
 .animation-blur-fade-in {
   @include blurFadeIn.blurFadeInAnimation();
 }

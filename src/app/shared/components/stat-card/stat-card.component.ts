@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, computed } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TooltipModule } from 'primeng/tooltip';
@@ -12,6 +12,7 @@ import { TooltipModule } from 'primeng/tooltip';
 })
 export class StatCardComponent {
   icon = input<string>();
+  imageSrc = input<string>();
   value = input.required<string>();
   label = input.required<string>();
   sublabel = input<string>();
@@ -21,4 +22,7 @@ export class StatCardComponent {
   tooltip = input<string>();
   link = input<string[]>();
   queryParams = input<Record<string, string>>();
+
+  readonly hasIcon = computed(() => !!this.icon());
+  readonly hasImage = computed(() => !!this.imageSrc());
 }

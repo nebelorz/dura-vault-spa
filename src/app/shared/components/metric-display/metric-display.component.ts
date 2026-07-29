@@ -3,7 +3,7 @@ import { NgClass } from '@angular/common';
 import { TooltipModule } from 'primeng/tooltip';
 
 import { METRIC_DEFINITIONS } from '@core/constants';
-import { MetricType } from '@core/models';
+import { MetricDefinition, MetricType } from '@core/models';
 import { formatNumber } from '@shared/functions';
 
 @Component({
@@ -19,12 +19,16 @@ export class MetricDisplayComponent {
   metric = input.required<MetricType>();
   layout = input.required<'row' | 'column'>();
 
+  // SIZING INPUTS
+  size = input<'sm' | 'md' | 'lg'>('sm');
+
   // OPTIONAL INPUTS
   value = input<number>(); // if undefined, value element won't render
   subValue = input<string>();
   relativePercentagePointsFromTotal = input<number>();
   displayValue = input<string>(); // overrides formatted value
-  iconSize = input<'xs' | 'sm' | 'base' | 'md'>('xs');
+  valueClass = input<string>(); // additional CSS class for the value element
+  iconSize = input<'xs' | 'sm' | 'md'>('sm');
 
   // VISIBILITY INPUTS
   showIcon = input<boolean>(true);
@@ -45,7 +49,20 @@ export class MetricDisplayComponent {
     return value !== undefined && value < 0;
   });
 
-  protected readonly metricDef = computed(() => METRIC_DEFINITIONS[this.metric()]);
+  protected readonly valueSizeClass = computed(() => {
+    switch (this.size()) {
+      case 'lg':
+        return 'text-heading';
+      case 'md':
+        return 'text-value';
+      default:
+        return 'text-body';
+    }
+  });
+
+  protected readonly metricDef = computed(
+    (): MetricDefinition => METRIC_DEFINITIONS[this.metric()],
+  );
 
   protected readonly iconClass = computed(() =>
     this.isLoss() ? this.metricDef().loss : this.metricDef().gain,

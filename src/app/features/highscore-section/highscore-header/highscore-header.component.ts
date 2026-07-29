@@ -5,7 +5,7 @@ import { TitlecaseSpacesPipe } from '@shared/pipes';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-highscore-header',
   templateUrl: './highscore-header.component.html',
-  styleUrls: ['./highscore-header.component.scss'],
+  styleUrl: './highscore-header.component.scss',
   imports: [TitlecaseSpacesPipe],
 })
 export class HighscoreHeaderComponent {

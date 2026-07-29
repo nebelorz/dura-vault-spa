@@ -1,0 +1,11 @@
+<p-button
+  class="navbar-item"
+  size="small"
+  [label]="config().label"
+  [icon]="icon"
+  [outlined]="true"
+  [severity]="config().severity"
+  [styleClass]="config().styleClass"
+  [disabled]="toggling() || seasonalDisabled"
+  (click)="toggle()"
+/>

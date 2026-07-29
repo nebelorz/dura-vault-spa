@@ -1,0 +1,9 @@
+@use 'status-message' as statusMessage;
+
+.loading-message-container {
+  @include statusMessage.status-message-container;
+}
+
+i {
+  opacity: var(--opacity-low);
+}

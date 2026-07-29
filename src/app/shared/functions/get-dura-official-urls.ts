@@ -1,13 +1,20 @@
 import { environment } from '@env';
+import type { ServerId } from '@core/constants';
 
-export function getDuraHomeUrl(): string {
-  return `${environment.dura.baseURL}/`;
+function getBaseURL(server: ServerId): string {
+  return server === 'seasonal'
+    ? environment.seasonal.dura.baseURL
+    : environment.classic.dura.baseURL;
 }
 
-export function getDuraPlayerUrl(name: string): string {
-  return `${environment.dura.baseURL}/?characters/${name}`;
+export function getDuraHomeUrl(server: ServerId = 'classic'): string {
+  return `${getBaseURL(server)}/`;
 }
 
-export function getDuraGuildUrl(name: string): string {
-  return `${environment.dura.baseURL}/?guilds/${name}`;
+export function getDuraPlayerUrl(name: string, server: ServerId = 'classic'): string {
+  return `${getBaseURL(server)}/?characters/${name}`;
+}
+
+export function getDuraGuildUrl(name: string, server: ServerId = 'classic'): string {
+  return `${getBaseURL(server)}/?guilds/${name}`;
 }

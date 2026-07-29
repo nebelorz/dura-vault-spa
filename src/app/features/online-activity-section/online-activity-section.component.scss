@@ -3,9 +3,6 @@
   max-width: 100%;
 
   .online-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 1.5rem;
 
     .selector-group {
@@ -28,6 +25,23 @@
       height: calc(90vh - 100px - 2rem);
       display: flex;
       flex-direction: column;
+
+      app-online-activity-data-table {
+        flex: 1;
+        min-height: 0;
+      }
+    }
+
+    .online-right {
+      height: calc(90vh - 100px - 2rem);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+
+      app-online-activity-charts {
+        flex: 1;
+        min-height: 0;
+      }
     }
 
     @media (max-width: 768px) {

@@ -2,40 +2,40 @@
   <app-loading-status />
 } @else if (isAvailable()) {
   <div class="account-section">
-    <span class="text-normal">INFORMATION</span>
+    <span class="sub-section-label">INFORMATION</span>
     @if (accountInfo(); as info) {
       @if (hasAccountInfo()) {
         <div class="records-list animation-fade">
           @if (info.created) {
             <div class="record-row">
-              <span class="record-label text-label">CREATED ON</span>
-              <span class="text-value">{{ info.created | date: 'dd MMM yyyy' }}</span>
+              <span class="record-label text-subvalue">CREATED ON</span>
+              <span class="text-standard">{{ info.created | date: 'dd MMM yyyy' }}</span>
             </div>
           }
           @if (info.banishedUntil) {
             <div class="record-row record-row--danger">
-              <span class="record-label text-label">BANNED UNTIL</span>
-              <span class="text-value metric--danger">{{
+              <span class="record-label text-subvalue">BANNED UNTIL</span>
+              <span class="text-standard metric--danger">{{
                 info.banishedUntil | date: 'dd MMM yyyy, HH:mm'
               }}</span>
             </div>
           }
           @if (info.status) {
             <div class="record-row record-row--info">
-              <span class="record-label text-label">STATUS</span>
-              <span class="text-value metric--info">{{ info.status }}</span>
+              <span class="record-label text-subvalue">STATUS</span>
+              <span class="text-standard metric--info">{{ info.status }}</span>
             </div>
           }
         </div>
       } @else {
-        <span class="text-sub text-muted">No public account information available</span>
+        <span class="text-subvalue text-muted">No public account information available</span>
       }
     } @else {
-      <span class="text-sub text-muted">No public account information available</span>
+      <span class="text-subvalue text-muted">No public account information available</span>
     }
   </div>
   <div class="account-section">
-    <span class="text-normal">CHARACTERS</span>
+    <span class="sub-section-label">CHARACTERS</span>
     @if (characters().length > 0) {
       <div class="characters-list animation-fade">
         @for (char of characters(); track char.name) {
@@ -44,11 +44,12 @@
             [class.account-character-row--current]="char.name.toLowerCase() === currentName()"
             [routerLink]="['/player', char.name]"
             [queryParams]="{ section: 'experience' }"
+            queryParamsHandling="merge"
           >
             <div class="account-character-info">
-              <span class="account-character-level text-label">Lvl {{ char.level ?? '?' }}</span>
-              <span class="account-character-name text-value">{{ char.name }}</span>
-              <span class="account-character-vocation text-sub">{{ char.vocation }}</span>
+              <span class="account-character-level text-subvalue">LVL {{ char.level ?? '?' }}</span>
+              <span class="account-character-name text-standard">{{ char.name }}</span>
+              <span class="account-character-vocation text-subvalue">{{ char.vocation }}</span>
             </div>
             @if (char.isOnline) {
               <span class="online-status-badge">
@@ -60,7 +61,7 @@
         }
       </div>
     } @else {
-      <span class="text-sub text-muted">No characters found</span>
+      <span class="text-subvalue text-muted">No characters found</span>
     }
   </div>
 } @else {

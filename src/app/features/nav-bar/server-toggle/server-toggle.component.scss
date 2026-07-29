@@ -1,0 +1,14 @@
+@use 'colors' as colors;
+
+:host {
+  display: inline-flex;
+  align-items: center;
+}
+
+::ng-deep .p-button {
+  min-width: 100px;
+}
+
+::ng-deep .p-button.seasonal-active {
+  background: colors.$danger-a10 !important;
+}

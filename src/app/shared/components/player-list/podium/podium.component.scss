@@ -1,0 +1,132 @@
+@use 'colors' as colors;
+@use '../../../styles/badge-variants' as badge;
+
+:host {
+  display: block;
+}
+
+// ===========================
+// PODIUM
+// ===========================
+.podium {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.podium-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  flex: 1;
+  max-width: 180px;
+
+  &--empty {
+    cursor: default;
+  }
+
+  &:not(&--empty):hover .podium-card {
+    transform: translateY(-3px);
+  }
+}
+
+.podium-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.75rem 0.5rem 0.5rem;
+  text-align: center;
+  width: 100%;
+  transition: transform 0.2s ease;
+
+  .metric-display--value {
+    font-size: var(--text-lg);
+    font-weight: bold;
+  }
+}
+
+.podium-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.podium-base {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-default) var(--radius-default) 0 0;
+  margin-top: 0.5rem;
+
+  &--first {
+    height: 90px;
+    background: var(--podium-first-bg, #{colors.$rank-a20});
+    border: 1px solid
+      color-mix(in srgb, var(--color-rank), transparent 65%);
+    border-bottom: none;
+  }
+
+  &--second {
+    height: 80px;
+    background: var(--podium-second-bg, var(--color-silver-a10));
+    border: 1px solid var(--podium-second-border, var(--color-silver-a20));
+    border-bottom: none;
+  }
+
+  &--third {
+    height: 65px;
+    background: var(--podium-third-bg, var(--color-bronze-a10));
+    border: 1px solid var(--podium-third-border, var(--color-bronze-a20));
+    border-bottom: none;
+  }
+
+  &--warn {
+    background: colors.$warn-a10;
+    border-color: color-mix(in srgb, var(--color-warn), transparent 65%);
+  }
+
+  &--danger {
+    background: colors.$danger-a10;
+    border-color: color-mix(in srgb, var(--color-danger), transparent 65%);
+  }
+}
+
+.podium-rank {
+  .podium-base--second & {
+    color: var(--podium-second-color, var(--color-silver));
+  }
+
+  .podium-base--first & {
+    color: var(--podium-first-color, #{colors.$rank});
+  }
+
+  .podium-base--third & {
+    color: var(--podium-third-color, var(--color-bronze));
+  }
+}
+
+.podium-base--warn .podium-rank {
+  color: var(--color-warn);
+}
+
+.podium-base--danger .podium-rank {
+  color: var(--color-danger);
+}
+
+.podium-name-container {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+@include badge.badge-base('podium');

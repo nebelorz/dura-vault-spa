@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { HighscoreRecord, Section, ScrapeDateRange, TimePeriod } from '@core/models';
-import { HighscoreService, MetadataService } from '@core/services';
-import { calculateAvailableDataDateRange } from '@shared/functions';
+import { HighscoreService, MetadataService, ServerService } from '@core/services';
+import { calculateAvailableDataDateRange, onServerSwitch } from '@shared/functions';
 import { DatePipe } from '@angular/common';
 import { HighscoreDataTableComponent } from './highscore-left-section/highscore-data-table/highscore-data-table.component';
 import { HighscoreHeaderComponent } from './highscore-header/highscore-header.component';
@@ -15,7 +15,7 @@ import { PeriodSelectorComponent } from '@shared/components';
 @Component({
   selector: 'app-highscore-section',
   templateUrl: './highscore-section.component.html',
-  styleUrls: ['./highscore-section.component.scss'],
+  styleUrl: './highscore-section.component.scss',
   imports: [
     HighscoreHeaderComponent,
     PeriodSelectorComponent,
@@ -30,6 +30,7 @@ export class HighscoreSectionComponent implements OnInit {
   private readonly highscoreService = inject(HighscoreService);
   private readonly metadataService = inject(MetadataService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly serverService = inject(ServerService);
 
   // State
   data = signal<HighscoreRecord[]>([]);
@@ -49,6 +50,13 @@ export class HighscoreSectionComponent implements OnInit {
       dateRange.active_comparison_date,
     );
   });
+
+  constructor() {
+    onServerSwitch(this.serverService, () => {
+      void this.loadScrapeDateRange();
+      void this.loadData();
+    });
+  }
 
   async ngOnInit(): Promise<void> {
     // Load metadata
@@ -70,13 +78,9 @@ export class HighscoreSectionComponent implements OnInit {
   }
 
   private async loadScrapeDateRange(): Promise<void> {
-    try {
-      const dateRange = await this.metadataService.getScrapeDates('highscore_top');
-      if (dateRange) {
-        this.scrapeDateRange.set(dateRange);
-      }
-    } finally {
-      this.loading.set(false);
+    const dateRange = await this.metadataService.getScrapeDates('highscore_top');
+    if (dateRange) {
+      this.scrapeDateRange.set(dateRange);
     }
   }
 

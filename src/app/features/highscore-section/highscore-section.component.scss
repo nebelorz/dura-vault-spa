@@ -3,9 +3,6 @@
   max-width: 100%;
 
   .highscore-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 1.5rem;
 
     .selector-group {
@@ -38,7 +35,7 @@
     .highscore-right {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 2rem;
     }
   }
 }

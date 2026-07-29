@@ -1,0 +1,26 @@
+@use 'colors' as colors;
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-input-row {
+  display: flex;
+  align-items: center;
+  padding: 0.4rem 0.75rem;
+  background: colors.$secondary;
+  border-radius: var(--radius-container) var(--radius-container) 0 0;
+}
+
+.search-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: inherit;
+
+  &::placeholder {
+    opacity: var(--opacity-mid);
+  }
+}

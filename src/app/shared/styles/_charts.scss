@@ -1,0 +1,29 @@
+// Chart Section Mixin
+// Shared layout for chart sub-components.
+// Usage: @use 'charts' as charts; @include charts.chart-layout();
+// After inclusion, each component adds its own :host declaration.
+
+@mixin chart-layout {
+  .chart-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .chart-container {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    p-chart {
+      display: block;
+      width: 100%;
+      flex: 1;
+      min-height: 0;
+    }
+  }
+}

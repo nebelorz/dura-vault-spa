@@ -1,16 +1,16 @@
 @use 'colors' as colors;
 
 .footer-content {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0 1.5rem;
-  max-width: 100%;
-  margin: 0 auto;
-  font-size: x-small;
-  color: colors.$secondary-light;
   background: colors.$surface;
   border: 2px solid colors.$secondary;
+  color: colors.$secondary-light;
+  display: flex;
+  font-weight: bold;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 100%;
+  padding: 0 1.5rem;
 }
 
 ::ng-deep html.darkmode .footer-content {
@@ -38,6 +38,6 @@
   }
 
   i {
-    font-size: 0.875rem;
+    font-size: var(--text-md);
   }
 }

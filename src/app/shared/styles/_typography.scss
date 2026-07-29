@@ -1,0 +1,50 @@
+// TEXT SCALE
+:root {
+  --text-xxs: 7px;
+  --text-xs: 8px;
+  --text-sm: 10px;
+  --text-standard: 12px;
+  --text-md: 13px;
+  --text-lg: 18px;
+  --text-xl: 20px;
+  --text-xxl: 24px;
+}
+
+// SCSS variable wrappers
+$text-xxs: var(--text-xxs);
+$text-xs: var(--text-xs);
+$text-sm: var(--text-sm);
+$text-standard: var(--text-standard);
+$text-md: var(--text-md);
+$text-lg: var(--text-lg);
+$text-xl: var(--text-xl);
+$text-xxl: var(--text-xxl);
+
+
+// CHANGELOG
+.changelog-body {
+  h2 {
+    opacity: var(--opacity-high);
+  }
+  h3 {
+    opacity: var(--opacity-mid);
+  }
+  p {
+    opacity: var(--opacity-mid);
+  }
+  li {
+    opacity: var(--opacity-mid);
+  }
+  strong {
+    opacity: 1;
+  }
+  code {
+    opacity: var(--opacity-high);
+  }
+  li::before {
+    opacity: var(--opacity-low);
+  }
+  img {
+    opacity: var(--opacity-high);
+  }
+}

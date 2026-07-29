@@ -1,0 +1,13 @@
+@use 'colors' as colors;
+
+.inline-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+
+  i.pi {
+    color: colors.$primary;
+    opacity: var(--opacity-low);
+  }
+}

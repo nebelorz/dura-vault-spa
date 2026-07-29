@@ -1,0 +1,52 @@
+@use 'colors' as colors;
+
+// RECORD ROWS
+.records-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.record-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: var(--radius-default);
+
+  &--xp {
+    background: colors.$xp-a10;
+  }
+  &--skill {
+    background: colors.$level-a10;
+  }
+  &--rank {
+    background: colors.$rank-a10;
+  }
+  &--secondary {
+    background: colors.$secondary-a10;
+  }
+  &--warn {
+    background: colors.$warn-a10;
+  }
+  &--danger {
+    background: colors.$danger-a10;
+  }
+  &--info {
+    background: colors.$info-a10;
+  }
+}
+
+.record-label {
+  flex-shrink: 0;
+  min-width: 82px;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.record-desc {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}

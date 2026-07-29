@@ -9,7 +9,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-period-selector',
   templateUrl: './period-selector.component.html',
-  styleUrls: ['./period-selector.component.scss'],
+  styleUrl: './period-selector.component.scss',
   imports: [FormsModule, SelectButtonModule],
 })
 export class PeriodSelectorComponent {

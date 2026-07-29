@@ -1,13 +1,13 @@
 <p-contextMenu #cm [model]="contextMenuItems" appendTo="body" />
 
-<app-podium-list
-  [items]="displayItems()"
-  [loading]="loading()"
-  emptyMessage="No online activity data for this period."
-  [disablePodium]="hasFilter()"
-  [hideOverlay]="true"
-  [showFilter]="true"
-  (filterChange)="onFilterChange($event)"
-  (itemClick)="onItemClick($event)"
-  (itemRightClick)="onItemRightClick($event)"
-/>
+@if (loading()) {
+  <app-loading-status />
+} @else if (!data().length) {
+  <app-no-data-status message="No online activity data for this period." />
+} @else {
+  <app-player-list
+    [items]="displayItems()"
+    (itemClick)="onItemClick($event)"
+    (itemRightClick)="onItemRightClick($event)"
+  />
+}

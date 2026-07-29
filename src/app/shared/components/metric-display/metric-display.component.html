@@ -8,9 +8,10 @@
     ></i>
   }
   <!-- VALUE -->
-  @if (value() !== undefined) {
+  @if (value() !== undefined || displayValue() !== undefined) {
     <span
       class="metric-display--value"
+      [ngClass]="[valueSizeClass(), colorClass(), valueClass() ?? '']"
       [pTooltip]="valueTooltip()"
       [tooltipPosition]="tooltipPosition()"
     >
@@ -20,7 +21,7 @@
   <!-- SHORT LABEL -->
   @if (showShortLabel()) {
     <span
-      class="metric-display--short-label"
+      class="metric-display--short-label text-caption"
       [pTooltip]="labelTooltip()"
       [tooltipPosition]="tooltipPosition()"
     >
@@ -30,7 +31,7 @@
   <!-- LABEL -->
   @if (showLabel()) {
     <span
-      class="metric-display--label"
+      class="metric-display--label text-caption"
       [pTooltip]="labelTooltip()"
       [tooltipPosition]="tooltipPosition()"
     >
@@ -40,7 +41,7 @@
   <!-- SUB VALUE -->
   @if (resolvedSubValue(); as sub) {
     <span
-      class="metric-display--sub-value"
+      class="metric-display--sub-value text-subvalue"
       [pTooltip]="subValueTooltip()"
       [tooltipPosition]="tooltipPosition()"
     >

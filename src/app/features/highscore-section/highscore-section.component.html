@@ -1,6 +1,6 @@
 <div class="highscore-container animation-fade">
   <!-- Header -->
-  <div class="highscore-header">
+  <div class="section-header highscore-header">
     <app-highscore-header [section]="section()" />
 
     <div class="selector-group">
@@ -9,9 +9,9 @@
         (periodChange)="onPeriodChange($event)"
       />
       @if (dateRange().length === 1) {
-        <span class="text-additional-info">{{ dateRange()[0] | date: 'dd MMM yyyy' }}</span>
+        <span class="text-caption">{{ dateRange()[0] | date: 'dd MMM yyyy' }}</span>
       } @else if (dateRange().length > 1) {
-        <span class="text-additional-info"
+        <span class="text-caption"
           >{{ dateRange()[0] | date: 'dd MMM yyyy' }} —
           {{ dateRange()[1] | date: 'dd MMM yyyy' }}</span
         >
@@ -26,7 +26,11 @@
     </div>
     <div class="highscore-right">
       <app-top-by-vocation-cards [data]="data()" [loading]="loading()" [section]="section()" />
-      <app-highscore-chart-gains-by-vocation [data]="data()" [loading]="loading()" [section]="section()" />
+      <app-highscore-chart-gains-by-vocation
+        [data]="data()"
+        [loading]="loading()"
+        [section]="section()"
+      />
     </div>
   </div>
 </div>

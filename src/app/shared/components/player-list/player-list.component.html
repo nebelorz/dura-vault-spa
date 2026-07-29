@@ -1,0 +1,23 @@
+@if (podiumItems().length) {
+  <app-podium
+    [items]="podiumItems()"
+    (itemClick)="itemClick.emit($event)"
+    (itemRightClick)="itemRightClick.emit($event)"
+  />
+}
+
+<div class="list-section" [class.integrated]="displayFilter() && displayList()">
+  @if (displayFilter()) {
+    <app-search-input [placeholder]="filterPlaceholder()" (searchChange)="onSearchChange($event)" />
+  }
+
+  @if (displayList()) {
+    <app-list
+      [items]="listItems()"
+      [rankOffset]="rankOffset()"
+      [emptyMessage]="emptyMessage()"
+      (itemClick)="itemClick.emit($event)"
+      (itemRightClick)="itemRightClick.emit($event)"
+    />
+  }
+</div>

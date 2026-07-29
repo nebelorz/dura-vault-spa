@@ -1,14 +1,16 @@
-﻿import { ChangeDetectionStrategy, Component, computed, effect, input, signal } from '@angular/core';
+﻿import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
 import { HighscoreRecord, Section } from '@core/models';
-import { getSectionLabel, VOCATION_GROUPS } from '@core/constants';
-import { formatNumber } from '@shared/functions';
+import {
+  CHART_FONT,
+  CHART_GRID_COLOR,
+  CHART_MUTED_COLOR,
+  getSectionLabel,
+  VOCATION_GROUPS,
+} from '@core/constants';
+import { createChartColors, formatNumber } from '@shared/functions';
 import { NoDataStatusComponent, LoadingStatusComponent } from '@shared/components';
 import { ChartModule } from 'primeng/chart';
-
-const CHART_FONT = 'Montserrat, Arial, sans-serif';
-const CHART_GRID = 'rgba(128, 128, 128, 0.2)';
-const CHART_MUTED = 'rgba(128, 128, 128, 0.7)';
 
 interface VocationStat {
   group: string;
@@ -28,23 +30,16 @@ export class HighscoreChartGainsByVocationComponent {
   loading = input.required<boolean>();
   section = input.required<Section>();
 
-  private readonly colorPrimary = signal<string>('#22c55e');
-  private readonly colorXp = signal<string>('#a855f7');
-  private readonly colorInfo = signal<string>('#38bdf8');
-  private readonly colorWarn = signal<string>('#fb923c');
-  private readonly colorSecondary = signal<string>('#64748b');
+  private readonly colors = createChartColors({
+    colorPrimary: { cssVar: '--color-primary', fallback: '#22c55e' },
+    colorXp: { cssVar: '--color-xp', fallback: '#a855f7' },
+    colorInfo: { cssVar: '--color-info', fallback: '#38bdf8' },
+    colorWarn: { cssVar: '--color-warn', fallback: '#fb923c' },
+    colorSecondary: { cssVar: '--color-secondary', fallback: '#64748b' },
+  });
 
   constructor() {
-    effect(() => this.updateColors());
-  }
-
-  private updateColors(): void {
-    const styles = getComputedStyle(document.documentElement);
-    this.colorPrimary.set(styles.getPropertyValue('--color-primary').trim() || '#22c55e');
-    this.colorXp.set(styles.getPropertyValue('--color-xp').trim() || '#a855f7');
-    this.colorInfo.set(styles.getPropertyValue('--color-info').trim() || '#38bdf8');
-    this.colorWarn.set(styles.getPropertyValue('--color-warn').trim() || '#fb923c');
-    this.colorSecondary.set(styles.getPropertyValue('--color-secondary').trim() || '#64748b');
+    this.colors.setup();
   }
 
   private readonly isXpSection = computed(
@@ -81,11 +76,11 @@ export class HighscoreChartGainsByVocationComponent {
     const stats = this.vocationStats();
     if (!stats.length) return null;
     const palette = [
-      this.colorPrimary(),
-      this.colorXp(),
-      this.colorInfo(),
-      this.colorWarn(),
-      this.colorSecondary(),
+      this.colors.colorPrimary(),
+      this.colors.colorXp(),
+      this.colors.colorInfo(),
+      this.colors.colorWarn(),
+      this.colors.colorSecondary(),
     ];
     return {
       labels: stats.map((stat) => stat.group),
@@ -145,7 +140,7 @@ export class HighscoreChartGainsByVocationComponent {
                 : formatNumber(Number(tickValue));
             },
           },
-          grid: { color: CHART_GRID },
+          grid: { color: CHART_GRID_COLOR },
         },
         y: {
           ticks: { font: { size: 11, family: CHART_FONT } },
@@ -157,7 +152,7 @@ export class HighscoreChartGainsByVocationComponent {
           labels: stats.map((stat) => `${stat.count}`),
           display: true,
           grid: { drawOnChartArea: false },
-          ticks: { font: { size: 10, family: CHART_FONT }, color: CHART_MUTED },
+          ticks: { font: { size: 10, family: CHART_FONT }, color: CHART_MUTED_COLOR },
         },
       },
     };

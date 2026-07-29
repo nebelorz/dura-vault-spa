@@ -1,0 +1,44 @@
+<div class="deaths-container animation-fade">
+  <div class="deaths-header section-header">
+    <app-deaths-header />
+
+    <div class="selector-group">
+      <app-period-selector
+        [selectedPeriod]="selectedPeriod()"
+        (periodChange)="onPeriodChange($event)"
+      />
+      @if (dateRange().length === 1) {
+        <span class="text-caption">{{ dateRange()[0] | date: 'dd MMM yyyy' }}</span>
+      } @else if (dateRange().length > 1) {
+        <span class="text-caption"
+          >{{ dateRange()[0] | date: 'dd MMM yyyy' }} —
+          {{ dateRange()[1] | date: 'dd MMM yyyy' }}</span
+        >
+      }
+    </div>
+  </div>
+
+  <div class="deaths-body">
+    <div class="deaths-left">
+      <div class="pvp-filter-group">
+        <p-selectbutton
+          [options]="pvpFilterOptions"
+          [ngModel]="pvpFilter()"
+          (onChange)="onPvpFilterChange($event.value)"
+          [allowEmpty]="true"
+        />
+      </div>
+      <app-deaths-data-table
+        [data]="data()"
+        [loading]="loading()"
+      />
+    </div>
+    <div class="deaths-right">
+      <app-deaths-charts
+        [data]="data()"
+        [loading]="loading()"
+        [period]="selectedPeriod()"
+      />
+    </div>
+  </div>
+</div>

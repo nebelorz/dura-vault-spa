@@ -1,5 +1,4 @@
 @use 'colors' as colors;
-@use 'text' as text;
 
 :host {
   display: contents;
@@ -12,12 +11,9 @@
   gap: 0.25rem;
   padding: 0.75rem 0.5rem;
   border: 1px solid colors.$secondary;
-  border-radius: 8px;
+  border-radius: var(--radius-container);
   text-align: center;
 
-  &--muted {
-    opacity: 0.5;
-  }
 }
 
 a.stat-card {
@@ -33,7 +29,16 @@ a.stat-card {
 }
 
 .stat-icon {
-  font-size: text.$text-md;
+  font-size: var(--text-md);
   color: colors.$primary;
-  opacity: 0.7;
+}
+
+.stat-image {
+  width: 13px;
+  height: 13px;
+  object-fit: contain;
+
+  &--muted {
+    opacity: 0.4;
+  }
 }

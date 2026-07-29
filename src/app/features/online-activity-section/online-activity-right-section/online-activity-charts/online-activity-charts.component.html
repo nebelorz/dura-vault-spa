@@ -32,30 +32,14 @@
     </div>
   }
 
-  @if (vocationChartData(); as vocationData) {
-    <section class="chart-section animation-fade">
-      <div class="chart-title text-label">Activity by Vocation</div>
-      <div class="chart-container chart-container--hbar">
-        <p-chart type="bar" [data]="vocationData" [options]="vocationChartOptions()" />
-      </div>
-    </section>
-  }
-
-  @if (levelChartData(); as levelData) {
-    <section class="chart-section animation-fade">
-      <div class="chart-title text-label">Activity by Level Range</div>
-      <div class="chart-container" [style.height]="levelChartHeight()">
-        <p-chart type="bar" [data]="levelData" [options]="levelChartOptions()" />
-      </div>
-    </section>
-  }
-
-  @if (timelineChartData(); as timelineData) {
-    <section class="chart-section animation-fade">
-      <div class="chart-title text-label">Activity by Period</div>
-      <div class="chart-container">
-        <p-chart type="line" [data]="timelineData" [options]="timelineChartOptions()" />
-      </div>
-    </section>
-  }
+  <div class="charts-grid">
+    <app-online-activity-by-vocation-chart [data]="data()" [loading]="loading()" />
+    <app-online-activity-by-level-chart [data]="data()" [loading]="loading()" />
+    <app-online-activity-by-period-chart
+      [timeline]="timeline()"
+      [period]="period()"
+      [loading]="loading()"
+      [activeComparisonDate]="activeComparisonDate()"
+    />
+  </div>
 }

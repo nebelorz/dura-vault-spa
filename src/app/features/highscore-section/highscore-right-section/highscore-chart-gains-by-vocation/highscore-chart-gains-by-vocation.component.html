@@ -1,15 +1,14 @@
-﻿<div class="stats-panel">
-  <h3 class="stats-title text-label">{{ chartTitle() }}</h3>
-
-  @if (loading()) {
-    <div class="chart-placeholder">
+﻿<section class="chart-section animation-fade">
+  <div class="sub-section-header">
+    <span class="sub-section-label">{{ chartTitle() }}</span>
+  </div>
+  <div class="chart-container">
+    @if (loading()) {
       <app-loading-status />
-    </div>
-  } @else if (vocationChartData(); as chartData) {
-    <div class="chart-wrapper animation-fade" [style.height]="chartHeight()">
+    } @else if (vocationChartData(); as chartData) {
       <p-chart type="bar" [data]="chartData" [options]="vocationChartOptions()" />
-    </div>
-  } @else {
-    <app-no-data-status />
-  }
-</div>
+    } @else {
+      <app-no-data-status />
+    }
+  </div>
+</section>

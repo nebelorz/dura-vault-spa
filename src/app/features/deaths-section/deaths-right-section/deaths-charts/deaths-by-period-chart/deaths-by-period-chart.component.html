@@ -1,0 +1,12 @@
+<section class="chart-section animation-fade">
+  <div class="sub-section-header">
+    <span class="sub-section-label">Deaths by Period</span>
+  </div>
+  <div class="chart-container">
+    @if (deathsByPeriodData(); as data) {
+      <p-chart type="line" [data]="data" [options]="deathsByPeriodOptions()" />
+    } @else {
+      <app-no-data-status />
+    }
+  </div>
+</section>

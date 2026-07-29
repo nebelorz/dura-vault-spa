@@ -71,6 +71,17 @@ export function toOnlineMenuItems(): MenuItem[] {
   ];
 }
 
+export function toDeathsMenuItems(): MenuItem[] {
+  return [
+    {
+      label: 'Deaths',
+      icon: 'pi pi-database',
+
+      routerLink: ['/deaths'],
+    },
+  ];
+}
+
 export function getSectionLabel(sectionValue: Section): string {
   const standard = HIGHSCORE_SECTIONS.find((s) => s.value === sectionValue);
   if (standard) return standard.label;

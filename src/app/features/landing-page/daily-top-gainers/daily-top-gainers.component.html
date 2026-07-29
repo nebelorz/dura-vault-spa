@@ -1,14 +1,14 @@
-<div class="daily-top">
+<div class="daily-top default-container">
   @if (loading()) {
     <app-loading-status />
   } @else {
     <!-- Experience Section -->
     @if (experiencePlayers().length > 0) {
       <section class="animation-fade">
-        <div class="section-header">
-          <span>EXPERIENCE GAIN</span>
+        <div class="sub-section-header">
+          <span class="sub-section-label">EXPERIENCE GAIN</span>
           @if (maxDate()) {
-            <span class="header-date">{{ maxDate()! | date: 'dd MMM yyyy' }}</span>
+            <span class="text-caption">{{ maxDate()! | date: 'dd MMM yyyy' }}</span>
           }
         </div>
         @for (row of experiencePlayerRows(); track row.name; let i = $index) {
@@ -20,18 +20,18 @@
           >
             <div class="player-main">
               <div class="text-value">{{ row.name }}</div>
-              <span class="text-sub">{{ row.vocation }}</span>
+              <span class="text-subvalue">{{ row.vocation }}</span>
             </div>
             <div class="player-gains">
               @for (col of row.columns; track col.metric) {
                 <app-metric-display
                   [metric]="col.metric"
                   layout="column"
-                  [value]="col.gainValue ?? undefined"
-                  [relativePercentagePointsFromTotal]="col.percentagePointsTotal"
-                  [subValue]="col.currentValue"
-                  [subValueTooltip]="col.currentValueTooltip"
-                  [abbreviate]="col.abbreviate"
+                  [value]="col.value"
+                  [relativePercentagePointsFromTotal]="col.relativePercentagePointsFromTotal"
+                  [subValue]="col.subValue"
+                  [subValueTooltip]="col.subValueTooltip"
+                  [abbreviate]="col.abbreviate ?? true"
                   [valueTooltip]="col.valueTooltip"
                 />
               }
@@ -44,8 +44,8 @@
     <!-- Experience Loss Section -->
     @if (experienceLossPlayerRow(); as row) {
       <section class="animation-fade">
-        <div class="section-header">
-          <span>EXPERIENCE LOSS</span>
+        <div class="sub-section-header">
+          <span class="sub-section-label">EXPERIENCE LOSS</span>
         </div>
         <div
           class="player-row player-row--loss"
@@ -54,18 +54,18 @@
         >
           <div class="player-main">
             <div class="text-value">{{ row.name }}</div>
-            <span class="text-sub">{{ row.vocation }}</span>
+            <span class="text-subvalue">{{ row.vocation }}</span>
           </div>
           <div class="player-gains">
             @for (col of row.columns; track col.metric) {
               <app-metric-display
                 [metric]="col.metric"
                 layout="column"
-                [value]="col.gainValue ?? undefined"
-                [relativePercentagePointsFromTotal]="col.percentagePointsTotal"
-                [subValue]="col.currentValue"
-                [subValueTooltip]="col.currentValueTooltip"
-                [abbreviate]="col.abbreviate"
+                [value]="col.value"
+                [relativePercentagePointsFromTotal]="col.relativePercentagePointsFromTotal"
+                [subValue]="col.subValue"
+                [subValueTooltip]="col.subValueTooltip"
+                [abbreviate]="col.abbreviate ?? true"
                 [valueTooltip]="col.valueTooltip"
               />
             }
@@ -88,8 +88,8 @@
         >
           <ng-template let-section pTemplate="item">
             <section class="animation-fade">
-              <div class="section-header">
-                <span>{{ section.label | uppercase }}</span>
+              <div class="sub-section-header">
+                <span class="sub-section-label">{{ section.label | uppercase }}</span>
               </div>
               @for (row of skillPlayerRows()[section.name]; track row.name) {
                 <div
@@ -99,7 +99,7 @@
                 >
                   <div class="player-main">
                     <div class="text-value">{{ row.name }}</div>
-                    <span class="text-sub">{{ row.vocation }}</span>
+                    <span class="text-subvalue">{{ row.vocation }}</span>
                   </div>
 
                   <div class="player-gains">
@@ -107,10 +107,10 @@
                       <app-metric-display
                         [metric]="col.metric"
                         layout="column"
-                        [value]="col.gainValue ?? undefined"
-                        [subValue]="col.currentValue"
-                        [subValueTooltip]="col.currentValueTooltip"
-                        [abbreviate]="col.abbreviate"
+                        [value]="col.value"
+                        [subValue]="col.subValue"
+                        [subValueTooltip]="col.subValueTooltip"
+                        [abbreviate]="col.abbreviate ?? true"
                         [valueTooltip]="col.valueTooltip"
                       />
                     }

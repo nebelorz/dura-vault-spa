@@ -1,5 +1,4 @@
 @use 'colors' as colors;
-@use 'text' as text;
 
 .account-section {
   display: flex;
@@ -24,7 +23,7 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.4rem 0.5rem;
-  border-radius: 6px;
+  border-radius: var(--radius-default);
   text-decoration: none;
   color: inherit;
   cursor: pointer;
@@ -58,7 +57,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  font-size: 0.5rem;
+  font-size: var(--text-xxs);
   font-weight: bold;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -86,6 +85,6 @@
     opacity: 1;
   }
   50% {
-    opacity: 0.4;
+    opacity: var(--opacity-low);
   }
 }

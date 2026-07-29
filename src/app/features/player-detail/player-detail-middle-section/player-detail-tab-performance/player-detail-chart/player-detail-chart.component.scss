@@ -1,5 +1,5 @@
 @use 'colors' as colors;
-@use 'text' as text;
+@use 'charts' as charts;
 
 :host {
   display: flex;
@@ -8,17 +8,8 @@
   min-height: 0;
 }
 
-.chart-wrapper {
-  position: relative;
-  flex: 1;
-  min-height: 21.875rem;
-  display: flex;
-  flex-direction: column;
+@include charts.chart-layout();
 
-  app-loading-status,
-  app-no-data-status,
-  p-chart {
-    flex: 1;
-    min-height: 0;
-  }
+.sub-section-header {
+  padding-bottom: 0.5rem;
 }

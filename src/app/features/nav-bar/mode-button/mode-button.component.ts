@@ -7,7 +7,7 @@ import { ThemeService } from '@core/services';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-mode-button',
   templateUrl: './mode-button.component.html',
-  styleUrls: ['./mode-button.component.scss'],
+  styleUrl: './mode-button.component.scss',
   imports: [ButtonModule],
 })
 export class ModeButtonComponent {

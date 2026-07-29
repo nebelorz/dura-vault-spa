@@ -1,4 +1,6 @@
-<h3 class="voc-title text-label">Top By Vocation</h3>
+<div class="sub-section-header">
+  <span class="sub-section-label">TOP BY VOCATION</span>
+</div>
 @if (loading()) {
   <app-loading-status />
 } @else if (knight() || paladin() || sorcerer() || druid() || none()) {
@@ -24,7 +26,7 @@
 }
 
 <ng-template #vocationCard let-item>
-  <a class="voc-card" [routerLink]="item.link" [queryParams]="queryParams()">
+  <a class="voc-card" [routerLink]="item.link" [queryParams]="queryParams()" queryParamsHandling="merge">
     <span class="text-label">{{ item.group }}</span>
     <span class="text-value">{{ item.name }}</span>
     <div class="voc-card-details-container">
@@ -33,13 +35,13 @@
           <app-metric-display
             [metric]="data.metric"
             layout="row"
-            [value]="data.gainValue"
+            [value]="data.value"
             [valueTooltip]="data.valueTooltip"
-            [relativePercentagePointsFromTotal]="data.percentagePointsTotal"
+            [relativePercentagePointsFromTotal]="data.relativePercentagePointsFromTotal"
             [subValue]="data.subValue"
             [subValueTooltip]="data.subValueTooltip"
             [showIcon]="false"
-            [abbreviate]="data.abbreviate"
+            [abbreviate]="data.abbreviate ?? true"
           />
         </div>
       }

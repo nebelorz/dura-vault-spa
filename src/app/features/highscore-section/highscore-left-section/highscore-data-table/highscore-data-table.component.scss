@@ -6,11 +6,6 @@
   height: 100%;
 }
 
-app-podium-list {
-  flex: 1;
-  min-height: 0;
-}
-
 // Red podium for experience_loss section
 :host.podium-danger-mode {
   --podium-first-color: #{colors.$danger};

@@ -8,7 +8,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-search-box',
   templateUrl: './search-box.component.html',
-  styleUrls: ['./search-box.component.scss'],
+  styleUrl: './search-box.component.scss',
   imports: [InputTextModule, FloatLabelModule],
 })
 export class SearchBoxComponent {
@@ -21,6 +21,7 @@ export class SearchBoxComponent {
     if (capitalizedQuery) {
       this.router.navigate(['/player', capitalizedQuery], {
         queryParams: { section: 'experience' },
+        queryParamsHandling: 'merge',
       });
 
       input.value = '';

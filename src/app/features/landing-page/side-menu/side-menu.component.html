@@ -1,25 +1,25 @@
-<div class="side-menu">
+<div class="side-menu default-container">
   <!-- Online Section -->
   <section>
-    <div class="section-header">
-      <span>SERVER STATS</span>
+    <div class="sub-section-header">
+      <span class="sub-section-label">SERVER STATS</span>
     </div>
     <p-menu [model]="serverStatsItems" />
   </section>
 
   <!-- Highscores Section -->
   <section>
-    <div class="section-header">
-      <span>HIGHSCORES</span>
+    <div class="sub-section-header">
+      <span class="sub-section-label">HIGHSCORES</span>
     </div>
     <p-menu [model]="highscoresItems" />
   </section>
 
   <!-- Other Sites Section -->
   <section>
-    <div class="section-header">
-      <span>OTHER SITES</span>
+    <div class="sub-section-header">
+      <span class="sub-section-label">OTHER SITES</span>
     </div>
-    <p-menu [model]="otherSitesItems" />
+    <p-menu [model]="otherSitesItems()" />
   </section>
 </div>

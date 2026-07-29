@@ -18,7 +18,7 @@
   display: inline-block;
   width: 1.75rem;
   height: 2px;
-  border-radius: 2px;
+  border-radius: var(--radius-default);
   margin-bottom: 0.2rem;
 
   &--level {
@@ -29,7 +29,6 @@
   }
   &--rank {
     background: var(--color-rank);
-    opacity: 0.45;
   }
 }
 

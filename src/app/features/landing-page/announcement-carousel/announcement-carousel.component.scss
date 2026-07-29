@@ -1,9 +1,9 @@
 ﻿@use 'colors' as colors;
-@use 'animation-jingle' as jingle;
+@use 'animations/jingle' as jingle;
 
 .carousel-container {
   width: 100%;
-  border-radius: 8px;
+  border-radius: var(--radius-container);
   overflow: hidden;
 }
 
@@ -13,7 +13,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: var(--radius-container);
   background-color: colors.$secondary;
 }
 
@@ -29,15 +29,10 @@
 
 .carousel-title {
   margin: 0 0 0.25rem 0;
-  font-size: small;
-  font-weight: bold;
-  opacity: 0.85;
 }
 
 .carousel-description {
   margin: 0;
-  font-size: x-small;
-  opacity: 0.75;
   line-height: 1.5;
   white-space: pre-line;
 }
@@ -52,25 +47,24 @@
 .coffee-logo {
   width: 22px;
   height: auto;
-  opacity: 0.85;
   @include jingle.jingleOnHover();
+  opacity: var(--opacity-high);
 }
 
 .coffee-btn {
-  display: inline-flex;
   align-items: center;
+  background-color: colors.$rank;
+  border-radius: var(--radius-default);
+  color: colors.$surface-dark;
+  display: inline-flex;
+  font-weight: bold;
   gap: 0.4rem;
   margin-top: 0.5rem;
   padding: 0.45rem 1rem;
-  border-radius: 6px;
-  font-size: x-small;
-  font-weight: bold;
   text-decoration: none;
-  color: colors.$surface-dark;
-  background-color: colors.$rank;
   transition: opacity 0.2s ease;
 
   &:hover {
-    opacity: 0.85;
+    opacity: var(--opacity-high);
   }
 }

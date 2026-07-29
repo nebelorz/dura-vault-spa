@@ -9,7 +9,7 @@ import { ButtonModule } from 'primeng/button';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-go-back-button',
   templateUrl: './go-back-button.component.html',
-  styleUrls: ['./go-back-button.component.scss'],
+  styleUrl: './go-back-button.component.scss',
   imports: [ButtonModule],
 })
 export class GoBackButtonComponent {

@@ -1,27 +1,35 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
-import { toMenuItems, toCustomMenuItems, toOnlineMenuItems } from '@core/constants';
+import {
+  toMenuItems,
+  toCustomMenuItems,
+  toOnlineMenuItems,
+  toDeathsMenuItems,
+} from '@core/constants';
+import { ServerService } from '@core/services';
 import { getDuraHomeUrl } from '@shared/functions';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-side-menu',
   templateUrl: './side-menu.component.html',
-  styleUrls: ['./side-menu.component.scss'],
+  styleUrl: './side-menu.component.scss',
   imports: [MenuModule],
 })
 export class SideMenuComponent {
-  readonly serverStatsItems: MenuItem[] = toOnlineMenuItems();
+  private readonly serverService = inject(ServerService);
+
+  readonly serverStatsItems: MenuItem[] = [...toDeathsMenuItems(), ...toOnlineMenuItems()];
 
   readonly highscoresItems: MenuItem[] = [...toMenuItems(), ...toCustomMenuItems()];
 
-  readonly otherSitesItems: MenuItem[] = [
+  readonly otherSitesItems = computed<MenuItem[]>(() => [
     {
       label: 'Dura',
       icon: 'pi pi-link',
-      url: getDuraHomeUrl(),
+      url: getDuraHomeUrl(this.serverService.server()),
       target: '_blank',
     },
     {
@@ -36,5 +44,5 @@ export class SideMenuComponent {
       url: 'https://sites.google.com/view/durawiki/home',
       target: '_blank',
     },
-  ];
+  ]);
 }

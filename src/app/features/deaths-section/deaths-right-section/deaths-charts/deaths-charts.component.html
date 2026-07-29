@@ -1,0 +1,37 @@
+@if (loading()) {
+  <app-loading-status />
+} @else {
+  @if (stats(); as s) {
+    <div class="stats-row animation-fade">
+      <app-stat-card
+        icon="pi pi-list"
+        [value]="s.totalDeaths.toString()"
+        label="Total Deaths"
+        [sublabel]="s.pvpPveSublabel"
+        accentColor="var(--color-danger)"
+      />
+      <app-stat-card
+        icon="pi pi-user"
+        [value]="s.topPvpKiller ? s.topPvpKiller.name : '—'"
+        label="PvP Top Killer"
+        [tooltip]="s.topPvpKiller ? s.topPvpKiller.count + ' kills' : 'No data'"
+        [muted]="!s.topPvpKiller"
+        accentColor="var(--color-danger)"
+      />
+      <app-stat-card
+        icon="pi pi-user"
+        [value]="s.topPveKiller ? s.topPveKiller.name : '—'"
+        label="PvE Top Killer"
+        [tooltip]="s.topPveKiller ? s.topPveKiller.count + ' kills' : 'No data'"
+        [muted]="!s.topPveKiller"
+        accentColor="var(--color-warn)"
+      />
+    </div>
+  }
+
+  <div class="charts-grid">
+    <app-top-pvp-killers-chart [data]="data()" />
+    <app-top-pve-killers-chart [data]="data()" />
+    <app-deaths-by-period-chart [data]="data()" [period]="period()" />
+  </div>
+}

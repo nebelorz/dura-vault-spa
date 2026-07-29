@@ -2,8 +2,8 @@ import { Component, OnInit, signal, inject, computed } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import { OnlineTimelineRecord, OnlineTopRecord, ScrapeDateRange, TimePeriod } from '@core/models';
-import { MetadataService, OnlineService } from '@core/services';
-import { calculateAvailableDataDateRange } from '@shared/functions';
+import { MetadataService, OnlineService, ServerService } from '@core/services';
+import { calculateAvailableDataDateRange, onServerSwitch } from '@shared/functions';
 import { PeriodSelectorComponent } from '@shared/components/period-selector/period-selector.component';
 import { OnlineHeaderComponent } from './online-header/online-header.component';
 import { OnlineDataTableComponent } from './online-activity-left-section/online-activity-data-table/online-activity-data-table.component';
@@ -24,6 +24,7 @@ import { OnlineActivityChartsComponent } from './online-activity-right-section/o
 export class OnlineActivitySectionComponent implements OnInit {
   private readonly onlineService = inject(OnlineService);
   private readonly metadataService = inject(MetadataService);
+  private readonly serverService = inject(ServerService);
 
   // State
   data = signal<OnlineTopRecord[]>([]);
@@ -42,6 +43,13 @@ export class OnlineActivitySectionComponent implements OnInit {
       range.active_comparison_date,
     );
   });
+
+  constructor() {
+    onServerSwitch(this.serverService, () => {
+      void this.loadScrapeDateRange();
+      void this.loadData();
+    });
+  }
 
   ngOnInit(): void {
     void this.loadScrapeDateRange().then(() => this.loadData());
