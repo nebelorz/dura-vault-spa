@@ -6,23 +6,28 @@ import { ServerService } from './server.service';
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
   private readonly serverService = inject(ServerService);
-  private readonly classicClient: SupabaseClient<any, any, any>;
-  private readonly seasonalClient: SupabaseClient<any, any, any>;
-
-  constructor() {
-    this.classicClient = createClient(
-      environment.classic.supabase.url,
-      environment.classic.supabase.anonKey,
-      { db: { schema: 'api' } },
-    );
-    this.seasonalClient = createClient(
-      environment.seasonal.supabase.url,
-      environment.seasonal.supabase.anonKey,
-      { db: { schema: 'api' } },
-    );
-  }
+  private _classicClient: SupabaseClient<any, any, any> | null = null;
+  private _seasonalClient: SupabaseClient<any, any, any> | null = null;
 
   getClient(): SupabaseClient {
-    return this.serverService.server() === 'seasonal' ? this.seasonalClient : this.classicClient;
+    if (this.serverService.server() === 'seasonal') {
+      if (!this._seasonalClient) {
+        this._seasonalClient = createClient(
+          environment.seasonal.supabase.url,
+          environment.seasonal.supabase.anonKey,
+          { db: { schema: 'api' } },
+        );
+      }
+      return this._seasonalClient;
+    }
+
+    if (!this._classicClient) {
+      this._classicClient = createClient(
+        environment.classic.supabase.url,
+        environment.classic.supabase.anonKey,
+        { db: { schema: 'api' } },
+      );
+    }
+    return this._classicClient;
   }
 }
