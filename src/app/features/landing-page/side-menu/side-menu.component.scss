@@ -58,8 +58,8 @@ section {
       }
     }
 
-    a.p-menu-item-link[href='/top/experience_loss'],
-    a.p-menu-item-link[href='/deaths'] {
+    a.p-menu-item-link[href^='/top/experience_loss'],
+    a.p-menu-item-link[href^='/deaths'] {
       .p-menu-item-icon {
         color: colors.$danger;
         opacity: var(--opacity-mid);

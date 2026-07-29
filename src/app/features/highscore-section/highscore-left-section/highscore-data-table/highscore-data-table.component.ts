@@ -105,7 +105,10 @@ export class HighscoreDataTableComponent implements OnInit, OnDestroy {
 
   private navigateToRecord(record: HighscoreRecord): void {
     const section = record.section === 'experience_loss' ? 'experience' : record.section;
-    this.router.navigate(['/player', record.name], { queryParams: { section } });
+    this.router.navigate(['/player', record.name], {
+      queryParams: { section },
+      queryParamsHandling: 'merge',
+    });
   }
 
   private viewPlayerDetails(): void {

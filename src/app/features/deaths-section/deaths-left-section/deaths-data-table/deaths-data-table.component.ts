@@ -27,12 +27,7 @@ import { MenuItem } from 'primeng/api';
   selector: 'app-deaths-data-table',
   templateUrl: './deaths-data-table.component.html',
   styleUrl: './deaths-data-table.component.scss',
-  imports: [
-    ContextMenuModule,
-    PlayerListComponent,
-    LoadingStatusComponent,
-    NoDataStatusComponent,
-  ],
+  imports: [ContextMenuModule, PlayerListComponent, LoadingStatusComponent, NoDataStatusComponent],
 })
 export class DeathsDataTableComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
@@ -105,7 +100,6 @@ export class DeathsDataTableComponent implements OnInit, OnDestroy {
           showLabel: true,
           layout: 'column',
           size: 'md',
-          valueTooltip: record.is_pvp ? 'Player killer' : 'Monster killer',
         },
         {
           metric: 'death_time',
@@ -138,6 +132,7 @@ export class DeathsDataTableComponent implements OnInit, OnDestroy {
   private navigateToPlayer(record: DeathRecord): void {
     this.router.navigate(['/player', record.player_name], {
       queryParams: { section: 'experience' },
+      queryParamsHandling: 'merge',
     });
   }
 

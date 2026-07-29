@@ -4,7 +4,7 @@ p-menubar {
   border: 1px solid colors.$secondary;
 }
 
-::ng-deep a.p-menubar-item-link[href='/top/experience_loss'] {
+::ng-deep a.p-menubar-item-link[href^='/top/experience_loss'] {
   .p-menubar-item-icon {
     color: colors.$danger !important;
     opacity: var(--opacity-mid);
@@ -16,7 +16,7 @@ p-menubar {
   }
 }
 
-::ng-deep a.p-menubar-item-link[href='/deaths'] {
+::ng-deep a.p-menubar-item-link[href^='/deaths'] {
   .p-menubar-item-icon {
     color: colors.$danger !important;
     opacity: var(--opacity-mid);

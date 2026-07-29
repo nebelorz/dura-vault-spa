@@ -118,7 +118,10 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
   }
 
   private navigateToPlayer(record: OnlineTopRecord): void {
-    this.router.navigate(['/player', record.name], { queryParams: { section: 'experience' } });
+    this.router.navigate(['/player', record.name], {
+      queryParams: { section: 'experience' },
+      queryParamsHandling: 'merge',
+    });
   }
 
   private viewPlayerDetails(): void {

@@ -167,6 +167,7 @@ export class PlayerDetailComponent implements OnInit {
 
     void this.router.navigate(['/player', this.playerName()], {
       queryParams: { section },
+      queryParamsHandling: 'merge',
     });
   }
 
@@ -203,6 +204,7 @@ export class PlayerDetailComponent implements OnInit {
       if (resolvedStats.length > 0 && !availableSections.includes(section)) {
         await this.router.navigate(['/player', playerName], {
           queryParams: { section: availableSections[0] },
+          queryParamsHandling: 'merge',
           replaceUrl: true,
         });
         return;

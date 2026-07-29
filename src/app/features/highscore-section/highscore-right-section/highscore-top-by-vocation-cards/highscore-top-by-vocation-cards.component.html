@@ -26,7 +26,7 @@
 }
 
 <ng-template #vocationCard let-item>
-  <a class="voc-card" [routerLink]="item.link" [queryParams]="queryParams()">
+  <a class="voc-card" [routerLink]="item.link" [queryParams]="queryParams()" queryParamsHandling="merge">
     <span class="text-label">{{ item.group }}</span>
     <span class="text-value">{{ item.name }}</span>
     <div class="voc-card-details-container">

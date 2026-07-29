@@ -24,6 +24,7 @@
                 <a
                   [routerLink]="['/player', seg.text]"
                   [queryParams]="{ section: 'experience' }"
+                  queryParamsHandling="merge"
                   class="killer-link"
                   ><img
                     [src]="

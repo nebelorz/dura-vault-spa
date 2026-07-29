@@ -21,6 +21,7 @@ export class SearchBoxComponent {
     if (capitalizedQuery) {
       this.router.navigate(['/player', capitalizedQuery], {
         queryParams: { section: 'experience' },
+        queryParamsHandling: 'merge',
       });
 
       input.value = '';

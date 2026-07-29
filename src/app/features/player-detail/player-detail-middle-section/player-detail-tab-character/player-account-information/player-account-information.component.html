@@ -44,6 +44,7 @@
             [class.account-character-row--current]="char.name.toLowerCase() === currentName()"
             [routerLink]="['/player', char.name]"
             [queryParams]="{ section: 'experience' }"
+            queryParamsHandling="merge"
           >
             <div class="account-character-info">
               <span class="account-character-level text-subvalue">LVL {{ char.level ?? '?' }}</span>

@@ -91,6 +91,7 @@ export class DailyTopGainersComponent {
   navigateToPlayer(playerName: string, section: string): void {
     this.router.navigate(['/player', playerName], {
       queryParams: { section },
+      queryParamsHandling: 'merge',
     });
   }
 }
