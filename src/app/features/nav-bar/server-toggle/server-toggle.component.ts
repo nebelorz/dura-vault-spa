@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnDestroy, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { ServerService } from '@core/services';
 
@@ -9,29 +10,50 @@ import { ServerService } from '@core/services';
   styleUrl: './server-toggle.component.scss',
   imports: [ButtonModule],
 })
-export class ServerToggleComponent {
+export class ServerToggleComponent implements OnDestroy {
   private readonly serverService = inject(ServerService);
+  private readonly router = inject(Router);
   readonly toggling = signal(false);
+  private toggleTimer: ReturnType<typeof setTimeout> | null = null;
 
-  readonly label = computed(() =>
-    this.serverService.server() === 'seasonal' ? 'Seasonal' : 'Classic',
-  );
+  readonly config = computed(() => {
+    const isSeasonal = this.serverService.server() === 'seasonal';
+    return {
+      label: isSeasonal ? 'Seasonal' : 'Classic',
+      severity: isSeasonal ? 'danger' : 'primary',
+      styleClass: isSeasonal ? 'seasonal-active' : '',
+    } as const;
+  });
   readonly icon = 'pi pi-globe';
-  readonly severity = computed(() =>
-    this.serverService.server() === 'seasonal' ? 'danger' : 'primary',
-  );
-  readonly buttonClass = computed(() =>
-    this.serverService.server() === 'seasonal' ? 'seasonal-active' : '',
-  );
+  readonly seasonalDisabled: boolean = !this.serverService.seasonalAvailable;
 
-  toggle(): void {
+  ngOnDestroy(): void {
+    if (this.toggleTimer) {
+      clearTimeout(this.toggleTimer);
+      this.toggleTimer = null;
+    }
+  }
+
+  async toggle(): Promise<void> {
     if (this.toggling()) return;
 
     this.serverService.toggleServer();
     this.toggling.set(true);
 
-    setTimeout(() => {
-      this.toggling.set(false);
-    }, 600);
+    try {
+      await this.router.navigate([], {
+        queryParams: { server: this.serverService.server() },
+        queryParamsHandling: 'merge',
+        replaceUrl: true,
+      });
+    } catch (err) {
+      console.warn('[ServerToggle] Navigation failed after server switch', err);
+    } finally {
+      if (this.toggleTimer) clearTimeout(this.toggleTimer);
+      this.toggleTimer = setTimeout(() => {
+        this.toggling.set(false);
+        this.toggleTimer = null;
+      }, 600);
+    }
   }
 }
