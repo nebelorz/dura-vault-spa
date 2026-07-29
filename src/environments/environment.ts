@@ -9,7 +9,7 @@ export const environment = {
     },
   },
   seasonal: {
-    // Set to `false` and redeploy to disable the seasonal server toggle.
+    // Set to `false` and redeploy to disable the seasonal server data retrieve
     enabled: false,
     dura: {
       baseURL: 'https://aetas.playdura.com',
