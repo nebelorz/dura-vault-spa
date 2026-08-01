@@ -9,7 +9,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { OnlineTopRecord, PodiumListItem, TimePeriod } from '@core/models';
+import { OnlineTopRecord, PodiumListItem, PodiumListItemBadge, TimePeriod } from '@core/models';
 import { ServerService, ToastService } from '@core/services';
 import { DAILY_WARN_MIN, DAILY_DANGER_MIN } from '@core/constants';
 import { getDuraPlayerUrl, buildMetrics } from '@shared/functions';
@@ -101,7 +101,7 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
       meta: `${record.vocation} · Lvl ${record.level}`,
       columns,
       rowClass: this.rowTimeClass(record),
-      podiumClass: this.podiumTimeClass(record),
+      badge: this.timeBadge(record),
     };
   }
 
@@ -111,10 +111,11 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
     return '';
   }
 
-  private podiumTimeClass(record: OnlineTopRecord): string {
-    if (record.average_online_time >= DAILY_DANGER_MIN) return 'podium-base--danger';
-    if (record.average_online_time >= DAILY_WARN_MIN) return 'podium-base--warn';
-    return '';
+  private timeBadge(record: OnlineTopRecord): PodiumListItemBadge | undefined {
+    if (record.average_online_time >= DAILY_DANGER_MIN)
+      return { text: '14h+', class: 'badge--danger' };
+    if (record.average_online_time >= DAILY_WARN_MIN) return { text: '10h+', class: 'badge--warn' };
+    return undefined;
   }
 
   private navigateToPlayer(record: OnlineTopRecord): void {

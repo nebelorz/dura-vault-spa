@@ -111,7 +111,7 @@ export class DeathsDataTableComponent implements OnInit, OnDestroy {
           valueClass: 'text-subvalue',
         },
       ],
-      rowClass: record.is_pvp ? 'list-row--pvp' : 'list-row--pve',
+      rowClass: record.is_pvp ? 'list-row--danger' : 'list-row--warn',
       badge: {
         text: record.is_pvp ? 'PvP' : 'PvE',
         class: record.is_pvp ? 'badge--danger' : 'badge--warn',

@@ -34,27 +34,11 @@
   }
 
   &--warn {
-    background: colors.$warn-a10;
-
-    &:hover {
-      background: colors.$warn-a20;
-    }
+    border-left: 1px solid var(--color-warn);
   }
 
   &--danger {
-    background: colors.$danger-a10;
-
-    &:hover {
-      background: colors.$danger-a20;
-    }
-  }
-
-  &--pvp {
-    border-left: 3px solid var(--color-error, #ef4444);
-  }
-
-  &--pve {
-    border-left: 3px solid var(--color-warn, #ffc107);
+    border-left: 1px solid var(--color-error);
   }
 }
 
