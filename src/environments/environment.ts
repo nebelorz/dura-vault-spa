@@ -1,5 +1,6 @@
 export const environment = {
   classic: {
+    responsePlayerLimit: 100, // The number of players to use on requests for classic
     dura: {
       baseURL: 'https://classic.dura-online.com',
     },
@@ -9,8 +10,8 @@ export const environment = {
     },
   },
   seasonal: {
-    // Set to `false` and redeploy to disable the seasonal server data retrieve
-    enabled: false,
+    enabled: false, // Redeploy to enable/disable seasonal environment toggle and data retrieval
+    responsePlayerLimit: 500, // The number of players to use on requests for seasonal
     dura: {
       baseURL: 'https://aetas.playdura.com',
     },
