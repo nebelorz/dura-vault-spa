@@ -90,7 +90,7 @@ export class DeathsSectionComponent implements OnInit {
       const result = await this.deathsService.getDeaths({
         period: this.selectedPeriod(),
         is_pvp: this.pvpFilter() ?? undefined,
-        limit: 500,
+        limit: this.serverService.responsePlayerLimit(),
       });
       if (result) this.data.set(result);
     } finally {

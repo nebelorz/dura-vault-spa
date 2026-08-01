@@ -1,4 +1,4 @@
-import { Injectable, signal, inject } from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
 import { ServerId, SERVER_STORAGE_KEY, DEFAULT_SERVER } from '@core/constants';
 import { environment } from '@env';
 import { CacheService } from './cache.service';
@@ -9,6 +9,7 @@ export class ServerService {
   private readonly _server = signal<ServerId>(this.getInitialServer());
   readonly server = this._server.asReadonly();
   readonly seasonalAvailable: boolean = environment.seasonal.enabled;
+  readonly responsePlayerLimit = computed(() => environment[this._server()].responsePlayerLimit);
 
   setServer(server: ServerId): void {
     if (server === 'seasonal' && !this.seasonalAvailable) return;

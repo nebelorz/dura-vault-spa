@@ -72,7 +72,10 @@ export class OnlineActivitySectionComponent implements OnInit {
 
     try {
       const [topResult, timelineResult] = await Promise.all([
-        this.onlineService.getTopOnline({ period: this.selectedPeriod(), limit: 100 }),
+        this.onlineService.getTopOnline({
+          period: this.selectedPeriod(),
+          limit: this.serverService.responsePlayerLimit(),
+        }),
         this.onlineService.getOnlineTimeline(this.selectedPeriod()),
       ]);
 

@@ -92,7 +92,7 @@ export class HighscoreSectionComponent implements OnInit {
       const result = await this.highscoreService.getTopGainers({
         period: this.selectedPeriod(),
         section: this.section(),
-        limit: 100,
+        limit: this.serverService.responsePlayerLimit(),
       });
 
       if (result) {
