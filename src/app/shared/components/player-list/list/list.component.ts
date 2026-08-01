@@ -3,6 +3,7 @@ import { NgClass } from '@angular/common';
 
 import { PodiumListItem } from '@core/models/podium-list.model';
 import { MetricDisplayComponent } from '../../metric-display/metric-display.component';
+import { BadgeComponent } from '../../badge/badge.component';
 
 import { TooltipModule } from 'primeng/tooltip';
 
@@ -10,7 +11,7 @@ import { TooltipModule } from 'primeng/tooltip';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   selector: 'app-list',
-  imports: [NgClass, MetricDisplayComponent, TooltipModule],
+  imports: [NgClass, MetricDisplayComponent, TooltipModule, BadgeComponent],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
 })

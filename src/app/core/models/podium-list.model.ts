@@ -1,8 +1,10 @@
+import type { BadgeVariant } from '@shared/components/badge/badge.component';
+
 import { MetricType } from './metric.model';
 
 export interface PodiumListItemBadge {
   text: string;
-  class: string;
+  variant: BadgeVariant;
 }
 
 export interface MetricColumn {

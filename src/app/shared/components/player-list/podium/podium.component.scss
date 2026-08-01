@@ -1,5 +1,4 @@
 @use 'colors' as colors;
-@use '../../../styles/badge-variants' as badge;
 
 :host {
   display: block;
@@ -70,8 +69,7 @@
   &--first {
     height: 90px;
     background: var(--podium-first-bg, #{colors.$rank-a20});
-    border: 1px solid
-      color-mix(in srgb, var(--color-rank), transparent 65%);
+    border: 1px solid color-mix(in srgb, var(--color-rank), transparent 65%);
     border-bottom: none;
   }
 
@@ -128,5 +126,3 @@
   gap: 0.35rem;
   flex-wrap: wrap;
 }
-
-@include badge.badge-base('podium');

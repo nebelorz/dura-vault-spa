@@ -11,7 +11,7 @@
           <div class="podium-name-container">
             <div class="podium-name text-value">{{ second.name }}</div>
             @if (second.badge; as badge) {
-              <span class="podium-badge" [ngClass]="badge.class">{{ badge.text }}</span>
+              <app-badge [text]="badge.text" [variant]="badge.variant" />
             }
           </div>
           <div class="text-subvalue">{{ second.meta }}</div>
@@ -51,7 +51,7 @@
         <div class="podium-name-container">
           <div class="podium-name text-value">{{ first.name }}</div>
           @if (first.badge; as badge) {
-            <span class="podium-badge" [ngClass]="badge.class">{{ badge.text }}</span>
+            <app-badge [text]="badge.text" [variant]="badge.variant" />
           }
         </div>
         <div class="text-subvalue">{{ first.meta }}</div>
@@ -88,7 +88,7 @@
           <div class="podium-name-container">
             <div class="podium-name text-value">{{ third.name }}</div>
             @if (third.badge; as badge) {
-              <span class="podium-badge" [ngClass]="badge.class">{{ badge.text }}</span>
+              <app-badge [text]="badge.text" [variant]="badge.variant" />
             }
           </div>
           <div class="text-subvalue">{{ third.meta }}</div>

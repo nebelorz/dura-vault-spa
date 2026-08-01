@@ -112,9 +112,8 @@ export class OnlineDataTableComponent implements OnInit, OnDestroy {
   }
 
   private timeBadge(record: OnlineTopRecord): PodiumListItemBadge | undefined {
-    if (record.average_online_time >= DAILY_DANGER_MIN)
-      return { text: '14h+', class: 'badge--danger' };
-    if (record.average_online_time >= DAILY_WARN_MIN) return { text: '10h+', class: 'badge--warn' };
+    if (record.average_online_time >= DAILY_DANGER_MIN) return { text: '14h+', variant: 'danger' };
+    if (record.average_online_time >= DAILY_WARN_MIN) return { text: '10h+', variant: 'warn' };
     return undefined;
   }
 

@@ -12,7 +12,7 @@
         <div class="list-meta-row">
           <span class="list-meta text-subvalue">{{ item.meta }}</span>
           @if (item.badge; as badge) {
-            <span class="list-badge" [ngClass]="badge.class">{{ badge.text }}</span>
+            <app-badge [text]="badge.text" [variant]="badge.variant" />
           }
         </div>
       </div>

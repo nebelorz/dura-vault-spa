@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { NgClass } from '@angular/common';
 
+import { BadgeComponent } from '../../badge/badge.component';
 import { PodiumListItem } from '@core/models/podium-list.model';
 import { MetricDisplayComponent } from '../../metric-display/metric-display.component';
 
@@ -10,7 +11,7 @@ import { TooltipModule } from 'primeng/tooltip';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   selector: 'app-podium',
-  imports: [NgClass, MetricDisplayComponent, TooltipModule],
+  imports: [NgClass, MetricDisplayComponent, TooltipModule, BadgeComponent],
   templateUrl: './podium.component.html',
   styleUrl: './podium.component.scss',
 })

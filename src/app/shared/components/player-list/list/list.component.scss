@@ -1,5 +1,4 @@
 @use 'colors' as colors;
-@use '../../../styles/badge-variants' as badge;
 
 :host {
   display: flex;
@@ -81,4 +80,3 @@
   flex-wrap: wrap;
 }
 
-@include badge.badge-base('list');
