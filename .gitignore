@@ -8,6 +8,7 @@
 
 # Node
 .env
+.env*.local
 /node_modules
 npm-debug.log
 yarn-error.log
@@ -40,6 +41,7 @@ yarn-error.log
 testem.log
 /typings
 __screenshots__/
+.vercel
 TODO.md
 
 # System files
@@ -52,3 +54,4 @@ Thumbs.db
 opencode.json
 AGENTS.md
 skills-lock.json
+openspec
