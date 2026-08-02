@@ -9,7 +9,10 @@ import { TopPveKillersChartComponent } from './top-pve-killers-chart/top-pve-kil
 
 interface StatsSummary {
   totalDeaths: number;
-  pvpPveSublabel: string;
+  pvpCount: number;
+  pveCount: number;
+  pvpPct: string;
+  pvePct: string;
   topPvpKiller: { name: string; count: number } | null;
   topPveKiller: { name: string; count: number } | null;
 }
@@ -41,7 +44,6 @@ export class DeathsChartsComponent {
     const pveCount = totalDeaths - pvpCount;
     const pvpPct = ((pvpCount / totalDeaths) * 100).toFixed(0);
     const pvePct = ((pveCount / totalDeaths) * 100).toFixed(0);
-    const pvpPveSublabel = `PvP ${pvpPct}% · PvE ${pvePct}%`;
 
     const pvpKills: Record<string, number> = {};
     const pveKills: Record<string, number> = {};
@@ -64,6 +66,6 @@ export class DeathsChartsComponent {
       ? { name: topPveKillerEntry[0], count: topPveKillerEntry[1] }
       : null;
 
-    return { totalDeaths, pvpPveSublabel, topPvpKiller, topPveKiller };
+    return { totalDeaths, pvpCount, pveCount, pvpPct, pvePct, topPvpKiller, topPveKiller };
   });
 }

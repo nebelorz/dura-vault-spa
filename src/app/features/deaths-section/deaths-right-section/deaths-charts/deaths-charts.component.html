@@ -4,12 +4,32 @@
   @if (stats(); as s) {
     <div class="stats-row animation-fade">
       <app-stat-card
-        icon="pi pi-list"
         [value]="s.totalDeaths.toString()"
         label="Total Deaths"
-        [sublabel]="s.pvpPveSublabel"
         accentColor="var(--color-danger)"
-      />
+      >
+        <div cardFooter class="deaths-breakdown">
+          <div class="deaths-breakdown-bar" aria-hidden="true">
+            <span
+              class="deaths-breakdown-segment deaths-breakdown-segment--pvp"
+              [style.width.%]="(s.pvpCount / s.totalDeaths) * 100"
+            ></span>
+            <span
+              class="deaths-breakdown-segment deaths-breakdown-segment--pve"
+              [style.width.%]="(s.pveCount / s.totalDeaths) * 100"
+            ></span>
+          </div>
+          <div class="deaths-breakdown-legend">
+            <span class="deaths-breakdown-label">PvP</span>
+            <span class="deaths-breakdown-count">{{ s.pvpCount.toLocaleString('en-US') }}</span>
+            <span class="deaths-breakdown-pct">({{ s.pvpPct }}%)</span>
+            <span class="deaths-breakdown-legend-separator" aria-hidden="true"></span>
+            <span class="deaths-breakdown-label">PvE</span>
+            <span class="deaths-breakdown-count">{{ s.pveCount.toLocaleString('en-US') }}</span>
+            <span class="deaths-breakdown-pct">({{ s.pvePct }}%)</span>
+          </div>
+        </div>
+      </app-stat-card>
       <app-stat-card
         icon="pi pi-user"
         [value]="s.topPvpKiller ? s.topPvpKiller.name : '—'"

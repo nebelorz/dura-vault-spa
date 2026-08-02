@@ -19,3 +19,57 @@
   grid-template-rows: repeat(3, 1fr);
   gap: 0.75rem;
 }
+
+.deaths-breakdown {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 0.25rem;
+}
+
+.deaths-breakdown-bar {
+  display: flex;
+  width: 100%;
+  height: 0.3rem;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.deaths-breakdown-segment {
+  height: 100%;
+  opacity: var(--opacity-mid);
+
+  &--pvp {
+    background: var(--color-danger);
+  }
+
+  &--pve {
+    background: var(--color-warn);
+  }
+}
+
+.deaths-breakdown-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  font-size: var(--text-sm);
+}
+
+.deaths-breakdown-label {
+  font-weight: bold;
+}
+
+.deaths-breakdown-pct {
+  opacity: var(--opacity-mid);
+}
+
+.deaths-breakdown-legend-separator {
+  width: 0.2rem;
+  height: 0.2rem;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: var(--opacity-mid);
+  flex-shrink: 0;
+}
