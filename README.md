@@ -158,7 +158,8 @@ src/
 │   │   │                #   loading-status, minimalist-icon, no-data-status,
 │   │   │                #   period-selector, podium-list, toast
 │   │   ├── functions/   # formatNumber, formatDate, getDuraPlayerUrl,
-│   │   │                #   calculateAvailableDataDateRange, formatMinutesToHours
+│   │   │                #   resolvePeriodRange, formatMinutesToHours
+
 │   │   ├── pipes/       # abbreviateNumber, minutesToHours, removeMinus, titlecaseSpaces
 │   │   └── styles/      # _colors.scss, _animation-fade.scss, _text.scss
 │   │
