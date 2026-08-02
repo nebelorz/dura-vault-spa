@@ -1,5 +1,5 @@
 export * from './build-metric';
-export * from './calculate-available-data-date-range';
+export * from './resolve-period-range';
 export * from './format-date';
 export * from './format-large-numbers';
 export * from './format-minutes-to-hours';
