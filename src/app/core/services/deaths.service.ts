@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 
-import { BaseApiService, CacheService, SupabaseService, ToastService } from '@core/services';
+import { BaseApiService, SupabaseService, ToastService } from '@core/services';
 import { DeathParams, DeathRecord } from '@core/models';
 
 @Injectable({
@@ -8,7 +8,6 @@ import { DeathParams, DeathRecord } from '@core/models';
 })
 export class DeathsService extends BaseApiService {
   private supabaseService = inject(SupabaseService);
-  protected cacheService = inject(CacheService);
   protected toastService = inject(ToastService);
   protected get supabase() {
     return this.supabaseService.getClient();
@@ -19,10 +18,8 @@ export class DeathsService extends BaseApiService {
     showErrorToast: boolean = true,
   ): Promise<DeathRecord[] | null> {
     const { period = 'day', player_name, killer_name, is_pvp, limit = 100 } = params;
-    const cacheKey = `deaths_${period}_${player_name ?? ''}_${killer_name ?? ''}_${is_pvp ?? ''}_${limit}`;
 
-    return this.fetchWithCache<DeathRecord[]>(
-      cacheKey,
+    return this.fetchRpc<DeathRecord[]>(
       'get_deaths',
       {
         p_period: period,
@@ -33,9 +30,5 @@ export class DeathsService extends BaseApiService {
       },
       { errorContext: 'deaths data', errorTitle: 'Deaths Error', showErrorToast },
     );
-  }
-
-  clearAllData(): void {
-    this.cacheService.clearByPattern('deaths_');
   }
 }

@@ -1,11 +1,9 @@
-import { Injectable, signal, computed, inject } from '@angular/core';
+import { Injectable, signal, computed } from '@angular/core';
 import { ServerId, SERVER_STORAGE_KEY, DEFAULT_SERVER } from '@core/constants';
 import { environment } from '@env';
-import { CacheService } from './cache.service';
 
 @Injectable({ providedIn: 'root' })
 export class ServerService {
-  private readonly cacheService = inject(CacheService);
   private readonly _server = signal<ServerId>(this.getInitialServer());
   readonly server = this._server.asReadonly();
   readonly seasonalAvailable: boolean = environment.seasonal.enabled;
@@ -15,7 +13,6 @@ export class ServerService {
     if (server === 'seasonal' && !this.seasonalAvailable) return;
     if (this._server() !== server) {
       this._server.set(server);
-      this.cacheService.clearAll();
       this.persist();
     }
   }

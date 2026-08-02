@@ -1,13 +1,11 @@
 import { inject, Injectable, signal } from '@angular/core';
 
 import { CharacterProfileData, CharacterProfileResult } from '@core/models';
-import { CacheService } from './cache.service';
 import { ServerService } from './server.service';
 import { ToastService } from './toast.service';
 
 @Injectable({ providedIn: 'root' })
 export class CharacterProfileService {
-  private readonly cacheService = inject(CacheService);
   private readonly serverService = inject(ServerService);
   private readonly toastService = inject(ToastService);
 
@@ -16,9 +14,6 @@ export class CharacterProfileService {
 
   async getCharacterProfile(name: string): Promise<CharacterProfileResult> {
     const server = this.serverService.server();
-    const key = `character_profile_${name}`;
-    const cached = this.cacheService.get<CharacterProfileResult>(key);
-    if (cached) return cached;
 
     this.loading.set(true);
     this.error.set(null);
@@ -33,7 +28,6 @@ export class CharacterProfileService {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data: CharacterProfileData = await res.json();
       const result: CharacterProfileResult = { status: 'found', data };
-      this.cacheService.set(key, result);
       return result;
     } catch {
       const errorMessage = 'Could not load character details from Dura page.';
@@ -43,9 +37,5 @@ export class CharacterProfileService {
     } finally {
       this.loading.set(false);
     }
-  }
-
-  clearAllData(): void {
-    this.cacheService.clearByPattern('character_profile');
   }
 }

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 
-import { BaseApiService, CacheService, SupabaseService, ToastService } from '@core/services';
+import { BaseApiService, SupabaseService, ToastService } from '@core/services';
 import {
   PlayerAchievement,
   PlayerHistoricRequest,
@@ -13,7 +13,6 @@ import {
 })
 export class PlayerDetailsService extends BaseApiService {
   private supabaseService = inject(SupabaseService);
-  protected cacheService = inject(CacheService);
   protected toastService = inject(ToastService);
   protected get supabase() {
     return this.supabaseService.getClient();
@@ -23,9 +22,7 @@ export class PlayerDetailsService extends BaseApiService {
     request: PlayerHistoricRequest,
     showErrorToast: boolean = true,
   ): Promise<PlayerHistoricResponse | null> {
-    const cacheKey = `player_historic_${request.p_name}_${request.p_section}_${request.p_period}`;
-
-    return this.fetchWithCache<PlayerHistoricResponse>(cacheKey, 'get_player_historic', request, {
+    return this.fetchRpc<PlayerHistoricResponse>('get_player_historic', request, {
       errorContext: 'player historic',
       errorTitle: 'Player Historic Error',
       showErrorToast,
@@ -33,10 +30,8 @@ export class PlayerDetailsService extends BaseApiService {
   }
 
   async getPlayerStats(name: string): Promise<PlayerStatsRecord[]> {
-    const cacheKey = `player_stats_${name}`;
     return (
-      (await this.fetchWithCache<PlayerStatsRecord[]>(
-        cacheKey,
+      (await this.fetchRpc<PlayerStatsRecord[]>(
         'get_player_stats',
         { p_name: name },
         {
@@ -49,10 +44,8 @@ export class PlayerDetailsService extends BaseApiService {
   }
 
   async getPlayerAchievements(name: string): Promise<PlayerAchievement[]> {
-    const cacheKey = `player_achievements_${name}`;
     return (
-      (await this.fetchWithCache<PlayerAchievement[]>(
-        cacheKey,
+      (await this.fetchRpc<PlayerAchievement[]>(
         'get_player_achievements',
         { p_name: name },
         {
@@ -62,11 +55,5 @@ export class PlayerDetailsService extends BaseApiService {
         },
       )) ?? []
     );
-  }
-
-  clearAllData(): void {
-    this.cacheService.clearByPattern('player_historic');
-    this.cacheService.clearByPattern('player_stats');
-    this.cacheService.clearByPattern('player_achievements');
   }
 }
