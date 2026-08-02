@@ -1,13 +1,13 @@
 ﻿import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-import { PlayerAchievement } from '@core/models';
+import { HighscoreSection, PlayerAchievement } from '@core/models';
 import {
   ACHIEVEMENT_CATEGORY_LABEL,
-  ACHIEVEMENT_SECTION_LABEL,
-  COMBAT_SKILL_ORDER,
   AchievementBadgeStyle,
+  HIGHSCORE_SECTIONS,
   getCategoryBadgeStyle,
+  getSectionLabel,
 } from '@core/constants';
 import {
   NoDataStatusComponent,
@@ -16,17 +16,6 @@ import {
 } from '@shared/components';
 import { Accordion, AccordionContent, AccordionHeader, AccordionPanel } from 'primeng/accordion';
 import { AchievementBadgeComponent } from './achievement-badge/achievement-badge.component';
-
-const CATEGORY_PATHS: Record<string, string> = {
-  // Flat hexagon — level, magic_level, combat_skills
-  level: 'M50 5 L90 27.5 L90 72.5 L50 95 L10 72.5 L10 27.5 Z',
-  magic_level: 'M50 5 L90 27.5 L90 72.5 L50 95 L10 72.5 L10 27.5 Z',
-  combat_skills: 'M50 5 L90 27.5 L90 72.5 L50 95 L10 72.5 L10 27.5 Z',
-  // Circle — fishing
-  fishing: 'M50 5 A45 45 0 1 0 50 95 A45 45 0 1 0 50 5 Z',
-};
-
-const DEFAULT_PATH = CATEGORY_PATHS['level'];
 
 interface AchievementGroup {
   category: string;
@@ -39,12 +28,11 @@ interface DisplayMilestone extends PlayerAchievement {
 }
 
 interface AchievementSectionGroup {
-  section: string;
+  section: HighscoreSection;
   sectionLabel: string;
   milestones: DisplayMilestone[];
   highestMilestone: number;
   badgeStyle: AchievementBadgeStyle;
-  path: string;
 }
 
 @Component({
@@ -72,8 +60,8 @@ export class PlayerAchievementsComponent {
   readonly groups = computed<AchievementGroup[]>(() => {
     const all = this.achievements();
 
-    const categoryOrder = ['level', 'magic_level', 'combat_skills', 'fishing'];
-    const grouped = new Map<string, Map<string, PlayerAchievement[]>>();
+    const categoryOrder = ['level', 'magic', 'skill'];
+    const grouped = new Map<string, Map<HighscoreSection, PlayerAchievement[]>>();
 
     for (const a of all) {
       if (!grouped.has(a.category)) grouped.set(a.category, new Map());
@@ -99,17 +87,16 @@ export class PlayerAchievementsComponent {
             });
             return {
               section: sec,
-              sectionLabel: ACHIEVEMENT_SECTION_LABEL[sec] ?? sec,
+              sectionLabel: getSectionLabel(sec),
               milestones: displayMilestones,
               highestMilestone,
               badgeStyle: getCategoryBadgeStyle(cat),
-              path: CATEGORY_PATHS[cat] ?? DEFAULT_PATH,
             };
           })
-          .sort((a, b) =>
-            cat === 'combat_skills'
-              ? COMBAT_SKILL_ORDER.indexOf(a.section) - COMBAT_SKILL_ORDER.indexOf(b.section)
-              : a.sectionLabel.localeCompare(b.sectionLabel),
+          .sort(
+            (a, b) =>
+              HIGHSCORE_SECTIONS.findIndex((s) => s.value === a.section) -
+              HIGHSCORE_SECTIONS.findIndex((s) => s.value === b.section),
           ),
       }));
   });

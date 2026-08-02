@@ -44,8 +44,8 @@ export interface PlayerHistoricRequest {
 }
 
 export interface PlayerAchievement {
-  category: string; // 'level' | 'magic_level' | 'combat_skills' | 'fishing'
-  section: string; // 'experience' | 'magic' | 'sword' | 'axe' | 'club' | 'fist' | 'shield' | 'distance' | 'fishing'
+  category: 'level' | 'magic' | 'skill';
+  section: HighscoreSection;
   milestone: number;
   achieved_date: string;
 }
