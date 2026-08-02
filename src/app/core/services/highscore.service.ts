@@ -14,15 +14,16 @@ export class HighscoreService extends BaseApiService {
   }
 
   async getTopGainers(
-    params: TopGainersParams = { section: 'experience', period: 'day', limit: 25 },
+    params: TopGainersParams = { section: 'experience', from: null, to: null, limit: 25 },
     showErrorToast: boolean = true,
   ): Promise<HighscoreRecord[] | null> {
-    const { period = 'week', section = null, limit = 25 } = params;
+    const { from = null, to = null, section = null, limit = 25 } = params;
 
     return this.fetchRpc<HighscoreRecord[]>(
       'get_top_gainers',
       {
-        p_period: period,
+        p_from_date: from,
+        p_to_date: to,
         p_section: section,
         p_limit: limit,
       },

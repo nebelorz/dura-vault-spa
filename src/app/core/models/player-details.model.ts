@@ -1,4 +1,3 @@
-import { TimePeriod } from './common.model';
 import { HighscoreSection } from './highscore.model';
 
 export interface PlayerStatsRecord {
@@ -40,7 +39,8 @@ export interface PlayerHistoricResponse {
 export interface PlayerHistoricRequest {
   p_name: string;
   p_section: HighscoreSection;
-  p_period: TimePeriod;
+  p_from_date: string | null;
+  p_to_date: string | null;
 }
 
 export interface PlayerAchievement {

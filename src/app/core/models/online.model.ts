@@ -1,5 +1,3 @@
-import { TimePeriod } from './common.model';
-
 export interface OnlineTopRecord {
   rank: number;
   name: string;
@@ -13,7 +11,8 @@ export interface OnlineTopRecord {
 }
 
 export interface OnlineTopParams {
-  period?: TimePeriod;
+  from?: string | null;
+  to?: string | null;
   limit: number;
 }
 

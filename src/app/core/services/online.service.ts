@@ -6,7 +6,6 @@ import {
   OnlineTopParams,
   OnlineTopRecord,
   PlayerOnlineResponse,
-  TimePeriod,
 } from '@core/models';
 
 @Injectable({
@@ -20,37 +19,39 @@ export class OnlineService extends BaseApiService {
   }
 
   async getTopOnline(
-    params: OnlineTopParams = { period: 'day', limit: 25 },
+    params: OnlineTopParams = { from: null, to: null, limit: 25 },
     showErrorToast: boolean = true,
   ): Promise<OnlineTopRecord[] | null> {
-    const { period = 'day', limit = 25 } = params;
+    const { from = null, to = null, limit = 25 } = params;
 
     return this.fetchRpc<OnlineTopRecord[]>(
       'get_top_online',
-      { p_period: period, p_limit: limit },
+      { p_from_date: from, p_to_date: to, p_limit: limit },
       { errorContext: 'online top data', errorTitle: 'Online Error', showErrorToast },
     );
   }
 
   async getPlayerOnlineHistory(
     p_name: string,
-    p_period: TimePeriod,
+    p_from_date: string | null,
+    p_to_date: string | null,
     showErrorToast: boolean = true,
   ): Promise<PlayerOnlineResponse | null> {
     return this.fetchRpc<PlayerOnlineResponse>(
       'get_online_stats',
-      { p_name, p_period },
+      { p_name, p_from_date, p_to_date },
       { errorContext: 'player online history', errorTitle: 'Online Error', showErrorToast },
     );
   }
 
   async getOnlineTimeline(
-    p_period: TimePeriod,
+    p_from_date: string | null,
+    p_to_date: string | null,
     showErrorToast: boolean = false,
   ): Promise<OnlineTimelineRecord[] | null> {
     return this.fetchRpc<OnlineTimelineRecord[]>(
       'get_online_server_timeline',
-      { p_period },
+      { p_from_date, p_to_date },
       { errorContext: 'online server timeline', errorTitle: 'Online Error', showErrorToast },
     );
   }

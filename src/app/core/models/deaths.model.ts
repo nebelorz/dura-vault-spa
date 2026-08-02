@@ -1,5 +1,3 @@
-import { TimePeriod } from './common.model';
-
 export interface DeathRecord {
   id: number;
   player_name: string;
@@ -11,7 +9,8 @@ export interface DeathRecord {
 }
 
 export interface DeathParams {
-  period?: TimePeriod;
+  from?: string | null;
+  to?: string | null;
   player_name?: string;
   killer_name?: string;
   is_pvp?: boolean;

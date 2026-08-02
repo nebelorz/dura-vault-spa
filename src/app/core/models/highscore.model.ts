@@ -1,5 +1,3 @@
-import { TimePeriod } from './common.model';
-
 export type HighscoreSection =
   | 'experience'
   | 'magic'
@@ -29,7 +27,8 @@ export interface HighscoreRecord {
 }
 
 export interface TopGainersParams {
-  period?: TimePeriod;
+  from?: string | null;
+  to?: string | null;
   section: Section | null;
   limit: number;
 }
