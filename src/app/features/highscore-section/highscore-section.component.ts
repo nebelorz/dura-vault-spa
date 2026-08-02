@@ -4,7 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { HighscoreRecord, Section, ScrapeDateRange, TimePeriod } from '@core/models';
 import { HighscoreService, MetadataService, ServerService } from '@core/services';
-import { calculateAvailableDataDateRange, onServerSwitch } from '@shared/functions';
+import { onServerSwitch, resolvePeriodRange } from '@shared/functions';
 import { DatePipe } from '@angular/common';
 import { HighscoreDataTableComponent } from './highscore-left-section/highscore-data-table/highscore-data-table.component';
 import { HighscoreHeaderComponent } from './highscore-header/highscore-header.component';
@@ -39,16 +39,24 @@ export class HighscoreSectionComponent implements OnInit {
   section = signal<Section>('experience');
   selectedPeriod = signal<TimePeriod>('day');
 
-  // Computed date range for period
-  dateRange = computed(() => {
+  private dataRequestId = 0;
+
+  // Single period window shared by the data requests and the label
+  window = computed(() => {
     const period = this.selectedPeriod();
-    const dateRange = this.scrapeDateRange();
-    if (!dateRange?.active_comparison_date) return [];
-    return calculateAvailableDataDateRange(
-      period,
-      dateRange.min_scrape_date ?? null,
-      dateRange.active_comparison_date,
-    );
+    const range = this.scrapeDateRange();
+    if (!range) return null;
+    const maxDate = range.max_scrape_date;
+    if (!maxDate) return null;
+    return resolvePeriodRange(period, range.min_scrape_date ?? null, maxDate);
+  });
+
+  // Display date range for the label (keeps the existing string[] shape)
+  dateRange = computed<string[]>(() => {
+    const w = this.window();
+    if (!w) return [];
+    if (w.from === w.to) return [w.from];
+    return [w.from, w.to];
   });
 
   constructor() {
@@ -85,21 +93,32 @@ export class HighscoreSectionComponent implements OnInit {
   }
 
   private async loadData(): Promise<void> {
+    const requestId = ++this.dataRequestId;
+    const window = this.window();
+    if (!window) {
+      this.loading.set(false);
+      return;
+    }
+
     this.loading.set(true);
     this.data.set([]);
 
     try {
       const result = await this.highscoreService.getTopGainers({
-        period: this.selectedPeriod(),
+        from: window.from,
+        to: window.to,
         section: this.section(),
         limit: this.serverService.responsePlayerLimit(),
       });
 
+      if (requestId !== this.dataRequestId) return;
       if (result) {
         this.data.set(result);
       }
     } finally {
-      this.loading.set(false);
+      if (requestId === this.dataRequestId) {
+        this.loading.set(false);
+      }
     }
   }
 }

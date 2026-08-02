@@ -3,7 +3,7 @@ import { DatePipe } from '@angular/common';
 
 import { OnlineTimelineRecord, OnlineTopRecord, ScrapeDateRange, TimePeriod } from '@core/models';
 import { MetadataService, OnlineService, ServerService } from '@core/services';
-import { calculateAvailableDataDateRange, onServerSwitch } from '@shared/functions';
+import { onServerSwitch, resolvePeriodRange } from '@shared/functions';
 import { PeriodSelectorComponent } from '@shared/components/period-selector/period-selector.component';
 import { OnlineHeaderComponent } from './online-header/online-header.component';
 import { OnlineDataTableComponent } from './online-activity-left-section/online-activity-data-table/online-activity-data-table.component';
@@ -33,15 +33,24 @@ export class OnlineActivitySectionComponent implements OnInit {
   selectedPeriod = signal<TimePeriod>('day');
   scrapeDateRange = signal<ScrapeDateRange | null>(null);
 
-  // Computed
-  dateRange = computed<string[]>(() => {
+  private dataRequestId = 0;
+
+  // Single period window shared by the data requests and the label
+  window = computed(() => {
+    const period = this.selectedPeriod();
     const range = this.scrapeDateRange();
-    if (!range?.active_comparison_date) return [];
-    return calculateAvailableDataDateRange(
-      this.selectedPeriod(),
-      range.min_scrape_date ?? null,
-      range.active_comparison_date,
-    );
+    if (!range) return null;
+    const maxDate = range.max_scrape_date;
+    if (!maxDate) return null;
+    return resolvePeriodRange(period, range.min_scrape_date ?? null, maxDate);
+  });
+
+  // Display date range for the label (keeps the existing string[] shape)
+  dateRange = computed<string[]>(() => {
+    const w = this.window();
+    if (!w) return [];
+    if (w.from === w.to) return [w.from];
+    return [w.from, w.to];
   });
 
   constructor() {
@@ -66,6 +75,13 @@ export class OnlineActivitySectionComponent implements OnInit {
   }
 
   private async loadData(): Promise<void> {
+    const requestId = ++this.dataRequestId;
+    const window = this.window();
+    if (!window) {
+      this.loading.set(false);
+      return;
+    }
+
     this.loading.set(true);
     this.data.set([]);
     this.timeline.set([]);
@@ -73,12 +89,14 @@ export class OnlineActivitySectionComponent implements OnInit {
     try {
       const [topResult, timelineResult] = await Promise.all([
         this.onlineService.getTopOnline({
-          period: this.selectedPeriod(),
+          from: window.from,
+          to: window.to,
           limit: this.serverService.responsePlayerLimit(),
         }),
-        this.onlineService.getOnlineTimeline(this.selectedPeriod()),
+        this.onlineService.getOnlineTimeline(window.from, window.to),
       ]);
 
+      if (requestId !== this.dataRequestId) return;
       if (topResult) {
         this.data.set(topResult);
       }
@@ -86,7 +104,9 @@ export class OnlineActivitySectionComponent implements OnInit {
         this.timeline.set(timelineResult);
       }
     } finally {
-      this.loading.set(false);
+      if (requestId === this.dataRequestId) {
+        this.loading.set(false);
+      }
     }
   }
 }

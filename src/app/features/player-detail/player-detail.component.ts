@@ -4,8 +4,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { CharacterProfileService, OnlineService, PlayerDetailsService, ServerService } from '@core/services';
-import { onServerSwitch } from '@shared/functions';
+import {
+  CharacterProfileService,
+  MetadataService,
+  OnlineService,
+  PlayerDetailsService,
+  ServerService,
+} from '@core/services';
+import { onServerSwitch, resolvePeriodRange } from '@shared/functions';
 import {
   CharacterProfileResult,
   HighscoreSection,
@@ -54,6 +60,7 @@ export class PlayerDetailComponent implements OnInit {
   private profileRequestId = 0;
   private readonly characterProfileService = inject(CharacterProfileService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly metadataService = inject(MetadataService);
   private readonly onlineService = inject(OnlineService);
   private readonly playerDetailsService = inject(PlayerDetailsService);
   private readonly route = inject(ActivatedRoute);
@@ -181,16 +188,44 @@ export class PlayerDetailComponent implements OnInit {
     this.resetDetailsState();
 
     try {
+      const [historicRange, onlineRange] = await Promise.all([
+        this.metadataService.getScrapeDates('highscore_top', false),
+        this.metadataService.getScrapeDates('online_top', false),
+      ]);
+
+      const historicWindow = historicRange?.max_scrape_date
+        ? resolvePeriodRange(
+            period,
+            historicRange.min_scrape_date ?? null,
+            historicRange.max_scrape_date,
+          )
+        : null;
+      const onlineWindow = onlineRange?.max_scrape_date
+        ? resolvePeriodRange(
+            period,
+            onlineRange.min_scrape_date ?? null,
+            onlineRange.max_scrape_date,
+          )
+        : null;
+
+      if (!historicWindow || !onlineWindow) return;
+
       const request: PlayerHistoricRequest = {
         p_name: playerName,
         p_section: section,
-        p_period: period,
+        p_from_date: historicWindow.from,
+        p_to_date: historicWindow.to,
       };
 
       const [data, stats, onlineData] = await Promise.all([
         this.playerDetailsService.getPlayerHistoric(request),
         this.playerDetailsService.getPlayerStats(playerName),
-        this.onlineService.getPlayerOnlineHistory(playerName, period, false),
+        this.onlineService.getPlayerOnlineHistory(
+          playerName,
+          onlineWindow.from,
+          onlineWindow.to,
+          false,
+        ),
       ]);
 
       if (requestId !== this.detailsRequestId) return;

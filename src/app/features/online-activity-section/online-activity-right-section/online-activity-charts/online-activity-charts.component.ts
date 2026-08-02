@@ -45,7 +45,6 @@ export class OnlineActivityChartsComponent {
   timeline = input.required<OnlineTimelineRecord[]>();
   loading = input.required<boolean>();
   period = input.required<TimePeriod>();
-  activeComparisonDate = input<string | null>(null);
 
   // Computed
   readonly stats = computed<StatsSummary | null>(() => {
@@ -66,10 +65,7 @@ export class OnlineActivityChartsComponent {
         }
       : null;
 
-    const cutoff = this.activeComparisonDate();
-    const entries = cutoff
-      ? this.timeline().filter((e) => e.activity_date <= cutoff)
-      : this.timeline().slice(0, -1);
+    const entries = this.timeline();
     const peak =
       entries.length >= 1
         ? entries.reduce((best, e) => (e.total_minutes > best.total_minutes ? e : best), entries[0])

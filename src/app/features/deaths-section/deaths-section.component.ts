@@ -5,8 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 import { DeathRecord, ScrapeDateRange, TimePeriod } from '@core/models';
 import { DeathsService, MetadataService, ServerService } from '@core/services';
-import { calculateAvailableDataDateRange } from '@shared/functions';
-import { onServerSwitch } from '@shared/functions';
+import { onServerSwitch, resolvePeriodRange } from '@shared/functions';
 import { PeriodSelectorComponent } from '@shared/components/period-selector/period-selector.component';
 import { DeathsHeaderComponent } from './deaths-header/deaths-header.component';
 import { DeathsDataTableComponent } from './deaths-left-section/deaths-data-table/deaths-data-table.component';
@@ -37,6 +36,26 @@ export class DeathsSectionComponent implements OnInit {
   pvpFilter = signal<boolean | null>(null);
   scrapeDateRange = signal<ScrapeDateRange | null>(null);
 
+  private dataRequestId = 0;
+
+  // Single period window shared by the data requests and the label
+  window = computed(() => {
+    const period = this.selectedPeriod();
+    const range = this.scrapeDateRange();
+    if (!range) return null;
+    const maxDate = range.max_scrape_date;
+    if (!maxDate) return null;
+    return resolvePeriodRange(period, range.min_scrape_date ?? null, maxDate);
+  });
+
+  // Display date range for the label (keeps the existing string[] shape)
+  dateRange = computed<string[]>(() => {
+    const w = this.window();
+    if (!w) return [];
+    if (w.from === w.to) return [w.from];
+    return [w.from, w.to];
+  });
+
   protected readonly pvpFilterOptions = [
     { label: 'All', value: null },
     { label: 'PvP', value: true },
@@ -50,16 +69,6 @@ export class DeathsSectionComponent implements OnInit {
       void this.loadData();
     });
   }
-
-  dateRange = computed<string[]>(() => {
-    const range = this.scrapeDateRange();
-    if (!range?.active_comparison_date) return [];
-    return calculateAvailableDataDateRange(
-      this.selectedPeriod(),
-      range.min_scrape_date ?? null,
-      range.active_comparison_date,
-    );
-  });
 
   ngOnInit(): void {
     this.loadScrapeDateRange()
@@ -83,18 +92,29 @@ export class DeathsSectionComponent implements OnInit {
   }
 
   private async loadData(): Promise<void> {
+    const requestId = ++this.dataRequestId;
+    const window = this.window();
+    if (!window) {
+      this.loading.set(false);
+      return;
+    }
+
     this.loading.set(true);
     this.data.set([]);
 
     try {
       const result = await this.deathsService.getDeaths({
-        period: this.selectedPeriod(),
+        from: window.from,
+        to: window.to,
         is_pvp: this.pvpFilter() ?? undefined,
         limit: this.serverService.responsePlayerLimit(),
       });
+      if (requestId !== this.dataRequestId) return;
       if (result) this.data.set(result);
     } finally {
-      this.loading.set(false);
+      if (requestId === this.dataRequestId) {
+        this.loading.set(false);
+      }
     }
   }
 }

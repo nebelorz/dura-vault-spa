@@ -17,7 +17,6 @@ import type { TooltipItem } from 'chart.js';
 export class OnlineActivityByPeriodChartComponent {
   timeline = input.required<OnlineTimelineRecord[]>();
   period = input.required<TimePeriod>();
-  activeComparisonDate = input<string | null>(null);
   loading = input.required<boolean>();
 
   private readonly colors = createChartColors({
@@ -33,10 +32,7 @@ export class OnlineActivityByPeriodChartComponent {
 
     if (period === 'day') return null;
 
-    const cutoff = this.activeComparisonDate();
-    const entries = cutoff
-      ? this.timeline().filter((e) => e.activity_date <= cutoff)
-      : this.timeline().slice(0, -1);
+    const entries = this.timeline();
     if (!entries.length) return null;
 
     let labels: string[];
