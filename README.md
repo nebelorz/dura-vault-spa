@@ -14,7 +14,7 @@ Built with Angular 21, this single-page application provides comprehensive data 
 
 - Highscore tables filtered by skill and time period (daily, weekly, monthly, yearly, all-time)
 - Detailed player profiles with Character and Performance tabs, live Dura data, progression charts, and summarized stats
-- Smart caching system for optimized data loading
+- Fresh data on every fetch (no client-side caching); server-side edge cache for character profiles
 - Theme support with dark/light mode toggle
 - Interactive Chart.js visualizations for trend analysis
 
@@ -131,7 +131,7 @@ src/
 │   ├── core/                    # Core application logic
 │   │   ├── constants/           # Sections, menu items, online thresholds
 │   │   ├── models/              # TypeScript interfaces (highscore, online, player-details…)
-│   │   └── services/            # BaseApiService, cache, supabase, theme, toast…
+│   │   └── services/            # BaseApiService, supabase, theme, toast…
 │   │
 │   ├── features/
 │   │   ├── footer/
