@@ -9,8 +9,9 @@
 import { DatePipe, NgClass } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { marked } from 'marked';
+import { BadgeComponent, type BadgeVariant } from '@shared/components';
 
-type TagColor = 'error' | 'warn' | 'info' | 'section' | 'versionMajor' | 'versionMinor';
+type TagColor = 'error' | 'warn' | 'info' | 'versionMajor' | 'versionMinor';
 
 interface DevInfoTag {
   label: string;
@@ -28,7 +29,7 @@ interface DevInfoEntry {
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-dev-info-panel',
-  imports: [DatePipe, NgClass],
+  imports: [DatePipe, NgClass, BadgeComponent],
   templateUrl: './dev-info-panel.component.html',
   styleUrl: './dev-info-panel.component.scss',
   encapsulation: ViewEncapsulation.None, // Allow own styles on markdown content
@@ -66,8 +67,16 @@ export class DevInfoPanelComponent implements OnInit {
     return map[type ?? 'info'] ?? 'pi pi-info-circle';
   }
 
-  getTypeClass(type?: DevInfoEntry['entryType']): string {
-    return `entry-type-${type ?? 'info'}`;
+  private readonly variantMap: Record<string, BadgeVariant> = {
+    error: 'danger',
+    warn: 'warn',
+    info: 'info',
+    versionMajor: 'xp',
+    versionMinor: 'secondary-light',
+  };
+
+  variantFor(color?: TagColor): BadgeVariant {
+    return this.variantMap[color ?? ''] ?? 'level';
   }
 
   // Ordered list of post dates (newest first)

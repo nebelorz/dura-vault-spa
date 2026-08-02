@@ -10,9 +10,7 @@
             @if (entry.tags?.length) {
               <div class="entry-tags">
                 @for (tag of entry.tags!; track tag.label) {
-                  <span class="entry-tag" [class]="'tag-' + (tag.color ?? 'primary')">{{
-                    tag.label
-                  }}</span>
+                  <app-badge [text]="tag.label" [variant]="variantFor(tag.color)" />
                 }
               </div>
             }
