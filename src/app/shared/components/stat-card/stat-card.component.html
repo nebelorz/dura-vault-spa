@@ -1,27 +1,18 @@
-@if (link(); as href) {
-  <a
-    class="stat-card"
-    [class.stat-card--muted]="muted()"
-    [routerLink]="href"
-    [queryParams]="queryParams()"
-    queryParamsHandling="merge"
-    [pTooltip]="tooltip()"
-    tooltipPosition="bottom"
-  >
-    <ng-container [ngTemplateOutlet]="content" />
-  </a>
-} @else {
-  <div
-    class="stat-card"
-    [class.stat-card--muted]="muted()"
-    [pTooltip]="tooltip()"
-    tooltipPosition="bottom"
-  >
-    <ng-container [ngTemplateOutlet]="content" />
-  </div>
-}
-
-<ng-template #content>
+<div
+  class="stat-card"
+  [class.stat-card--muted]="muted()"
+  [class.stat-card--link]="!!link()"
+  [pTooltip]="tooltip()"
+  tooltipPosition="bottom"
+>
+  @if (link(); as href) {
+    <a
+      class="stat-card__link"
+      [routerLink]="href"
+      [queryParams]="queryParams()"
+      queryParamsHandling="merge"
+    ></a>
+  }
   @if (hasImage()) {
     <img [src]="imageSrc()!" class="stat-image" [class.stat-image--muted]="muted()" alt="" />
   } @else if (hasIcon()) {
@@ -30,6 +21,9 @@
   <span class="text-label" [class.text-muted]="muted()">{{ label() }}</span>
   <span class="text-value" [class.text-muted]="muted()">{{ value() }}</span>
   @if (sublabel()) {
-    <span class="text-subvalue" [class.text-muted]="muted()" [style.color]="sublabelColor()">{{ sublabel() }}</span>
+    <span class="text-subvalue" [class.text-muted]="muted()" [style.color]="sublabelColor()">{{
+      sublabel()
+    }}</span>
   }
-</ng-template>
+  <ng-content select="[cardFooter]" />
+</div>

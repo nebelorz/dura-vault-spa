@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, computed } from '@angular/core';
-import { NgTemplateOutlet } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TooltipModule } from 'primeng/tooltip';
 
@@ -8,7 +7,7 @@ import { TooltipModule } from 'primeng/tooltip';
   selector: 'app-stat-card',
   templateUrl: './stat-card.component.html',
   styleUrl: './stat-card.component.scss',
-  imports: [NgTemplateOutlet, RouterLink, TooltipModule],
+  imports: [RouterLink, TooltipModule],
 })
 export class StatCardComponent {
   icon = input<string>();
