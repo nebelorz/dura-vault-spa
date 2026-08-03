@@ -10,41 +10,30 @@
 :root {
   // Domain base colors
   --color-rank: #ffbc40;
-  --color-skill: #43d4d4;
-  --color-online: #17a2b8;
-  --color-warn: #ffc107;
-  --color-error: #ef4444;
+  --color-warn: #fdba74;
   --color-silver: #c0c0c0;
   --color-bronze: #cd7f32;
-  --color-section: #c4621a;
-  --color-secondary-light: #777777;
+  --color-secondary-light: var(--p-text-muted-color);
 
   // PrimeNG-mapped colors
   --color-primary: var(--p-primary-color);
-  --color-level: var(--p-primary-color);
+  --color-level: var(--color-primary);
   --color-secondary: var(--p-button-secondary-background);
   --color-xp: var(--p-button-help-background);
   --color-info: var(--p-button-info-background);
+  --color-skill: var(--p-button-info-background);
   --color-danger: var(--p-button-danger-background);
-  --color-success: var(--p-button-success-background);
+  --color-error: var(--color-danger);
 
   // Opacity variants — derived, never hardcoded
   --color-primary-a10: color-mix(in srgb, var(--color-primary), transparent 90%);
   --color-primary-a20: color-mix(in srgb, var(--color-primary), transparent 80%);
   --color-level-a10: color-mix(in srgb, var(--color-level), transparent 90%);
-  --color-level-a20: color-mix(in srgb, var(--color-level), transparent 80%);
   --color-rank-a10: color-mix(in srgb, var(--color-rank), transparent 90%);
   --color-rank-a20: color-mix(in srgb, var(--color-rank), transparent 80%);
-  --color-skill-a10: color-mix(in srgb, var(--color-skill), transparent 90%);
-  --color-skill-a20: color-mix(in srgb, var(--color-skill), transparent 80%);
-  --color-online-a10: color-mix(in srgb, var(--color-online), transparent 90%);
-  --color-online-a20: color-mix(in srgb, var(--color-online), transparent 80%);
   --color-xp-a10: color-mix(in srgb, var(--color-xp), transparent 90%);
-  --color-xp-a20: color-mix(in srgb, var(--color-xp), transparent 80%);
   --color-secondary-a10: color-mix(in srgb, var(--color-secondary), transparent 90%);
-  --color-secondary-a20: color-mix(in srgb, var(--color-secondary), transparent 80%);
   --color-secondary-light-a10: color-mix(in srgb, var(--color-secondary-light), transparent 90%);
-  --color-secondary-light-a20: color-mix(in srgb, var(--color-secondary-light), transparent 80%);
   --color-warn-a10: color-mix(in srgb, var(--color-warn), transparent 90%);
   --color-warn-a20: color-mix(in srgb, var(--color-warn), transparent 80%);
   --color-danger-a10: color-mix(in srgb, var(--color-danger), transparent 90%);
@@ -52,13 +41,11 @@
   --color-info-a10: color-mix(in srgb, var(--color-info), transparent 90%);
   --color-info-a20: color-mix(in srgb, var(--color-info), transparent 80%);
 
-  // Metal & section opacity variants
+  // Metal opacity variants
   --color-silver-a10: color-mix(in srgb, var(--color-silver), transparent 90%);
   --color-silver-a20: color-mix(in srgb, var(--color-silver), transparent 80%);
   --color-bronze-a10: color-mix(in srgb, var(--color-bronze), transparent 90%);
   --color-bronze-a20: color-mix(in srgb, var(--color-bronze), transparent 80%);
-  --color-section-a10: color-mix(in srgb, var(--color-section), transparent 90%);
-  --color-section-a20: color-mix(in srgb, var(--color-section), transparent 80%);
 
   // Chart-internal
   --color-chart-grid: rgba(128, 128, 128, 0.2);
@@ -66,7 +53,13 @@
   // Interaction states
   --color-secondary-hover: var(--p-button-secondary-hover-background);
 
-  // Surface overlays
+  // Surface overlays (light mode)
+  --color-surface-overlay: rgba(0, 0, 0, 0.04);
+  --color-surface-overlay-border: rgba(0, 0, 0, 0.06);
+}
+
+// Dark mode escape hatch
+:root.darkmode {
   --color-surface-overlay: rgba(255, 255, 255, 0.06);
   --color-surface-overlay-border: rgba(255, 255, 255, 0.08);
 }
@@ -77,49 +70,23 @@
 $primary: var(--color-primary);
 $secondary: var(--color-secondary);
 $rank: var(--color-rank);
-$level: var(--color-level);
-$skill: var(--color-skill);
-$online: var(--color-online);
-$xp: var(--color-xp);
-$silver: var(--color-silver);
-$bronze: var(--color-bronze);
-$section: var(--color-section);
 $secondary-light: var(--color-secondary-light);
 $warn: var(--color-warn);
-$error: var(--color-error);
 $danger: var(--color-danger);
 $info: var(--color-info);
-$success: var(--color-success);
 $surface: var(--p-surface-0);
 $surface-dark: var(--p-surface-950);
-$chart-grid: var(--color-chart-grid);
 $secondary-hover: var(--color-secondary-hover);
-$surface-overlay: var(--color-surface-overlay);
-$surface-overlay-border: var(--color-surface-overlay-border);
 
 // Opacity — canonical names
 $primary-a10: var(--color-primary-a10);
 $primary-a20: var(--color-primary-a20);
 $level-a10: var(--color-level-a10);
-$level-a20: var(--color-level-a20);
 $rank-a10: var(--color-rank-a10);
 $rank-a20: var(--color-rank-a20);
-$skill-a10: var(--color-skill-a10);
-$skill-a20: var(--color-skill-a20);
-$online-a10: var(--color-online-a10);
-$online-a20: var(--color-online-a20);
 $xp-a10: var(--color-xp-a10);
-$xp-a20: var(--color-xp-a20);
 $secondary-a10: var(--color-secondary-a10);
-$secondary-a20: var(--color-secondary-a20);
 $secondary-light-a10: var(--color-secondary-light-a10);
-$secondary-light-a20: var(--color-secondary-light-a20);
-$silver-a10: var(--color-silver-a10);
-$silver-a20: var(--color-silver-a20);
-$bronze-a10: var(--color-bronze-a10);
-$bronze-a20: var(--color-bronze-a20);
-$section-a10: var(--color-section-a10);
-$section-a20: var(--color-section-a20);
 $warn-a10: var(--color-warn-a10);
 $warn-a20: var(--color-warn-a20);
 $danger-a10: var(--color-danger-a10);
