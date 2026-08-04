@@ -12,4 +12,43 @@
 
 .sub-section-header {
   padding-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.chart-chips {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.chart-chip {
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--chip-color, #888);
+  border-radius: 1rem;
+  background: transparent;
+  color: var(--chip-color, #888);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 0.5;
+
+  &.active {
+    background: var(--chip-color, #888);
+    color: #fff;
+    opacity: 1;
+  }
+
+  &.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(.disabled) {
+    opacity: 0.8;
+  }
 }

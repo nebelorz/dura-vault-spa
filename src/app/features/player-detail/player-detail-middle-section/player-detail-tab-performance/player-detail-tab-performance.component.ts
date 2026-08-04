@@ -1,6 +1,11 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
-import { PlayerHistoricResponse, PlayerDetailsSummary, HighscoreSection } from '@core/models';
+import {
+  PlayerAchievement,
+  PlayerHistoricResponse,
+  PlayerDetailsSummary,
+  HighscoreSection,
+} from '@core/models';
 import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
 import { PlayerGainsSummaryComponent } from './player-gains-summary/player-gains-summary.component';
 import { PlayerDetailChartComponent } from './player-detail-chart/player-detail-chart.component';
@@ -22,4 +27,10 @@ export class PlayerDetailTabPerformanceComponent {
   summary = input<PlayerDetailsSummary | null>(null);
   section = input.required<HighscoreSection>();
   loading = input.required<boolean>();
+  achievements = input<PlayerAchievement[]>([]);
+
+  readonly hasPointsData = computed(() => {
+    const data = this.playerDetailsData();
+    return data?.daily?.some((record) => record.points !== null) ?? false;
+  });
 }

@@ -3,7 +3,11 @@
     <app-loading-status />
   } @else if (summary(); as playerSummary) {
     <div class="gains-section animation-fade">
-      <app-player-gains-summary [summary]="playerSummary" [section]="section()" />
+      <app-player-gains-summary
+        [summary]="playerSummary"
+        [section]="section()"
+        [hasPoints]="hasPointsData()"
+      />
     </div>
 
     <div class="chart-section animation-fade">
@@ -11,6 +15,7 @@
         [playerDetailsData]="playerDetailsData()"
         [loading]="loading()"
         [section]="section()"
+        [achievements]="achievements()"
       />
     </div>
   } @else {

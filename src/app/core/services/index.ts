@@ -1,4 +1,5 @@
 export * from './base-api.service';
+export * from './chart-preferences.service';
 export * from './character-profile.service';
 export * from './deaths.service';
 export * from './highscore.service';
