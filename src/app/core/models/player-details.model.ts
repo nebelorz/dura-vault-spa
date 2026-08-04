@@ -12,8 +12,8 @@ export interface PlayerStatsRecord {
 
 export interface PlayerDetailsDailyRecord {
   scrape_date: string;
-  rank: number;
-  level: number;
+  rank: number | null;
+  level: number | null;
   points: number | null;
   gain_points: number | null;
   gain_level: number | null;
