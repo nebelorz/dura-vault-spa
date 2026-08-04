@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, input } from '@an
 import { PlayerDetailsDailyRecord, PlayerHistoricResponse, HighscoreSection } from '@core/models';
 import { ThemeService } from '@core/services';
 import { getSectionLabel, CHART_FONT } from '@core/constants';
-import { formatDate, formatNumber } from '@shared/functions';
+import { carryForward, formatDate, formatNumber, markerIndices } from '@shared/functions';
 import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
 
 import { ChartModule } from 'primeng/chart';
@@ -17,11 +17,10 @@ interface ChartDataset {
   fill: boolean;
   borderWidth: number;
   yAxisID: string;
-  pointRadius: number;
-  pointHoverRadius: number;
+  pointRadius: number | number[];
+  pointHoverRadius: number | number[];
   spanGaps: boolean;
   order: number;
-  segment?: Record<string, (ctx: { p0DataIndex: number; p1DataIndex: number }) => unknown>;
 }
 
 interface TooltipContext {
@@ -112,38 +111,25 @@ export class PlayerDetailChartComponent {
     const labels = data.daily.map((record) => formatDate(record.scrape_date));
     const hasPoints = data.daily.some((record) => record.points !== null);
 
+    const levelCaptures = data.daily.map((record) => record.level);
+    const pointsCaptures = data.daily.map((record) => record.points);
+    const rankCaptures = data.daily.map((record) => record.rank);
+
+    const levelSeries = carryForward(levelCaptures);
+    const pointsSeries = carryForward(pointsCaptures);
+    const rankSeries = carryForward(rankCaptures);
+
     const datasets: ChartDataset[] = [
-      this.createDataset(
-        this.levelLabel(),
-        data.daily.map((r) => r.level),
-        levelOrSkill,
-        'y',
-        true,
-        1,
-      ),
+      this.createDataset(this.levelLabel(), levelSeries, levelCaptures, levelOrSkill, 'y', true, 1),
     ];
 
     if (hasPoints) {
       datasets.push(
-        this.createDataset(
-          'Experience',
-          data.daily.map((r) => r.points),
-          xp,
-          'y1',
-          false,
-          2,
-        ),
+        this.createDataset('Experience', pointsSeries, pointsCaptures, xp, 'y1', false, 2),
       );
     }
 
-    datasets.push(
-      this.createSteppedDataset(
-        'Rank',
-        data.daily.map((r) => r.rank),
-        rank,
-        'y2',
-      ),
-    );
+    datasets.push(this.createSteppedDataset('Rank', rankSeries, rankCaptures, rank, 'y2'));
 
     return { labels, datasets };
   });
@@ -205,9 +191,19 @@ export class PlayerDetailChartComponent {
   private createSteppedDataset(
     label: string,
     data: (number | null)[],
+    captures: (number | null)[],
     color: string,
     yAxisID: string,
   ): ChartDataset & { stepped: boolean } {
+    // Rank markers render only where the captured rank changes (or on the first
+    // captured day); unchanged ladder days keep the markerless stepped plateau.
+    const markers = markerIndices(captures);
+    const markerSet = new Set(markers);
+    const pointRadius = data.map((_, index) =>
+      markerSet.has(index) ? (data.length > 20 ? 2 : 3) : 0,
+    );
+    const pointHoverRadius = data.map((_, index) => (markerSet.has(index) ? 6 : 0));
+
     return {
       label,
       data,
@@ -217,8 +213,8 @@ export class PlayerDetailChartComponent {
       fill: false,
       borderWidth: 1,
       yAxisID,
-      pointRadius: 0,
-      pointHoverRadius: 4,
+      pointRadius,
+      pointHoverRadius,
       spanGaps: true,
       order: 4,
       stepped: true,
@@ -228,13 +224,24 @@ export class PlayerDetailChartComponent {
   private createDataset(
     label: string,
     data: (number | null)[],
+    captures: (number | null)[],
     color: string,
     yAxisID: string,
     fill: boolean,
     order: number,
   ): ChartDataset {
-    const hasNulls = data.includes(null);
-    const dataset: ChartDataset = {
+    // Markers render only where the captured value changes (or on the first
+    // captured day); unchanged captured days and carried-forward (null) days show
+    // the plateau line without a point. Tooltips still work everywhere via the
+    // `index`/`intersect: false` interaction mode.
+    const markers = markerIndices(captures);
+    const markerSet = new Set(markers);
+    const pointRadius = data.map((_, index) =>
+      markerSet.has(index) ? (data.length > 20 ? 2 : 3) : 0,
+    );
+    const pointHoverRadius = data.map((_, index) => (markerSet.has(index) ? 6 : 0));
+
+    return {
       label,
       data,
       borderColor: color,
@@ -243,21 +250,11 @@ export class PlayerDetailChartComponent {
       fill,
       borderWidth: 1,
       yAxisID,
-      pointRadius: data.length > 20 ? 2 : 3,
-      pointHoverRadius: 6,
+      pointRadius,
+      pointHoverRadius,
       spanGaps: true,
       order,
     };
-
-    if (hasNulls) {
-      const dimColor = this.withAlpha(color, 0.35);
-      dataset.segment = {
-        borderDash: (ctx) => (ctx.p1DataIndex - ctx.p0DataIndex > 1 ? [5, 5] : undefined),
-        borderColor: (ctx) => (ctx.p1DataIndex - ctx.p0DataIndex > 1 ? dimColor : undefined),
-      };
-    }
-
-    return dataset;
   }
 
   private createScales(

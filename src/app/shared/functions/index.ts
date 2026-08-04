@@ -1,4 +1,6 @@
 export * from './build-metric';
+export * from './carry-forward';
+export * from './marker-indices';
 export * from './resolve-period-range';
 export * from './format-date';
 export * from './format-large-numbers';
