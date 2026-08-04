@@ -19,14 +19,20 @@ export class DeathsByPeriodChartComponent {
   period = input.required<TimePeriod>();
 
   private readonly colors = createChartColors({
-    primaryColor: { cssVar: '--color-error', fallback: '#ef4444' },
+    pvpColor: { cssVar: '--color-danger', fallback: '#ef4444' },
+    pveColor: { cssVar: '--color-warn', fallback: '#fdba74' },
   });
 
   constructor() {
     this.colors.setup();
   }
 
-  readonly deathsByPeriodData = computed(() => {
+  private readonly periodStats = computed<{
+    labels: string[];
+    total: number[];
+    pvp: number[];
+    pve: number[];
+  } | null>(() => {
     const period = this.period();
 
     if (period === 'day') return null;
@@ -34,83 +40,116 @@ export class DeathsByPeriodChartComponent {
     const records = this.data();
     if (!records.length) return null;
 
-    let labels: string[];
-    let counts: number[];
+    const bucketKey = (r: DeathRecord): string =>
+      period === 'week' || period === 'month'
+        ? r.died_at.substring(0, 10)
+        : r.died_at.substring(0, 7);
 
-    if (period === 'week' || period === 'month') {
-      const map = new Map<string, number>();
-      for (const r of records) {
-        const key = r.died_at.substring(0, 10);
-        map.set(key, (map.get(key) ?? 0) + 1);
+    const totalMap = new Map<string, number>();
+    const pvpMap = new Map<string, number>();
+    const pveMap = new Map<string, number>();
+
+    for (const r of records) {
+      const key = bucketKey(r);
+      totalMap.set(key, (totalMap.get(key) ?? 0) + 1);
+      if (r.is_pvp) {
+        pvpMap.set(key, (pvpMap.get(key) ?? 0) + 1);
+      } else {
+        pveMap.set(key, (pveMap.get(key) ?? 0) + 1);
       }
-      const sorted = [...map.entries()].sort((a, b) => a[0].localeCompare(b[0]));
-      labels = sorted.map(([k]) => formatDate(k));
-      counts = sorted.map(([, c]) => c);
-    } else {
-      const map = new Map<string, number>();
-      for (const r of records) {
-        const key = r.died_at.substring(0, 7);
-        map.set(key, (map.get(key) ?? 0) + 1);
-      }
-      const sorted = [...map.entries()].sort((a, b) => a[0].localeCompare(b[0]));
-      labels = sorted.map(([k]) => {
-        const [y, m] = k.split('-');
-        return new Date(+y, +m - 1).toLocaleString('en', { month: 'short', year: '2-digit' });
-      });
-      counts = sorted.map(([, c]) => c);
     }
 
-    if (!labels.length) return null;
+    const sortedKeys = [...totalMap.keys()].sort((a, b) => a.localeCompare(b));
+    if (!sortedKeys.length) return null;
+
+    const labels = sortedKeys.map((k) => {
+      if (period === 'week' || period === 'month') return formatDate(k);
+      const [y, m] = k.split('-');
+      return new Date(+y, +m - 1).toLocaleString('en', { month: 'short', year: '2-digit' });
+    });
 
     return {
       labels,
+      total: sortedKeys.map((k) => totalMap.get(k) ?? 0),
+      pvp: sortedKeys.map((k) => pvpMap.get(k) ?? 0),
+      pve: sortedKeys.map((k) => pveMap.get(k) ?? 0),
+    };
+  });
+
+  readonly deathsByPeriodData = computed(() => {
+    const stats = this.periodStats();
+    if (!stats) return null;
+
+    return {
+      labels: stats.labels,
       datasets: [
         {
-          label: 'Deaths',
-          data: counts,
+          label: 'PvP',
+          data: stats.pvp,
           fill: true,
           tension: 0.3,
           pointRadius: 3,
           pointHoverRadius: 5,
-          backgroundColor: `${this.colors.primaryColor()}22`,
-          borderColor: this.colors.primaryColor(),
+          backgroundColor: `${this.colors.pvpColor()}22`,
+          borderColor: this.colors.pvpColor(),
+          borderWidth: 1,
+        },
+        {
+          label: 'PvE',
+          data: stats.pve,
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          pointHoverRadius: 5,
+          backgroundColor: `${this.colors.pveColor()}22`,
+          borderColor: this.colors.pveColor(),
           borderWidth: 1,
         },
       ],
     };
   });
 
-  readonly deathsByPeriodOptions = computed(() => ({
-    maintainAspectRatio: false,
-    responsive: true,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        backgroundColor: 'rgba(0,0,0,0.8)',
-        padding: 10,
-        cornerRadius: 4,
-        titleFont: { family: CHART_FONT },
-        bodyFont: { family: CHART_FONT },
-        callbacks: {
-          label: (ctx: TooltipItem<'line'>) => ` ${ctx.parsed.y} deaths`,
+  readonly deathsByPeriodOptions = computed(() => {
+    const stats = this.periodStats();
+
+    return {
+      maintainAspectRatio: false,
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          mode: 'index',
+          intersect: false,
+          backgroundColor: 'rgba(0,0,0,0.8)',
+          padding: 10,
+          cornerRadius: 4,
+          titleFont: { family: CHART_FONT },
+          bodyFont: { family: CHART_FONT },
+          callbacks: {
+            beforeBody: (items: TooltipItem<'line'>[]) => {
+              const item = items[0];
+              return item && stats ? `Total deaths: ${stats.total[item.dataIndex]}` : '';
+            },
+            label: (ctx: TooltipItem<'line'>) => `${ctx.dataset.label}: ${ctx.parsed.y} deaths`,
+          },
         },
       },
-    },
-    scales: {
-      x: {
-        ticks: {
-          font: { size: 10, family: CHART_FONT },
-          maxRotation: 45,
+      scales: {
+        x: {
+          ticks: {
+            font: { size: 10, family: CHART_FONT },
+            maxRotation: 45,
+          },
+          grid: { drawOnChartArea: false },
         },
-        grid: { drawOnChartArea: false },
-      },
-      y: {
-        ticks: {
-          font: { size: 10, family: CHART_FONT },
-          precision: 0,
+        y: {
+          ticks: {
+            font: { size: 10, family: CHART_FONT },
+            precision: 0,
+          },
+          grid: { color: CHART_GRID_COLOR },
         },
-        grid: { color: CHART_GRID_COLOR },
       },
-    },
-  }));
+    };
+  });
 }
