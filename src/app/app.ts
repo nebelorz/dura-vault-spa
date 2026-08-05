@@ -1,4 +1,4 @@
-import { Component, inject, DestroyRef, OnInit } from '@angular/core';
+import { Component, inject, DestroyRef, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterOutlet } from '@angular/router';
 import { fromEvent } from 'rxjs';
@@ -13,6 +13,7 @@ import { ServerService } from '@core/services';
   imports: [RouterOutlet, NavBarComponent, FooterComponent, ToastComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App implements OnInit {
   private readonly router = inject(Router);

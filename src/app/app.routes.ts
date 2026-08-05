@@ -1,29 +1,37 @@
 import { Routes } from '@angular/router';
-import { HighscoreSectionComponent } from './features/highscore-section/highscore-section.component';
-import { OnlineActivitySectionComponent } from './features/online-activity-section/online-activity-section.component';
-import { PlayerDetailComponent } from './features/player-detail/player-detail.component';
-import { LandingPageComponent } from './features/landing-page/landing-page.component';
-import { DeathsSectionComponent } from './features/deaths-section/deaths-section.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: LandingPageComponent,
+    loadComponent: () =>
+      import('./features/landing-page/landing-page.component').then((m) => m.LandingPageComponent),
   },
   {
     path: 'top/:section',
-    component: HighscoreSectionComponent,
+    loadComponent: () =>
+      import('./features/highscore-section/highscore-section.component').then(
+        (m) => m.HighscoreSectionComponent,
+      ),
   },
   {
     path: 'online',
-    component: OnlineActivitySectionComponent,
+    loadComponent: () =>
+      import('./features/online-activity-section/online-activity-section.component').then(
+        (m) => m.OnlineActivitySectionComponent,
+      ),
   },
   {
     path: 'deaths',
-    component: DeathsSectionComponent,
+    loadComponent: () =>
+      import('./features/deaths-section/deaths-section.component').then(
+        (m) => m.DeathsSectionComponent,
+      ),
   },
   {
     path: 'player/:name',
-    component: PlayerDetailComponent,
+    loadComponent: () =>
+      import('./features/player-detail/player-detail.component').then(
+        (m) => m.PlayerDetailComponent,
+      ),
   },
 ];

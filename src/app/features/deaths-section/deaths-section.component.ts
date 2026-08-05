@@ -1,4 +1,11 @@
-import { Component, OnInit, signal, inject, computed } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  signal,
+  inject,
+  computed,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
@@ -24,6 +31,7 @@ import { DeathsChartsComponent } from './deaths-right-section/deaths-charts/deat
     SelectButtonModule,
     FormsModule,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DeathsSectionComponent implements OnInit {
   private readonly deathsService = inject(DeathsService);

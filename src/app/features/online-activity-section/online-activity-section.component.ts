@@ -1,4 +1,11 @@
-import { Component, OnInit, signal, inject, computed } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  signal,
+  inject,
+  computed,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import { OnlineTimelineRecord, OnlineTopRecord, ScrapeDateRange, TimePeriod } from '@core/models';
@@ -20,6 +27,7 @@ import { OnlineActivityChartsComponent } from './online-activity-right-section/o
     OnlineActivityChartsComponent,
     DatePipe,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OnlineActivitySectionComponent implements OnInit {
   private readonly onlineService = inject(OnlineService);

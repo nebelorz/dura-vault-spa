@@ -1,4 +1,12 @@
-import { Component, OnInit, signal, computed, inject, DestroyRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  signal,
+  computed,
+  inject,
+  DestroyRef,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
@@ -54,6 +62,7 @@ import { Tabs, TabList, Tab, TabPanels, TabPanel } from 'primeng/tabs';
     TabPanel,
     DatePipe,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlayerDetailComponent implements OnInit {
   private detailsRequestId = 0;

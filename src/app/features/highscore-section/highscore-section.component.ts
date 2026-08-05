@@ -1,4 +1,12 @@
-import { Component, OnInit, signal, computed, inject, DestroyRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  signal,
+  computed,
+  inject,
+  DestroyRef,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -24,6 +32,7 @@ import { PeriodSelectorComponent } from '@shared/components';
     HighscoreTopPerVocationCardsComponent,
     DatePipe,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HighscoreSectionComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);

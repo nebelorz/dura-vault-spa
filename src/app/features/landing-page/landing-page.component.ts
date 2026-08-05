@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 
 import { DailyHighscoresSummary, DailyTopPlayer, SectionData } from '@core/models';
 import { HighscoreService, MetadataService, ServerService, ThemeService } from '@core/services';
@@ -19,6 +19,7 @@ import { SideMenuComponent } from './side-menu/side-menu.component';
     DailyTopGainersComponent,
     SideMenuComponent,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingPageComponent implements OnInit {
   private readonly highscoreService = inject(HighscoreService);
