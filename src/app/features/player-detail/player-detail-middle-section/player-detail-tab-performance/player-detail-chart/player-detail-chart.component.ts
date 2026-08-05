@@ -183,7 +183,7 @@ export class PlayerDetailChartComponent {
     const data = this.playerDetailsData();
     if (!data?.daily?.length || data.daily.length <= 1) return null;
 
-    const { levelOrSkill, xp, rank, danger } = this.colors();
+    const { levelOrSkill, xp, rank } = this.colors();
     const labels = data.daily.map((record) => formatDate(record.scrape_date));
     const vis = this.visibleSeries();
 
@@ -306,13 +306,7 @@ export class PlayerDetailChartComponent {
           },
         },
       },
-      scales: this.createScales(
-        hp,
-        data?.daily ?? [],
-        this.levelLabel(),
-        this.colors(),
-        vis,
-      ),
+      scales: this.createScales(hp, data?.daily ?? [], this.levelLabel(), this.colors(), vis),
     };
   });
 
@@ -406,9 +400,7 @@ export class PlayerDetailChartComponent {
       dataset.pointBackgroundColor = data.map((_, index) =>
         lossIndices.has(index) ? danger : this.withAlpha(color, 0.1),
       );
-      dataset.pointBorderColor = data.map((_, index) =>
-        lossIndices.has(index) ? danger : color,
-      );
+      dataset.pointBorderColor = data.map((_, index) => (lossIndices.has(index) ? danger : color));
       dataset.pointStyle = data.map((_, index) => (lossIndices.has(index) ? 'rectRot' : 'circle'));
     }
 
