@@ -22,7 +22,7 @@
 
     .deaths-left {
       position: sticky;
-      top: calc(50px + 1rem);
+      top: calc(var(--nav-height) + 1rem);
       height: calc(90vh - 100px - 2rem);
       display: flex;
       flex-direction: column;

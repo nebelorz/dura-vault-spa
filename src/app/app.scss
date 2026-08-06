@@ -15,7 +15,7 @@ app-nav-bar {
 
 router-outlet {
   display: block;
-  margin-top: 50px;
+  margin-top: var(--nav-height);
   margin-bottom: 50px;
 }
 
