@@ -1,6 +1,5 @@
 export * from './badge/badge.component';
 export * from './go-back-button/go-back-button.component';
-export * from './loading/inline-loading/inline-loading.component';
 export * from './loading/loading-status/loading-status.component';
 export * from './metric-display/metric-display.component';
 export * from './minimalist-icon/minimalist-icon.component';
