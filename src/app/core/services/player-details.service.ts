@@ -1,6 +1,6 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import { BaseApiService, SupabaseService, ToastService } from '@core/services';
+import { BaseApiService } from '@core/services';
 import {
   PlayerAchievement,
   PlayerPerformanceRequest,
@@ -12,12 +12,6 @@ import {
   providedIn: 'root',
 })
 export class PlayerDetailsService extends BaseApiService {
-  private supabaseService = inject(SupabaseService);
-  protected toastService = inject(ToastService);
-  protected get supabase() {
-    return this.supabaseService.getClient();
-  }
-
   async getPlayerPerformance(
     request: PlayerPerformanceRequest,
     showErrorToast: boolean = true,

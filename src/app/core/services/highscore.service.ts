@@ -1,18 +1,12 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import { BaseApiService, SupabaseService, ToastService } from '@core/services';
+import { BaseApiService } from '@core/services';
 import { DailyHighscoresSummary, HighscoreRecord, TopGainersParams } from '@core/models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HighscoreService extends BaseApiService {
-  private supabaseService = inject(SupabaseService);
-  protected toastService = inject(ToastService);
-  protected get supabase() {
-    return this.supabaseService.getClient();
-  }
-
   async getTopGainers(
     params: TopGainersParams = { section: 'experience', from: null, to: null, limit: 25 },
     showErrorToast: boolean = true,

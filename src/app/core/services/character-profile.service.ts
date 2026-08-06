@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { CharacterProfileData, CharacterProfileResult } from '@core/models';
 import { ServerService } from './server.service';
@@ -9,14 +9,8 @@ export class CharacterProfileService {
   private readonly serverService = inject(ServerService);
   private readonly toastService = inject(ToastService);
 
-  loading = signal<boolean>(false);
-  error = signal<string | null>(null);
-
   async getCharacterProfile(name: string): Promise<CharacterProfileResult> {
     const server = this.serverService.server();
-
-    this.loading.set(true);
-    this.error.set(null);
 
     try {
       const params = new URLSearchParams();
@@ -31,11 +25,8 @@ export class CharacterProfileService {
       return result;
     } catch {
       const errorMessage = 'Could not load character details from Dura page.';
-      this.error.set(errorMessage);
       this.toastService.warn(errorMessage);
       return { status: 'error' };
-    } finally {
-      this.loading.set(false);
     }
   }
 }

@@ -1,6 +1,6 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import { BaseApiService, SupabaseService, ToastService } from '@core/services';
+import { BaseApiService } from '@core/services';
 import {
   OnlineTimelineRecord,
   OnlineTopParams,
@@ -12,12 +12,6 @@ import {
   providedIn: 'root',
 })
 export class OnlineService extends BaseApiService {
-  private supabaseService = inject(SupabaseService);
-  protected toastService = inject(ToastService);
-  protected get supabase() {
-    return this.supabaseService.getClient();
-  }
-
   async getTopOnline(
     params: OnlineTopParams = { from: null, to: null, limit: 25 },
     showErrorToast: boolean = true,

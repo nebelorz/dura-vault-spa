@@ -1,18 +1,12 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import { BaseApiService, SupabaseService, ToastService } from '@core/services';
+import { BaseApiService } from '@core/services';
 import { ScrapeDateRange, ScrapeDateTable } from '@core/models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MetadataService extends BaseApiService {
-  private supabaseService = inject(SupabaseService);
-  protected toastService = inject(ToastService);
-  protected get supabase() {
-    return this.supabaseService.getClient();
-  }
-
   async getScrapeDates(
     tableName: ScrapeDateTable = 'highscore_top',
     showErrorToast: boolean = true,
