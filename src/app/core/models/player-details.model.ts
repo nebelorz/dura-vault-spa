@@ -31,16 +31,17 @@ export interface PlayerDetailsSummary {
   day_last: string;
 }
 
-export interface PlayerHistoricResponse {
+export interface PlayerPerformanceResponse {
   daily: PlayerDetailsDailyRecord[];
   summary: PlayerDetailsSummary;
 }
 
-export interface PlayerHistoricRequest {
+export interface PlayerPerformanceRequest {
   p_name: string;
   p_section: HighscoreSection;
   p_from_date: string | null;
   p_to_date: string | null;
+  p_only_active?: boolean;
 }
 
 export interface PlayerAchievement {

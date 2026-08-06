@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, input } from '@an
 import {
   PlayerAchievement,
   PlayerDetailsDailyRecord,
-  PlayerHistoricResponse,
+  PlayerPerformanceResponse,
   HighscoreSection,
 } from '@core/models';
 import { ChartPreferencesService, ThemeService } from '@core/services';
@@ -66,7 +66,7 @@ export class PlayerDetailChartComponent {
   private readonly themeService = inject(ThemeService);
   private readonly chartPrefs = inject(ChartPreferencesService);
 
-  playerDetailsData = input.required<PlayerHistoricResponse | null>();
+  playerDetailsData = input.required<PlayerPerformanceResponse | null>();
   loading = input.required<boolean>();
   section = input<HighscoreSection>('experience');
   achievements = input<PlayerAchievement[]>([]);

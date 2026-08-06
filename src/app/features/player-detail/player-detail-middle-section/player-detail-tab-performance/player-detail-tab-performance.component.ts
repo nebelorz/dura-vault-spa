@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 
 import {
   PlayerAchievement,
-  PlayerHistoricResponse,
+  PlayerPerformanceResponse,
   PlayerDetailsSummary,
   HighscoreSection,
 } from '@core/models';
@@ -23,7 +23,7 @@ import { PlayerDetailChartComponent } from './player-detail-chart/player-detail-
   ],
 })
 export class PlayerDetailTabPerformanceComponent {
-  playerDetailsData = input<PlayerHistoricResponse | null>(null);
+  playerDetailsData = input<PlayerPerformanceResponse | null>(null);
   summary = input<PlayerDetailsSummary | null>(null);
   section = input.required<HighscoreSection>();
   loading = input.required<boolean>();

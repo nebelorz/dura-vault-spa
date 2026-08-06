@@ -3,8 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { BaseApiService, SupabaseService, ToastService } from '@core/services';
 import {
   PlayerAchievement,
-  PlayerHistoricRequest,
-  PlayerHistoricResponse,
+  PlayerPerformanceRequest,
+  PlayerPerformanceResponse,
   PlayerStatsRecord,
 } from '@core/models';
 
@@ -18,13 +18,13 @@ export class PlayerDetailsService extends BaseApiService {
     return this.supabaseService.getClient();
   }
 
-  async getPlayerHistoric(
-    request: PlayerHistoricRequest,
+  async getPlayerPerformance(
+    request: PlayerPerformanceRequest,
     showErrorToast: boolean = true,
-  ): Promise<PlayerHistoricResponse | null> {
-    return this.fetchRpc<PlayerHistoricResponse>('get_player_historic', request, {
-      errorContext: 'player historic',
-      errorTitle: 'Player Historic Error',
+  ): Promise<PlayerPerformanceResponse | null> {
+    return this.fetchRpc<PlayerPerformanceResponse>('get_player_performance', request, {
+      errorContext: 'player performance',
+      errorTitle: 'Player Performance Error',
       showErrorToast,
     });
   }

@@ -24,8 +24,8 @@ import {
   CharacterProfileResult,
   HighscoreSection,
   PlayerAchievement,
-  PlayerHistoricRequest,
-  PlayerHistoricResponse,
+  PlayerPerformanceRequest,
+  PlayerPerformanceResponse,
   PlayerOnlineResponse,
   PlayerStatsRecord,
   TimePeriod,
@@ -84,7 +84,7 @@ export class PlayerDetailComponent implements OnInit {
   characterProfile = signal<CharacterProfileResult | null>(null);
   loading = signal<boolean>(true);
   playerAchievements = signal<PlayerAchievement[]>([]);
-  playerDetailsData = signal<PlayerHistoricResponse | null>(null);
+  playerDetailsData = signal<PlayerPerformanceResponse | null>(null);
   playerName = signal<string>('');
   playerOnlineData = signal<PlayerOnlineResponse | null>(null);
   playerStats = signal<PlayerStatsRecord[]>([]);
@@ -219,15 +219,16 @@ export class PlayerDetailComponent implements OnInit {
 
       if (!historicWindow || !onlineWindow) return;
 
-      const request: PlayerHistoricRequest = {
+      const request: PlayerPerformanceRequest = {
         p_name: playerName,
         p_section: section,
         p_from_date: historicWindow.from,
         p_to_date: historicWindow.to,
+        p_only_active: period === 'all',
       };
 
       const [data, stats, onlineData] = await Promise.all([
-        this.playerDetailsService.getPlayerHistoric(request),
+        this.playerDetailsService.getPlayerPerformance(request),
         this.playerDetailsService.getPlayerStats(playerName),
         this.onlineService.getPlayerOnlineHistory(
           playerName,
