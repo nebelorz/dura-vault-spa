@@ -1,12 +1,19 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, InjectionToken, inject } from '@angular/core';
 import { ServerId, SERVER_STORAGE_KEY, DEFAULT_SERVER } from '@core/constants';
 import { environment } from '@env';
 
+export const SEASONAL_ENABLED = new InjectionToken<boolean>('SEASONAL_ENABLED', {
+  providedIn: 'root',
+  factory: () => environment.seasonal.enabled,
+});
+
 @Injectable({ providedIn: 'root' })
 export class ServerService {
+  private readonly seasonalEnabled =
+    inject(SEASONAL_ENABLED, { optional: true }) ?? environment.seasonal.enabled;
+  readonly seasonalAvailable: boolean = this.seasonalEnabled;
   private readonly _server = signal<ServerId>(this.getInitialServer());
   readonly server = this._server.asReadonly();
-  readonly seasonalAvailable: boolean = environment.seasonal.enabled;
   readonly responsePlayerLimit = computed(() => environment[this._server()].responsePlayerLimit);
 
   setServer(server: ServerId): void {
