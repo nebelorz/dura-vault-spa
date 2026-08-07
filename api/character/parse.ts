@@ -1,0 +1,169 @@
+const HTML_ENTITIES: Record<string, string> = {
+  amp: '&',
+  lt: '<',
+  gt: '>',
+  quot: '"',
+  apos: "'",
+  nbsp: '\u00a0',
+};
+
+export function decodeHtmlEntities(str: string): string {
+  return str.replace(/&(#(\d+)|#x([\da-fA-F]+)|([a-zA-Z]+));/g, (_, __, dec, hex, name) => {
+    if (dec) return String.fromCodePoint(parseInt(dec, 10));
+    if (hex) return String.fromCodePoint(parseInt(hex, 16));
+    return HTML_ENTITIES[name] ?? _;
+  });
+}
+
+export function extractField(html: string, field: string): string | null {
+  const re = new RegExp(
+    `<td[^>]*>${field}:</td>\\s*<td[^>]*>(?:<span[^>]*>)?(?:<b>)?([^<\\[\\n]+?)(?:</b>)?(?:</span>)?(?:\\s*\\[|</td>)`,
+    'i',
+  );
+  const m = html.match(re);
+  return m ? decodeHtmlEntities(m[1].trim()) : null;
+}
+
+export function toISO(dateStr: string | null): string | null {
+  if (!dateStr) return null;
+  const d = new Date(dateStr);
+  return isNaN(d.getTime()) ? dateStr : d.toISOString().replace(/\.\d{3}Z$/, 'Z');
+}
+
+export function parseDeaths(html: string): {
+  date: string;
+  level: number | null;
+  description: string;
+  killers: string[];
+}[] {
+  const start = html.indexOf('<!-- DEATHS -->');
+  const end = html.indexOf('<!-- DEATHS_END -->');
+  if (start === -1 || end === -1) return [];
+  const slice = html.slice(start, end);
+  const re = /<tr[^>]*>\s*<td[^>]*>([^<]+)<\/td>\s*<td[^>]*>([\s\S]+?)<\/td>/g;
+  const deaths: {
+    date: string;
+    level: number | null;
+    description: string;
+    killers: string[];
+  }[] = [];
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(slice)) !== null) {
+    const desc = decodeHtmlEntities(m[2].replace(/<[^>]+>/g, '').trim());
+    if (desc && !desc.includes('Character Deaths')) {
+      const killerRe = /href="[^"]*\?characters\/([^"]+)"/g;
+      const killers: string[] = [];
+      let km: RegExpExecArray | null;
+      while ((km = killerRe.exec(m[2])) !== null) {
+        killers.push(decodeURIComponent(km[1].replace(/\+/g, ' ')));
+      }
+      const levelMatch = desc.match(/killed at level (\d+)/i);
+      deaths.push({
+        date: toISO(m[1].trim()) ?? m[1].trim(),
+        level: levelMatch ? parseInt(levelMatch[1]) : null,
+        description: desc,
+        killers,
+      });
+    }
+  }
+  return deaths;
+}
+
+export function parseHouses(
+  html: string,
+): { name: string; rent: string; size: number | null; beds: number | null; dueDate: string }[] {
+  const start = html.indexOf('<!-- HOUSES -->');
+  const end = html.indexOf('<!-- HOUSES_END -->');
+  if (start === -1 || end === -1) return [];
+  const slice = html.slice(start, end);
+  const houses: {
+    name: string;
+    rent: string;
+    size: number | null;
+    beds: number | null;
+    dueDate: string;
+  }[] = [];
+  const rowRe = /<tr[^>]*bgcolor[^>]*>([\s\S]+?)<\/tr>/g;
+  let m: RegExpExecArray | null;
+  while ((m = rowRe.exec(slice)) !== null) {
+    const cells = [...m[1].matchAll(/<td[^>]*>([^<]+)<\/td>/g)].map((c) =>
+      decodeHtmlEntities(c[1].trim()),
+    );
+    if (cells.length === 5 && cells[0] !== 'Name') {
+      const size = parseInt(cells[2]);
+      const beds = parseInt(cells[3]);
+      houses.push({
+        name: cells[0],
+        rent: cells[1],
+        size: isNaN(size) ? null : size,
+        beds: isNaN(beds) ? null : beds,
+        dueDate: toISO(cells[4]) ?? cells[4],
+      });
+    }
+  }
+  return houses;
+}
+
+export function parseCharacters(
+  html: string,
+): { name: string; level: number | null; vocation: string | null; isOnline: boolean }[] {
+  const start = html.indexOf('<!-- CHARACTERS_LIST -->');
+  const end = html.indexOf('<!-- CHARACTERS_LIST_END -->');
+  if (start === -1 || end === -1) return [];
+  const slice = html.slice(start, end);
+  const chars: {
+    name: string;
+    level: number | null;
+    vocation: string | null;
+    isOnline: boolean;
+  }[] = [];
+  const re =
+    /<nobr>\d+\.&#160;([^<]+)<\/nobr>[\s\S]*?<td>(\d+)\s+([^<]+)<\/td>\s*<td[^>]*>([\s\S]*?)<\/td>/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(slice)) !== null) {
+    chars.push({
+      name: decodeHtmlEntities(m[1].trim()),
+      level: parseInt(m[2]),
+      vocation: decodeHtmlEntities(m[3].trim()),
+      isOnline: /\bOnline\b/i.test(m[4]),
+    });
+  }
+  return chars;
+}
+
+export function parseAccountCreated(html: string): string | null {
+  const start = html.indexOf('<!-- ACCOUNT_INFORMATION -->');
+  const end = html.indexOf('<!-- ACCOUNT_INFORMATION_END -->');
+  if (start === -1 || end === -1) return null;
+  const slice = html.slice(start, end);
+  const m = slice.match(/<td[^>]*>Created:<\/td>\s*<td[^>]*>\s*([^\n<[]+)/i);
+  return m ? decodeHtmlEntities(m[1].trim()) : null;
+}
+
+export function parseBanishedUntil(html: string): string | null {
+  const start = html.indexOf('<!-- ACCOUNT_INFORMATION -->');
+  const end = html.indexOf('<!-- ACCOUNT_INFORMATION_END -->');
+  if (start === -1 || end === -1) return null;
+  const slice = html.slice(start, end);
+  const m = slice.match(/\[Banished until ([^\]]+)\]/i);
+  return m ? decodeHtmlEntities(m[1].trim()) : null;
+}
+
+export function parseFormerNames(html: string): string[] {
+  const m = html.match(/\[Former Name\(s\):\s*([^\]]+)\]/i);
+  if (!m) return [];
+  return m[1]
+    .split(',')
+    .map((s) => decodeHtmlEntities(s.trim()))
+    .filter(Boolean);
+}
+
+export function parseGuild(html: string): { rank: string; name: string } | null {
+  const m = html.match(
+    /Guild membership:<\/td>\s*<td[^>]*>\s*([^<]+?)\s*of the\s*<a[^>]*?>([^<]+)<\/a>/i,
+  );
+  if (!m) return null;
+  const rank = decodeHtmlEntities(m[1].trim());
+  const name = decodeHtmlEntities(m[2].trim());
+  return { rank, name };
+}
