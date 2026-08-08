@@ -11,7 +11,7 @@ export const environment = {
   },
   seasonal: {
     enabled: true, // Redeploy to enable/disable seasonal environment toggle and data retrieval
-    responsePlayerLimit: 1000, // The number of players to use on requests for seasonal
+    responsePlayerLimit: 5000, // The number of players to use on requests for seasonal
     dura: {
       baseURL: 'https://aetas.playdura.com',
     },
