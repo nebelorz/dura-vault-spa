@@ -99,7 +99,6 @@ export class OnlineActivitySectionComponent implements OnInit {
         this.onlineService.getTopOnline({
           from: window.from,
           to: window.to,
-          limit: this.serverService.responsePlayerLimit(),
         }),
         this.onlineService.getOnlineTimeline(window.from, window.to),
       ]);

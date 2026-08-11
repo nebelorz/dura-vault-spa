@@ -19,11 +19,49 @@ export abstract class BaseApiService {
       errorContext: string;
       errorTitle?: string;
       showErrorToast?: boolean;
+      fetchAll?: boolean;
+      pageSize?: number;
     },
   ): Promise<T | null> {
-    const { errorContext, errorTitle = 'Error', showErrorToast = true } = options;
+    const {
+      errorContext,
+      errorTitle = 'Error',
+      showErrorToast = true,
+      fetchAll = false,
+      pageSize = 1000,
+    } = options;
 
     try {
+      if (fetchAll) {
+        const merged: unknown[] = [];
+
+        for (let offset = 0; ; offset += pageSize) {
+          const { data, error } = await this.supabase
+            .rpc(rpcName, params)
+            .range(offset, offset + pageSize - 1);
+
+          if (error) {
+            const errorMessage = `Failed to load ${errorContext}`;
+            console.error(`Error loading ${errorContext}:`, error);
+
+            if (showErrorToast) {
+              this.toastService.error(errorMessage, errorTitle);
+            }
+
+            return null;
+          }
+
+          const page = (data ?? []) as unknown[];
+          merged.push(...page);
+
+          if (page.length < pageSize) {
+            break;
+          }
+        }
+
+        return merged as T;
+      }
+
       const { data, error } = await this.supabase.rpc(rpcName, params);
 
       if (error) {

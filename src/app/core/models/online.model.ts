@@ -13,7 +13,7 @@ export interface OnlineTopRecord {
 export interface OnlineTopParams {
   from?: string | null;
   to?: string | null;
-  limit: number;
+  limit?: number;
 }
 
 export interface PlayerOnlineDailyRecord {

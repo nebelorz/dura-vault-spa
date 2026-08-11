@@ -30,7 +30,7 @@ export interface TopGainersParams {
   from?: string | null;
   to?: string | null;
   section: Section | null;
-  limit: number;
+  limit?: number;
 }
 
 export interface DailyTopPlayer {

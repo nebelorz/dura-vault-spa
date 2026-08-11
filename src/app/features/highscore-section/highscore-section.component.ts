@@ -117,7 +117,6 @@ export class HighscoreSectionComponent implements OnInit {
         from: window.from,
         to: window.to,
         section: this.section(),
-        limit: this.serverService.responsePlayerLimit(),
       });
 
       if (requestId !== this.dataRequestId) return;

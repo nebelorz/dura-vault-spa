@@ -115,7 +115,6 @@ export class DeathsSectionComponent implements OnInit {
         from: window.from,
         to: window.to,
         is_pvp: this.pvpFilter() ?? undefined,
-        limit: this.serverService.responsePlayerLimit(),
       });
       if (requestId !== this.dataRequestId) return;
       if (result) this.data.set(result);

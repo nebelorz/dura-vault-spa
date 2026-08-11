@@ -13,15 +13,24 @@ import {
 })
 export class OnlineService extends BaseApiService {
   async getTopOnline(
-    params: OnlineTopParams = { from: null, to: null, limit: 25 },
+    params: OnlineTopParams = { from: null, to: null },
     showErrorToast: boolean = true,
   ): Promise<OnlineTopRecord[] | null> {
-    const { from = null, to = null, limit = 25 } = params;
+    const { from = null, to = null, limit } = params;
 
     return this.fetchRpc<OnlineTopRecord[]>(
       'get_top_online',
-      { p_from_date: from, p_to_date: to, p_limit: limit },
-      { errorContext: 'online top data', errorTitle: 'Online Error', showErrorToast },
+      {
+        p_from_date: from,
+        p_to_date: to,
+        ...(limit != null ? { p_limit: limit } : {}),
+      },
+      {
+        errorContext: 'online top data',
+        errorTitle: 'Online Error',
+        showErrorToast,
+        fetchAll: true,
+      },
     );
   }
 
@@ -46,7 +55,12 @@ export class OnlineService extends BaseApiService {
     return this.fetchRpc<OnlineTimelineRecord[]>(
       'get_online_server_timeline',
       { p_from_date, p_to_date },
-      { errorContext: 'online server timeline', errorTitle: 'Online Error', showErrorToast },
+      {
+        errorContext: 'online server timeline',
+        errorTitle: 'Online Error',
+        showErrorToast,
+        fetchAll: true,
+      },
     );
   }
 }

@@ -8,10 +8,10 @@ import { DailyHighscoresSummary, HighscoreRecord, TopGainersParams } from '@core
 })
 export class HighscoreService extends BaseApiService {
   async getTopGainers(
-    params: TopGainersParams = { section: 'experience', from: null, to: null, limit: 25 },
+    params: TopGainersParams = { section: 'experience', from: null, to: null },
     showErrorToast: boolean = true,
   ): Promise<HighscoreRecord[] | null> {
-    const { from = null, to = null, section = null, limit = 25 } = params;
+    const { from = null, to = null, section = null, limit } = params;
 
     return this.fetchRpc<HighscoreRecord[]>(
       'get_top_gainers',
@@ -19,12 +19,13 @@ export class HighscoreService extends BaseApiService {
         p_from_date: from,
         p_to_date: to,
         p_section: section,
-        p_limit: limit,
+        ...(limit != null ? { p_limit: limit } : {}),
       },
       {
         errorContext: 'highscore data',
         errorTitle: 'Highscore Error',
         showErrorToast,
+        fetchAll: true,
       },
     );
   }

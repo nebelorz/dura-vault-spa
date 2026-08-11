@@ -1,4 +1,4 @@
-import { Injectable, signal, computed, InjectionToken, inject } from '@angular/core';
+import { Injectable, signal, InjectionToken, inject } from '@angular/core';
 import { ServerId, SERVER_STORAGE_KEY, DEFAULT_SERVER } from '@core/constants';
 import { environment } from '@env';
 
@@ -14,7 +14,6 @@ export class ServerService {
   readonly seasonalAvailable: boolean = this.seasonalEnabled;
   private readonly _server = signal<ServerId>(this.getInitialServer());
   readonly server = this._server.asReadonly();
-  readonly responsePlayerLimit = computed(() => environment[this._server()].responsePlayerLimit);
 
   setServer(server: ServerId): void {
     if (server === 'seasonal' && !this.seasonalAvailable) return;
@@ -43,7 +42,7 @@ export class ServerService {
     try {
       localStorage.setItem(SERVER_STORAGE_KEY, this._server());
     } catch {
-      /* localStorage may be unavailable in private browsing or SSR */
+      // localStorage may be unavailable in private browsing or SSR
     }
   }
 
@@ -53,7 +52,7 @@ export class ServerService {
       if (stored === 'seasonal' && this.seasonalAvailable) return 'seasonal';
       if (stored === 'classic') return 'classic';
     } catch {
-      /* localStorage may be unavailable in private browsing or SSR */
+      // localStorage may be unavailable in private browsing or SSR
     }
     return DEFAULT_SERVER;
   }
