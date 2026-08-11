@@ -13,6 +13,8 @@ class TestApiService extends BaseApiService {
       errorContext: string;
       errorTitle?: string;
       showErrorToast?: boolean;
+      fetchAll?: boolean;
+      pageSize?: number;
     },
   ): Promise<T | null> {
     return super.fetchRpc(rpcName, params, options);
@@ -131,5 +133,86 @@ describe('BaseApiService.fetchRpc', () => {
 
     expect(result).toBeNull();
     expect(errorSpy).not.toHaveBeenCalled();
+  });
+
+  it('merges pages in offset order when fetchAll is true', async () => {
+    const { service, rpc, errorSpy } = setup();
+    const pages = [[{ id: 1 }, { id: 2 }], [{ id: 3 }]];
+    const rangeCalls: Array<[number, number]> = [];
+    rpc.mockReturnValue({
+      range: (from: number, to: number) => {
+        rangeCalls.push([from, to]);
+        return Promise.resolve({ data: pages.shift(), error: null });
+      },
+    });
+
+    const result = await service.fetchRpc(
+      'get_thing',
+      {},
+      { errorContext: 'things', fetchAll: true, pageSize: 2 },
+    );
+
+    expect(result).toEqual([{ id: 1 }, { id: 2 }, { id: 3 }]);
+    expect(rangeCalls).toEqual([
+      [0, 1],
+      [2, 3],
+    ]);
+    expect(errorSpy).not.toHaveBeenCalled();
+  });
+
+  it('returns a single page unchanged when the result fits in one page', async () => {
+    const { service, rpc, errorSpy } = setup();
+    rpc.mockReturnValue({
+      range: () => Promise.resolve({ data: [{ id: 1 }, { id: 2 }], error: null }),
+    });
+
+    const result = await service.fetchRpc(
+      'get_thing',
+      {},
+      { errorContext: 'things', fetchAll: true, pageSize: 1000 },
+    );
+
+    expect(result).toEqual([{ id: 1 }, { id: 2 }]);
+    expect(rpc).toHaveBeenCalledTimes(1);
+    expect(errorSpy).not.toHaveBeenCalled();
+  });
+
+  it('stops on the first short page when the result is an exact multiple of the page size', async () => {
+    const { service, rpc } = setup();
+    const pages = [[{ id: 1 }, { id: 2 }], [{ id: 3 }, { id: 4 }], []];
+    rpc.mockReturnValue({
+      range: () => Promise.resolve({ data: pages.shift(), error: null }),
+    });
+
+    const result = await service.fetchRpc(
+      'get_thing',
+      {},
+      { errorContext: 'things', fetchAll: true, pageSize: 2 },
+    );
+
+    expect(result).toEqual([{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]);
+    expect(rpc).toHaveBeenCalledTimes(3);
+  });
+
+  it('returns null with no partial data when a page fails mid-pagination', async () => {
+    const { service, rpc, errorSpy } = setup();
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+    const pages: Array<{ data: unknown; error: unknown }> = [
+      { data: [{ id: 1 }, { id: 2 }], error: null },
+      { data: null, error: { message: 'boom' } },
+    ];
+    rpc.mockReturnValue({
+      range: () => Promise.resolve(pages.shift()),
+    });
+
+    const result = await service.fetchRpc(
+      'get_thing',
+      {},
+      { errorContext: 'things', fetchAll: true, pageSize: 2 },
+    );
+
+    expect(result).toBeNull();
+    expect(consoleError).toHaveBeenCalledWith('Error loading things:', { message: 'boom' });
+    expect(errorSpy).toHaveBeenCalledWith('Failed to load things', 'Error');
   });
 });
