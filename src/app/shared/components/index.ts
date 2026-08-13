@@ -12,5 +12,4 @@ export * from './player-list/player-list.component';
 export * from './player-list/podium/podium.component';
 export * from './player-list/list/list.component';
 export * from './stat-card/stat-card.component';
-export * from './toast/toast.component';
 export * from './player-list/search-input/search-input.component';

@@ -1,15 +1,19 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   OnInit,
   inject,
   input,
   viewChild,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { timer } from 'rxjs';
 
 import { PodiumListItem } from '@core/models';
-import { ServerService, ToastService } from '@core/services';
+import { ServerService } from '@core/services';
 import { getDuraPlayerUrl } from '@shared/functions';
 
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
@@ -27,12 +31,10 @@ import { PlayerListComponent } from '../player-list/player-list.component';
   imports: [ContextMenuModule, PlayerListComponent, LoadingStatusComponent, NoDataStatusComponent],
 })
 export class PlayerActionsTableComponent implements OnInit {
-  private static readonly HINT_SEEN_KEY = 'dura-vault:player-context-menu-hint-seen';
-  private static hintSeenInMemory = false;
-
   private readonly router = inject(Router);
   private readonly serverService = inject(ServerService);
-  private readonly toastService = inject(ToastService);
+  private readonly messageService = inject(MessageService);
+  private readonly destroyRef = inject(DestroyRef);
 
   // Inputs
   items = input.required<PodiumListItem[]>();
@@ -68,7 +70,7 @@ export class PlayerActionsTableComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.showHintOnce();
+    this.showHint();
   }
 
   protected onItemClick(item: PodiumListItem): void {
@@ -100,32 +102,15 @@ export class PlayerActionsTableComponent implements OnInit {
     );
   }
 
-  private showHintOnce(): void {
-    if (this.hasSeenHint()) return;
-    this.toastService.info(
-      'Right-click on a row to see more options',
-      undefined,
-      undefined,
-      'bottom-right',
-    );
-    this.markHintSeen();
-  }
-
-  private hasSeenHint(): boolean {
-    if (PlayerActionsTableComponent.hintSeenInMemory) return true;
-    try {
-      return localStorage.getItem(PlayerActionsTableComponent.HINT_SEEN_KEY) !== null;
-    } catch {
-      return false;
-    }
-  }
-
-  private markHintSeen(): void {
-    PlayerActionsTableComponent.hintSeenInMemory = true;
-    try {
-      localStorage.setItem(PlayerActionsTableComponent.HINT_SEEN_KEY, 'true');
-    } catch {
-      // Storage unavailable — the in-memory flag covers the rest of this session.
-    }
+  private showHint(): void {
+    timer(300)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Info',
+          detail: 'Right-click on a row to see more options',
+        });
+      });
   }
 }

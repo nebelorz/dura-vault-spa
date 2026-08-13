@@ -1,4 +1,21 @@
-<app-toast />
+<p-toast position="bottom-right" life="5000" [motionOptions]="toastMotionOptions">
+  <ng-template pTemplate="headless" let-message let-closeFn="closeFn">
+    <div class="toast-message toast-{{ message.severity }}">
+      <!-- Content -->
+      <div class="toast-content">
+        @if (message.summary) {
+          <div class="toast-summary text-value">{{ message.summary }}</div>
+        }
+        <div class="toast-detail text-standard">{{ message.detail }}</div>
+      </div>
+
+      <!-- Close button -->
+      <button class="toast-close" (click)="closeFn($event)" aria-label="Close">
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+  </ng-template>
+</p-toast>
 
 <app-nav-bar />
 

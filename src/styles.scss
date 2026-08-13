@@ -23,6 +23,9 @@
 @use 'animations/fade' as animationFade;
 @use 'animations/blur-fade-in' as blurFadeIn;
 
+// Components
+@use 'toast';
+
 // Global animation classes
 .animation-fade {
   @include animationFade.fadeAnimation();

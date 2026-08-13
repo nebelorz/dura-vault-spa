@@ -11,4 +11,3 @@ export * from './player-details.service';
 export * from './server.service';
 export * from './supabase.service';
 export * from './theme.service';
-export * from './toast.service';

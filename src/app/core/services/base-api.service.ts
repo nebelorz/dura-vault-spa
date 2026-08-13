@@ -1,12 +1,12 @@
 import { inject } from '@angular/core';
 import { SupabaseClient } from '@supabase/supabase-js';
+import { MessageService } from 'primeng/api';
 
 import { SupabaseService } from './supabase.service';
-import { ToastService } from './toast.service';
 
 export abstract class BaseApiService {
   private readonly supabaseService = inject(SupabaseService);
-  protected readonly toastService = inject(ToastService);
+  protected readonly messageService = inject(MessageService);
 
   protected get supabase(): SupabaseClient {
     return this.supabaseService.getClient();
@@ -45,7 +45,12 @@ export abstract class BaseApiService {
             console.error(`Error loading ${errorContext}:`, error);
 
             if (showErrorToast) {
-              this.toastService.error(errorMessage, errorTitle);
+              this.messageService.add({
+                severity: 'error',
+                summary: errorTitle,
+                detail: errorMessage,
+                life: 8000,
+              });
             }
 
             return null;
@@ -69,7 +74,12 @@ export abstract class BaseApiService {
         console.error(`Error loading ${errorContext}:`, error);
 
         if (showErrorToast) {
-          this.toastService.error(errorMessage, errorTitle);
+          this.messageService.add({
+            severity: 'error',
+            summary: errorTitle,
+            detail: errorMessage,
+            life: 8000,
+          });
         }
 
         return null;
@@ -81,7 +91,12 @@ export abstract class BaseApiService {
       console.error('Unexpected error:', err);
 
       if (showErrorToast) {
-        this.toastService.error(errorMessage, errorTitle);
+        this.messageService.add({
+          severity: 'error',
+          summary: errorTitle,
+          detail: errorMessage,
+          life: 8000,
+        });
       }
 
       return null;

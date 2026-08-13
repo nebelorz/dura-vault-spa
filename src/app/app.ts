@@ -1,16 +1,19 @@
 import { Component, inject, DestroyRef, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Router, RouterOutlet } from '@angular/router';
-import { fromEvent } from 'rxjs';
+import { NavigationStart, Router, RouterOutlet } from '@angular/router';
+import { filter, fromEvent } from 'rxjs';
+import { MotionOptions } from '@primeuix/motion';
+
+import { Toast } from 'primeng/toast';
+import { MessageService, PrimeTemplate } from 'primeng/api';
 
 import { NavBarComponent } from './features/nav-bar/nav-bar.component';
 import { FooterComponent } from './features/footer/footer.component';
-import { ToastComponent } from './shared/components/toast/toast.component';
 import { ServerService } from '@core/services';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavBarComponent, FooterComponent, ToastComponent],
+  imports: [RouterOutlet, NavBarComponent, FooterComponent, Toast, PrimeTemplate],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,7 +21,13 @@ import { ServerService } from '@core/services';
 export class App implements OnInit {
   private readonly router = inject(Router);
   private readonly serverService = inject(ServerService);
+  private readonly messageService = inject(MessageService);
   private readonly destroyRef = inject(DestroyRef);
+
+  protected readonly toastMotionOptions: MotionOptions = {
+    name: 'toast',
+    safe: true,
+  };
 
   constructor() {
     fromEvent(document, 'visibilitychange')
@@ -29,6 +38,13 @@ export class App implements OnInit {
           favicon.href = document.hidden ? 'favicon-inactive.svg' : 'favicon-active.svg';
         }
       });
+
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationStart),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe(() => this.messageService.clear());
   }
 
   ngOnInit(): void {

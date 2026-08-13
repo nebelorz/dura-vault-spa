@@ -1,0 +1,108 @@
+@use 'colors' as colors;
+
+.p-toast-message {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  color: inherit !important;
+}
+
+.toast-message {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px colors.$secondary;
+  min-width: 300px;
+  pointer-events: auto;
+  backdrop-filter: blur(10px);
+  color: #000;
+}
+
+// The tinted background is translucent, so text contrast depends on the page
+// behind it: dark text on light surfaces, light text in .darkmode.
+:root.darkmode .toast-message {
+  color: #fff;
+}
+
+.toast-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.toast-summary {
+  line-height: 1.4;
+}
+
+.toast-detail {
+  line-height: 1.5;
+}
+
+.toast-close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-default);
+  transition: all 0.2s ease;
+  color: inherit;
+
+  i {
+    font-size: var(--text-sm);
+  }
+}
+
+// Severity-tinted backgrounds
+.toast-success {
+  background: colors.$primary-a20;
+}
+
+.toast-info {
+  background: colors.$info-a20;
+}
+
+.toast-warn {
+  background: colors.$warn-a20;
+}
+
+.toast-error {
+  background: colors.$danger-a20;
+}
+
+// Motion classes consumed by <p-toast> motionOptions (name: 'toast').
+// Slide-up + fade enter, fade-out leave.
+.toast-enter-from {
+  transform: translateY(16px);
+  opacity: 0;
+}
+
+.toast-enter-to {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.toast-enter-active {
+  transition:
+    transform 300ms ease-out,
+    opacity 300ms ease-out;
+}
+
+.toast-leave-from {
+  opacity: 1;
+}
+
+.toast-leave-to {
+  opacity: 0;
+}
+
+.toast-leave-active {
+  transition: opacity 200ms ease-in;
+}
