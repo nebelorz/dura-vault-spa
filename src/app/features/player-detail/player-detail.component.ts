@@ -7,7 +7,6 @@ import {
   DestroyRef,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -32,7 +31,11 @@ import {
   PeriodOption,
 } from '@core/models';
 
-import { PeriodSelectorComponent, MinimalistIconComponent } from '@shared/components';
+import {
+  PeriodSelectorComponent,
+  MinimalistIconComponent,
+  DateRangeLabelComponent,
+} from '@shared/components';
 import { PlayerDetailHeaderComponent } from './player-detail-header/player-detail-header.component';
 import { PlayerDetailTabCharacterComponent } from './player-detail-middle-section/player-detail-tab-character/player-detail-tab-character.component';
 import { PlayerStatsComponent } from './player-detail-left-section/player-stats/player-stats.component';
@@ -50,6 +53,7 @@ import { Tabs, TabList, Tab, TabPanels, TabPanel } from 'primeng/tabs';
     PlayerDetailHeaderComponent,
     PeriodSelectorComponent,
     MinimalistIconComponent,
+    DateRangeLabelComponent,
     PlayerStatsComponent,
     PlayerOnlineStatsComponent,
     PlayerAchievementsComponent,
@@ -60,7 +64,6 @@ import { Tabs, TabList, Tab, TabPanels, TabPanel } from 'primeng/tabs';
     Tab,
     TabPanels,
     TabPanel,
-    DatePipe,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

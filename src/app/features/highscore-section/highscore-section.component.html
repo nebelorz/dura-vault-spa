@@ -1,6 +1,6 @@
-<div class="highscore-container animation-fade">
+<div class="section-shell animation-fade">
   <!-- Header -->
-  <div class="section-header highscore-header">
+  <div class="section-header">
     <app-highscore-header [section]="section()" />
 
     <div class="selector-group">
@@ -8,23 +8,16 @@
         [selectedPeriod]="selectedPeriod()"
         (periodChange)="onPeriodChange($event)"
       />
-      @if (dateRange().length === 1) {
-        <span class="text-caption">{{ dateRange()[0] | date: 'dd MMM yyyy' }}</span>
-      } @else if (dateRange().length > 1) {
-        <span class="text-caption"
-          >{{ dateRange()[0] | date: 'dd MMM yyyy' }} —
-          {{ dateRange()[1] | date: 'dd MMM yyyy' }}</span
-        >
-      }
+      <app-date-range-label [dateRange]="dateRange()" />
     </div>
   </div>
 
   <!-- Body: left (ranking) | right (stats + charts) -->
-  <div class="highscore-body">
-    <div class="highscore-left">
+  <div class="section-body">
+    <div class="section-left">
       <app-highscore-data-table [data]="data()" [loading]="loading()" [section]="section()" />
     </div>
-    <div class="highscore-right">
+    <div class="section-right">
       <app-top-by-vocation-cards [data]="data()" [loading]="loading()" [section]="section()" />
       <app-highscore-chart-gains-by-vocation
         [data]="data()"

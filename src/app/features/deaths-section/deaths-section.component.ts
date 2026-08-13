@@ -1,18 +1,11 @@
-import {
-  Component,
-  OnInit,
-  signal,
-  inject,
-  computed,
-  ChangeDetectionStrategy,
-} from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { Component, OnInit, signal, inject, ChangeDetectionStrategy } from '@angular/core';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
 
 import { DeathRecord, ScrapeDateRange, TimePeriod } from '@core/models';
 import { DeathsService, MetadataService, ServerService } from '@core/services';
-import { onServerSwitch, resolvePeriodRange } from '@shared/functions';
+import { createPeriodWindow, onServerSwitch } from '@shared/functions';
+import { DateRangeLabelComponent } from '@shared/components/date-range-label/date-range-label.component';
 import { PeriodSelectorComponent } from '@shared/components/period-selector/period-selector.component';
 import { DeathsHeaderComponent } from './deaths-header/deaths-header.component';
 import { DeathsDataTableComponent } from './deaths-left-section/deaths-data-table/deaths-data-table.component';
@@ -25,9 +18,9 @@ import { DeathsChartsComponent } from './deaths-right-section/deaths-charts/deat
   imports: [
     DeathsHeaderComponent,
     PeriodSelectorComponent,
+    DateRangeLabelComponent,
     DeathsDataTableComponent,
     DeathsChartsComponent,
-    DatePipe,
     SelectButtonModule,
     FormsModule,
   ],
@@ -47,22 +40,9 @@ export class DeathsSectionComponent implements OnInit {
   private dataRequestId = 0;
 
   // Single period window shared by the data requests and the label
-  window = computed(() => {
-    const period = this.selectedPeriod();
-    const range = this.scrapeDateRange();
-    if (!range) return null;
-    const maxDate = range.max_scrape_date;
-    if (!maxDate) return null;
-    return resolvePeriodRange(period, range.min_scrape_date ?? null, maxDate);
-  });
-
-  // Display date range for the label (keeps the existing string[] shape)
-  dateRange = computed<string[]>(() => {
-    const w = this.window();
-    if (!w) return [];
-    if (w.from === w.to) return [w.from];
-    return [w.from, w.to];
-  });
+  private readonly periodWindow = createPeriodWindow(this.selectedPeriod, this.scrapeDateRange);
+  window = this.periodWindow.window;
+  dateRange = this.periodWindow.dateRange;
 
   protected readonly pvpFilterOptions = [
     { label: 'All', value: null },
@@ -71,10 +51,10 @@ export class DeathsSectionComponent implements OnInit {
   ];
 
   constructor() {
-    onServerSwitch(this.serverService, () => {
+    onServerSwitch(this.serverService, async () => {
       this.pvpFilter.set(null);
-      void this.loadScrapeDateRange();
-      void this.loadData();
+      await this.loadScrapeDateRange();
+      await this.loadData();
     });
   }
 

@@ -1,4 +1,5 @@
 export * from './badge/badge.component';
+export * from './date-range-label/date-range-label.component';
 export * from './go-back-button/go-back-button.component';
 export * from './loading/loading-status/loading-status.component';
 export * from './metric-display/metric-display.component';

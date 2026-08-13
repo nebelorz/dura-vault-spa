@@ -1,5 +1,6 @@
 export * from './build-metric';
 export * from './carry-forward';
+export * from './create-period-window';
 export * from './marker-indices';
 export * from './resolve-period-range';
 export * from './format-date';

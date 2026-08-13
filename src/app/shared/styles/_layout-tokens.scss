@@ -4,6 +4,12 @@
   --radius-default: 6px;
   --nav-height: 50px;
   --chart-min-height: 21.875rem;
+  --section-gap: 1.5rem;
+  --section-header-margin: 1.5rem;
+  --section-selector-gap: 0.25rem;
+  --section-sticky-top: calc(var(--nav-height) + 1rem);
+  --section-panel-height: calc(90vh - 100px - 2rem);
+  --section-collapse-breakpoint: 768px;
 }
 
 // SCSS variable wrappers
@@ -11,3 +17,10 @@ $radius-container: var(--radius-container);
 $radius-default: var(--radius-default);
 $nav-height: var(--nav-height);
 $chart-min-height: var(--chart-min-height);
+$section-gap: var(--section-gap);
+$section-header-margin: var(--section-header-margin);
+$section-selector-gap: var(--section-selector-gap);
+$section-sticky-top: var(--section-sticky-top);
+$section-panel-height: var(--section-panel-height);
+
+$section-collapse-breakpoint: 768px; // breakpoint wrapper is a literal so it can be used in `@media`

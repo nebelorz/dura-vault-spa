@@ -2,7 +2,6 @@ import {
   Component,
   OnInit,
   signal,
-  computed,
   inject,
   DestroyRef,
   ChangeDetectionStrategy,
@@ -12,25 +11,23 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { HighscoreRecord, Section, ScrapeDateRange, TimePeriod } from '@core/models';
 import { HighscoreService, MetadataService, ServerService } from '@core/services';
-import { onServerSwitch, resolvePeriodRange } from '@shared/functions';
-import { DatePipe } from '@angular/common';
+import { createPeriodWindow, onServerSwitch } from '@shared/functions';
+import { DateRangeLabelComponent, PeriodSelectorComponent } from '@shared/components';
 import { HighscoreDataTableComponent } from './highscore-left-section/highscore-data-table/highscore-data-table.component';
 import { HighscoreHeaderComponent } from './highscore-header/highscore-header.component';
 import { HighscoreChartGainsByVocationComponent } from './highscore-right-section/highscore-chart-gains-by-vocation/highscore-chart-gains-by-vocation.component';
 import { HighscoreTopPerVocationCardsComponent } from './highscore-right-section/highscore-top-by-vocation-cards/highscore-top-by-vocation-cards.component';
-import { PeriodSelectorComponent } from '@shared/components';
 
 @Component({
   selector: 'app-highscore-section',
   templateUrl: './highscore-section.component.html',
-  styleUrl: './highscore-section.component.scss',
   imports: [
     HighscoreHeaderComponent,
     PeriodSelectorComponent,
+    DateRangeLabelComponent,
     HighscoreDataTableComponent,
     HighscoreChartGainsByVocationComponent,
     HighscoreTopPerVocationCardsComponent,
-    DatePipe,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -51,27 +48,14 @@ export class HighscoreSectionComponent implements OnInit {
   private dataRequestId = 0;
 
   // Single period window shared by the data requests and the label
-  window = computed(() => {
-    const period = this.selectedPeriod();
-    const range = this.scrapeDateRange();
-    if (!range) return null;
-    const maxDate = range.max_scrape_date;
-    if (!maxDate) return null;
-    return resolvePeriodRange(period, range.min_scrape_date ?? null, maxDate);
-  });
-
-  // Display date range for the label (keeps the existing string[] shape)
-  dateRange = computed<string[]>(() => {
-    const w = this.window();
-    if (!w) return [];
-    if (w.from === w.to) return [w.from];
-    return [w.from, w.to];
-  });
+  private readonly periodWindow = createPeriodWindow(this.selectedPeriod, this.scrapeDateRange);
+  window = this.periodWindow.window;
+  dateRange = this.periodWindow.dateRange;
 
   constructor() {
-    onServerSwitch(this.serverService, () => {
-      void this.loadScrapeDateRange();
-      void this.loadData();
+    onServerSwitch(this.serverService, async () => {
+      await this.loadScrapeDateRange();
+      await this.loadData();
     });
   }
 

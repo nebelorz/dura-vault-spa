@@ -1,0 +1,58 @@
+// SHARED PERIOD-DRIVEN SECTION LAYOUT
+// Sized only by the layout tokens defined in `layout-tokens`.
+@use 'layout-tokens' as *;
+
+.section-shell {
+  padding: 1rem;
+  max-width: 100%;
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: $section-header-margin;
+
+    .selector-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: $section-selector-gap;
+    }
+  }
+
+  .section-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $section-gap;
+    align-items: start;
+
+    .section-left {
+      position: sticky;
+      top: $section-sticky-top;
+      height: $section-panel-height;
+      display: flex;
+      flex-direction: column;
+
+      > *:last-child {
+        flex: 1;
+        min-height: 0;
+      }
+    }
+
+    .section-right {
+      height: $section-panel-height;
+      display: flex;
+      flex-direction: column;
+      gap: $section-gap;
+      min-height: 0;
+
+      > * {
+        flex: 1;
+        min-height: 0;
+      }
+    }
+
+    @media (max-width: $section-collapse-breakpoint) {
+      grid-template-columns: 1fr;
+    }
+  }
+}

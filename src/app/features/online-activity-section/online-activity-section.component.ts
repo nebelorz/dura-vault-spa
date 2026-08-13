@@ -1,16 +1,9 @@
-import {
-  Component,
-  OnInit,
-  signal,
-  inject,
-  computed,
-  ChangeDetectionStrategy,
-} from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { Component, OnInit, signal, inject, ChangeDetectionStrategy } from '@angular/core';
 
 import { OnlineTimelineRecord, OnlineTopRecord, ScrapeDateRange, TimePeriod } from '@core/models';
 import { MetadataService, OnlineService, ServerService } from '@core/services';
-import { onServerSwitch, resolvePeriodRange } from '@shared/functions';
+import { createPeriodWindow, onServerSwitch } from '@shared/functions';
+import { DateRangeLabelComponent } from '@shared/components/date-range-label/date-range-label.component';
 import { PeriodSelectorComponent } from '@shared/components/period-selector/period-selector.component';
 import { OnlineHeaderComponent } from './online-header/online-header.component';
 import { OnlineDataTableComponent } from './online-activity-left-section/online-activity-data-table/online-activity-data-table.component';
@@ -19,13 +12,12 @@ import { OnlineActivityChartsComponent } from './online-activity-right-section/o
 @Component({
   selector: 'app-online-activity-section',
   templateUrl: './online-activity-section.component.html',
-  styleUrl: './online-activity-section.component.scss',
   imports: [
     OnlineHeaderComponent,
     PeriodSelectorComponent,
+    DateRangeLabelComponent,
     OnlineDataTableComponent,
     OnlineActivityChartsComponent,
-    DatePipe,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -44,27 +36,14 @@ export class OnlineActivitySectionComponent implements OnInit {
   private dataRequestId = 0;
 
   // Single period window shared by the data requests and the label
-  window = computed(() => {
-    const period = this.selectedPeriod();
-    const range = this.scrapeDateRange();
-    if (!range) return null;
-    const maxDate = range.max_scrape_date;
-    if (!maxDate) return null;
-    return resolvePeriodRange(period, range.min_scrape_date ?? null, maxDate);
-  });
-
-  // Display date range for the label (keeps the existing string[] shape)
-  dateRange = computed<string[]>(() => {
-    const w = this.window();
-    if (!w) return [];
-    if (w.from === w.to) return [w.from];
-    return [w.from, w.to];
-  });
+  private readonly periodWindow = createPeriodWindow(this.selectedPeriod, this.scrapeDateRange);
+  window = this.periodWindow.window;
+  dateRange = this.periodWindow.dateRange;
 
   constructor() {
-    onServerSwitch(this.serverService, () => {
-      void this.loadScrapeDateRange();
-      void this.loadData();
+    onServerSwitch(this.serverService, async () => {
+      await this.loadScrapeDateRange();
+      await this.loadData();
     });
   }
 
