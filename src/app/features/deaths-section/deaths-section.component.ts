@@ -6,6 +6,7 @@ import { DeathRecord, ScrapeDateRange, TimePeriod } from '@core/models';
 import { DeathsService, MetadataService, ServerService } from '@core/services';
 import { createPeriodWindow, onServerSwitch } from '@shared/functions';
 import { DateRangeLabelComponent } from '@shared/components/date-range-label/date-range-label.component';
+import { ErrorStatusComponent } from '@shared/components/error-status/error-status.component';
 import { PeriodSelectorComponent } from '@shared/components/period-selector/period-selector.component';
 import { DeathsHeaderComponent } from './deaths-header/deaths-header.component';
 import { DeathsDataTableComponent } from './deaths-left-section/deaths-data-table/deaths-data-table.component';
@@ -19,6 +20,7 @@ import { DeathsChartsComponent } from './deaths-right-section/deaths-charts/deat
     DeathsHeaderComponent,
     PeriodSelectorComponent,
     DateRangeLabelComponent,
+    ErrorStatusComponent,
     DeathsDataTableComponent,
     DeathsChartsComponent,
     SelectButtonModule,
@@ -32,10 +34,13 @@ export class DeathsSectionComponent implements OnInit {
   private readonly serverService = inject(ServerService);
 
   data = signal<DeathRecord[]>([]);
+  error = signal<boolean>(false);
   loading = signal<boolean>(true);
+  retrying = signal<boolean>(false);
   selectedPeriod = signal<TimePeriod>('day');
   pvpFilter = signal<boolean | null>(null);
   scrapeDateRange = signal<ScrapeDateRange | null>(null);
+  private scrapeError = signal<boolean>(false);
 
   private dataRequestId = 0;
 
@@ -53,15 +58,22 @@ export class DeathsSectionComponent implements OnInit {
   constructor() {
     onServerSwitch(this.serverService, async () => {
       this.pvpFilter.set(null);
-      await this.loadScrapeDateRange();
-      await this.loadData();
+      if (await this.loadScrapeDateRange()) {
+        await this.loadData();
+      }
     });
   }
 
   ngOnInit(): void {
-    this.loadScrapeDateRange()
-      .then(() => this.loadData())
-      .catch(() => this.loadData());
+    void (async () => {
+      try {
+        if (await this.loadScrapeDateRange()) {
+          await this.loadData();
+        }
+      } catch {
+        await this.loadData();
+      }
+    })();
   }
 
   onPeriodChange(period: TimePeriod): void {
@@ -74,29 +86,55 @@ export class DeathsSectionComponent implements OnInit {
     void this.loadData();
   }
 
-  private async loadScrapeDateRange(): Promise<void> {
-    const dateRange = await this.metadataService.getScrapeDates('deaths', false);
-    if (dateRange) this.scrapeDateRange.set(dateRange);
+  async retry(): Promise<void> {
+    if (this.retrying()) return;
+    this.retrying.set(true);
+    try {
+      if (await this.loadScrapeDateRange()) {
+        await this.loadData();
+      }
+    } finally {
+      this.retrying.set(false);
+    }
   }
 
-  private async loadData(): Promise<void> {
+  private async loadScrapeDateRange(): Promise<boolean> {
+    const result = await this.metadataService.getScrapeDates('deaths', false);
+    if (result.status === 'error') {
+      this.scrapeError.set(true);
+      this.error.set(true);
+      return false;
+    }
+    this.scrapeError.set(false);
+    this.scrapeDateRange.set(result.range);
+    return true;
+  }
+
+  async loadData(): Promise<void> {
     const requestId = ++this.dataRequestId;
     const window = this.window();
     if (!window) {
+      this.error.set(this.scrapeError());
       this.loading.set(false);
+      this.data.set([]);
       return;
     }
 
+    this.error.set(false);
     this.loading.set(true);
     this.data.set([]);
 
     try {
-      const result = await this.deathsService.getDeaths({
-        from: window.from,
-        to: window.to,
-        is_pvp: this.pvpFilter() ?? undefined,
-      });
+      const result = await this.deathsService.getDeaths(
+        {
+          from: window.from,
+          to: window.to,
+          is_pvp: this.pvpFilter() ?? undefined,
+        },
+        false,
+      );
       if (requestId !== this.dataRequestId) return;
+      this.error.set(result === null);
       if (result) this.data.set(result);
     } finally {
       if (requestId === this.dataRequestId) {

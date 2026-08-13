@@ -11,20 +11,24 @@
     </div>
   </div>
 
-  <div class="section-body">
-    <div class="section-left">
-      <div class="pvp-filter-group">
-        <p-selectbutton
-          [options]="pvpFilterOptions"
-          [ngModel]="pvpFilter()"
-          (onChange)="onPvpFilterChange($event.value)"
-          [allowEmpty]="true"
-        />
+  @if (error()) {
+    <app-error-status (retry)="retry()" [disabled]="retrying()" />
+  } @else {
+    <div class="section-body">
+      <div class="section-left">
+        <div class="pvp-filter-group">
+          <p-selectbutton
+            [options]="pvpFilterOptions"
+            [ngModel]="pvpFilter()"
+            (onChange)="onPvpFilterChange($event.value)"
+            [allowEmpty]="true"
+          />
+        </div>
+        <app-deaths-data-table [data]="data()" [loading]="loading()" />
       </div>
-      <app-deaths-data-table [data]="data()" [loading]="loading()" />
+      <div class="section-right">
+        <app-deaths-charts [data]="data()" [loading]="loading()" [period]="selectedPeriod()" />
+      </div>
     </div>
-    <div class="section-right">
-      <app-deaths-charts [data]="data()" [loading]="loading()" [period]="selectedPeriod()" />
-    </div>
-  </div>
+  }
 </div>
