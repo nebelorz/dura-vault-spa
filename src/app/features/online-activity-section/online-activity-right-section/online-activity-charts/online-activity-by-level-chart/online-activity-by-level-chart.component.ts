@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 
 import { OnlineTopRecord } from '@core/models';
-import { CHART_FONT, CHART_GRID_COLOR } from '@core/constants';
-import { createChartColors } from '@shared/functions';
+import { CHART_FONT, getChartThemeDefaults } from '@core/constants';
+import { ThemeService } from '@core/services';
+import { buildHorizontalBarOptions, createChartColors } from '@shared/functions';
 import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
 import { ChartModule } from 'primeng/chart';
 import type { TooltipItem } from 'chart.js';
@@ -38,6 +39,11 @@ export class OnlineActivityByLevelChartComponent {
   private readonly colors = createChartColors({
     primaryColor: { cssVar: '--color-primary', fallback: '#22c55e' },
   });
+
+  private readonly themeService = inject(ThemeService);
+  private readonly themeDefaults = computed(() =>
+    getChartThemeDefaults(this.themeService.darkMode()),
+  );
 
   constructor() {
     this.colors.setup();
@@ -75,51 +81,28 @@ export class OnlineActivityByLevelChartComponent {
 
   readonly levelChartOptions = computed(() => {
     const stats = this.levelStats();
-    return {
-      indexAxis: 'y' as const,
-      maintainAspectRatio: false,
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: 'rgba(0,0,0,0.8)',
-          padding: 10,
-          cornerRadius: 4,
-          titleFont: { family: CHART_FONT },
-          bodyFont: { family: CHART_FONT },
-          callbacks: {
-            label: (ctx: TooltipItem<'bar'>) => ` ${ctx.parsed.x}h`,
-            afterLabel: (ctx: TooltipItem<'bar'>) => {
-              const s = stats[ctx.dataIndex];
-              return s ? ` ${s.count} players` : '';
-            },
-          },
+    const defaults = this.themeDefaults();
+    return buildHorizontalBarOptions(defaults, {
+      tooltipCallbacks: {
+        label: (ctx: TooltipItem<'bar'>) => ` ${ctx.parsed.x}h`,
+        afterLabel: (ctx: TooltipItem<'bar'>) => {
+          const s = stats[ctx.dataIndex];
+          return s ? ` ${s.count} players` : '';
         },
       },
-      scales: {
-        x: {
-          ticks: {
-            font: { size: 10, family: CHART_FONT },
-            callback: (v: string | number) => `${v}h`,
-          },
-          grid: { color: CHART_GRID_COLOR },
-        },
-        y: {
-          ticks: { font: { size: 11, family: CHART_FONT } },
-          grid: { drawOnChartArea: false },
-        },
+      xTicks: {
+        callback: (v: string | number) => `${v}h`,
+      },
+      extraScales: {
         y2: {
-          type: 'category' as const,
-          position: 'right' as const,
+          type: 'category',
+          position: 'right',
           labels: stats.map((b) => `${b.count}`),
           display: true,
           grid: { drawOnChartArea: false },
-          ticks: {
-            font: { size: 10, family: CHART_FONT },
-            color: 'rgba(128,128,128,0.7)',
-          },
+          ticks: { font: { size: 10, family: CHART_FONT }, color: defaults.mutedColor },
         },
       },
-    };
+    });
   });
 }

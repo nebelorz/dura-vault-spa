@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 
 import { OnlineTimelineRecord, TimePeriod } from '@core/models';
-import { CHART_FONT, CHART_GRID_COLOR } from '@core/constants';
-import { createChartColors, formatDate } from '@shared/functions';
+import { getChartThemeDefaults } from '@core/constants';
+import { ThemeService } from '@core/services';
+import { buildLineOptions, createChartColors, formatDate } from '@shared/functions';
 import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
 import { ChartModule } from 'primeng/chart';
 import type { TooltipItem } from 'chart.js';
@@ -22,6 +23,11 @@ export class OnlineActivityByPeriodChartComponent {
   private readonly colors = createChartColors({
     primaryColor: { cssVar: '--color-primary', fallback: '#22c55e' },
   });
+
+  private readonly themeService = inject(ThemeService);
+  private readonly themeDefaults = computed(() =>
+    getChartThemeDefaults(this.themeService.darkMode()),
+  );
 
   constructor() {
     this.colors.setup();
@@ -73,37 +79,15 @@ export class OnlineActivityByPeriodChartComponent {
     };
   });
 
-  readonly timelineChartOptions = computed(() => ({
-    maintainAspectRatio: false,
-    responsive: true,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        backgroundColor: 'rgba(0,0,0,0.8)',
-        padding: 10,
-        cornerRadius: 4,
-        titleFont: { family: CHART_FONT },
-        bodyFont: { family: CHART_FONT },
-        callbacks: {
-          label: (ctx: TooltipItem<'line'>) => ` ${ctx.parsed.y}h`,
-        },
+  readonly timelineChartOptions = computed(() =>
+    buildLineOptions(this.themeDefaults(), {
+      tooltipCallbacks: {
+        label: (ctx: TooltipItem<'line'>) => ` ${ctx.parsed.y}h`,
       },
-    },
-    scales: {
-      x: {
-        ticks: {
-          font: { size: 10, family: CHART_FONT },
-          maxRotation: 45,
-        },
-        grid: { drawOnChartArea: false },
+      xTicks: { maxRotation: 45 },
+      yTicks: {
+        callback: (v: string | number) => `${v}h`,
       },
-      y: {
-        ticks: {
-          font: { size: 10, family: CHART_FONT },
-          callback: (v: string | number) => `${v}h`,
-        },
-        grid: { color: CHART_GRID_COLOR },
-      },
-    },
-  }));
+    }),
+  );
 }

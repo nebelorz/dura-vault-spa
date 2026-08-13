@@ -1,16 +1,18 @@
-﻿import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+﻿import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 
 import { HighscoreRecord, Section } from '@core/models';
 import {
   CHART_FONT,
-  CHART_GRID_COLOR,
-  CHART_MUTED_COLOR,
+  getChartThemeDefaults,
   getSectionLabel,
   VOCATION_GROUPS,
 } from '@core/constants';
-import { createChartColors, formatNumber } from '@shared/functions';
+import { ThemeService } from '@core/services';
+import { buildHorizontalBarOptions, createChartColors, formatNumber } from '@shared/functions';
 import { NoDataStatusComponent, LoadingStatusComponent } from '@shared/components';
 import { ChartModule } from 'primeng/chart';
+
+import type { TooltipItem } from 'chart.js';
 
 interface VocationStat {
   group: string;
@@ -37,6 +39,11 @@ export class HighscoreChartGainsByVocationComponent {
     colorWarn: { cssVar: '--color-warn', fallback: '#fb923c' },
     colorSecondary: { cssVar: '--color-secondary', fallback: '#64748b' },
   });
+
+  private readonly themeService = inject(ThemeService);
+  private readonly themeDefaults = computed(() =>
+    getChartThemeDefaults(this.themeService.darkMode()),
+  );
 
   constructor() {
     this.colors.setup();
@@ -102,59 +109,37 @@ export class HighscoreChartGainsByVocationComponent {
     const isXp = this.isXpSection();
     const isLoss = this.section() === 'experience_loss';
     const sectionLabel = getSectionLabel(this.section());
-    return {
-      indexAxis: 'y' as const,
-      maintainAspectRatio: false,
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: 'rgba(0,0,0,0.8)',
-          padding: 10,
-          cornerRadius: 4,
-          titleFont: { family: CHART_FONT },
-          bodyFont: { family: CHART_FONT },
-          callbacks: {
-            label: (ctx: { parsed: { x: number } }) => {
-              const val = ctx.parsed.x;
-              if (isXp) {
-                return isLoss ? ` -${formatNumber(val)} XP` : ` ${formatNumber(val)} XP`;
-              }
-              return ` ${val} ${sectionLabel}`;
-            },
-            afterLabel: (ctx: { dataIndex: number }) => {
-              const vocationStat = stats[ctx.dataIndex];
-              return vocationStat ? ` ${vocationStat.count} players` : '';
-            },
-          },
+    const defaults = this.themeDefaults();
+    return buildHorizontalBarOptions(defaults, {
+      tooltipCallbacks: {
+        label: (ctx: TooltipItem<'bar'>) => {
+          const val = ctx.parsed.x;
+          if (isXp) {
+            return isLoss ? ` -${formatNumber(val)} XP` : ` ${formatNumber(val)} XP`;
+          }
+          return ` ${val} ${sectionLabel}`;
+        },
+        afterLabel: (ctx: TooltipItem<'bar'>) => {
+          const vocationStat = stats[ctx.dataIndex];
+          return vocationStat ? ` ${vocationStat.count} players` : '';
         },
       },
-      scales: {
-        x: {
-          ticks: {
-            font: { size: 10, family: CHART_FONT },
-            callback: (tickValue: number | string) => {
-              if (!isXp) return `${tickValue}`;
-              return isLoss
-                ? `-${formatNumber(Number(tickValue))}`
-                : formatNumber(Number(tickValue));
-            },
-          },
-          grid: { color: CHART_GRID_COLOR },
+      xTicks: {
+        callback: (tickValue: number | string) => {
+          if (!isXp) return `${tickValue}`;
+          return isLoss ? `-${formatNumber(Number(tickValue))}` : formatNumber(Number(tickValue));
         },
-        y: {
-          ticks: { font: { size: 11, family: CHART_FONT } },
-          grid: { drawOnChartArea: false },
-        },
+      },
+      extraScales: {
         y2: {
-          type: 'category' as const,
-          position: 'right' as const,
+          type: 'category',
+          position: 'right',
           labels: stats.map((stat) => `${stat.count}`),
           display: true,
           grid: { drawOnChartArea: false },
-          ticks: { font: { size: 10, family: CHART_FONT }, color: CHART_MUTED_COLOR },
+          ticks: { font: { size: 10, family: CHART_FONT }, color: defaults.mutedColor },
         },
       },
-    };
+    });
   });
 }

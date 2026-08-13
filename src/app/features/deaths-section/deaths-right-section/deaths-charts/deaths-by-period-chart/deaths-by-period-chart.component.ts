@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 
 import { DeathRecord, TimePeriod } from '@core/models';
-import { CHART_FONT, CHART_GRID_COLOR } from '@core/constants';
-import { createChartColors, formatDate } from '@shared/functions';
+import { getChartThemeDefaults } from '@core/constants';
+import { ThemeService } from '@core/services';
+import { buildLineOptions, createChartColors, formatDate } from '@shared/functions';
 import { NoDataStatusComponent } from '@shared/components';
 import { ChartModule } from 'primeng/chart';
 import type { TooltipItem } from 'chart.js';
@@ -22,6 +23,11 @@ export class DeathsByPeriodChartComponent {
     pvpColor: { cssVar: '--color-danger', fallback: '#ef4444' },
     pveColor: { cssVar: '--color-warn', fallback: '#fdba74' },
   });
+
+  private readonly themeService = inject(ThemeService);
+  private readonly themeDefaults = computed(() =>
+    getChartThemeDefaults(this.themeService.darkMode()),
+  );
 
   constructor() {
     this.colors.setup();
@@ -111,45 +117,18 @@ export class DeathsByPeriodChartComponent {
 
   readonly deathsByPeriodOptions = computed(() => {
     const stats = this.periodStats();
-
-    return {
-      maintainAspectRatio: false,
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          mode: 'index',
-          intersect: false,
-          backgroundColor: 'rgba(0,0,0,0.8)',
-          padding: 10,
-          cornerRadius: 4,
-          titleFont: { family: CHART_FONT },
-          bodyFont: { family: CHART_FONT },
-          callbacks: {
-            beforeBody: (items: TooltipItem<'line'>[]) => {
-              const item = items[0];
-              return item && stats ? `Total deaths: ${stats.total[item.dataIndex]}` : '';
-            },
-            label: (ctx: TooltipItem<'line'>) => `${ctx.dataset.label}: ${ctx.parsed.y} deaths`,
-          },
+    return buildLineOptions(this.themeDefaults(), {
+      tooltipMode: 'index',
+      tooltipIntersect: false,
+      tooltipCallbacks: {
+        beforeBody: (items: TooltipItem<'line'>[]) => {
+          const item = items[0];
+          return item && stats ? `Total deaths: ${stats.total[item.dataIndex]}` : '';
         },
+        label: (ctx: TooltipItem<'line'>) => `${ctx.dataset.label}: ${ctx.parsed.y} deaths`,
       },
-      scales: {
-        x: {
-          ticks: {
-            font: { size: 10, family: CHART_FONT },
-            maxRotation: 45,
-          },
-          grid: { drawOnChartArea: false },
-        },
-        y: {
-          ticks: {
-            font: { size: 10, family: CHART_FONT },
-            precision: 0,
-          },
-          grid: { color: CHART_GRID_COLOR },
-        },
-      },
-    };
+      xTicks: { maxRotation: 45 },
+      yTicks: { precision: 0 },
+    });
   });
 }
