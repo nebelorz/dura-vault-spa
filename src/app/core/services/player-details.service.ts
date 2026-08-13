@@ -23,31 +23,27 @@ export class PlayerDetailsService extends BaseApiService {
     });
   }
 
-  async getPlayerStats(name: string): Promise<PlayerStatsRecord[]> {
-    return (
-      (await this.fetchRpc<PlayerStatsRecord[]>(
-        'get_player_stats',
-        { p_name: name },
-        {
-          errorContext: 'player stats',
-          errorTitle: 'Player Stats Error',
-          showErrorToast: false,
-        },
-      )) ?? []
+  async getPlayerStats(name: string): Promise<PlayerStatsRecord[] | null> {
+    return await this.fetchRpc<PlayerStatsRecord[]>(
+      'get_player_stats',
+      { p_name: name },
+      {
+        errorContext: 'player stats',
+        errorTitle: 'Player Stats Error',
+        showErrorToast: false,
+      },
     );
   }
 
-  async getPlayerAchievements(name: string): Promise<PlayerAchievement[]> {
-    return (
-      (await this.fetchRpc<PlayerAchievement[]>(
-        'get_player_achievements',
-        { p_name: name },
-        {
-          errorContext: 'player achievements',
-          errorTitle: 'Player Achievements Error',
-          showErrorToast: false,
-        },
-      )) ?? []
+  async getPlayerAchievements(name: string): Promise<PlayerAchievement[] | null> {
+    return this.fetchRpc<PlayerAchievement[]>(
+      'get_player_achievements',
+      { p_name: name },
+      {
+        errorContext: 'player achievements',
+        errorTitle: 'Player Achievements Error',
+        showErrorToast: false,
+      },
     );
   }
 }

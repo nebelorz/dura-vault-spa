@@ -47,9 +47,9 @@ export class LandingPageComponent implements OnInit {
   }
 
   private async loadActiveComparisonDate(): Promise<void> {
-    const dateRange = await this.metadataService.getScrapeDates('highscore_top', false);
-    if (dateRange?.active_comparison_date) {
-      this.maxDate.set(dateRange.active_comparison_date);
+    const result = await this.metadataService.getScrapeDates('highscore_top', false);
+    if (result.status === 'ok' && result.range?.active_comparison_date) {
+      this.maxDate.set(result.range.active_comparison_date);
     }
   }
 
