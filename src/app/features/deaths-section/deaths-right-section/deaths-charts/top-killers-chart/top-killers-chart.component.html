@@ -1,12 +1,12 @@
 <section class="chart-section animation-fade">
   <div class="sub-section-header">
-    <span class="sub-section-label">Top PvE Killers</span>
+    <span class="sub-section-label">{{ chartTitle() }}</span>
   </div>
   <div class="chart-container">
     @if (chartData(); as data) {
       <p-chart type="bar" [data]="data" [options]="chartOptions()" />
     } @else {
-      <app-no-data-status message="No PvE kills for the period selected"/>
+      <app-no-data-status [message]="emptyMessage()" />
     }
   </div>
 </section>

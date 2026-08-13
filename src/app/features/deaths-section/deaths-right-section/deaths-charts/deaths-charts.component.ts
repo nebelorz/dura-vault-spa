@@ -4,8 +4,7 @@ import { DeathRecord, TimePeriod } from '@core/models';
 import { LoadingStatusComponent, StatCardComponent } from '@shared/components';
 
 import { DeathsByPeriodChartComponent } from './deaths-by-period-chart/deaths-by-period-chart.component';
-import { TopPvpKillersChartComponent } from './top-pvp-killers-chart/top-pvp-killers-chart.component';
-import { TopPveKillersChartComponent } from './top-pve-killers-chart/top-pve-killers-chart.component';
+import { TopKillersChartComponent } from './top-killers-chart/top-killers-chart.component';
 
 interface StatsSummary {
   totalDeaths: number;
@@ -26,8 +25,7 @@ interface StatsSummary {
     LoadingStatusComponent,
     StatCardComponent,
     DeathsByPeriodChartComponent,
-    TopPvpKillersChartComponent,
-    TopPveKillersChartComponent,
+    TopKillersChartComponent,
   ],
 })
 export class DeathsChartsComponent {

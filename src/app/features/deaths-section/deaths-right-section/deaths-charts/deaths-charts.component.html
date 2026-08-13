@@ -50,8 +50,8 @@
   }
 
   <div class="charts-grid">
-    <app-top-pvp-killers-chart [data]="data()" />
-    <app-top-pve-killers-chart [data]="data()" />
+    <app-top-killers-chart [data]="data()" mode="pvp" />
+    <app-top-killers-chart [data]="data()" mode="pve" />
     <app-deaths-by-period-chart [data]="data()" [period]="period()" />
   </div>
 }
