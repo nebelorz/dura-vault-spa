@@ -12,7 +12,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HighscoreRecord, Section, ScrapeDateRange, TimePeriod } from '@core/models';
 import { HighscoreService, MetadataService, ServerService } from '@core/services';
 import { createPeriodWindow, onServerSwitch } from '@shared/functions';
-import { DateRangeLabelComponent, PeriodSelectorComponent } from '@shared/components';
+import {
+  DateRangeLabelComponent,
+  ErrorStatusComponent,
+  PeriodSelectorComponent,
+} from '@shared/components';
 import { HighscoreDataTableComponent } from './highscore-left-section/highscore-data-table/highscore-data-table.component';
 import { HighscoreHeaderComponent } from './highscore-header/highscore-header.component';
 import { HighscoreChartGainsByVocationComponent } from './highscore-right-section/highscore-chart-gains-by-vocation/highscore-chart-gains-by-vocation.component';
@@ -25,6 +29,7 @@ import { HighscoreTopPerVocationCardsComponent } from './highscore-right-section
     HighscoreHeaderComponent,
     PeriodSelectorComponent,
     DateRangeLabelComponent,
+    ErrorStatusComponent,
     HighscoreDataTableComponent,
     HighscoreChartGainsByVocationComponent,
     HighscoreTopPerVocationCardsComponent,
@@ -40,8 +45,11 @@ export class HighscoreSectionComponent implements OnInit {
 
   // State
   data = signal<HighscoreRecord[]>([]);
+  error = signal<boolean>(false);
   loading = signal<boolean>(true);
+  retrying = signal<boolean>(false);
   scrapeDateRange = signal<ScrapeDateRange | null>(null);
+  private scrapeError = signal<boolean>(false);
   section = signal<Section>('experience');
   selectedPeriod = signal<TimePeriod>('day');
 
@@ -54,8 +62,9 @@ export class HighscoreSectionComponent implements OnInit {
 
   constructor() {
     onServerSwitch(this.serverService, async () => {
-      await this.loadScrapeDateRange();
-      await this.loadData();
+      if (await this.loadScrapeDateRange()) {
+        await this.loadData();
+      }
     });
   }
 
@@ -78,32 +87,56 @@ export class HighscoreSectionComponent implements OnInit {
     this.loadData();
   }
 
-  private async loadScrapeDateRange(): Promise<void> {
-    const dateRange = await this.metadataService.getScrapeDates('highscore_top');
-    if (dateRange) {
-      this.scrapeDateRange.set(dateRange);
+  async retry(): Promise<void> {
+    if (this.retrying()) return;
+    this.retrying.set(true);
+    try {
+      if (await this.loadScrapeDateRange()) {
+        await this.loadData();
+      }
+    } finally {
+      this.retrying.set(false);
     }
   }
 
-  private async loadData(): Promise<void> {
+  private async loadScrapeDateRange(): Promise<boolean> {
+    const result = await this.metadataService.getScrapeDates('highscore_top', false);
+    if (result.status === 'error') {
+      this.scrapeError.set(true);
+      this.error.set(true);
+      return false;
+    }
+    this.scrapeError.set(false);
+    this.scrapeDateRange.set(result.range);
+    return true;
+  }
+
+  async loadData(): Promise<void> {
     const requestId = ++this.dataRequestId;
     const window = this.window();
     if (!window) {
+      this.error.set(this.scrapeError());
       this.loading.set(false);
+      this.data.set([]);
       return;
     }
 
+    this.error.set(false);
     this.loading.set(true);
     this.data.set([]);
 
     try {
-      const result = await this.highscoreService.getTopGainers({
-        from: window.from,
-        to: window.to,
-        section: this.section(),
-      });
+      const result = await this.highscoreService.getTopGainers(
+        {
+          from: window.from,
+          to: window.to,
+          section: this.section(),
+        },
+        false,
+      );
 
       if (requestId !== this.dataRequestId) return;
+      this.error.set(result === null);
       if (result) {
         this.data.set(result);
       }

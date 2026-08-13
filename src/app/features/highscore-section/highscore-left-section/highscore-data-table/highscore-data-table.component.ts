@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
 import { HighscoreRecord, PodiumListItem, Section } from '@core/models';
+import { getSectionLabel } from '@core/constants';
 import { buildMetrics } from '@shared/functions';
 import { PlayerActionsTableComponent } from '@shared/components';
 
@@ -20,6 +21,7 @@ export class HighscoreDataTableComponent {
 
   // Computed
   protected readonly isLoss = computed(() => this.section() === 'experience_loss');
+  protected readonly sectionLabel = computed(() => getSectionLabel(this.section()));
 
   readonly displayItems = computed<PodiumListItem[]>(() =>
     this.data().map((record) => this.toDisplayItem(record, this.section())),
