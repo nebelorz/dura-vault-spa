@@ -1,22 +1,27 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 
 import { OnlineTopRecord, PodiumListItem, PodiumListItemBadge, TimePeriod } from '@core/models';
 import { DAILY_WARN_MIN, DAILY_DANGER_MIN } from '@core/constants';
 import { buildMetrics } from '@shared/functions';
-import { PlayerActionsTableComponent } from '@shared/components';
+import { ErrorStatusComponent, PlayerActionsTableComponent } from '@shared/components';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-online-activity-data-table',
   templateUrl: './online-activity-data-table.component.html',
   styleUrl: './online-activity-data-table.component.scss',
-  imports: [PlayerActionsTableComponent],
+  imports: [PlayerActionsTableComponent, ErrorStatusComponent],
 })
 export class OnlineDataTableComponent {
   // Inputs
   data = input.required<OnlineTopRecord[]>();
   loading = input.required<boolean>();
+  error = input(false);
+  disabled = input(false);
   period = input.required<TimePeriod>();
+
+  // Outputs
+  retry = output<void>();
 
   // Computed
   readonly displayItems = computed<PodiumListItem[]>(() =>

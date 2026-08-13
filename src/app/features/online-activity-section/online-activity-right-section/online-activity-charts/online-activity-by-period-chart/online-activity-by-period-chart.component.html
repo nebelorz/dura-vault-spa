@@ -3,9 +3,7 @@
     <span class="sub-section-label">Activity by Period</span>
   </div>
   <div class="chart-container">
-    @if (loading()) {
-      <app-loading-status />
-    } @else if (timelineChartData(); as data) {
+    @if (timelineChartData(); as data) {
       <p-chart type="line" [data]="data" [options]="timelineChartOptions()" />
     } @else {
       <app-no-data-status />

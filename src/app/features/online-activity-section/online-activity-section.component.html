@@ -13,21 +13,32 @@
   </div>
 
   <!-- Body: left (podium + list) | right (stats + charts) -->
-  <div class="section-body">
-    <div class="section-left">
-      <app-online-activity-data-table
-        [data]="data()"
-        [loading]="loading()"
-        [period]="selectedPeriod()"
-      />
+  @if (scrapeError()) {
+    <app-error-status (retry)="retry()" [disabled]="retrying()" />
+  } @else {
+    <div class="section-body">
+      <div class="section-left">
+        <app-online-activity-data-table
+          [data]="data()"
+          [loading]="loading()"
+          [error]="topError()"
+          [disabled]="retrying()"
+          [period]="selectedPeriod()"
+          (retry)="retry()"
+        />
+      </div>
+      <div class="section-right">
+        <app-online-activity-charts
+          [data]="data()"
+          [timeline]="timeline()"
+          [loading]="loading()"
+          [topError]="topError()"
+          [timelineError]="timelineError()"
+          [disabled]="retrying()"
+          [period]="selectedPeriod()"
+          (retry)="retry()"
+        />
+      </div>
     </div>
-    <div class="section-right">
-      <app-online-activity-charts
-        [data]="data()"
-        [timeline]="timeline()"
-        [loading]="loading()"
-        [period]="selectedPeriod()"
-      />
-    </div>
-  </div>
+  }
 </div>

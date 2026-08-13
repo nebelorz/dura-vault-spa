@@ -4,7 +4,7 @@ import { OnlineTimelineRecord, TimePeriod } from '@core/models';
 import { getChartThemeDefaults } from '@core/constants';
 import { ThemeService } from '@core/services';
 import { buildLineOptions, createChartColors, formatDate } from '@shared/functions';
-import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
+import { NoDataStatusComponent } from '@shared/components';
 import { ChartModule } from 'primeng/chart';
 import type { TooltipItem } from 'chart.js';
 
@@ -13,12 +13,11 @@ import type { TooltipItem } from 'chart.js';
   selector: 'app-online-activity-by-period-chart',
   templateUrl: './online-activity-by-period-chart.component.html',
   styleUrl: './online-activity-by-period-chart.component.scss',
-  imports: [ChartModule, LoadingStatusComponent, NoDataStatusComponent],
+  imports: [ChartModule, NoDataStatusComponent],
 })
 export class OnlineActivityByPeriodChartComponent {
   timeline = input.required<OnlineTimelineRecord[]>();
   period = input.required<TimePeriod>();
-  loading = input.required<boolean>();
 
   private readonly colors = createChartColors({
     primaryColor: { cssVar: '--color-primary', fallback: '#22c55e' },

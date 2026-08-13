@@ -1,9 +1,13 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 
 import { OnlineTopRecord, OnlineTimelineRecord, TimePeriod } from '@core/models';
 import { VOCATION_GROUPS } from '@core/constants';
 import { formatDate } from '@shared/functions';
-import { LoadingStatusComponent, StatCardComponent } from '@shared/components';
+import {
+  ErrorStatusComponent,
+  LoadingStatusComponent,
+  StatCardComponent,
+} from '@shared/components';
 
 import { OnlineActivityByVocationChartComponent } from './online-activity-by-vocation-chart/online-activity-by-vocation-chart.component';
 import { OnlineActivityByLevelChartComponent } from './online-activity-by-level-chart/online-activity-by-level-chart.component';
@@ -34,6 +38,7 @@ interface StatsSummary {
   imports: [
     LoadingStatusComponent,
     StatCardComponent,
+    ErrorStatusComponent,
     OnlineActivityByVocationChartComponent,
     OnlineActivityByLevelChartComponent,
     OnlineActivityByPeriodChartComponent,
@@ -44,7 +49,13 @@ export class OnlineActivityChartsComponent {
   data = input.required<OnlineTopRecord[]>();
   timeline = input.required<OnlineTimelineRecord[]>();
   loading = input.required<boolean>();
+  topError = input(false);
+  timelineError = input(false);
+  disabled = input(false);
   period = input.required<TimePeriod>();
+
+  // Outputs
+  retry = output<void>();
 
   // Computed
   readonly stats = computed<StatsSummary | null>(() => {

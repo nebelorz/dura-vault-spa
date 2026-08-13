@@ -4,7 +4,7 @@ import { OnlineTopRecord } from '@core/models';
 import { CHART_FONT, getChartThemeDefaults, VOCATION_GROUPS } from '@core/constants';
 import { ThemeService } from '@core/services';
 import { buildHorizontalBarOptions, createChartColors } from '@shared/functions';
-import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
+import { NoDataStatusComponent } from '@shared/components';
 import { ChartModule } from 'primeng/chart';
 import type { TooltipItem } from 'chart.js';
 
@@ -19,11 +19,10 @@ interface VocationStat {
   selector: 'app-online-activity-by-vocation-chart',
   templateUrl: './online-activity-by-vocation-chart.component.html',
   styleUrl: './online-activity-by-vocation-chart.component.scss',
-  imports: [ChartModule, LoadingStatusComponent, NoDataStatusComponent],
+  imports: [ChartModule, NoDataStatusComponent],
 })
 export class OnlineActivityByVocationChartComponent {
   data = input.required<OnlineTopRecord[]>();
-  loading = input.required<boolean>();
 
   private readonly colors = createChartColors({
     primaryColor: { cssVar: '--color-primary', fallback: '#22c55e' },

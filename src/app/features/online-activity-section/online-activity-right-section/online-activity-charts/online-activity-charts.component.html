@@ -1,7 +1,7 @@
 @if (loading()) {
   <app-loading-status />
 } @else {
-  @if (stats(); as statsSummary) {
+  @if (!topError() && stats(); as statsSummary) {
     <div class="stats-row animation-fade">
       <app-stat-card
         icon="pi pi-star-fill"
@@ -33,12 +33,17 @@
   }
 
   <div class="charts-grid">
-    <app-online-activity-by-vocation-chart [data]="data()" [loading]="loading()" />
-    <app-online-activity-by-level-chart [data]="data()" [loading]="loading()" />
-    <app-online-activity-by-period-chart
-      [timeline]="timeline()"
-      [period]="period()"
-      [loading]="loading()"
-    />
+    @if (topError()) {
+      <app-error-status class="top-charts-error" (retry)="retry.emit()" [disabled]="disabled()" />
+    } @else {
+      <app-online-activity-by-vocation-chart [data]="data()" />
+      <app-online-activity-by-level-chart [data]="data()" />
+    }
+
+    @if (timelineError()) {
+      <app-error-status (retry)="retry.emit()" [disabled]="disabled()" />
+    } @else {
+      <app-online-activity-by-period-chart [timeline]="timeline()" [period]="period()" />
+    }
   </div>
 }

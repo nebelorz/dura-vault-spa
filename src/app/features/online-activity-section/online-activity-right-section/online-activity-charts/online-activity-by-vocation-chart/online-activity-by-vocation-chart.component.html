@@ -3,9 +3,7 @@
     <span class="sub-section-label">Activity by Vocation</span>
   </div>
   <div class="chart-container">
-    @if (loading()) {
-      <app-loading-status />
-    } @else if (vocationChartData(); as data) {
+    @if (vocationChartData(); as data) {
       <p-chart type="bar" [data]="data" [options]="vocationChartOptions()" />
     } @else {
       <app-no-data-status />

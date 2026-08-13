@@ -1,5 +1,9 @@
-<app-player-actions-table
-  [items]="displayItems()"
-  [loading]="loading()"
-  emptyMessage="No online activity data for this period."
-/>
+@if (error()) {
+  <app-error-status (retry)="retry.emit()" [disabled]="disabled()" />
+} @else {
+  <app-player-actions-table
+    [items]="displayItems()"
+    [loading]="loading()"
+    emptyMessage="No online activity data for this period."
+  />
+}
