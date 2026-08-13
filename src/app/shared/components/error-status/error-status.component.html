@@ -1,0 +1,13 @@
+<div class="empty-message-container animation-fade">
+  <i class="pi pi-exclamation-triangle"></i>
+  <h3>{{ title() }}</h3>
+
+  @if (message()) {
+    <p class="text-body">{{ message() }}</p>
+  }
+
+  <button type="button" class="retry-button" (click)="retry.emit()" [disabled]="disabled()">
+    <i class="pi pi-refresh"></i>
+    <span>Retry</span>
+  </button>
+</div>

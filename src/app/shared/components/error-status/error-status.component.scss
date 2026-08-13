@@ -1,0 +1,48 @@
+@use 'status-message' as statusMessage;
+
+.empty-message-container {
+  @include statusMessage.status-message-container;
+}
+
+i {
+  opacity: var(--opacity-low);
+}
+
+.retry-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  border: none;
+  border-radius: var(--radius-default);
+  background: var(--color-primary-a10);
+  color: var(--color-primary);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: bold;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    opacity 0.15s ease;
+
+  i.pi {
+    font-size: var(--text-sm);
+    opacity: 1;
+  }
+
+  &:hover {
+    background: var(--color-primary-a20);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: var(--opacity-low);
+    cursor: not-allowed;
+    background: var(--color-primary-a10);
+  }
+}
