@@ -1,26 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  inject,
-  viewChild,
-  OnInit,
-  OnDestroy,
-} from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
 import { HighscoreRecord, PodiumListItem, Section } from '@core/models';
-import { ServerService, ToastService } from '@core/services';
-import { getDuraPlayerUrl, buildMetrics } from '@shared/functions';
-import {
-  PlayerListComponent,
-  LoadingStatusComponent,
-  NoDataStatusComponent,
-} from '@shared/components';
-
-import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
-import { MenuItem } from 'primeng/api';
+import { buildMetrics } from '@shared/functions';
+import { PlayerActionsTableComponent } from '@shared/components';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,23 +10,13 @@ import { MenuItem } from 'primeng/api';
   templateUrl: './highscore-data-table.component.html',
   styleUrl: './highscore-data-table.component.scss',
   host: { '[class.podium-danger-mode]': 'isLoss()' },
-  imports: [ContextMenuModule, PlayerListComponent, LoadingStatusComponent, NoDataStatusComponent],
+  imports: [PlayerActionsTableComponent],
 })
-export class HighscoreDataTableComponent implements OnInit, OnDestroy {
-  private readonly router = inject(Router);
-  private readonly serverService = inject(ServerService);
-  private readonly toastService = inject(ToastService);
-
+export class HighscoreDataTableComponent {
   // Inputs
   data = input.required<HighscoreRecord[]>();
   loading = input.required<boolean>();
   section = input.required<Section>();
-
-  // State
-  private selectedRecord: HighscoreRecord | null = null;
-
-  // Child
-  private readonly cm = viewChild<ContextMenu>('cm');
 
   // Computed
   protected readonly isLoss = computed(() => this.section() === 'experience_loss');
@@ -53,43 +25,9 @@ export class HighscoreDataTableComponent implements OnInit, OnDestroy {
     this.data().map((record) => this.toDisplayItem(record, this.section())),
   );
 
-  // Context menu
-  readonly contextMenuItems: MenuItem[] = [
-    {
-      label: 'Details',
-      icon: 'pi pi-eye',
-      command: () => this.viewPlayerDetails(),
-    },
-    { separator: true },
-    {
-      label: 'Search on Dura',
-      icon: 'pi pi-external-link',
-      command: () => this.searchOnDura(),
-    },
-  ];
-
-  ngOnInit(): void {
-    this.toastService.info(
-      'Right-click on a row to see more options',
-      undefined,
-      undefined,
-      'bottom-right',
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.toastService.clear();
-  }
-
-  protected onItemClick(item: PodiumListItem): void {
-    const record = this.data().find((r) => r.name === item.id);
-    if (record) this.navigateToRecord(record);
-  }
-
-  protected onItemRightClick({ event, item }: { event: MouseEvent; item: PodiumListItem }): void {
-    this.selectedRecord = this.data().find((r) => r.name === item.id) ?? null;
-    this.cm()?.show(event);
-  }
+  protected readonly playerSection = computed(() =>
+    this.section() === 'experience_loss' ? 'experience' : this.section(),
+  );
 
   private toDisplayItem(record: HighscoreRecord, section: Section): PodiumListItem {
     const group = section === 'experience' || section === 'experience_loss' ? 'level' : 'skill';
@@ -101,23 +39,5 @@ export class HighscoreDataTableComponent implements OnInit, OnDestroy {
       meta: record.vocation,
       columns,
     };
-  }
-
-  private navigateToRecord(record: HighscoreRecord): void {
-    const section = record.section === 'experience_loss' ? 'experience' : record.section;
-    this.router.navigate(['/player', record.name], {
-      queryParams: { section },
-      queryParamsHandling: 'merge',
-    });
-  }
-
-  private viewPlayerDetails(): void {
-    if (this.selectedRecord) this.navigateToRecord(this.selectedRecord);
-  }
-
-  private searchOnDura(): void {
-    const record = this.selectedRecord;
-    if (!record) return;
-    window.open(getDuraPlayerUrl(record.name, this.serverService.server()), '_blank');
   }
 }

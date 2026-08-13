@@ -1,16 +1,8 @@
-@if (loading()) {
-  <app-loading-status />
-} @else if (data().length === 0) {
-  <app-no-data-status message="No deaths recorded for this period" />
-} @else {
-  <app-player-list
-    [items]="displayItems()"
-    [displayPodium]="false"
-    [displayFilter]="true"
-    filterPlaceholder="Filter by player name"
-    emptyMessage="No deaths found"
-    (itemClick)="onItemClick($event)"
-    (itemRightClick)="onItemRightClick($event)"
-  />
-  <p-contextmenu #cm [model]="contextMenuItems" appendTo="body" />
-}
+<app-player-actions-table
+  [items]="displayItems()"
+  [loading]="loading()"
+  emptyMessage="No deaths recorded for this period"
+  [displayPodium]="false"
+  filterPlaceholder="Filter by player name"
+  listEmptyMessage="No deaths found"
+/>

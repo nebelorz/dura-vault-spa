@@ -1,0 +1,17 @@
+<p-contextMenu #cm [model]="contextMenuItems" appendTo="body" />
+
+@if (loading()) {
+  <app-loading-status />
+} @else if (!items().length) {
+  <app-no-data-status [message]="emptyMessage()" />
+} @else {
+  <app-player-list
+    [items]="items()"
+    [displayPodium]="displayPodium()"
+    [displayFilter]="displayFilter()"
+    [filterPlaceholder]="filterPlaceholder()"
+    [emptyMessage]="listEmptyMessage()"
+    (itemClick)="onItemClick($event)"
+    (itemRightClick)="onItemRightClick($event)"
+  />
+}
