@@ -21,7 +21,14 @@ interface DeathRow extends CharacterDeath {
   selector: 'app-player-deaths',
   templateUrl: './player-deaths.component.html',
   styleUrl: './player-deaths.component.scss',
-  imports: [DatePipe, NgClass, UpperCasePipe, RouterLink, NoDataStatusComponent, LoadingStatusComponent],
+  imports: [
+    DatePipe,
+    NgClass,
+    UpperCasePipe,
+    RouterLink,
+    NoDataStatusComponent,
+    LoadingStatusComponent,
+  ],
 })
 export class PlayerDeathsComponent {
   profile = input<CharacterProfileResult | null>(null);

@@ -38,7 +38,8 @@ export class ServerAwareUrlSerializer implements UrlSerializer {
     if (tree.queryParamMap.has('server')) {
       const clone = new UrlTree();
       clone.root = tree.root;
-      const { server: _, ...rest } = tree.queryParams;
+      const rest = { ...tree.queryParams };
+      delete rest['server'];
       clone.queryParams = rest;
       clone.fragment = tree.fragment;
       return this.defaultSerializer.serialize(clone);

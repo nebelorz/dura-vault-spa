@@ -6,7 +6,9 @@ import { ServerService } from './server.service';
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
   private readonly serverService = inject(ServerService);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- schema-generic invariance: clients are created with { db: { schema: 'api' } }, which bare SupabaseClient generics can't express
   private _classicClient: SupabaseClient<any, any, any> | null = null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private _seasonalClient: SupabaseClient<any, any, any> | null = null;
 
   getClient(): SupabaseClient {
