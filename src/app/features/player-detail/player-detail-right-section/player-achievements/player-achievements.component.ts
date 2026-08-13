@@ -1,4 +1,4 @@
-﻿import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+﻿import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import { HighscoreSection, PlayerAchievement } from '@core/models';
@@ -13,6 +13,7 @@ import {
   NoDataStatusComponent,
   LoadingStatusComponent,
   MinimalistIconComponent,
+  ErrorStatusComponent,
 } from '@shared/components';
 import { Accordion, AccordionContent, AccordionHeader, AccordionPanel } from 'primeng/accordion';
 import { AchievementBadgeComponent } from './achievement-badge/achievement-badge.component';
@@ -45,6 +46,7 @@ interface AchievementSectionGroup {
     DatePipe,
     LoadingStatusComponent,
     NoDataStatusComponent,
+    ErrorStatusComponent,
     Accordion,
     AccordionPanel,
     AccordionHeader,
@@ -56,6 +58,10 @@ interface AchievementSectionGroup {
 export class PlayerAchievementsComponent {
   achievements = input.required<PlayerAchievement[]>();
   loading = input.required<boolean>();
+  error = input(false);
+
+  // Outputs
+  retry = output<void>();
 
   readonly groups = computed<AchievementGroup[]>(() => {
     const all = this.achievements();

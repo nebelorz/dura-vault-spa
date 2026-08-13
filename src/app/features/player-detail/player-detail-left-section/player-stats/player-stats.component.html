@@ -3,6 +3,8 @@
 
   @if (loading() && !stats().length) {
     <app-loading-status />
+  } @else if (error()) {
+    <app-error-status (retry)="retry.emit()" />
   } @else if (!stats().length) {
     <div class="stat-row">
       <div class="stat-info">
@@ -55,7 +57,9 @@
       >
         <app-metric-display metric="skill" layout="row" iconSize="md" />
         <div class="stat-info">
-          <div class="record-label text-subvalue">{{ getSectionLabel(stat.section) | uppercase }}</div>
+          <div class="record-label text-subvalue">
+            {{ getSectionLabel(stat.section) | uppercase }}
+          </div>
           <div class="stat-value-row">
             <span class="stat-value text-standard">{{ stat.level }}</span>
             <span class="stat-rank metric--rank text-caption">#{{ stat.rank }}</span>

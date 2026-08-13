@@ -3,20 +3,32 @@ import { DatePipe, UpperCasePipe } from '@angular/common';
 
 import { PlayerStatsRecord, HighscoreSection, Section } from '@core/models';
 import { getSectionLabel, HIGHSCORE_SECTIONS } from '@core/constants';
-import { LoadingStatusComponent, MetricDisplayComponent } from '@shared/components';
+import {
+  ErrorStatusComponent,
+  LoadingStatusComponent,
+  MetricDisplayComponent,
+} from '@shared/components';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-player-stats',
   templateUrl: './player-stats.component.html',
   styleUrl: './player-stats.component.scss',
-  imports: [LoadingStatusComponent, MetricDisplayComponent, DatePipe, UpperCasePipe],
+  imports: [
+    LoadingStatusComponent,
+    MetricDisplayComponent,
+    ErrorStatusComponent,
+    DatePipe,
+    UpperCasePipe,
+  ],
 })
 export class PlayerStatsComponent {
   stats = input.required<PlayerStatsRecord[]>();
   loading = input.required<boolean>();
+  error = input(false);
   activeSection = input.required<HighscoreSection>();
   sectionSelect = output<HighscoreSection>();
+  retry = output<void>();
 
   protected readonly getSectionLabel = (section: string) => getSectionLabel(section as Section);
 

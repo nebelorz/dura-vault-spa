@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 
 import {
   PlayerAchievement,
@@ -6,7 +6,11 @@ import {
   PlayerDetailsSummary,
   HighscoreSection,
 } from '@core/models';
-import { LoadingStatusComponent, NoDataStatusComponent } from '@shared/components';
+import {
+  ErrorStatusComponent,
+  LoadingStatusComponent,
+  NoDataStatusComponent,
+} from '@shared/components';
 import { PlayerGainsSummaryComponent } from './player-gains-summary/player-gains-summary.component';
 import { PlayerDetailChartComponent } from './player-detail-chart/player-detail-chart.component';
 
@@ -18,6 +22,7 @@ import { PlayerDetailChartComponent } from './player-detail-chart/player-detail-
   imports: [
     LoadingStatusComponent,
     NoDataStatusComponent,
+    ErrorStatusComponent,
     PlayerGainsSummaryComponent,
     PlayerDetailChartComponent,
   ],
@@ -28,6 +33,10 @@ export class PlayerDetailTabPerformanceComponent {
   section = input.required<HighscoreSection>();
   loading = input.required<boolean>();
   achievements = input<PlayerAchievement[]>([]);
+  error = input(false);
+
+  // Outputs
+  retry = output<void>();
 
   readonly hasPointsData = computed(() => {
     const data = this.playerDetailsData();

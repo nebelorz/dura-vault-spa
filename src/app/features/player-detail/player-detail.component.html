@@ -30,8 +30,10 @@
           <app-player-stats
             [stats]="playerStats()"
             [loading]="loading()"
+            [error]="detailsError()"
             [activeSection]="section()"
             (sectionSelect)="onSectionChange($event)"
+            (retry)="loadPlayerDetails()"
           />
         </div>
         <div class="left-online-section default-container">
@@ -69,6 +71,8 @@
                 class="animation-fade"
                 [profile]="characterProfile()"
                 [profileLoading]="profileLoading()"
+                [error]="profileError()"
+                (retry)="loadCharacterProfile(playerName())"
               />
             </p-tabpanel>
             <p-tabpanel [value]="performanceTab">
@@ -78,7 +82,9 @@
                 [summary]="summary()"
                 [section]="section()"
                 [loading]="loading()"
+                [error]="detailsError()"
                 [achievements]="playerAchievements()"
+                (retry)="loadPlayerDetails()"
               />
             </p-tabpanel>
           </p-tabpanels>
@@ -90,6 +96,8 @@
           <app-player-achievements
             [achievements]="playerAchievements()"
             [loading]="achievementsLoading()"
+            [error]="achievementsError()"
+            (retry)="loadPlayerAchievements(playerName())"
           />
         </div>
       </div>

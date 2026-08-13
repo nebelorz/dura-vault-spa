@@ -2,6 +2,8 @@
 
 @if (loading() && achievements().length === 0) {
   <app-loading-status />
+} @else if (error()) {
+  <app-error-status (retry)="retry.emit()" />
 } @else if (isEmpty()) {
   <app-no-data-status title="No Achievements" message="No milestones stored in the vault yet" />
 } @else {

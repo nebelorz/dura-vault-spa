@@ -1,6 +1,8 @@
 <div class="performance-tab">
   @if (loading()) {
     <app-loading-status />
+  } @else if (error()) {
+    <app-error-status (retry)="retry.emit()" />
   } @else if (summary(); as playerSummary) {
     <div class="gains-section animation-fade">
       <app-player-gains-summary

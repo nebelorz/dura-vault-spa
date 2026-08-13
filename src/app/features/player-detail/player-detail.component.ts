@@ -68,6 +68,7 @@ import { Tabs, TabList, Tab, TabPanels, TabPanel } from 'primeng/tabs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlayerDetailComponent implements OnInit {
+  private achievementsRequestId = 0;
   private detailsRequestId = 0;
   private profileRequestId = 0;
   private readonly characterProfileService = inject(CharacterProfileService);
@@ -83,14 +84,17 @@ export class PlayerDetailComponent implements OnInit {
   readonly characterTab = '0';
   readonly performanceTab = '1';
   activeTab = signal<string>(this.characterTab);
+  achievementsError = signal<boolean>(false);
   achievementsLoading = signal<boolean>(true);
   characterProfile = signal<CharacterProfileResult | null>(null);
+  detailsError = signal<boolean>(false);
   loading = signal<boolean>(true);
   playerAchievements = signal<PlayerAchievement[]>([]);
   playerDetailsData = signal<PlayerPerformanceResponse | null>(null);
   playerName = signal<string>('');
   playerOnlineData = signal<PlayerOnlineResponse | null>(null);
   playerStats = signal<PlayerStatsRecord[]>([]);
+  profileError = signal<boolean>(false);
   profileLoading = signal<boolean>(true);
   section = signal<HighscoreSection>('experience');
   selectedPeriod = signal<TimePeriod>('all');
@@ -190,20 +194,31 @@ export class PlayerDetailComponent implements OnInit {
     });
   }
 
-  private async loadPlayerDetails(): Promise<void> {
+  async loadPlayerDetails(): Promise<void> {
     const requestId = ++this.detailsRequestId;
     const playerName = this.playerName();
     const section = this.section();
     const period = this.selectedPeriod();
 
+    this.detailsError.set(false);
     this.loading.set(true);
     this.resetDetailsState();
 
     try {
-      const [historicRange, onlineRange] = await Promise.all([
+      const [historicResult, onlineResult] = await Promise.all([
         this.metadataService.getScrapeDates('highscore_top', false),
         this.metadataService.getScrapeDates('online_top', false),
       ]);
+
+      if (historicResult.status === 'error' || onlineResult.status === 'error') {
+        if (requestId === this.detailsRequestId) {
+          this.detailsError.set(true);
+        }
+        return;
+      }
+
+      const historicRange = historicResult.range;
+      const onlineRange = onlineResult.range;
 
       const historicWindow = historicRange?.max_scrape_date
         ? resolvePeriodRange(
@@ -220,7 +235,9 @@ export class PlayerDetailComponent implements OnInit {
           )
         : null;
 
-      if (!historicWindow || !onlineWindow) return;
+      if (!historicWindow || !onlineWindow) {
+        return;
+      }
 
       const request: PlayerPerformanceRequest = {
         p_name: playerName,
@@ -231,7 +248,7 @@ export class PlayerDetailComponent implements OnInit {
       };
 
       const [data, stats, onlineData] = await Promise.all([
-        this.playerDetailsService.getPlayerPerformance(request),
+        this.playerDetailsService.getPlayerPerformance(request, false),
         this.playerDetailsService.getPlayerStats(playerName),
         this.onlineService.getPlayerOnlineHistory(
           playerName,
@@ -242,6 +259,8 @@ export class PlayerDetailComponent implements OnInit {
       ]);
 
       if (requestId !== this.detailsRequestId) return;
+
+      this.detailsError.set(data === null || stats === null || onlineData === null);
 
       const resolvedStats = stats ?? [];
       const availableSections = resolvedStats.map((stat) => stat.section as HighscoreSection);
@@ -267,19 +286,26 @@ export class PlayerDetailComponent implements OnInit {
     }
   }
 
-  private async loadPlayerAchievements(name: string): Promise<void> {
+  async loadPlayerAchievements(name: string): Promise<void> {
+    const requestId = ++this.achievementsRequestId;
+    this.achievementsError.set(false);
     this.achievementsLoading.set(true);
     try {
       const achievements = await this.playerDetailsService.getPlayerAchievements(name);
-      this.playerAchievements.set(achievements);
+      if (requestId !== this.achievementsRequestId) return;
+      this.achievementsError.set(achievements === null);
+      this.playerAchievements.set(achievements ?? []);
     } finally {
-      this.achievementsLoading.set(false);
+      if (requestId === this.achievementsRequestId) {
+        this.achievementsLoading.set(false);
+      }
     }
   }
 
-  private async loadCharacterProfile(name: string): Promise<void> {
+  async loadCharacterProfile(name: string): Promise<void> {
     const requestId = ++this.profileRequestId;
 
+    this.profileError.set(false);
     this.characterProfile.set(null);
     this.profileLoading.set(true);
 
@@ -287,6 +313,7 @@ export class PlayerDetailComponent implements OnInit {
       const profile = await this.characterProfileService.getCharacterProfile(name);
       if (requestId !== this.profileRequestId) return;
 
+      this.profileError.set(profile.status === 'error');
       this.characterProfile.set(profile);
     } finally {
       if (requestId === this.profileRequestId) {
