@@ -81,7 +81,7 @@ export class DevInfoPanelComponent implements OnInit {
 
   // Ordered list of post dates (newest first)
   readonly postDates = [
-    '2026-08-12',
+    '2026-08-13',
     '2026-08-08',
     '2026-08-07',
     '2026-08-02',
