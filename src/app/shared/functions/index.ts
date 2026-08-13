@@ -1,3 +1,4 @@
+export * from './buildChartOptions';
 export * from './build-metric';
 export * from './carry-forward';
 export * from './create-period-window';
