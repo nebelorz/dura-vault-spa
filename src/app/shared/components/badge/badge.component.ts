@@ -7,6 +7,7 @@ export type BadgeVariant =
   | 'skill'
   | 'xp'
   | 'info'
+  | 'rank'
   | 'secondary-light';
 
 @Component({

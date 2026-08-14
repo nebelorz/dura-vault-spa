@@ -11,7 +11,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { marked } from 'marked';
 import { BadgeComponent, type BadgeVariant } from '@shared/components';
 
-type TagColor = 'error' | 'warn' | 'info' | 'versionMajor' | 'versionMinor';
+type TagColor = 'error' | 'warn' | 'info' | 'versionMajor' | 'versionMinor' | 'patch';
 
 interface DevInfoTag {
   label: string;
@@ -72,7 +72,8 @@ export class DevInfoPanelComponent implements OnInit {
     warn: 'warn',
     info: 'info',
     versionMajor: 'xp',
-    versionMinor: 'secondary-light',
+    versionMinor: 'rank',
+    patch: 'secondary-light',
   };
 
   variantFor(color?: TagColor): BadgeVariant {

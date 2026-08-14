@@ -41,6 +41,10 @@
   --badge-color: var(--color-info);
 }
 
+.badge--rank {
+  --badge-color: var(--color-rank);
+}
+
 .badge--secondary-light {
   --badge-color: var(--color-secondary-light);
 }
